@@ -1,0 +1,1211 @@
+/* ============================================================
+   PALETAS — el único archivo con hexadecimales
+   prototipo-3
+
+   Un bloque por paleta. Se cambia con `data-palette` en <html>:
+       <html data-palette="verano">
+   Sin atributo manda la paleta Café (el bloque :root).
+   Doce paletas: cafe · verano · primavera · oro · arcoiris · tech ·
+   alegre · invierno · piel · halloween · frio · noche.
+
+   REGLA: se usan ESTRICTAMENTE los colores entregados.
+   Un tono sólo se deriva cuando ningún color de la paleta puede
+   cumplir el mínimo WCAG de ese rol — texto normal 4.5:1, íconos y
+   bordes 3:1 — y en ese caso el bloque lo dice arriba, con el número
+   que lo justifica. El blanco #FFFFFF del fondo de página no cuenta
+   como color de paleta: es la superficie que pidió el brief.
+
+   El color de texto que va sobre el primario, sobre el acento y
+   sobre la barra está declarado, nunca se asume blanco.
+
+   VELOS DEL HERO — fijados en 0.5 en las doce paletas por decisión de
+   diseño: se quiere ver la foto.
+   Eso tiene un costo medido. La foto `banners/banner-1.jpg` tiene
+   píxeles blancos puros Y negros puros dentro de la banda donde va el
+   texto. Con alfa 0.5 el contraste contra ESE peor caso queda entre
+   1.26:1 y 3.31:1 según la paleta, por debajo del mínimo de 4.5:1: sobre
+   las zonas claras de la foto el título se lee mal. El comentario de
+   cada `--color-on-banner` lleva su número.
+   Para recuperar legibilidad sin subir el velo: una franja de refuerzo
+   detrás del bloque de texto, o una foto sin zonas quemadas. Subir el
+   alfa a ~0.7 también resuelve, que es de donde venía.
+   ============================================================ */
+
+/* ============================================================
+   PALETA 01 — "Café"
+   Entregada: #EDE0D4 · #C9A27E · #A47148 · #6F4E37 · #3E2C23
+   Usa tal cual: #EDE0D4, #A47148, #6F4E37, #3E2C23
+   Todavía sin rol: #C9A27E  (entran con los badges)
+   Sin derivados: los cinco roles se cubren con la paleta.
+   ============================================================ */
+
+:root,
+[data-palette="cafe"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #EDE0D4;  /* de la paleta · 10.2:1 con text */
+    --color-grad-alt-2:    #F3EBE3;  /* DERIVADO: surface-alt aclarado 35% · segundo tono del degradado de la caja clara · texto 11.20:1 · detalle 6.31:1 · ícono 6.31:1 */
+    --color-border:        #EDE0D4;  /* de la paleta · 1.3:1 sobre surface — separador decorativo */
+    --color-border-strong: #A47148;  /* de la paleta · 4.17:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #3E2C23;  /* de la paleta · 13.21:1 sobre surface · 10.2:1 sobre surface-alt */
+    --color-text-muted:  #6F4E37;  /* de la paleta · 7.44:1 sobre surface · 5.75:1 sobre surface-alt */
+    --color-text-subtle: #6F4E37;  /* de la paleta · 7.44:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #3E2C23;  /* de la paleta */
+    --color-primary-hover: #3E2C23;  /* de la paleta */
+    --color-on-primary:    #EDE0D4;  /* de la paleta · 10.2:1 sobre primary */
+
+    --color-accent:       #6F4E37;  /* de la paleta · 7.44:1 sobre surface */
+    --color-accent-hover: #3E2C23;  /* de la paleta */
+    --color-on-accent:    #EDE0D4;  /* de la paleta · 5.75:1 sobre accent */
+
+    --color-accent-soft:   #A47148;  /* de la paleta · 4.17:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #EDE0D4;  /* de la paleta · 10.2:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #EDE0D4;  /* 10.2:1 sobre primary */
+    --color-on-dark-muted:  #EDE0D4;  /* 10.2:1 sobre primary */
+    --color-on-dark-border: #A47148;  /* 3.17:1 sobre primary — separador decorativo */
+    --color-grad-2:         #6F4E37;  /* de la paleta · segundo tono del degradado sobre oscuro (barra y pie) · 5.75:1 con on-dark-muted encima, 1.77:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #6F4E37;  /* de la paleta */
+    --color-on-nav:     #FFFFFF;  /* DERIVADO · 7.44:1 sobre nav-bg */
+    --color-nav-active: #EDE0D4;  /* de la paleta · 5.75:1 sobre nav-bg */
+    --color-nav-brand:  #EDE0D4;  /* de la paleta · 5.75:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #A47148;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #6F4E37;  /* 7.44:1 sobre surface */
+    --color-focus-invert: #EDE0D4;  /* 10.2:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(62, 44, 35, 0.7);
+    --color-glass-border: rgba(237, 224, 212, 0.55);
+    --bg-image-fallback:  #EDE0D4;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(62, 44, 35, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 2.92:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(237, 224, 212, 0.5);
+    --color-on-banner-light:   #3E2C23;  /* 2.71:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 13.21:1 sobre primary · 13.21:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 13.21:1 sobre primary · 13.21:1 sobre primary-hover */
+    --color-brand-2:     #DE8445;  /* DERIVADO del matiz del acento · 4.71:1 sobre primary · 4.71:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 02 — "Verano"
+   Entregada: #00C2CB · #7FE0D4 · #FFE38A · #FF9A76 · #FF5D8F
+   Usa tal cual: #00C2CB, #FFE38A
+   Todavía sin rol: #7FE0D4, #FF9A76, #FF5D8F  (entran con los badges)
+
+   DERIVADOS — la paleta no puede cubrir estos roles sin romper el
+   mínimo WCAG, así que se derivó el tono conservando el matiz:
+     · --color-text / --color-primary → #830028
+       ningún color de la paleta llega a 4.5:1 sobre blanco (el mejor es #FF5D8F con 2.91:1)
+     · --color-accent-hover → #67001F
+       sólo para el estado hover: la paleta no tiene otro tono legible
+   ============================================================ */
+
+[data-palette="verano"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #FFE38A;  /* de la paleta · 8.32:1 con text */
+    --color-grad-alt-2:    #7FE0D4;  /* de la paleta (sw-2) · segundo tono del degradado de la caja clara · texto 6.77:1 · detalle 6.77:1 · ícono 6.77:1 */
+    --color-border:        #FFE38A;  /* de la paleta · 1.26:1 sobre surface — separador decorativo */
+    --color-border-strong: #830028;  /* DERIVADO · 10.52:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #830028;  /* DERIVADO · 10.52:1 sobre surface · 8.32:1 sobre surface-alt */
+    --color-text-muted:  #830028;  /* DERIVADO · 10.52:1 sobre surface · 8.32:1 sobre surface-alt */
+    --color-text-subtle: #830028;  /* DERIVADO · 10.52:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #830028;  /* DERIVADO */
+    --color-primary-hover: #67001F;  /* DERIVADO */
+    --color-on-primary:    #FFE38A;  /* de la paleta · 8.32:1 sobre primary */
+
+    --color-accent:       #830028;  /* DERIVADO · 10.52:1 sobre surface */
+    --color-accent-hover: #67001F;  /* DERIVADO */
+    --color-on-accent:    #FFE38A;  /* de la paleta · 8.32:1 sobre accent */
+
+    --color-accent-soft:   #830028;  /* DERIVADO · 10.52:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #FFE38A;  /* de la paleta · 8.32:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #FFE38A;  /* 8.32:1 sobre primary */
+    --color-on-dark-muted:  #FFE38A;  /* 8.32:1 sobre primary */
+    --color-on-dark-border: #830028;  /* 1.0:1 sobre primary — separador decorativo */
+    --color-grad-2:         #67001F;  /* primary-hover · segundo tono del degradado sobre oscuro (barra y pie) · 10.40:1 con on-dark-muted encima, 1.25:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #00C2CB;  /* de la paleta */
+    --color-on-nav:     #830028;  /* DERIVADO · 4.8:1 sobre nav-bg */
+    --color-nav-active: #830028;  /* DERIVADO · 4.8:1 sobre nav-bg */
+    --color-nav-brand:  #830028;  /* DERIVADO · 4.8:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #FFE38A;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #830028;  /* 10.52:1 sobre surface */
+    --color-focus-invert: #FFE38A;  /* 8.32:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(131, 0, 40, 0.7);
+    --color-glass-border: rgba(255, 227, 138, 0.55);
+    --bg-image-fallback:  #FFE38A;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(131, 0, 40, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 3.11:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(255, 227, 138, 0.5);
+    --color-on-banner-light:   #830028;  /* 2.19:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 10.52:1 sobre primary · 13.15:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 10.52:1 sobre primary · 13.15:1 sobre primary-hover */
+    --color-brand-2:     #ED9BB4;  /* DERIVADO del matiz del acento · 4.98:1 sobre primary · 6.23:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 03 — "Primavera"
+   Entregada: #FFF3C9 · #C9E4A6 · #F7B7C4 · #A3D9C9 · #7FB4E0
+   Usa tal cual: #FFF3C9, #7FB4E0
+   Todavía sin rol: #C9E4A6, #F7B7C4, #A3D9C9  (entran con los badges)
+
+   DERIVADOS — la paleta no puede cubrir estos roles sin romper el
+   mínimo WCAG, así que se derivó el tono conservando el matiz:
+     · --color-text / --color-primary → #184164
+       ningún color de la paleta llega a 4.5:1 sobre blanco (el mejor es #7FB4E0 con 2.21:1)
+     · --color-accent-hover → #12314C
+       sólo para el estado hover: la paleta no tiene otro tono legible
+   ============================================================ */
+
+[data-palette="primavera"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #FFF3C9;  /* de la paleta · 9.56:1 con text */
+    --color-grad-alt-2:    #C9E4A6;  /* de la paleta (sw-2) · segundo tono del degradado de la caja clara · texto 7.65:1 · detalle 7.65:1 · ícono 7.65:1 */
+    --color-border:        #FFF3C9;  /* de la paleta · 1.11:1 sobre surface — separador decorativo */
+    --color-border-strong: #184164;  /* DERIVADO · 10.61:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #184164;  /* DERIVADO · 10.61:1 sobre surface · 9.56:1 sobre surface-alt */
+    --color-text-muted:  #184164;  /* DERIVADO · 10.61:1 sobre surface · 9.56:1 sobre surface-alt */
+    --color-text-subtle: #184164;  /* DERIVADO · 10.61:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #184164;  /* DERIVADO */
+    --color-primary-hover: #12314C;  /* DERIVADO */
+    --color-on-primary:    #FFF3C9;  /* de la paleta · 9.56:1 sobre primary */
+
+    --color-accent:       #184164;  /* DERIVADO · 10.61:1 sobre surface */
+    --color-accent-hover: #12314C;  /* DERIVADO */
+    --color-on-accent:    #FFF3C9;  /* de la paleta · 9.56:1 sobre accent */
+
+    --color-accent-soft:   #184164;  /* DERIVADO · 10.61:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #FFF3C9;  /* de la paleta · 9.56:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #FFF3C9;  /* 9.56:1 sobre primary */
+    --color-on-dark-muted:  #FFF3C9;  /* 9.56:1 sobre primary */
+    --color-on-dark-border: #184164;  /* 1.0:1 sobre primary — separador decorativo */
+    --color-grad-2:         #12314C;  /* primary-hover · segundo tono del degradado sobre oscuro (barra y pie) · 12.05:1 con on-dark-muted encima, 1.26:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #7FB4E0;  /* de la paleta */
+    --color-on-nav:     #184164;  /* DERIVADO · 4.8:1 sobre nav-bg */
+    --color-nav-active: #184164;  /* DERIVADO · 4.8:1 sobre nav-bg */
+    --color-nav-brand:  #184164;  /* DERIVADO · 4.8:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #FFF3C9;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #184164;  /* 10.61:1 sobre surface */
+    --color-focus-invert: #FFF3C9;  /* 9.56:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(24, 65, 100, 0.7);
+    --color-glass-border: rgba(255, 243, 201, 0.55);
+    --bg-image-fallback:  #FFF3C9;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(24, 65, 100, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 2.70:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(255, 243, 201, 0.5);
+    --color-on-banner-light:   #184164;  /* 2.45:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 10.61:1 sobre primary · 13.38:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 10.61:1 sobre primary · 13.38:1 sobre primary-hover */
+    --color-brand-2:     #79B4E7;  /* DERIVADO del matiz del acento · 4.80:1 sobre primary · 6.05:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 04 — "Oro"
+   Entregada: #FBF3D0 · #EBD08C · #D4AF37 · #B8860B · #7C5E10
+   Usa tal cual: #FBF3D0, #D4AF37, #B8860B, #7C5E10
+   Todavía sin rol: #EBD08C  (entran con los badges)
+
+   DERIVADOS — la paleta no puede cubrir estos roles sin romper el
+   mínimo WCAG, así que se derivó el tono conservando el matiz:
+     · --color-accent-hover → #6A500E
+       sólo para el estado hover: la paleta no tiene otro tono legible
+   ============================================================ */
+
+[data-palette="oro"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #FBF3D0;  /* de la paleta · 5.43:1 con text */
+    --color-grad-alt-2:    #FCF7E0;  /* DERIVADO: surface-alt aclarado 35% · segundo tono del degradado de la caja clara · texto 5.63:1 · detalle 5.63:1 · ícono 5.63:1 */
+    --color-border:        #FBF3D0;  /* de la paleta · 1.12:1 sobre surface — separador decorativo */
+    --color-border-strong: #B8860B;  /* de la paleta · 3.25:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #7C5E10;  /* de la paleta · 6.06:1 sobre surface · 5.43:1 sobre surface-alt */
+    --color-text-muted:  #7C5E10;  /* de la paleta · 6.06:1 sobre surface · 5.43:1 sobre surface-alt */
+    --color-text-subtle: #7C5E10;  /* de la paleta · 6.06:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #7C5E10;  /* de la paleta */
+    --color-primary-hover: #6A500E;  /* DERIVADO */
+    --color-on-primary:    #FBF3D0;  /* de la paleta · 5.43:1 sobre primary */
+
+    --color-accent:       #7C5E10;  /* de la paleta · 6.06:1 sobre surface */
+    --color-accent-hover: #6A500E;  /* DERIVADO */
+    --color-on-accent:    #FBF3D0;  /* de la paleta · 5.43:1 sobre accent */
+
+    --color-accent-soft:   #B8860B;  /* de la paleta · 3.25:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #FBF3D0;  /* de la paleta · 5.43:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #FBF3D0;  /* 5.43:1 sobre primary */
+    --color-on-dark-muted:  #FBF3D0;  /* 5.43:1 sobre primary */
+    --color-on-dark-border: #D4AF37;  /* 2.88:1 sobre primary — separador decorativo */
+    --color-grad-2:         #6A500E;  /* primary-hover · segundo tono del degradado sobre oscuro (barra y pie) · 6.81:1 con on-dark-muted encima, 1.25:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #7C5E10;  /* de la paleta */
+    --color-on-nav:     #FFFFFF;  /* DERIVADO · 6.06:1 sobre nav-bg */
+    --color-nav-active: #FBF3D0;  /* de la paleta · 5.43:1 sobre nav-bg */
+    --color-nav-brand:  #FBF3D0;  /* de la paleta · 5.43:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #B8860B;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #7C5E10;  /* 6.06:1 sobre surface */
+    --color-focus-invert: #FBF3D0;  /* 5.43:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(124, 94, 16, 0.7);
+    --color-glass-border: rgba(251, 243, 208, 0.55);
+    --bg-image-fallback:  #FBF3D0;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(124, 94, 16, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 2.18:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(251, 243, 208, 0.5);
+    --color-on-banner-light:   #7C5E10;  /* 1.4:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 6.06:1 sobre primary · 7.59:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 6.06:1 sobre primary · 7.59:1 sobre primary-hover */
+    --color-brand-2:     #EFE7A4;  /* DERIVADO del matiz del acento · 4.80:1 sobre primary · 6.01:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 05 — "Arcoíris"
+   Entregada: #FF5A5F · #FFB400 · #3DDC84 · #00A6ED · #8B5CF6
+   Usa tal cual: #FF5A5F, #FFB400, #3DDC84, #8B5CF6
+   Todavía sin rol: #00A6ED  (entran con los badges)
+
+   DERIVADOS — la paleta no puede cubrir estos roles sin romper el
+   mínimo WCAG, así que se derivó el tono conservando el matiz:
+     · --color-text / --color-primary → #410ABC
+       ningún color de la paleta llega a 4.5:1 sobre blanco (el mejor es #8B5CF6 con 4.23:1)
+     · --color-accent-hover → #330892
+       sólo para el estado hover: la paleta no tiene otro tono legible
+   ============================================================ */
+
+[data-palette="arcoiris"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #FFB400;  /* de la paleta · 5.91:1 con text */
+    --color-grad-alt-2:    #3DDC84;  /* de la paleta (sw-3) · segundo tono del degradado de la caja clara · texto 5.90:1 · detalle 5.90:1 · ícono 5.90:1 */
+    --color-border:        #FFB400;  /* de la paleta · 1.78:1 sobre surface — separador decorativo */
+    --color-border-strong: #FF5A5F;  /* de la paleta · 3.05:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #410ABC;  /* DERIVADO · 10.53:1 sobre surface · 5.91:1 sobre surface-alt */
+    --color-text-muted:  #410ABC;  /* DERIVADO · 10.53:1 sobre surface · 5.91:1 sobre surface-alt */
+    --color-text-subtle: #410ABC;  /* DERIVADO · 10.53:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #410ABC;  /* DERIVADO */
+    --color-primary-hover: #330892;  /* DERIVADO */
+    --color-on-primary:    #FFB400;  /* de la paleta · 5.91:1 sobre primary */
+
+    --color-accent:       #410ABC;  /* DERIVADO · 10.53:1 sobre surface */
+    --color-accent-hover: #330892;  /* DERIVADO */
+    --color-on-accent:    #FFB400;  /* de la paleta · 5.91:1 sobre accent */
+
+    --color-accent-soft:   #FF5A5F;  /* de la paleta · 3.05:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #FFB400;  /* de la paleta · 5.91:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #FFB400;  /* 5.91:1 sobre primary */
+    --color-on-dark-muted:  #FFB400;  /* 5.91:1 sobre primary */
+    --color-on-dark-border: #8B5CF6;  /* 2.49:1 sobre primary — separador decorativo */
+    --color-grad-2:         #330892;  /* primary-hover · segundo tono del degradado sobre oscuro (barra y pie) · 7.41:1 con on-dark-muted encima, 1.25:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #3DDC84;  /* de la paleta */
+    --color-on-nav:     #410ABC;  /* DERIVADO · 5.9:1 sobre nav-bg */
+    --color-nav-active: #410ABC;  /* DERIVADO · 5.9:1 sobre nav-bg */
+    --color-nav-brand:  #410ABC;  /* DERIVADO · 5.9:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #FF5A5F;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #410ABC;  /* 10.53:1 sobre surface */
+    --color-focus-invert: #FFB400;  /* 5.91:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(65, 10, 188, 0.7);
+    --color-glass-border: rgba(255, 180, 0, 0.55);
+    --bg-image-fallback:  #FFB400;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(65, 10, 188, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 3.06:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(255, 180, 0, 0.5);
+    --color-on-banner-light:   #410ABC;  /* 1.69:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 10.53:1 sobre primary · 13.20:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 10.53:1 sobre primary · 13.20:1 sobre primary-hover */
+    --color-brand-2:     #BBA4EF;  /* DERIVADO del matiz del acento · 4.85:1 sobre primary · 6.08:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 06 — "Tech"
+   Entregada: #E7DFF7 · #C6B4EE · #A48AE0 · #7B5FD1 · #4E2FB0
+   Usa tal cual: #E7DFF7, #C6B4EE, #A48AE0, #7B5FD1, #4E2FB0
+
+   DERIVADOS — la paleta no puede cubrir estos roles sin romper el
+   mínimo WCAG, así que se derivó el tono conservando el matiz:
+     · --color-on-accent → #FFFFFF
+       sobre el acento ningún color de la paleta llega a 4.5:1
+   ============================================================ */
+
+[data-palette="tech"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #E7DFF7;  /* de la paleta · 6.91:1 con text */
+    --color-grad-alt-2:    #EFEAFA;  /* DERIVADO: surface-alt aclarado 35% · segundo tono del degradado de la caja clara · texto 7.56:1 · detalle 7.56:1 · ícono 4.05:1 */
+    --color-border:        #E7DFF7;  /* de la paleta · 1.29:1 sobre surface — separador decorativo */
+    --color-border-strong: #7B5FD1;  /* de la paleta · 4.77:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #4E2FB0;  /* de la paleta · 8.91:1 sobre surface · 6.91:1 sobre surface-alt */
+    --color-text-muted:  #4E2FB0;  /* de la paleta · 8.91:1 sobre surface · 6.91:1 sobre surface-alt */
+    --color-text-subtle: #7B5FD1;  /* de la paleta · 4.77:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #4E2FB0;  /* de la paleta */
+    --color-primary-hover: #4E2FB0;  /* de la paleta */
+    --color-on-primary:    #E7DFF7;  /* de la paleta · 6.91:1 sobre primary */
+
+    --color-accent:       #7B5FD1;  /* de la paleta · 4.77:1 sobre surface */
+    --color-accent-hover: #4E2FB0;  /* de la paleta */
+    --color-on-accent:    #FFFFFF;  /* DERIVADO · 4.77:1 sobre accent */
+
+    --color-accent-soft:   #7B5FD1;  /* de la paleta · 4.77:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #C6B4EE;  /* de la paleta · 4.74:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #E7DFF7;  /* 6.91:1 sobre primary */
+    --color-on-dark-muted:  #E7DFF7;  /* 6.91:1 sobre primary */
+    --color-on-dark-border: #A48AE0;  /* 3.09:1 sobre primary — separador decorativo */
+    --color-grad-2:         #301D6D;  /* DERIVADO · segundo tono del degradado sobre oscuro (barra y pie) · 10.71:1 con on-dark-muted encima, 1.55:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #7B5FD1;  /* de la paleta */
+    --color-on-nav:     #FFFFFF;  /* DERIVADO · 4.77:1 sobre nav-bg */
+    --color-nav-active: #FFFFFF;  /* DERIVADO · 4.77:1 sobre nav-bg */
+    --color-nav-brand:  #E7DFF7;  /* de la paleta · 3.7:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #C6B4EE;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #7B5FD1;  /* 4.77:1 sobre surface */
+    --color-focus-invert: #C6B4EE;  /* 4.74:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(78, 47, 176, 0.7);
+    --color-glass-border: rgba(231, 223, 247, 0.55);
+    --bg-image-fallback:  #E7DFF7;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(78, 47, 176, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 2.61:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(231, 223, 247, 0.5);
+    --color-on-banner-light:   #4E2FB0;  /* 1.83:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 8.91:1 sobre primary · 8.91:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 8.91:1 sobre primary · 8.91:1 sobre primary-hover */
+    --color-brand-2:     #C4B5F2;  /* DERIVADO del matiz del acento · 4.77:1 sobre primary · 4.77:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 07 — "Alegre"
+   Entregada: #FF6B6B · #FFD93D · #6BCB77 · #4D96FF · #FF6FB5
+   Usa tal cual: #FF6B6B, #FFD93D, #6BCB77
+   Todavía sin rol: #4D96FF, #FF6FB5  (entran con los badges)
+
+   DERIVADOS — la paleta no puede cubrir estos roles sin romper el
+   mínimo WCAG, así que se derivó el tono conservando el matiz:
+     · --color-text / --color-primary → #003A8E
+       ningún color de la paleta llega a 4.5:1 sobre blanco (el mejor es #4D96FF con 2.95:1)
+     · --color-accent-hover → #002D6D
+       sólo para el estado hover: la paleta no tiene otro tono legible
+   ============================================================ */
+
+[data-palette="alegre"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #FFD93D;  /* de la paleta · 7.64:1 con text */
+    --color-grad-alt-2:    #6BCB77;  /* de la paleta (sw-3) · segundo tono del degradado de la caja clara · texto 5.23:1 · detalle 5.23:1 · ícono 5.23:1 */
+    --color-border:        #FFD93D;  /* de la paleta · 1.38:1 sobre surface — separador decorativo */
+    --color-border-strong: #003A8E;  /* DERIVADO · 10.52:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #003A8E;  /* DERIVADO · 10.52:1 sobre surface · 7.64:1 sobre surface-alt */
+    --color-text-muted:  #003A8E;  /* DERIVADO · 10.52:1 sobre surface · 7.64:1 sobre surface-alt */
+    --color-text-subtle: #003A8E;  /* DERIVADO · 10.52:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #003A8E;  /* DERIVADO */
+    --color-primary-hover: #002D6D;  /* DERIVADO */
+    --color-on-primary:    #FFD93D;  /* de la paleta · 7.64:1 sobre primary */
+
+    --color-accent:       #003A8E;  /* DERIVADO · 10.52:1 sobre surface */
+    --color-accent-hover: #002D6D;  /* DERIVADO */
+    --color-on-accent:    #FFD93D;  /* de la paleta · 7.64:1 sobre accent */
+
+    --color-accent-soft:   #003A8E;  /* DERIVADO · 10.52:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #FFD93D;  /* de la paleta · 7.64:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #FFD93D;  /* 7.64:1 sobre primary */
+    --color-on-dark-muted:  #FFD93D;  /* 7.64:1 sobre primary */
+    --color-on-dark-border: #003A8E;  /* 1.0:1 sobre primary — separador decorativo */
+    --color-grad-2:         #002D6D;  /* primary-hover · segundo tono del degradado sobre oscuro (barra y pie) · 9.55:1 con on-dark-muted encima, 1.25:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #6BCB77;  /* de la paleta */
+    --color-on-nav:     #003A8E;  /* DERIVADO · 5.23:1 sobre nav-bg */
+    --color-nav-active: #003A8E;  /* DERIVADO · 5.23:1 sobre nav-bg */
+    --color-nav-brand:  #003A8E;  /* DERIVADO · 5.23:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #FF6B6B;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #003A8E;  /* 10.52:1 sobre surface */
+    --color-focus-invert: #FFD93D;  /* 7.64:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(0, 58, 142, 0.7);
+    --color-glass-border: rgba(255, 217, 61, 0.55);
+    --bg-image-fallback:  #FFD93D;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(0, 58, 142, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 2.79:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(255, 217, 61, 0.5);
+    --color-on-banner-light:   #003A8E;  /* 2.05:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 10.52:1 sobre primary · 13.16:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 10.52:1 sobre primary · 13.16:1 sobre primary-hover */
+    --color-brand-2:     #8AB1EA;  /* DERIVADO del matiz del acento · 4.79:1 sobre primary · 5.99:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 08 — "Invierno"
+   Entregada: #E3F6F5 · #A7E0DB · #5FB0C9 · #3E6D9C · #2A2F63
+   Usa tal cual: #E3F6F5, #5FB0C9, #3E6D9C, #2A2F63
+   Todavía sin rol: #A7E0DB  (entran con los badges)
+   Sin derivados: los cinco roles se cubren con la paleta.
+   ============================================================ */
+
+[data-palette="invierno"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #E3F6F5;  /* de la paleta · 11.14:1 con text */
+    --color-grad-alt-2:    #EDF9F8;  /* DERIVADO: surface-alt aclarado 35% · segundo tono del degradado de la caja clara · texto 11.58:1 · detalle 5.04:1 · ícono 5.04:1 */
+    --color-border:        #E3F6F5;  /* de la paleta · 1.12:1 sobre surface — separador decorativo */
+    --color-border-strong: #3E6D9C;  /* de la paleta · 5.42:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #2A2F63;  /* de la paleta · 12.46:1 sobre surface · 11.14:1 sobre surface-alt */
+    --color-text-muted:  #3E6D9C;  /* de la paleta · 5.42:1 sobre surface · 4.85:1 sobre surface-alt */
+    --color-text-subtle: #3E6D9C;  /* de la paleta · 5.42:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #2A2F63;  /* de la paleta */
+    --color-primary-hover: #2A2F63;  /* de la paleta */
+    --color-on-primary:    #E3F6F5;  /* de la paleta · 11.14:1 sobre primary */
+
+    --color-accent:       #3E6D9C;  /* de la paleta · 5.42:1 sobre surface */
+    --color-accent-hover: #2A2F63;  /* de la paleta */
+    --color-on-accent:    #E3F6F5;  /* de la paleta · 4.85:1 sobre accent */
+
+    --color-accent-soft:   #3E6D9C;  /* de la paleta · 5.42:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #E3F6F5;  /* de la paleta · 11.14:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #E3F6F5;  /* 11.14:1 sobre primary */
+    --color-on-dark-muted:  #E3F6F5;  /* 11.14:1 sobre primary */
+    --color-on-dark-border: #3E6D9C;  /* 2.3:1 sobre primary — separador decorativo */
+    --color-grad-2:         #3E6D9C;  /* de la paleta · segundo tono del degradado sobre oscuro (barra y pie) · 4.85:1 con on-dark-muted encima, 2.30:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #3E6D9C;  /* de la paleta */
+    --color-on-nav:     #FFFFFF;  /* DERIVADO · 5.42:1 sobre nav-bg */
+    --color-nav-active: #E3F6F5;  /* de la paleta · 4.85:1 sobre nav-bg */
+    --color-nav-brand:  #E3F6F5;  /* de la paleta · 4.85:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #5FB0C9;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #3E6D9C;  /* 5.42:1 sobre surface */
+    --color-focus-invert: #E3F6F5;  /* 11.14:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(42, 47, 99, 0.7);
+    --color-glass-border: rgba(227, 246, 245, 0.55);
+    --bg-image-fallback:  #E3F6F5;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(42, 47, 99, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 2.86:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(227, 246, 245, 0.5);
+    --color-on-banner-light:   #2A2F63;  /* 2.86:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 12.46:1 sobre primary · 12.46:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 12.46:1 sobre primary · 12.46:1 sobre primary-hover */
+    --color-brand-2:     #67A6E4;  /* DERIVADO del matiz del acento · 4.84:1 sobre primary · 4.84:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 09 — "Piel"
+   Entregada: #F8D9C0 · #E9B98F · #D89B72 · #B87A56 · #8A5A3C
+   Usa tal cual: #F8D9C0, #D89B72, #B87A56, #8A5A3C
+   Todavía sin rol: #E9B98F  (entran con los badges)
+
+   DERIVADOS — la paleta no puede cubrir estos roles sin romper el
+   mínimo WCAG, así que se derivó el tono conservando el matiz:
+     · --color-accent-hover → #764D33
+       sólo para el estado hover: la paleta no tiene otro tono legible
+     · --color-accent-invert → #FBECDF
+       ningún color de la paleta llega a 4.5:1 sobre la barra
+     · --color-surface-alt → #FAE6D5
+       ningún color de la paleta aguanta la tinta encima (el mejor da 4.34:1); es un tinte del más claro
+     · --color-on-primary → #FFFFFF
+       sobre la barra ningún color de la paleta llega a 4.5:1
+     · --color-on-accent → #FFFFFF
+       sobre el acento ningún color de la paleta llega a 4.5:1
+   ============================================================ */
+
+[data-palette="piel"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #FAE6D5;  /* DERIVADO · 4.81:1 con text */
+    --color-grad-alt-2:    #FCEFE4;  /* DERIVADO: surface-alt aclarado 35% · segundo tono del degradado de la caja clara · texto 5.16:1 · detalle 5.16:1 · ícono 5.16:1 */
+    --color-border:        #F8D9C0;  /* de la paleta · 1.34:1 sobre surface — separador decorativo */
+    --color-border-strong: #B87A56;  /* de la paleta · 3.53:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #8A5A3C;  /* de la paleta · 5.82:1 sobre surface · 4.81:1 sobre surface-alt */
+    --color-text-muted:  #8A5A3C;  /* de la paleta · 5.82:1 sobre surface · 4.81:1 sobre surface-alt */
+    --color-text-subtle: #8A5A3C;  /* de la paleta · 5.82:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #8A5A3C;  /* de la paleta */
+    --color-primary-hover: #764D33;  /* DERIVADO */
+    --color-on-primary:    #FFFFFF;  /* DERIVADO · 5.82:1 sobre primary */
+
+    --color-accent:       #8A5A3C;  /* de la paleta · 5.82:1 sobre surface */
+    --color-accent-hover: #764D33;  /* DERIVADO */
+    --color-on-accent:    #FFFFFF;  /* DERIVADO · 5.82:1 sobre accent */
+
+    --color-accent-soft:   #B87A56;  /* de la paleta · 3.53:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #FBECDF;  /* DERIVADO · 5.03:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #FFFFFF;  /* 5.82:1 sobre primary */
+    --color-on-dark-muted:  #FFFFFF;  /* 5.82:1 sobre primary */
+    --color-on-dark-border: #D89B72;  /* 2.45:1 sobre primary — separador decorativo */
+    --color-grad-2:         #764D33;  /* primary-hover · segundo tono del degradado sobre oscuro (barra y pie) · 7.29:1 con on-dark-muted encima, 1.25:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #8A5A3C;  /* de la paleta */
+    --color-on-nav:     #FFFFFF;  /* DERIVADO · 5.82:1 sobre nav-bg */
+    --color-nav-active: #FFFFFF;  /* DERIVADO · 5.82:1 sobre nav-bg */
+    --color-nav-brand:  #F8D9C0;  /* de la paleta · 4.34:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #D89B72;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #8A5A3C;  /* 5.82:1 sobre surface */
+    --color-focus-invert: #FBECDF;  /* 5.03:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(138, 90, 60, 0.7);
+    --color-glass-border: rgba(250, 230, 213, 0.55);
+    --bg-image-fallback:  #FAE6D5;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(138, 90, 60, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 2.15:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(250, 230, 213, 0.5);
+    --color-on-banner-light:   #8A5A3C;  /* 1.26:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 5.82:1 sobre primary · 7.29:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 5.82:1 sobre primary · 7.29:1 sobre primary-hover */
+    --color-brand-2:     #F0E9AD;  /* DERIVADO del matiz del acento · 4.70:1 sobre primary · 5.89:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 10 — "Halloween"
+   Entregada: #F4A100 · #E8730C · #7A3E9D · #3E1F47 · #1A1423
+   Usa tal cual: #F4A100, #E8730C, #7A3E9D, #3E1F47, #1A1423
+
+   DERIVADOS — la paleta no puede cubrir estos roles sin romper el
+   mínimo WCAG, así que se derivó el tono conservando el matiz:
+     · --color-on-accent → #FFFFFF
+       sobre el acento ningún color de la paleta llega a 4.5:1
+   ============================================================ */
+
+[data-palette="halloween"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #F4A100;  /* de la paleta · 8.51:1 con text */
+    --color-grad-alt-2:    #F8C259;  /* DERIVADO: surface-alt aclarado 35% · segundo tono del degradado de la caja clara · texto 11.00:1 · detalle 8.62:1 · ícono 4.28:1 */
+    --color-border:        #F4A100;  /* de la paleta · 2.11:1 sobre surface — separador decorativo */
+    --color-border-strong: #E8730C;  /* de la paleta · 3.05:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #1A1423;  /* de la paleta · 17.98:1 sobre surface · 8.51:1 sobre surface-alt */
+    --color-text-muted:  #3E1F47;  /* de la paleta · 14.08:1 sobre surface · 6.67:1 sobre surface-alt */
+    --color-text-subtle: #7A3E9D;  /* de la paleta · 6.99:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #1A1423;  /* de la paleta */
+    --color-primary-hover: #1A1423;  /* de la paleta */
+    --color-on-primary:    #F4A100;  /* de la paleta · 8.51:1 sobre primary */
+
+    --color-accent:       #7A3E9D;  /* de la paleta · 6.99:1 sobre surface */
+    --color-accent-hover: #1A1423;  /* de la paleta */
+    --color-on-accent:    #FFFFFF;  /* DERIVADO · 6.99:1 sobre accent */
+
+    --color-accent-soft:   #E8730C;  /* de la paleta · 3.05:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #F4A100;  /* de la paleta · 8.51:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #F4A100;  /* 8.51:1 sobre primary */
+    --color-on-dark-muted:  #F4A100;  /* 8.51:1 sobre primary */
+    --color-on-dark-border: #7A3E9D;  /* 2.57:1 sobre primary — separador decorativo */
+    --color-grad-2:         #3E1F47;  /* de la paleta · segundo tono del degradado sobre oscuro (barra y pie) · 6.67:1 con on-dark-muted encima, 1.28:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #7A3E9D;  /* de la paleta */
+    --color-on-nav:     #FFFFFF;  /* DERIVADO · 6.99:1 sobre nav-bg */
+    --color-nav-active: #FFFFFF;  /* DERIVADO · 6.99:1 sobre nav-bg */
+    --color-nav-brand:  #F4A100;  /* de la paleta · 3.31:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #E8730C;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #7A3E9D;  /* 6.99:1 sobre surface */
+    --color-focus-invert: #F4A100;  /* 8.51:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(26, 20, 35, 0.7);
+    --color-glass-border: rgba(244, 161, 0, 0.55);
+    --bg-image-fallback:  #F4A100;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(26, 20, 35, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 3.42:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(244, 161, 0, 0.5);
+    --color-on-banner-light:   #1A1423;  /* 2.56:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 17.98:1 sobre primary · 17.98:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 17.98:1 sobre primary · 17.98:1 sobre primary-hover */
+    --color-brand-2:     #B25FE3;  /* DERIVADO del matiz del acento · 4.83:1 sobre primary · 4.83:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 11 — "Frío"
+   Entregada: #C1D993 · #A7D078 · #B560E1 · #7C63BB · #6941B0
+   Usa tal cual: #C1D993, #A7D078, #B560E1, #7C63BB, #6941B0
+
+   DERIVADOS — la paleta no puede cubrir estos roles sin romper el
+   mínimo WCAG, así que se derivó el tono conservando el matiz:
+     · --color-on-accent → #FFFFFF
+       sobre el acento ningún color de la paleta llega a 4.5:1
+   ============================================================ */
+
+[data-palette="frio"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #C1D993;  /* de la paleta · 4.56:1 con text */
+    --color-grad-alt-2:    #D7E6B9;  /* DERIVADO: surface-alt aclarado 35% · segundo tono del degradado de la caja clara · texto 5.33:1 · detalle 5.33:1 · ícono 3.65:1 */
+    --color-border:        #C1D993;  /* de la paleta · 1.54:1 sobre surface — separador decorativo */
+    --color-border-strong: #B560E1;  /* de la paleta · 3.67:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #6941B0;  /* de la paleta · 7.04:1 sobre surface · 4.56:1 sobre surface-alt */
+    --color-text-muted:  #6941B0;  /* de la paleta · 7.04:1 sobre surface · 4.56:1 sobre surface-alt */
+    --color-text-subtle: #7C63BB;  /* de la paleta · 4.82:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #6941B0;  /* de la paleta */
+    --color-primary-hover: #6941B0;  /* de la paleta */
+    --color-on-primary:    #C1D993;  /* de la paleta · 4.56:1 sobre primary */
+
+    --color-accent:       #7C63BB;  /* de la paleta · 4.82:1 sobre surface */
+    --color-accent-hover: #6941B0;  /* de la paleta */
+    --color-on-accent:    #FFFFFF;  /* DERIVADO · 4.82:1 sobre accent */
+
+    --color-accent-soft:   #B560E1;  /* de la paleta · 3.67:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #C1D993;  /* de la paleta · 4.56:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #C1D993;  /* 4.56:1 sobre primary */
+    --color-on-dark-muted:  #C1D993;  /* 4.56:1 sobre primary */
+    --color-on-dark-border: #B560E1;  /* 1.92:1 sobre primary — separador decorativo */
+    --color-grad-2:         #41286D;  /* DERIVADO · segundo tono del degradado sobre oscuro (barra y pie) · 7.78:1 con on-dark-muted encima, 1.71:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #6941B0;  /* de la paleta */
+    --color-on-nav:     #FFFFFF;  /* DERIVADO · 7.04:1 sobre nav-bg */
+    --color-nav-active: #C1D993;  /* de la paleta · 4.56:1 sobre nav-bg */
+    --color-nav-brand:  #A7D078;  /* de la paleta · 4.0:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #B560E1;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #7C63BB;  /* 4.82:1 sobre surface */
+    --color-focus-invert: #C1D993;  /* 4.56:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(105, 65, 176, 0.7);
+    --color-glass-border: rgba(193, 217, 147, 0.55);
+    --bg-image-fallback:  #C1D993;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(105, 65, 176, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 2.34:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(193, 217, 147, 0.5);
+    --color-on-banner-light:   #6941B0;  /* 1.26:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 7.04:1 sobre primary · 7.04:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 7.04:1 sobre primary · 7.04:1 sobre primary-hover */
+    --color-brand-2:     #D1D2EB;  /* DERIVADO del matiz del acento · 4.74:1 sobre primary · 4.74:1 sobre primary-hover */
+}
+
+/* ============================================================
+   PALETA 12 — "Noche"
+   Entregada: #1F4973 · #3124A5 · #392184 · #17224D · #271538
+   Usa tal cual: #1F4973, #3124A5, #392184, #271538
+   Todavía sin rol: #17224D  (entran con los badges)
+
+   DERIVADOS — la paleta no puede cubrir estos roles sin romper el
+   mínimo WCAG, así que se derivó el tono conservando el matiz:
+     · --color-accent-invert → #8A80E3
+       ningún color de la paleta llega a 4.5:1 sobre la barra
+     · --color-surface-alt → #4B8DCF
+       ningún color de la paleta aguanta la tinta encima (el mejor da 1.81:1); es un tinte del más claro
+     · --color-on-primary → #FFFFFF
+       sobre la barra ningún color de la paleta llega a 4.5:1
+     · --color-on-accent → #FFFFFF
+       sobre el acento ningún color de la paleta llega a 4.5:1
+   ============================================================ */
+
+[data-palette="noche"] {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #4B8DCF;  /* DERIVADO · 4.81:1 con text */
+    --color-grad-alt-2:    #8AB5E0;  /* DERIVADO: surface-alt aclarado 35% · segundo tono del degradado de la caja clara · texto 7.81:1 · detalle 7.81:1 · ícono 5.07:1 */
+    --color-border:        #1F4973;  /* de la paleta · 9.3:1 sobre surface — separador decorativo */
+    --color-border-strong: #3124A5;  /* de la paleta · 10.9:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #271538;  /* de la paleta · 16.79:1 sobre surface · 4.81:1 sobre surface-alt */
+    --color-text-muted:  #271538;  /* de la paleta · 16.79:1 sobre surface · 4.81:1 sobre surface-alt */
+    --color-text-subtle: #392184;  /* de la paleta · 12.18:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #271538;  /* de la paleta */
+    --color-primary-hover: #271538;  /* de la paleta */
+    --color-on-primary:    #FFFFFF;  /* DERIVADO · 16.79:1 sobre primary */
+
+    --color-accent:       #3124A5;  /* de la paleta · 10.9:1 sobre surface */
+    --color-accent-hover: #271538;  /* de la paleta */
+    --color-on-accent:    #FFFFFF;  /* DERIVADO · 10.9:1 sobre accent */
+
+    --color-accent-soft:   #3124A5;  /* de la paleta · 10.9:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #8A80E3;  /* DERIVADO · 5.02:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #FFFFFF;  /* 16.79:1 sobre primary */
+    --color-on-dark-muted:  #FFFFFF;  /* 16.79:1 sobre primary */
+    --color-on-dark-border: #1F4973;  /* 1.81:1 sobre primary — separador decorativo */
+    --color-grad-2:         #17224D;  /* de la paleta · segundo tono del degradado sobre oscuro (barra y pie) · 15.30:1 con on-dark-muted encima, 1.10:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #1F4973;  /* de la paleta */
+    --color-on-nav:     #FFFFFF;  /* DERIVADO · 9.3:1 sobre nav-bg */
+    --color-nav-active: #FFFFFF;  /* DERIVADO · 9.3:1 sobre nav-bg */
+    --color-nav-brand:  #FFFFFF;  /* DERIVADO · 9.3:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #3124A5;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #3124A5;  /* 10.9:1 sobre surface */
+    --color-focus-invert: #8A80E3;  /* 5.02:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(39, 21, 56, 0.7);
+    --color-glass-border: rgba(75, 141, 207, 0.55);
+    --bg-image-fallback:  #4B8DCF;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(39, 21, 56, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 3.31:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(75, 141, 207, 0.5);
+    --color-on-banner-light:   #271538;  /* 1.73:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 16.79:1 sobre primary · 16.79:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 16.79:1 sobre primary · 16.79:1 sobre primary-hover */
+    --color-brand-2:     #8C81E9;  /* DERIVADO del matiz del acento · 5.14:1 sobre primary · 5.14:1 sobre primary-hover */
+}
+
+/* ============================================================
+   MUESTRAS DEL SELECTOR
+   Los cuadraditos del panel muestran TODAS las paletas, también la
+   que no está activa. Por eso los cinco tonos de cada una se repiten
+   acá: son decorativos, no se usan en la interfaz.
+   ============================================================ */
+
+:root {
+    --sw-cafe-1: #EDE0D4;
+    --sw-cafe-2: #C9A27E;
+    --sw-cafe-3: #A47148;
+    --sw-cafe-4: #6F4E37;
+    --sw-cafe-5: #3E2C23;
+
+    --sw-verano-1: #00C2CB;
+    --sw-verano-2: #7FE0D4;
+    --sw-verano-3: #FFE38A;
+    --sw-verano-4: #FF9A76;
+    --sw-verano-5: #FF5D8F;
+
+    --sw-primavera-1: #FFF3C9;
+    --sw-primavera-2: #C9E4A6;
+    --sw-primavera-3: #F7B7C4;
+    --sw-primavera-4: #A3D9C9;
+    --sw-primavera-5: #7FB4E0;
+
+    --sw-oro-1: #FBF3D0;
+    --sw-oro-2: #EBD08C;
+    --sw-oro-3: #D4AF37;
+    --sw-oro-4: #B8860B;
+    --sw-oro-5: #7C5E10;
+
+    --sw-arcoiris-1: #FF5A5F;
+    --sw-arcoiris-2: #FFB400;
+    --sw-arcoiris-3: #3DDC84;
+    --sw-arcoiris-4: #00A6ED;
+    --sw-arcoiris-5: #8B5CF6;
+
+    --sw-tech-1: #E7DFF7;
+    --sw-tech-2: #C6B4EE;
+    --sw-tech-3: #A48AE0;
+    --sw-tech-4: #7B5FD1;
+    --sw-tech-5: #4E2FB0;
+
+    --sw-alegre-1: #FF6B6B;
+    --sw-alegre-2: #FFD93D;
+    --sw-alegre-3: #6BCB77;
+    --sw-alegre-4: #4D96FF;
+    --sw-alegre-5: #FF6FB5;
+
+    --sw-invierno-1: #E3F6F5;
+    --sw-invierno-2: #A7E0DB;
+    --sw-invierno-3: #5FB0C9;
+    --sw-invierno-4: #3E6D9C;
+    --sw-invierno-5: #2A2F63;
+
+    --sw-piel-1: #F8D9C0;
+    --sw-piel-2: #E9B98F;
+    --sw-piel-3: #D89B72;
+    --sw-piel-4: #B87A56;
+    --sw-piel-5: #8A5A3C;
+
+    --sw-halloween-1: #F4A100;
+    --sw-halloween-2: #E8730C;
+    --sw-halloween-3: #7A3E9D;
+    --sw-halloween-4: #3E1F47;
+    --sw-halloween-5: #1A1423;
+
+    --sw-frio-1: #C1D993;
+    --sw-frio-2: #A7D078;
+    --sw-frio-3: #B560E1;
+    --sw-frio-4: #7C63BB;
+    --sw-frio-5: #6941B0;
+
+    --sw-noche-1: #1F4973;
+    --sw-noche-2: #3124A5;
+    --sw-noche-3: #392184;
+    --sw-noche-4: #17224D;
+    --sw-noche-5: #271538;
+}
+
+.sample-cafe .sw-1 { background-color: var(--sw-cafe-1); }
+.sample-cafe .sw-2 { background-color: var(--sw-cafe-2); }
+.sample-cafe .sw-3 { background-color: var(--sw-cafe-3); }
+.sample-cafe .sw-4 { background-color: var(--sw-cafe-4); }
+.sample-cafe .sw-5 { background-color: var(--sw-cafe-5); }
+
+.sample-verano .sw-1 { background-color: var(--sw-verano-1); }
+.sample-verano .sw-2 { background-color: var(--sw-verano-2); }
+.sample-verano .sw-3 { background-color: var(--sw-verano-3); }
+.sample-verano .sw-4 { background-color: var(--sw-verano-4); }
+.sample-verano .sw-5 { background-color: var(--sw-verano-5); }
+
+.sample-primavera .sw-1 { background-color: var(--sw-primavera-1); }
+.sample-primavera .sw-2 { background-color: var(--sw-primavera-2); }
+.sample-primavera .sw-3 { background-color: var(--sw-primavera-3); }
+.sample-primavera .sw-4 { background-color: var(--sw-primavera-4); }
+.sample-primavera .sw-5 { background-color: var(--sw-primavera-5); }
+
+.sample-oro .sw-1 { background-color: var(--sw-oro-1); }
+.sample-oro .sw-2 { background-color: var(--sw-oro-2); }
+.sample-oro .sw-3 { background-color: var(--sw-oro-3); }
+.sample-oro .sw-4 { background-color: var(--sw-oro-4); }
+.sample-oro .sw-5 { background-color: var(--sw-oro-5); }
+
+.sample-arcoiris .sw-1 { background-color: var(--sw-arcoiris-1); }
+.sample-arcoiris .sw-2 { background-color: var(--sw-arcoiris-2); }
+.sample-arcoiris .sw-3 { background-color: var(--sw-arcoiris-3); }
+.sample-arcoiris .sw-4 { background-color: var(--sw-arcoiris-4); }
+.sample-arcoiris .sw-5 { background-color: var(--sw-arcoiris-5); }
+
+.sample-tech .sw-1 { background-color: var(--sw-tech-1); }
+.sample-tech .sw-2 { background-color: var(--sw-tech-2); }
+.sample-tech .sw-3 { background-color: var(--sw-tech-3); }
+.sample-tech .sw-4 { background-color: var(--sw-tech-4); }
+.sample-tech .sw-5 { background-color: var(--sw-tech-5); }
+
+.sample-alegre .sw-1 { background-color: var(--sw-alegre-1); }
+.sample-alegre .sw-2 { background-color: var(--sw-alegre-2); }
+.sample-alegre .sw-3 { background-color: var(--sw-alegre-3); }
+.sample-alegre .sw-4 { background-color: var(--sw-alegre-4); }
+.sample-alegre .sw-5 { background-color: var(--sw-alegre-5); }
+
+.sample-invierno .sw-1 { background-color: var(--sw-invierno-1); }
+.sample-invierno .sw-2 { background-color: var(--sw-invierno-2); }
+.sample-invierno .sw-3 { background-color: var(--sw-invierno-3); }
+.sample-invierno .sw-4 { background-color: var(--sw-invierno-4); }
+.sample-invierno .sw-5 { background-color: var(--sw-invierno-5); }
+
+.sample-piel .sw-1 { background-color: var(--sw-piel-1); }
+.sample-piel .sw-2 { background-color: var(--sw-piel-2); }
+.sample-piel .sw-3 { background-color: var(--sw-piel-3); }
+.sample-piel .sw-4 { background-color: var(--sw-piel-4); }
+.sample-piel .sw-5 { background-color: var(--sw-piel-5); }
+
+.sample-halloween .sw-1 { background-color: var(--sw-halloween-1); }
+.sample-halloween .sw-2 { background-color: var(--sw-halloween-2); }
+.sample-halloween .sw-3 { background-color: var(--sw-halloween-3); }
+.sample-halloween .sw-4 { background-color: var(--sw-halloween-4); }
+.sample-halloween .sw-5 { background-color: var(--sw-halloween-5); }
+
+.sample-frio .sw-1 { background-color: var(--sw-frio-1); }
+.sample-frio .sw-2 { background-color: var(--sw-frio-2); }
+.sample-frio .sw-3 { background-color: var(--sw-frio-3); }
+.sample-frio .sw-4 { background-color: var(--sw-frio-4); }
+.sample-frio .sw-5 { background-color: var(--sw-frio-5); }
+
+.sample-noche .sw-1 { background-color: var(--sw-noche-1); }
+.sample-noche .sw-2 { background-color: var(--sw-noche-2); }
+.sample-noche .sw-3 { background-color: var(--sw-noche-3); }
+.sample-noche .sw-4 { background-color: var(--sw-noche-4); }
+.sample-noche .sw-5 { background-color: var(--sw-noche-5); }
+
+
+/* ============================================================
+   BADGES DE ESTADO — un solo bloque para las 12 paletas
+
+   No repiten hexadecimales: apuntan a pares que cada paleta ya
+   declara y que ya tienen su ratio anotado más arriba. Así una
+   paleta nueva hereda badges correctos sin tocar este bloque.
+
+       nuevo     → accent  + on-accent
+       destacado → surface + text          (+ borde border-strong)
+       agotado   → primary + on-primary
+
+   Los tres pares superan 4.5:1 en las 12 paletas. El más ajustado
+   es 4.56:1 (primary/on-primary en Frío); le siguen 4.77:1 (Tech)
+   y 4.82:1 (Frío) en accent/on-accent.
+
+   Se eligieron esos tres y no otros porque quedan en luminancias
+   separadas — media, clara y oscura — y así los estados se
+   distinguen también en escala de grises. El de "destacado" se
+   pinta sobre `surface`, que es claro, y por eso lleva borde
+   `border-strong` (≥ 3:1 sobre ese fondo en las 12 paletas): sin
+   él desaparecería sobre una foto de producto clara.
+
+   Igual el color nunca es la única señal: cada badge lleva ícono
+   + texto.
+   ============================================================ */
+
+:root {
+    --color-badge-new-bg:        var(--color-accent);
+    --color-badge-new-text:      var(--color-on-accent);
+    --color-badge-featured-bg:   var(--color-surface);
+    --color-badge-featured-text: var(--color-text);
+    --color-badge-sold-out-bg:   var(--color-primary);
+    --color-badge-sold-out-text: var(--color-on-primary);
+}
+
+
+/* ============================================================
+   VELO DEL PANEL LATERAL — uno solo para las 12 paletas
+
+   Es la capa que oscurece la página mientras el menú lateral está
+   abierto en móvil y tablet. No se deriva de la paleta a propósito:
+   su trabajo es apagar TODO lo que hay detrás (fotos de producto,
+   banner, pie de color) para que el panel se lea como la única capa
+   activa, y un velo teñido de primario no apaga parejo en las doce.
+
+   No lleva texto encima, así que no le aplica el mínimo de 4.5:1: no
+   es un par de contraste, es una atenuación. El 0.55 alcanza para que
+   nada de atrás compita con el panel y todavía deje ver dónde estaba
+   uno.
+   ============================================================ */
+
+:root {
+    --color-veil: rgba(0, 0, 0, 0.55);
+}
+
+
+/* ============================================================
+   TONOS DE PRODUCTO
+
+   Son DATO del producto, no de la paleta: el color real de la
+   prenda o del armazón. Por eso no cambian al cambiar de paleta y
+   viven en su propio bloque.
+
+   No comunican estado ni información: cada muestra lleva su nombre
+   en texto (`.visually-hidden`), que es lo que lee el lector de
+   pantalla. El círculo de color es refuerzo visual, nunca la única
+   señal — por eso no aplica el mínimo de 4.5:1, que es para texto.
+
+   Lo que sí necesitan es no desaparecer sobre la tarjeta: todas
+   llevan borde `--color-border-strong` (≥ 3:1 sobre el fondo), que
+   es lo que las delimita cuando el tono es casi blanco.
+   ============================================================ */
+
+:root {
+    --swatch-black:       #1C1C1C;
+    --swatch-gray:        #7A7A7A;
+    --swatch-silver:      #C2C6CA;
+    --swatch-white:       #F3F1EE;
+    --swatch-beige:       #C9B79C;
+    --swatch-brown:       #5A4034;
+    --swatch-burgundy:    #6E2A32;
+    --swatch-green:       #6B7A4F;
+    --swatch-blue-dark:   #1F3A5F;
+    --swatch-blue-medium: #4A78B0;
+    --swatch-sky:         #9CC0E4;
+    --swatch-gold:        #C8A24A;
+}
+
+.swatch-black       { background-color: var(--swatch-black); }
+.swatch-gray        { background-color: var(--swatch-gray); }
+.swatch-silver    { background-color: var(--swatch-silver); }
+.swatch-white      { background-color: var(--swatch-white); }
+.swatch-beige       { background-color: var(--swatch-beige); }
+.swatch-brown      { background-color: var(--swatch-brown); }
+.swatch-burgundy       { background-color: var(--swatch-burgundy); }
+.swatch-green       { background-color: var(--swatch-green); }
+.swatch-blue-dark { background-color: var(--swatch-blue-dark); }
+.swatch-blue-medium  { background-color: var(--swatch-blue-medium); }
+.swatch-sky     { background-color: var(--swatch-sky); }
+.swatch-gold      { background-color: var(--swatch-gold); }

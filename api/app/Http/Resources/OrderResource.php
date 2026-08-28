@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class OrderResource extends JsonResource
+{
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'items_count' => $this->items_count,
+            'total' => $this->total,
+            'currency' => $this->currency,
+            'created_at' => $this->created_at,
+            'items' => OrderItemResource::collection($this->whenLoaded('items')),
+        ];
+    }
+}

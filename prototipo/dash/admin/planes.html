@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="admin" data-theme-locked>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planes y suscripciones — Superadmin</title>
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/themes.css">
+</head>
+
+<body>
+    <div class="shell" data-shell>
+
+        <!-- ============================ SIDEBAR ============================ -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <span class="brand-mark">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3l7 3v6c0 4.4-3 8.2-7 9-4-.8-7-4.6-7-9V6Z" />
+                        <path d="m9 12 2 2 4-4" />
+                    </svg>
+                </span>
+                <span class="brand-text">
+                    <strong>Catálogos</strong>
+                    <span>Superadmin</span>
+                </span>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Menú de superadministración">
+                <div class="nav-group">
+                    <div class="nav-group-label">Plataforma</div>
+
+                    <div class="nav-list">
+                        <ul>
+                            <li>
+                                <div class="nav-item">
+                                    <a href="dashboard.html">
+                                        <span class="nav-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="3" width="7" height="9" rx="1" />
+                                                <rect x="14" y="3" width="7" height="5" rx="1" />
+                                                <rect x="14" y="12" width="7" height="9" rx="1" />
+                                                <rect x="3" y="16" width="7" height="5" rx="1" />
+                                            </svg>
+                                        </span>
+                                        <span class="nav-text">Dashboard</span>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="nav-item">
+                                    <a href="tiendas.html">
+                                        <span class="nav-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M3 9.5 4.8 4.6A1 1 0 0 1 5.7 4h12.6a1 1 0 0 1 .9.6L21 9.5" />
+                                                <path d="M3 9.5h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z" />
+                                                <path d="M5 14v6h14v-6" />
+                                            </svg>
+                                        </span>
+                                        <span class="nav-text">Tiendas</span>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="nav-item">
+                                    <a href="usuarios.html">
+                                        <span class="nav-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="9" cy="8" r="3.5" />
+                                                <path d="M2 20a7 7 0 0 1 14 0" />
+                                                <path d="M16 5.5a3.5 3.5 0 0 1 0 7" />
+                                                <path d="M18 13.5a7 7 0 0 1 4 6.5" />
+                                            </svg>
+                                        </span>
+                                        <span class="nav-text">Usuarios</span>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="nav-item is-active">
+                                    <a href="planes.html" aria-current="page">
+                                        <span class="nav-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="2" y="5" width="20" height="14" rx="2" />
+                                                <path d="M2 10h20" />
+                                            </svg>
+                                        </span>
+                                        <span class="nav-text">Planes</span>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="nav-item">
+                                    <a href="moderacion.html">
+                                        <span class="nav-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 4 2 20h20L12 4Z" />
+                                                <path d="M12 10v4" />
+                                                <path d="M12 17h.01" />
+                                            </svg>
+                                        </span>
+                                        <span class="nav-text">Moderación</span>
+                                        <span class="count">8</span>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="nav-branch" data-nav-branch>
+                                    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">
+                                        <span class="nav-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="3" />
+                                                <path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1Z" />
+                                            </svg>
+                                        </span>
+                                        <span class="nav-text">Plataforma</span>
+                                        <span class="nav-arrow">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m9 18 6-6-6-6" />
+                                            </svg>
+                                        </span>
+                                    </button>
+
+                                    <div class="nav-sub">
+                                        <ul>
+                                            <li>
+                                                <div class="nav-item">
+                                                    <a href="plataforma.html#layouts">
+                                                        <span class="nav-text">Layouts</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="nav-item">
+                                                    <a href="plataforma.html#correos">
+                                                        <span class="nav-text">Correos</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="nav-item">
+                                                    <a href="plataforma.html#ajustes">
+                                                        <span class="nav-text">Ajustes</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="plan-card">
+                    <div class="plan-top">
+                        <strong>Sistema</strong>
+                        <span class="badge badge-success badge-dot">Operativo</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 31%"></div>
+                    </div>
+                    <p>31 % de almacenamiento usado</p>
+                </div>
+
+                <button class="sidebar-collapse" type="button" data-sidebar-toggle>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m11 17-5-5 5-5" />
+                        <path d="m18 17-5-5 5-5" />
+                    </svg>
+                    <span>Contraer menú</span>
+                </button>
+            </div>
+        </aside>
+
+        <div class="sidebar-overlay" data-sidebar-overlay></div>
+
+        <!-- ============================= MAIN ============================== -->
+        <div class="main">
+
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-label="Abrir menú">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 6h16" />
+                            <path d="M4 12h16" />
+                            <path d="M4 18h16" />
+                        </svg>
+                    </button>
+
+                    <div class="search topbar-search">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="7" />
+                            <path d="m20 20-3.5-3.5" />
+                        </svg>
+                        <input class="input" type="search" placeholder="Buscar tienda, usuario o correo…" aria-label="Buscar">
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <a class="btn btn-outline btn-sm" href="../dashboard.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3" />
+                            <path d="m16 17 5-5-5-5" />
+                            <path d="M21 12H9" />
+                        </svg>
+                        Ir a mi tienda
+                    </a>
+
+                    <div class="dropdown" data-dropdown>
+                        <button class="topbar-action" type="button" data-dropdown-toggle aria-expanded="false" aria-label="Alertas del sistema">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+                                <path d="M13.7 21a2 2 0 0 1-3.4 0" />
+                            </svg>
+                            <span class="count">5</span>
+                        </button>
+
+                        <div class="dropdown-menu">
+                            <div class="dropdown-head">
+                                <strong>Alertas</strong>
+                                <span>5 sin revisar</span>
+                            </div>
+
+                            <div class="notif-list">
+                                <ul>
+                                    <li>
+                                        <span class="notif-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="2" y="5" width="20" height="14" rx="2" />
+                                                <path d="M2 10h20" />
+                                            </svg>
+                                        </span>
+                                        <span class="notif-text">
+                                            <strong>2 pagos rechazados</strong>
+                                            <span>Plan Emprendedor · Hoy</span>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="notif-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M12 4 2 20h20L12 4Z" />
+                                                <path d="M12 10v4" />
+                                                <path d="M12 17h.01" />
+                                            </svg>
+                                        </span>
+                                        <span class="notif-text">
+                                            <strong>3 tiendas reportadas hoy</strong>
+                                            <span>Esperan moderación</span>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="topbar-divider"></div>
+
+                    <div class="dropdown" data-dropdown>
+                        <button class="user-button" type="button" data-dropdown-toggle aria-expanded="false">
+                            <span class="avatar">RA</span>
+                            <span class="user-meta">
+                                <strong>Rafael Albino</strong>
+                                <span>Superadmin</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+
+                        <div class="dropdown-menu">
+                            <div class="dropdown-head">
+                                <strong>Rafael Albino</strong>
+                                <span>rafael@catalogo.com</span>
+                            </div>
+
+                            <hr>
+
+                            <div class="dropdown-item">
+                                <a href="../cuenta.html#perfil">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="8" r="4" />
+                                        <path d="M4 21a8 8 0 0 1 16 0" />
+                                    </svg>
+                                    Mi perfil
+                                </a>
+                            </div>
+
+                            <div class="dropdown-item">
+                                <a href="../dashboard.html">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 9.5 4.8 4.6A1 1 0 0 1 5.7 4h12.6a1 1 0 0 1 .9.6L21 9.5" />
+                                        <path d="M3 9.5h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z" />
+                                        <path d="M5 14v6h14v-6" />
+                                    </svg>
+                                    Panel de mi tienda
+                                </a>
+                            </div>
+
+                            <hr>
+
+                            <div class="dropdown-item is-danger">
+                                <a href="../login.html">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M9 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3" />
+                                        <path d="m16 17 5-5-5-5" />
+                                        <path d="M21 12H9" />
+                                    </svg>
+                                    Cerrar sesión
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <nav class="breadcrumb" aria-label="Ruta de navegación">
+                <ol>
+                    <li><a href="dashboard.html">Superadmin</a></li>
+                    <li aria-current="page">Planes y suscripciones</li>
+                </ol>
+            </nav>
+
+            <main class="content">
+
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1>Planes y suscripciones</h1>
+                        <p>Precios, límites y cobros de la plataforma</p>
+                    </div>
+
+                    <div class="page-actions">
+                        <button class="btn btn-outline" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3v12" />
+                                <path d="m7 10 5 5 5-5" />
+                                <path d="M5 21h14" />
+                            </svg>
+                            Exportar cobros
+                        </button>
+
+                        <button class="btn btn-primary" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+                            </svg>
+                            Nuevo plan
+                        </button>
+                    </div>
+                </div>
+
+                <section class="stat-grid">
+                    <article class="stat">
+                        <div class="stat-top">
+                            <div class="stat-label">Ingreso mensual</div>
+                            <span class="stat-icon is-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                                    <path d="M2 10h20" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="stat-bottom">
+                            <div class="stat-value">$ 961k</div>
+                            <span class="stat-delta is-up">+20 %</span>
+                        </div>
+                    </article>
+
+                    <article class="stat">
+                        <div class="stat-top">
+                            <div class="stat-label">Suscripciones activas</div>
+                        </div>
+                        <div class="stat-bottom">
+                            <div class="stat-value">205</div>
+                            <span class="stat-delta is-up">+18</span>
+                        </div>
+                    </article>
+
+                    <article class="stat">
+                        <div class="stat-top">
+                            <div class="stat-label">Conversión a pago</div>
+                        </div>
+                        <div class="stat-bottom">
+                            <div class="stat-value">16 %</div>
+                            <span class="stat-delta is-up">+2 pts</span>
+                        </div>
+                    </article>
+
+                    <article class="stat">
+                        <div class="stat-top">
+                            <div class="stat-label">Bajas del mes</div>
+                        </div>
+                        <div class="stat-bottom">
+                            <div class="stat-value">7</div>
+                            <span class="stat-delta is-down">3,4 % de churn</span>
+                        </div>
+                    </article>
+                </section>
+
+                <!-- Planes configurables -->
+                <section class="card">
+                    <header class="card-header">
+                        <div class="card-title">
+                            <h2>Planes disponibles</h2>
+                            <p>Lo que ve el emprendedor al querer mejorar su cuenta</p>
+                        </div>
+                    </header>
+
+                    <div class="card-body">
+                        <div class="plan-grid">
+
+                            <div class="plan-option">
+                                <div class="plan-option-head">
+                                    <h3>Gratis</h3>
+                                    <span class="badge badge-success badge-dot">Activo</span>
+                                </div>
+
+                                <div class="plan-price">
+                                    <strong>$ 0</strong>
+                                    <span>/ mes</span>
+                                </div>
+
+                                <div class="plan-features">
+                                    <ul>
+                                        <li>
+                                            <span class="check-mark is-done">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m4 12 6 6L20 6" />
+                                                </svg>
+                                            </span>
+                                            50 productos · 10 categorías
+                                        </li>
+                                        <li>
+                                            <span class="check-mark is-done">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m4 12 6 6L20 6" />
+                                                </svg>
+                                            </span>
+                                            200 MB de imágenes
+                                        </li>
+                                        <li>
+                                            <span class="check-mark is-done">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m4 12 6 6L20 6" />
+                                                </svg>
+                                            </span>
+                                            1.042 tiendas usándolo
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <button class="btn btn-outline btn-block" type="button">Editar plan</button>
+                            </div>
+
+                            <div class="plan-option is-current">
+                                <div class="plan-option-head">
+                                    <h3>Emprendedor</h3>
+                                    <span class="badge badge-accent">Más vendido</span>
+                                </div>
+
+                                <div class="plan-price">
+                                    <strong>$ 4.900</strong>
+                                    <span>/ mes</span>
+                                </div>
+
+                                <div class="plan-features">
+                                    <ul>
+                                        <li>
+                                            <span class="check-mark is-done">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m4 12 6 6L20 6" />
+                                                </svg>
+                                            </span>
+                                            Productos ilimitados
+                                        </li>
+                                        <li>
+                                            <span class="check-mark is-done">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m4 12 6 6L20 6" />
+                                                </svg>
+                                            </span>
+                                            5 GB de imágenes
+                                        </li>
+                                        <li>
+                                            <span class="check-mark is-done">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m4 12 6 6L20 6" />
+                                                </svg>
+                                            </span>
+                                            168 tiendas usándolo
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <button class="btn btn-outline btn-block" type="button">Editar plan</button>
+                            </div>
+
+                            <div class="plan-option">
+                                <div class="plan-option-head">
+                                    <h3>Negocio</h3>
+                                    <span class="badge badge-success badge-dot">Activo</span>
+                                </div>
+
+                                <div class="plan-price">
+                                    <strong>$ 11.900</strong>
+                                    <span>/ mes</span>
+                                </div>
+
+                                <div class="plan-features">
+                                    <ul>
+                                        <li>
+                                            <span class="check-mark is-done">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m4 12 6 6L20 6" />
+                                                </svg>
+                                            </span>
+                                            Dominio propio · varias tiendas
+                                        </li>
+                                        <li>
+                                            <span class="check-mark is-done">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m4 12 6 6L20 6" />
+                                                </svg>
+                                            </span>
+                                            20 GB de imágenes
+                                        </li>
+                                        <li>
+                                            <span class="check-mark is-done">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m4 12 6 6L20 6" />
+                                                </svg>
+                                            </span>
+                                            37 tiendas usándolo
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <button class="btn btn-outline btn-block" type="button">Editar plan</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Cobros -->
+                <section class="panel-grid">
+                    <article class="card">
+                        <header class="card-header">
+                            <div class="card-title">
+                                <h2>Últimos cobros</h2>
+                                <p>Movimientos de los últimos 7 días</p>
+                            </div>
+                            <select class="select" aria-label="Filtrar cobros">
+                                <option>Todos</option>
+                                <option>Aprobados</option>
+                                <option>Rechazados</option>
+                                <option>Pendientes</option>
+                            </select>
+                        </header>
+
+                        <div class="card-body is-flush">
+                            <div class="table-wrap">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Tienda</th>
+                                            <th>Plan</th>
+                                            <th>Monto</th>
+                                            <th>Fecha</th>
+                                            <th>Estado</th>
+                                            <th><span class="visually-hidden">Acciones</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="table-cell">
+                                                    <span class="avatar avatar-sm">AS</span>
+                                                    <span class="table-cell-text">
+                                                        <strong>Aroma Sur</strong>
+                                                        <span>lucia@aromasur.com</span>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge badge-accent">Emprendedor</span></td>
+                                            <td>
+                                                <div class="table-price">$ 4.900</div>
+                                            </td>
+                                            <td>06/08/2026</td>
+                                            <td><span class="badge badge-success badge-dot">Aprobado</span></td>
+                                            <td>
+                                                <div class="table-actions">
+                                                    <button class="btn btn-ghost btn-sm" type="button">Comprobante</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="table-cell">
+                                                    <span class="avatar avatar-sm">BN</span>
+                                                    <span class="table-cell-text">
+                                                        <strong>Bazar Norte</strong>
+                                                        <span>sofia@bazarnorte.com</span>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge badge-warning">Negocio</span></td>
+                                            <td>
+                                                <div class="table-price">$ 11.900</div>
+                                            </td>
+                                            <td>05/08/2026</td>
+                                            <td><span class="badge badge-success badge-dot">Aprobado</span></td>
+                                            <td>
+                                                <div class="table-actions">
+                                                    <button class="btn btn-ghost btn-sm" type="button">Comprobante</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="table-cell">
+                                                    <span class="avatar avatar-sm">VJ</span>
+                                                    <span class="table-cell-text">
+                                                        <strong>Vera Joyas</strong>
+                                                        <span>ana@verajoyas.com</span>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge badge-accent">Emprendedor</span></td>
+                                            <td>
+                                                <div class="table-price">$ 4.900</div>
+                                            </td>
+                                            <td>05/08/2026</td>
+                                            <td><span class="badge badge-danger badge-dot">Rechazado</span></td>
+                                            <td>
+                                                <div class="table-actions">
+                                                    <button class="btn btn-outline btn-sm" type="button">Reintentar</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="table-cell">
+                                                    <span class="avatar avatar-sm">NM</span>
+                                                    <span class="table-cell-text">
+                                                        <strong>Nómade</strong>
+                                                        <span>hola@nomade.ar</span>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge badge-accent">Emprendedor</span></td>
+                                            <td>
+                                                <div class="table-price">$ 4.900</div>
+                                            </td>
+                                            <td>03/08/2026</td>
+                                            <td><span class="badge badge-warning badge-dot">Pendiente</span></td>
+                                            <td>
+                                                <div class="table-actions">
+                                                    <button class="btn btn-ghost btn-sm" type="button">Ver</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="table-cell">
+                                                    <span class="avatar avatar-sm">CS</span>
+                                                    <span class="table-cell-text">
+                                                        <strong>Casa Sur</strong>
+                                                        <span>info@casasur.com</span>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge badge-warning">Negocio</span></td>
+                                            <td>
+                                                <div class="table-price">$ 11.900</div>
+                                            </td>
+                                            <td>01/08/2026</td>
+                                            <td><span class="badge badge-success badge-dot">Aprobado</span></td>
+                                            <td>
+                                                <div class="table-actions">
+                                                    <button class="btn btn-ghost btn-sm" type="button">Comprobante</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="page-info">Mostrando 5 de 218 cobros del mes</div>
+                            <button class="btn btn-outline btn-sm" type="button">Ver todos</button>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <header class="card-header">
+                            <div class="card-title">
+                                <h2>Reparto de ingresos</h2>
+                                <p>Sobre $ 961k del mes</p>
+                            </div>
+                        </header>
+
+                        <div class="card-body">
+                            <div class="usage">
+                                <div class="usage-item">
+                                    <div class="usage-top">
+                                        <strong>Emprendedor</strong>
+                                        <span>$ 823k · 168 tiendas</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 86%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="usage-item">
+                                    <div class="usage-top">
+                                        <strong>Negocio</strong>
+                                        <span>$ 138k · 37 tiendas</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 14%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="list">
+                                <ul>
+                                    <li>
+                                        <span class="list-main">
+                                            <strong>Cobros aprobados</strong>
+                                            <span>Este mes</span>
+                                        </span>
+                                        <span class="list-meta">211</span>
+                                    </li>
+                                    <li>
+                                        <span class="list-main">
+                                            <strong>Rechazados</strong>
+                                            <span>Reintentan en 48 h</span>
+                                        </span>
+                                        <span class="list-meta">5</span>
+                                    </li>
+                                    <li>
+                                        <span class="list-main">
+                                            <strong>Pendientes</strong>
+                                            <span>Esperando acreditación</span>
+                                        </span>
+                                        <span class="list-meta">2</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="alert alert-warning">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 4 2 20h20L12 4Z" />
+                                    <path d="M12 10v4" />
+                                    <path d="M12 17h.01" />
+                                </svg>
+                                <div class="alert-body">
+                                    <strong>2 pagos rechazados hoy</strong>
+                                    <span>Si fallan tres veces, la tienda vuelve al plan Gratis.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div class="toast-stack" data-toast-stack></div>
+
+    <script src="../assets/js/app.js"></script>
+</body>
+
+</html>

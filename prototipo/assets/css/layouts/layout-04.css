@@ -1,0 +1,106 @@
+/* ==========================================================================
+   LAYOUT 04 — "Ofertas": fondo oscuro de campaña, tarjetas sin marco,
+   precio en cinta sobre la imagen y botón de acción sobre la foto.
+   Solo piel: no define colores nuevos ni componentes nuevos.
+   ========================================================================== */
+
+[data-layout="04"] {
+    background-color: var(--color-primary);
+    color: var(--color-text-invert);
+}
+
+/* El fondo de página ya es oscuro: el texto de la barra nunca se invierte. */
+[data-layout="04"] .page-topbar {
+    color: var(--color-text-invert);
+    border-top: 12px solid var(--color-accent);
+}
+
+[data-layout="04"] .page-topbar-solid {
+    background-color: var(--color-primary-dark);
+}
+
+[data-layout="04"] .page-heading {
+    padding: 2rem 0;
+    background-color: var(--color-primary);
+}
+
+[data-layout="04"] .page-title {
+    font-weight: 800;
+}
+
+[data-layout="04"] .page-main {
+    background-color: var(--color-primary);
+}
+
+[data-layout="04"] .section-title h2,
+[data-layout="04"] .section-subtitle {
+    color: var(--color-text-invert);
+}
+
+[data-layout="04"] .card {
+    border: 0;
+    background-color: transparent;
+}
+
+[data-layout="04"] .card-media {
+    aspect-ratio: 1 / 1;
+    background-color: var(--color-surface);
+}
+
+[data-layout="04"] .card-body {
+    padding: 0.75rem 0 0;
+}
+
+[data-layout="04"] .card-title h3 {
+    font-size: 0.938rem;
+}
+
+[data-layout="04"] .benefits li {
+    color: var(--color-text-invert);
+    opacity: 0.75;
+}
+
+[data-layout="04"] .card:hover {
+    border-color: transparent;
+}
+
+[data-layout="04"] .detail-text,
+[data-layout="04"] .spec dt {
+    color: var(--color-text-invert);
+    opacity: 0.75;
+}
+
+[data-layout="04"] .contact-panel,
+[data-layout="04"] .specs-boxed {
+    background-color: transparent;
+    border-color: var(--color-accent);
+}
+
+[data-layout="04"] .gallery-main,
+[data-layout="04"] .gallery-thumb {
+    border-color: var(--color-accent);
+}
+
+[data-layout="04"] .btn-outline {
+    border-color: var(--color-accent);
+    color: var(--color-text-invert);
+}
+
+[data-layout="04"] .page-footer {
+    background-color: var(--color-primary);
+    border-bottom: 12px solid var(--color-accent);
+}
+
+@media (max-width: 767px) {
+    [data-layout="04"] .page-topbar {
+        border-top-width: 8px;
+    }
+
+    [data-layout="04"] .page-heading {
+        padding: 1.25rem 0;
+    }
+
+    [data-layout="04"] .card-media {
+        aspect-ratio: auto;
+    }
+}

@@ -1,0 +1,977 @@
+/* ==========================================================================
+   COMPONENTES — clase base + variantes.
+   Este archivo NO cambia al agregar layouts nuevos: los layouts solo
+   aportan su piel en assets/css/layouts/layout-XX.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Band — franja de ancho completo (header, footer, destacados)
+   -------------------------------------------------------------------------- */
+
+.band {
+    width: 100%;
+    padding: 1.5rem 0;
+    background-color: var(--color-surface);
+}
+
+.band-dark {
+    background-color: var(--color-primary);
+    color: var(--color-text-invert);
+}
+
+.band-light {
+    background-color: var(--color-surface-alt);
+}
+
+.band-accent {
+    background-color: var(--color-accent);
+    color: var(--color-text-invert);
+}
+
+.band-tall {
+    padding: 2.5rem 0;
+}
+
+.band-slim {
+    padding: 1rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Brand — nombre o logo de la tienda
+   -------------------------------------------------------------------------- */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    max-width: 180px;
+}
+
+.brand-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.brand-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-tagline {
+    font-size: 0.813rem;
+    opacity: 0.75;
+}
+
+.brand-stacked {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.brand-center {
+    justify-content: center;
+    text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Topbar — barra superior con marca y navegación
+   -------------------------------------------------------------------------- */
+
+/* Solo la barra de marca + menú queda fija; el título scrollea.
+   Arranca transparente y toma fondo al primer scroll (.page-topbar-solid). */
+.page-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: transparent;
+    color: var(--color-text);
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.25s ease;
+}
+
+.page-topbar-solid {
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-invert);
+}
+
+/* Se esconde al bajar y vuelve al subir. */
+.page-topbar-hidden {
+    transform: translateY(-100%);
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav ul {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav a {
+    font-size: 0.938rem;
+    letter-spacing: 0.02em;
+    opacity: 0.75;
+}
+
+.nav a:hover,
+.nav [aria-current="page"] {
+    opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Section — bloque de contenido
+   -------------------------------------------------------------------------- */
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.section-header-row {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.section-title {
+    letter-spacing: 0.01em;
+}
+
+.section-subtitle {
+    color: var(--color-text-soft);
+}
+
+.section-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Page title — título grande de página
+   -------------------------------------------------------------------------- */
+
+.page-title {
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Grid — grilla de tarjetas. En mobile SIEMPRE 2 por fila.
+   -------------------------------------------------------------------------- */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-tight {
+    gap: 1rem;
+}
+
+.grid-wide {
+    gap: 2.5rem;
+}
+
+.grid-item-wide {
+    grid-column: span 2;
+}
+
+/* --------------------------------------------------------------------------
+   Card — tarjeta de producto
+   -------------------------------------------------------------------------- */
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+}
+
+.card-flat {
+    border: 0;
+    background-color: transparent;
+}
+
+.card-outline {
+    border: 2px solid var(--color-accent);
+}
+
+.card-shadow {
+    border: 0;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-tab {
+    align-self: center;
+    margin: -0.75rem 0 0;
+    padding: 0.375rem 1.5rem;
+    background-color: var(--color-primary);
+    color: var(--color-text-invert);
+    font-size: 0.813rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.card-media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: var(--color-surface);
+}
+
+.card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.card-media-cover img {
+    object-fit: cover;
+}
+
+.card-media-framed {
+    margin: 1rem;
+    border: 1px solid var(--color-border);
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+.card-body-tight {
+    padding: 0.75rem;
+    gap: 0.5rem;
+}
+
+.card-title h3 {
+    font-size: 1rem;
+}
+
+.card-text {
+    color: var(--color-text-soft);
+    font-size: 0.875rem;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem 1rem;
+}
+
+.card-cta {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+}
+
+/* Especificidad sobre .btn-sm para no depender del orden del archivo. */
+.card-cta.btn > a,
+.card-cta.btn > button {
+    padding: 0.375rem 0.625rem;
+    font-size: 0.75rem;
+}
+
+.card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.card-link a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.card:hover {
+    border-color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Price — precio del producto
+   -------------------------------------------------------------------------- */
+
+.price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    font-weight: 700;
+}
+
+.price-currency {
+    font-size: 0.75em;
+}
+
+.price-value {
+    font-size: 1.375rem;
+}
+
+.price-lg .price-value {
+    font-size: 2rem;
+}
+
+.price-accent {
+    color: var(--color-accent);
+}
+
+.price-ask {
+    color: var(--color-text-soft);
+    font-size: 0.938rem;
+    font-weight: 600;
+}
+
+/* Vive al final del .card-body pero se posiciona sobre la imagen (respecto
+   a .card); en mobile vuelve al flujo y queda al pie del cuerpo. */
+.price-corner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    padding: 0.125rem 0.5rem;
+    background-color: var(--color-accent);
+    color: var(--color-text-invert);
+}
+
+.price-corner .price-value {
+    font-size: 0.875rem;
+}
+
+/* --------------------------------------------------------------------------
+   Badge — etiquetas de descuento, envío, estado
+   -------------------------------------------------------------------------- */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    background-color: var(--color-surface-alt);
+    color: var(--color-text);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.badge-strong {
+    background-color: var(--color-primary);
+    color: var(--color-text-invert);
+}
+
+.badge-accent {
+    background-color: var(--color-accent);
+    color: var(--color-text-invert);
+}
+
+.badge-discount {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 0.375rem 0.75rem;
+    background-color: var(--color-accent);
+    color: var(--color-text-invert);
+}
+
+.badge-discount .badge-value {
+    font-size: 1rem;
+}
+
+.badge-discount .badge-label {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+}
+
+.badge-soldout {
+    background-color: var(--color-danger);
+    color: var(--color-text-invert);
+}
+
+.badge-corner {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 2;
+}
+
+.badge-corner-right {
+    left: auto;
+    right: 0.75rem;
+}
+
+.badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Specs — ficha de atributos clave/valor
+   -------------------------------------------------------------------------- */
+
+.specs dl {
+    display: flex;
+    flex-direction: column;
+}
+
+.spec {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.spec:last-child {
+    border-bottom: 0;
+}
+
+.spec dt {
+    color: var(--color-text-soft);
+    font-size: 0.875rem;
+}
+
+.spec dd {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: right;
+}
+
+.specs-boxed {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+}
+
+.specs-plain .spec {
+    border-bottom: 0;
+    padding: 0.25rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Swatches — muestras de color
+   -------------------------------------------------------------------------- */
+
+.swatches {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.swatch {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+}
+
+.swatch-lg {
+    width: 28px;
+    height: 28px;
+}
+
+/* --------------------------------------------------------------------------
+   Benefits — lista de beneficios en viñetas
+   -------------------------------------------------------------------------- */
+
+.benefits ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.benefits li {
+    position: relative;
+    padding-left: 1rem;
+    color: var(--color-text-soft);
+    font-size: 0.813rem;
+}
+
+.benefits li::before {
+    content: "";
+    position: absolute;
+    top: 0.5em;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+}
+
+.benefits-inline ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   Button — base + variantes
+   -------------------------------------------------------------------------- */
+
+/* El padding vive en el hijo (a / button) para que toda la superficie
+   sea clickeable sin poner clases en la etiqueta <a>. */
+
+.btn {
+    display: inline-flex;
+    align-self: flex-start;
+    border: 1px solid var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-text-invert);
+    font-size: 0.938rem;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    transition: opacity 0.2s ease;
+}
+
+.btn > a,
+.btn > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    border: 0;
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+.btn-sm > a,
+.btn-sm > button {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.813rem;
+}
+
+.btn-lg > a,
+.btn-lg > button {
+    padding: 1rem 1.75rem;
+    font-size: 1.063rem;
+}
+
+.btn-block {
+    display: flex;
+    align-self: stretch;
+    width: 100%;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-primary);
+}
+
+.btn-ghost {
+    border-color: transparent;
+    background-color: transparent;
+    color: var(--color-text);
+}
+
+.btn-accent {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+}
+
+.btn-whatsapp {
+    border-color: var(--color-whatsapp);
+    background-color: var(--color-whatsapp);
+    color: var(--color-text-invert);
+}
+
+.btn-facebook {
+    border-color: var(--color-facebook);
+    background-color: var(--color-facebook);
+    color: var(--color-text-invert);
+}
+
+.btn-arrow > a::after,
+.btn-arrow > button::after {
+    content: "→";
+    font-size: 1.125em;
+    line-height: 1;
+}
+
+.btn-back > a::before,
+.btn-back > button::before {
+    content: "←";
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.btn-icon > a,
+.btn-icon > button {
+    padding: 0.625rem;
+}
+
+.btn-icon > a svg,
+.btn-icon > button svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Filters — chips de categoría
+   -------------------------------------------------------------------------- */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Gallery — galería del detalle de producto
+   -------------------------------------------------------------------------- */
+
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.gallery-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+}
+
+.gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.gallery-thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.gallery-thumb {
+    width: 76px;
+    height: 76px;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+}
+
+.gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.gallery-thumb[aria-current="true"] {
+    border-color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Detail — layout del detalle de producto
+   -------------------------------------------------------------------------- */
+
+.detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.detail-title {
+    letter-spacing: 0.01em;
+}
+
+.detail-text {
+    color: var(--color-text-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Contact — datos de contacto
+   -------------------------------------------------------------------------- */
+
+.contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.contact-item:last-child {
+    border-bottom: 0;
+}
+
+.contact-label {
+    color: var(--color-text-soft);
+    font-size: 0.875rem;
+}
+
+.contact-value {
+    font-weight: 600;
+    text-align: right;
+}
+
+.contact-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.75rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.footer-note {
+    font-size: 0.813rem;
+    opacity: 0.75;
+}
+
+/* --------------------------------------------------------------------------
+   Actionbar — barra fija inferior con los canales de contacto
+   -------------------------------------------------------------------------- */
+
+.actionbar {
+    display: none;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    padding: 0.75rem 0;
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+}
+
+.actionbar .btn-group {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+}
+
+.actionbar .btn {
+    flex: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Empty — estado vacío
+   -------------------------------------------------------------------------- */
+
+.empty {
+    padding: 3rem 1rem;
+    color: var(--color-text-soft);
+    text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — tablet
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1199px) {
+    .grid-4 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .detail {
+        gap: 2rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — mobile (2 productos por fila)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+    .actionbar {
+        display: block;
+    }
+
+    /* Sin marco fijo: la imagen manda su propio alto y nunca se recorta. */
+    .card-media {
+        aspect-ratio: auto;
+    }
+
+    .card-media img {
+        height: auto;
+    }
+
+    .card-media .badge-discount {
+        display: none;
+    }
+
+    .price-corner {
+        position: static;
+        align-self: flex-start;
+    }
+
+    .grid,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 2rem;
+        column-gap: 0.75rem;
+    }
+
+    .grid-item-wide {
+        grid-column: span 2;
+    }
+
+    /* En mobile el título puede partirse: nunca se corta ni desborda. */
+    .page-title {
+        white-space: normal;
+    }
+
+    .detail,
+    .contact {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .card-body {
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .card-title h3 {
+        font-size: 0.875rem;
+    }
+
+    .price-value {
+        font-size: 1.125rem;
+    }
+
+    .spec dt,
+    .spec dd {
+        font-size: 0.75rem;
+    }
+
+    .btn-block-mobile {
+        display: flex;
+        align-self: stretch;
+        width: 100%;
+    }
+
+    /* Marca y menú siempre en la misma línea. */
+    .topbar {
+        gap: 0.75rem;
+    }
+
+    .topbar-actions {
+        gap: 0.75rem;
+    }
+
+    .nav ul {
+        gap: 1rem;
+    }
+
+    .nav a {
+        font-size: 0.875rem;
+    }
+
+    .brand-name {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es" data-paleta="cafe" data-radios="cuadrado" data-banner="oscuro" data-nav="oscuro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jean Slim Fit Índigo — Tienda Nube</title>
+    <meta name="description" content="Jean slim fit en denim stretch, talles 38 al 46 y tres colores. Precio a la vista y consulta directa por WhatsApp.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/paletas.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+
+    <!-- Parte del panel de diseño: aplica la paleta guardada antes de pintar -->
+    <script src="assets/js/tema.js"></script>
+</head>
+
+<body>
+
+    <p class="skip-link"><a href="#contenido">Saltar al contenido</a></p>
+
+    <!-- ========================================================
+         SPRITE DE ÍCONOS — SVG inline, nunca emojis
+         ======================================================== -->
+    <svg class="sprite" aria-hidden="true" hidden>
+        <symbol id="i-reloj" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="13" r="8"></circle>
+            <path d="M12 9.5V13l2.5 1.5"></path>
+            <path d="M5 4.5 7.5 2.5M19 4.5 16.5 2.5"></path>
+        </symbol>
+        <symbol id="i-telefono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15.5 21a13 13 0 0 1-12.5-12.5 2 2 0 0 1 2-2.5h2.5a1 1 0 0 1 1 .8l.7 3a1 1 0 0 1-.5 1.1l-1.4.8a11 11 0 0 0 5 5l.8-1.4a1 1 0 0 1 1.1-.5l3 .7a1 1 0 0 1 .8 1V19a2 2 0 0 1-2.5 2Z"></path>
+        </symbol>
+        <symbol id="i-ubicacion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"></path>
+            <circle cx="12" cy="10" r="2.6"></circle>
+        </symbol>
+        <symbol id="i-lupa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m16.5 16.5 4 4"></path>
+        </symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </symbol>
+        <symbol id="i-cerrar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="m6 6 12 12M18 6 6 18"></path>
+        </symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"></path>
+        </symbol>
+        <symbol id="i-logo" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="16" cy="16" r="14"></circle>
+            <path d="M11 22V10h6a4 4 0 0 1 0 8h-6"></path>
+        </symbol>
+        <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.14.17-.24.25-.41.09-.16.04-.31-.02-.43-.06-.12-.56-1.35-.76-1.84-.2-.49-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.17 1.71 2.61 4.15 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"></path>
+        </symbol>
+        <symbol id="i-paleta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a9 9 0 1 0 0 18c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1-.3-.3-.4-.6-.4-1 0-.8.7-1.4 1.5-1.4H16a5 5 0 0 0 5-5c0-4-4-8-9-8Z"></path>
+            <circle cx="7.5" cy="12" r="1.1" fill="currentColor" stroke="none"></circle>
+            <circle cx="10" cy="8" r="1.1" fill="currentColor" stroke="none"></circle>
+            <circle cx="14.5" cy="8" r="1.1" fill="currentColor" stroke="none"></circle>
+            <circle cx="17" cy="11.5" r="1.1" fill="currentColor" stroke="none"></circle>
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m5 12.5 4.5 4.5L19 7"></path>
+        </symbol>
+        <symbol id="i-flecha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12h15m-6-6 6 6-6 6"></path>
+        </symbol>
+        <symbol id="i-nuevo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.5 13.9 9l5.6 1.9-5.6 1.9L12 18.5l-1.9-5.7L4.5 10.9 10.1 9 12 3.5Z"></path>
+            <path d="M18.5 15.5l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2Z"></path>
+        </symbol>
+        <symbol id="i-estrella" viewBox="0 0 24 24" fill="currentColor">
+            <path d="m12 3.6 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L12 3.6Z"></path>
+        </symbol>
+        <symbol id="i-agotado" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="8.5"></circle>
+            <path d="m6.5 6.5 11 11"></path>
+        </symbol>
+        <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="m3.6 6.7 8.4 5.8 8.4-5.8"></path>
+        </symbol>
+        <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21.5c4.4-4.3 6.6-7.7 6.6-10.4a6.6 6.6 0 1 0-13.2 0c0 2.7 2.2 6.1 6.6 10.4Z"></path>
+            <circle cx="12" cy="10.6" r="2.5"></circle>
+        </symbol>
+        <symbol id="i-youtube" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.28 5 12 5 12 5s-6.28 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12c0 1.61.13 3.22.4 4.8a2.5 2.5 0 0 0 1.76 1.77C5.72 19 12 19 12 19s6.28 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77c.27-1.58.4-3.19.4-4.8 0-1.61-.13-3.22-.4-4.8ZM10.2 15.02V8.98L15.4 12l-5.2 3.02Z"></path>
+        </symbol>
+        <symbol id="i-facebook" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.6 21.5v-8.2h2.8l.4-3.2h-3.2V8.05c0-.93.26-1.56 1.59-1.56h1.7V3.61a22.6 22.6 0 0 0-2.48-.13c-2.45 0-4.13 1.5-4.13 4.25v2.37H7.44v3.2h2.84v8.2h3.32Z"></path>
+        </symbol>
+        <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="16.9" cy="7.1" r="1.2" fill="currentColor" stroke="none"></circle>
+        </symbol>
+        <symbol id="i-tiktok" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16.2 2h-2.9v13.4a2.5 2.5 0 1 1-2.1-2.47v-2.96a5.45 5.45 0 1 0 5 5.43V9.5a6.8 6.8 0 0 0 3.6 1.05V7.6a3.9 3.9 0 0 1-3.6-3.87V2Z"></path>
+        </symbol>
+
+        <symbol id="i-etiqueta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3h7.2L21 13.8 13.8 21 3 10.2V3Z"/>
+            <circle cx="7.3" cy="7.3" r="1.3"/>
+        </symbol>
+        <symbol id="i-compartir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="2.6"/>
+            <circle cx="6" cy="12" r="2.6"/>
+            <circle cx="18" cy="19" r="2.6"/>
+            <path d="m8.4 13.4 7.2 4.2M15.6 6.4 8.4 10.6"/>
+        </symbol>
+        <symbol id="i-camion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2.8 6h11v9.5h-11z"/>
+            <path d="M13.8 9.5h3.9l3.5 3.5v2.5h-7.4z"/>
+            <circle cx="7" cy="18" r="2"/>
+            <circle cx="17.4" cy="18" r="2"/>
+        </symbol>
+        <symbol id="i-cambio" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3.5 9h14l-3.6-3.6"/>
+            <path d="M20.5 15h-14l3.6 3.6"/>
+        </symbol>
+        <symbol id="i-escudo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3 7 2.8V12c0 4.2-2.9 7.8-7 9-4.1-1.2-7-4.8-7-9V5.8L12 3Z"/>
+            <path d="m9 12 2.2 2.2L15.2 10"/>
+        </symbol>
+    </svg>
+
+    <!-- ========================================================
+         CABECERA
+         ======================================================== -->
+    <header class="cabecera">
+
+        <!-- Franja superior: logo + datos de atención -->
+        <div class="cabecera-top">
+            <div class="contenedor cabecera-top-inner">
+
+                <a class="marca" href="index.html">
+                    <svg class="marca-icono" aria-hidden="true" focusable="false"><use href="#i-logo"></use></svg>
+                    <span class="marca-nombre">Tienda<strong>Nube</strong></span>
+                </a>
+
+                <ul class="datos">
+                    <li class="dato">
+                        <svg class="dato-icono" aria-hidden="true" focusable="false"><use href="#i-reloj"></use></svg>
+                        <span class="dato-cuerpo">
+                            <strong class="dato-titulo">Lun a Sáb: 9:00 – 18:00</strong>
+                            <span class="dato-detalle">Domingo cerrado</span>
+                        </span>
+                    </li>
+                    <li class="dato">
+                        <svg class="dato-icono" aria-hidden="true" focusable="false"><use href="#i-ubicacion"></use></svg>
+                        <address class="dato-cuerpo">
+                            <span class="dato-titulo">Av. Ballivián 1234</span>
+                            <span class="dato-detalle">Calacoto, La Paz</span>
+                        </address>
+                    </li>
+                    <li class="dato">
+                        <svg class="dato-icono" aria-hidden="true" focusable="false"><use href="#i-telefono"></use></svg>
+                        <span class="dato-cuerpo">
+                            <a class="dato-titulo" href="tel:+59170012345">(591) 700 12345</a>
+                            <a class="dato-detalle" href="mailto:hola@tiendanube.com">hola@tiendanube.com</a>
+                        </span>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <!-- Barra de navegación -->
+        <nav class="nav" aria-label="Principal">
+            <div class="contenedor nav-inner">
+
+                <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
+                    <svg class="nav-toggle-icono" aria-hidden="true" focusable="false" data-icono-abrir><use href="#i-menu"></use></svg>
+                    <svg class="nav-toggle-icono" aria-hidden="true" focusable="false" data-icono-cerrar hidden><use href="#i-cerrar"></use></svg>
+                    <span class="nav-toggle-texto">Menú</span>
+                </button>
+
+                <ul class="menu" id="menu-principal">
+                    <li class="menu-item">
+                        <a class="menu-enlace" href="index.html">Inicio</a>
+                    </li>
+                    <li class="menu-item">
+                        <button class="menu-enlace menu-boton" type="button" aria-expanded="false" aria-controls="submenu-categorias">
+                            Categorías
+                            <svg class="menu-chevron" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                        </button>
+                        <ul class="submenu" id="submenu-categorias" hidden>
+                            <li><a href="index.html#celulares">Celulares</a></li>
+                            <li><a href="index.html#zapatillas">Zapatillas</a></li>
+                            <li><a href="index.html#ropa-hombre">Ropa de hombre</a></li>
+                            <li><a href="index.html#perfumes">Perfumes</a></li>
+                            <li><a href="index.html#gafas">Gafas</a></li>
+                            <li><a href="index.html#unas">Uñas</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a class="menu-enlace" href="index.html#nosotros">About us</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="menu-enlace" href="#contacto">Contact</a>
+                    </li>
+                </ul>
+
+                <div class="nav-buscador">
+                    <button class="buscador-toggle" type="button" aria-expanded="false" aria-controls="form-buscador">
+                        <svg class="buscador-toggle-icono" aria-hidden="true" focusable="false" data-icono-abrir><use href="#i-lupa"></use></svg>
+                        <svg class="buscador-toggle-icono" aria-hidden="true" focusable="false" data-icono-cerrar hidden><use href="#i-cerrar"></use></svg>
+                        <span class="visually-hidden">Buscar productos</span>
+                    </button>
+
+                    <form class="buscador" id="form-buscador" role="search" action="index.html" method="get">
+                        <label class="visually-hidden" for="q">Buscar productos</label>
+                        <input class="buscador-campo" type="search" id="q" name="q" placeholder="Buscar productos…" autocomplete="off">
+                        <button class="buscador-enviar" type="submit">
+                            <svg class="buscador-enviar-icono" aria-hidden="true" focusable="false"><use href="#i-lupa"></use></svg>
+                            <span class="visually-hidden">Buscar</span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </nav>
+
+    </header>
+
+    <!-- ========================================================
+         CONTENIDO — ficha de un producto
+         Los datos son de ejemplo: esta página es la maqueta que
+         después se llena desde la API.
+         ======================================================== -->
+    <main class="contenido" id="contenido">
+
+        <!-- Migas de pan: dónde estoy y cómo vuelvo al catálogo -->
+        <nav class="migas" aria-label="Migas de pan">
+            <div class="contenedor">
+                <ol class="migas-lista">
+                    <li class="migas-item">
+                        <a class="migas-enlace" href="index.html">Inicio</a>
+                        <svg class="migas-icono" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                    </li>
+                    <li class="migas-item">
+                        <a class="migas-enlace" href="index.html#productos">Ropa de hombre</a>
+                        <svg class="migas-icono" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                    </li>
+                    <li class="migas-item">
+                        <span class="migas-actual" aria-current="page">Jean Slim Fit Índigo</span>
+                    </li>
+                </ol>
+            </div>
+        </nav>
+
+        <!-- ========================================================
+             FICHA — galería + información
+             ======================================================== -->
+        <section class="seccion detalle" aria-labelledby="producto-titulo">
+            <div class="contenedor detalle-inner">
+
+                <!-- ------------------------------------------------
+                     GALERÍA — transición por desvanecido (fade).
+                     Las fotos están todas en el HTML. Sin JS se ve la
+                     primera y las miniaturas siguen siendo enlaces a
+                     cada foto; con JS pasan a cambiar el visor.
+                     ------------------------------------------------ -->
+                <div class="galeria" data-galeria>
+
+                    <div class="galeria-visor">
+                        <ul class="galeria-slides" data-slides>
+                            <li class="galeria-slide is-activa" id="foto-1">
+                                <img class="galeria-foto" src="assets/img/ropa-hombre/0cfb33efcc5b8aaaaa9275d91a08df58.jpg"
+                                     alt="Dos jeans slim fit en índigo y azul noche, usados con zapatillas blancas"
+                                     width="900" height="900" fetchpriority="high" decoding="async">
+                            </li>
+                            <li class="galeria-slide" id="foto-2">
+                                <img class="galeria-foto" src="assets/img/ropa-hombre/7a5704c293a7d142730f1155133b3779.jpg"
+                                     alt="El mismo jean en azul noche, combinado con remera blanca"
+                                     width="900" height="900" loading="lazy" decoding="async">
+                            </li>
+                            <li class="galeria-slide" id="foto-3">
+                                <img class="galeria-foto" src="assets/img/ropa-hombre/81a5249c82ca91a2ef94c5b6fadf2a83.jpg"
+                                     alt="Detalle de la textura del denim stretch"
+                                     width="900" height="900" loading="lazy" decoding="async">
+                            </li>
+                            <li class="galeria-slide" id="foto-4">
+                                <img class="galeria-foto" src="assets/img/ropa-hombre/971f4fff8302e3ea7eaeca0b76580305.jpg"
+                                     alt="El jean visto de frente y de espalda sobre fondo claro"
+                                     width="900" height="900" loading="lazy" decoding="async">
+                            </li>
+                        </ul>
+
+                        <p class="badge badge-destacado">
+                            <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-estrella"></use></svg>
+                            Destacado
+                        </p>
+
+                        <!-- Flechas: las muestra el script, no sirven sin él -->
+                        <button class="galeria-flecha galeria-anterior" type="button" data-anterior hidden>
+                            <svg class="galeria-flecha-icono" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                            <span class="visually-hidden">Foto anterior</span>
+                        </button>
+                        <button class="galeria-flecha galeria-siguiente" type="button" data-siguiente hidden>
+                            <svg class="galeria-flecha-icono" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                            <span class="visually-hidden">Foto siguiente</span>
+                        </button>
+                    </div>
+
+                    <!-- Qué foto se está viendo, para quien no la ve -->
+                    <p class="visually-hidden" role="status" data-galeria-estado>Foto 1 de 4</p>
+
+                    <ul class="galeria-minis" data-minis>
+                        <li>
+                            <a class="galeria-mini is-activa" href="#foto-1" aria-current="true">
+                                <img src="assets/img/ropa-hombre/0cfb33efcc5b8aaaaa9275d91a08df58.jpg" alt="Ver foto 1: los dos jeans completos" width="160" height="160" loading="lazy" decoding="async">
+                            </a>
+                        </li>
+                        <li>
+                            <a class="galeria-mini" href="#foto-2">
+                                <img src="assets/img/ropa-hombre/7a5704c293a7d142730f1155133b3779.jpg" alt="Ver foto 2: el jean en azul noche" width="160" height="160" loading="lazy" decoding="async">
+                            </a>
+                        </li>
+                        <li>
+                            <a class="galeria-mini" href="#foto-3">
+                                <img src="assets/img/ropa-hombre/81a5249c82ca91a2ef94c5b6fadf2a83.jpg" alt="Ver foto 3: detalle de la tela" width="160" height="160" loading="lazy" decoding="async">
+                            </a>
+                        </li>
+                        <li>
+                            <a class="galeria-mini" href="#foto-4">
+                                <img src="assets/img/ropa-hombre/971f4fff8302e3ea7eaeca0b76580305.jpg" alt="Ver foto 4: frente y espalda" width="160" height="160" loading="lazy" decoding="async">
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- ------------------------------------------------
+                     INFORMACIÓN
+                     ------------------------------------------------ -->
+                <div class="detalle-info">
+
+                    <h1 class="detalle-titulo" id="producto-titulo">Jean Slim Fit Índigo</h1>
+
+                    <ul class="detalle-meta">
+                        <li class="detalle-meta-item">
+                            Código <strong>RH-JN-014</strong>
+                        </li>
+                        <li class="detalle-meta-item">
+                            <a class="detalle-meta-enlace" href="index.html#productos">Ropa de hombre</a>
+                        </li>
+                        <li class="detalle-meta-item detalle-stock">
+                            <svg class="detalle-meta-icono" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                            Disponible
+                        </li>
+                    </ul>
+
+                    <p class="precio precio-detalle">
+                        <span class="precio-moneda">Gs</span>
+                        <strong class="precio-valor">185.000</strong>
+                        <s class="precio-antes"><span class="visually-hidden">Precio anterior:</span> Gs 231.000</s>
+                        <span class="precio-off">
+                            <svg class="precio-off-icono" aria-hidden="true" focusable="false"><use href="#i-etiqueta"></use></svg>
+                            20&nbsp;% menos
+                        </span>
+                    </p>
+
+                    <p class="detalle-cuotas">O 3 cuotas de Gs 61.700 sin interés.</p>
+
+                    <p class="detalle-resumen">
+                        Jean de corte slim en denim stretch: cae ajustado sin apretar y
+                        vuelve a su forma después de todo el día. Costuras reforzadas,
+                        cinco bolsillos y un lavado índigo parejo que no destiñe en los
+                        primeros lavados.
+                    </p>
+
+                    <dl class="ficha ficha-detalle">
+                        <div class="ficha-fila">
+                            <dt class="ficha-clave">Talles</dt>
+                            <dd class="ficha-valor">38 al 46</dd>
+                        </div>
+                        <div class="ficha-fila">
+                            <dt class="ficha-clave">Tela</dt>
+                            <dd class="ficha-valor">Denim stretch (98&nbsp;% algodón, 2&nbsp;% elastano)</dd>
+                        </div>
+                        <div class="ficha-fila">
+                            <dt class="ficha-clave">Corte</dt>
+                            <dd class="ficha-valor">Slim fit, tiro medio</dd>
+                        </div>
+                        <div class="ficha-fila">
+                            <dt class="ficha-clave">Colores</dt>
+                            <dd class="ficha-valor">
+                                <ul class="tonos tonos-detalle">
+                                    <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                    <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul noche</span></li>
+                                    <li class="tono tono-azul-medio"><span class="visually-hidden">Índigo</span></li>
+                                </ul>
+                            </dd>
+                        </div>
+                    </dl>
+
+                    <ul class="detalle-acciones">
+                        <li>
+                            <a class="boton boton-primario" href="https://wa.me/59170012345?text=Hola%2C%20me%20interesa%20el%20Jean%20Slim%20Fit%20%C3%8Dndigo%20(RH-JN-014)" target="_blank" rel="noopener">
+                                <svg class="boton-icono" aria-hidden="true" focusable="false"><use href="#i-whatsapp"></use></svg>
+                                Consultar por WhatsApp
+                            </a>
+                        </li>
+                        <li>
+                            <a class="boton boton-borde" href="https://wa.me/?text=Mir%C3%A1%20este%20jean%20de%20Tienda%20Nube" target="_blank" rel="noopener">
+                                <svg class="boton-icono" aria-hidden="true" focusable="false"><use href="#i-compartir"></use></svg>
+                                Compartir
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="ventajas">
+                        <li class="ventaja">
+                            <svg class="ventaja-icono" aria-hidden="true" focusable="false"><use href="#i-camion"></use></svg>
+                            <span class="ventaja-cuerpo">
+                                <strong class="ventaja-titulo">Entrega el mismo día</strong>
+                                <span class="ventaja-detalle">En la ciudad, para pedidos hasta las 15:00</span>
+                            </span>
+                        </li>
+                        <li class="ventaja">
+                            <svg class="ventaja-icono" aria-hidden="true" focusable="false"><use href="#i-cambio"></use></svg>
+                            <span class="ventaja-cuerpo">
+                                <strong class="ventaja-titulo">Cambio de talle sin cargo</strong>
+                                <span class="ventaja-detalle">Dentro de los 7 días, con la etiqueta puesta</span>
+                            </span>
+                        </li>
+                        <li class="ventaja">
+                            <svg class="ventaja-icono" aria-hidden="true" focusable="false"><use href="#i-escudo"></use></svg>
+                            <span class="ventaja-cuerpo">
+                                <strong class="ventaja-titulo">Pagás al recibir</strong>
+                                <span class="ventaja-detalle">Efectivo, QR o transferencia</span>
+                            </span>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================================
+             DETALLE AMPLIADO — pestañas
+             Sin JS es un índice de enlaces y los tres bloques abiertos,
+             cada uno con su título. El script los convierte en pestañas
+             (tablist/tab/tabpanel): no hay elemento nativo para esto,
+             es de los pocos casos donde ARIA es la única salida.
+             ======================================================== -->
+        <section class="seccion seccion-detalles" aria-labelledby="mas-titulo">
+            <div class="contenedor">
+
+                <h2 id="mas-titulo">Más sobre este producto</h2>
+
+                <div class="tabs" data-tabs>
+
+                    <ul class="tabs-lista" data-tabs-lista aria-labelledby="mas-titulo">
+                        <li class="tabs-item">
+                            <a class="tab" id="tab-descripcion" href="#panel-descripcion">Descripción</a>
+                        </li>
+                        <li class="tabs-item">
+                            <a class="tab" id="tab-talle" href="#panel-talle">Cómo elegir el talle</a>
+                        </li>
+                        <li class="tabs-item">
+                            <a class="tab" id="tab-envios" href="#panel-envios">Envíos y cambios</a>
+                        </li>
+                    </ul>
+
+                    <div class="tabs-panel" id="panel-descripcion" data-tab="tab-descripcion">
+                        <h3 class="tabs-panel-titulo">Descripción</h3>
+                        <p>
+                            El slim fit es el corte intermedio entre el recto y el skinny:
+                            sigue la pierna sin marcarla. El elastano hace la diferencia en
+                            el uso diario — se estira al sentarse y no queda la rodilla
+                            deformada al final del día.
+                        </p>
+                        <p>
+                            El índigo es un lavado parejo, sin bigotes ni desgastes, así que
+                            combina tanto con zapatillas como con un calzado más formal.
+                        </p>
+                    </div>
+
+                    <div class="tabs-panel" id="panel-talle" data-tab="tab-talle">
+                        <h3 class="tabs-panel-titulo">Cómo elegir el talle</h3>
+                        <p>
+                            Los talles van del 38 al 46 y corresponden a la cintura en
+                            centímetros dividida por dos. Si estás entre dos talles,
+                            conviene el mayor: el denim stretch cede alrededor de medio
+                            talle con el uso.
+                        </p>
+                        <dl class="ficha">
+                            <div class="ficha-fila">
+                                <dt class="ficha-clave">Talle 40</dt>
+                                <dd class="ficha-valor">Cintura 80 cm · Largo 102 cm</dd>
+                            </div>
+                            <div class="ficha-fila">
+                                <dt class="ficha-clave">Talle 42</dt>
+                                <dd class="ficha-valor">Cintura 84 cm · Largo 104 cm</dd>
+                            </div>
+                            <div class="ficha-fila">
+                                <dt class="ficha-clave">Talle 44</dt>
+                                <dd class="ficha-valor">Cintura 88 cm · Largo 106 cm</dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <div class="tabs-panel" id="panel-envios" data-tab="tab-envios">
+                        <h3 class="tabs-panel-titulo">Envíos y cambios</h3>
+                        <p>
+                            Entregamos el mismo día dentro de la ciudad para los pedidos
+                            confirmados antes de las 15:00. Al interior sale por encomienda
+                            y demora entre 24 y 48 horas.
+                        </p>
+                        <p>
+                            El cambio de talle no tiene cargo dentro de los 7 días, siempre
+                            que la prenda esté sin usar y con la etiqueta puesta. Se
+                            coordina por el mismo WhatsApp de la compra.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================================
+             PRODUCTOS RELACIONADOS
+             Mismas tarjetas del catálogo. No llevan `data-grilla`:
+             acá no hay filtro ni paginación que las gobierne.
+             ======================================================== -->
+        <section class="seccion seccion-relacionados" aria-labelledby="relacionados-titulo">
+            <div class="contenedor">
+
+                <div class="seccion-cabecera seccion-cabecera-fila">
+                    <h2 id="relacionados-titulo">Productos relacionados</h2>
+                    <a class="seccion-enlace" href="index.html#productos">
+                        Ver todo el catálogo
+                        <svg class="seccion-enlace-icono" aria-hidden="true" focusable="false"><use href="#i-flecha"></use></svg>
+                    </a>
+                </div>
+
+                <ul class="grilla grilla-relacionados">
+                <li class="grilla-item">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/154d5ab010b1d01b206185012189345d.jpg" alt="Bermudas de jean en cuatro lavados de azul apoyadas sobre un piso claro" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-nuevo">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-nuevo"></use></svg>
+                                Nuevo
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Bermuda de Jean Clásica</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 48</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim 100% algodón</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Regular</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul oscuro</span></li>
+                                            <li class="tono tono-azul-medio"><span class="visually-hidden">Azul medio</span></li>
+                                            <li class="tono tono-celeste"><span class="visually-hidden">Celeste</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">135.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/2592623453a33ff3f7b3d8b89e3d2cea.jpg" alt="Tres pantalones chinos doblados en bordó, gris y negro" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Pantalón Chino Recto</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 46</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Gabardina</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Recto</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-bordo"><span class="visually-hidden">Bordó</span></li>
+                                            <li class="tono tono-gris"><span class="visually-hidden">Gris</span></li>
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">165.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/4385b10315c63793fad6bbc590d6aa2d.jpg" alt="Jean skinny celeste combinado con remera negra y zapatillas blancas" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Jean Skinny Celeste</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 44</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim stretch</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Skinny</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-celeste"><span class="visually-hidden">Celeste</span></li>
+                                            <li class="tono tono-azul-medio"><span class="visually-hidden">Azul medio</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">179.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/4ec3879ffa00ec9536e9cc8012a2c6e0.jpg" alt="Cuatro jeans clásicos extendidos, del negro al celeste" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-destacado">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-estrella"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Jean Clásico Cinco Bolsillos</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 50</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim 12 oz</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Clásico</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul oscuro</span></li>
+                                            <li class="tono tono-celeste"><span class="visually-hidden">Celeste</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">159.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+                </ul>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================
+         PIE DE PÁGINA
+         Cuatro columnas sobre fondo oscuro + barra inferior.
+         Los títulos son <h2>: el <h1> de la página vive en el banner.
+         ======================================================== -->
+    <footer class="pie">
+
+        <div class="contenedor pie-inner">
+
+            <!-- Columna 1: marca y descripción -->
+            <div class="pie-col pie-col-marca">
+                <a class="marca marca-pie" href="index.html">
+                    <svg class="marca-icono" aria-hidden="true" focusable="false"><use href="#i-logo"></use></svg>
+                    <span class="marca-nombre">Tienda<strong>Nube</strong></span>
+                </a>
+                <p class="pie-descripcion">
+                    Catálogo online de moda y accesorios. Precios a la vista,
+                    atención por WhatsApp y entrega el mismo día en la ciudad.
+                </p>
+            </div>
+
+            <!-- Columna 2: contenido -->
+            <nav class="pie-col" aria-labelledby="pie-contenido-titulo">
+                <h2 class="pie-titulo" id="pie-contenido-titulo">Contenido</h2>
+                <ul class="pie-lista pie-lista-doble">
+                    <li><a class="pie-enlace" href="index.html">Inicio</a></li>
+                    <li><a class="pie-enlace" href="index.html#productos">Categorías</a></li>
+                    <li><a class="pie-enlace" href="index.html#nosotros">About us</a></li>
+                    <li><a class="pie-enlace" href="#contacto">Contact</a></li>
+                    <li><a class="pie-enlace" href="index.html#como-comprar">Cómo comprar</a></li>
+                    <li><a class="pie-enlace" href="index.html#envios">Envíos y pagos</a></li>
+                </ul>
+            </nav>
+
+            <!-- Columna 3: contacto -->
+            <section class="pie-col" id="contacto" aria-labelledby="pie-contacto-titulo">
+                <h2 class="pie-titulo" id="pie-contacto-titulo">Contacto</h2>
+                <address class="pie-datos">
+                    <ul class="pie-lista">
+                        <li class="pie-dato">
+                            <svg class="pie-dato-icono" aria-hidden="true" focusable="false"><use href="#i-whatsapp"></use></svg>
+                            <a class="pie-enlace pie-enlace-fuerte" href="https://wa.me/59170012345" target="_blank" rel="noopener">
+                                WhatsApp (591) 700 12345
+                            </a>
+                        </li>
+                        <li class="pie-dato">
+                            <svg class="pie-dato-icono" aria-hidden="true" focusable="false"><use href="#i-telefono"></use></svg>
+                            <a class="pie-enlace" href="tel:+59122456789">(591) 2 456 789</a>
+                        </li>
+                        <li class="pie-dato">
+                            <svg class="pie-dato-icono" aria-hidden="true" focusable="false"><use href="#i-mail"></use></svg>
+                            <a class="pie-enlace" href="mailto:hola@tiendanube.com">hola@tiendanube.com</a>
+                        </li>
+                        <li class="pie-dato">
+                            <svg class="pie-dato-icono" aria-hidden="true" focusable="false"><use href="#i-reloj"></use></svg>
+                            <span>Lun a Sáb: 9:00 – 18:00</span>
+                        </li>
+                        <li class="pie-dato">
+                            <svg class="pie-dato-icono" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg>
+                            <span>Av. Ballivián 267, local 4<br>Santa Cruz de la Sierra</span>
+                        </li>
+                    </ul>
+                </address>
+            </section>
+
+            <!-- Columna 4: redes -->
+            <section class="pie-col" aria-labelledby="pie-redes-titulo">
+                <h2 class="pie-titulo" id="pie-redes-titulo">Seguinos</h2>
+                <p class="pie-nota">Novedades, ofertas y stock nuevo todas las semanas.</p>
+                <ul class="pie-lista pie-redes">
+                    <li>
+                        <a class="pie-red" href="https://youtube.com/@tiendanube" target="_blank" rel="noopener">
+                            <svg class="pie-red-icono" aria-hidden="true" focusable="false"><use href="#i-youtube"></use></svg>
+                            YouTube
+                        </a>
+                    </li>
+                    <li>
+                        <a class="pie-red" href="https://facebook.com/tiendanube" target="_blank" rel="noopener">
+                            <svg class="pie-red-icono" aria-hidden="true" focusable="false"><use href="#i-facebook"></use></svg>
+                            Facebook
+                        </a>
+                    </li>
+                    <li>
+                        <a class="pie-red" href="https://instagram.com/tiendanube" target="_blank" rel="noopener">
+                            <svg class="pie-red-icono" aria-hidden="true" focusable="false"><use href="#i-instagram"></use></svg>
+                            Instagram
+                        </a>
+                    </li>
+                    <li>
+                        <a class="pie-red" href="https://tiktok.com/@tiendanube" target="_blank" rel="noopener">
+                            <svg class="pie-red-icono" aria-hidden="true" focusable="false"><use href="#i-tiktok"></use></svg>
+                            TikTok
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
+        </div>
+
+        <!-- Barra inferior -->
+        <div class="pie-bottom">
+            <div class="contenedor pie-bottom-inner">
+                <p class="pie-copy">© 2026 TiendaNube · Diseñado por <a class="pie-enlace" href="#">DiseProg</a></p>
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- ========================================================
+         PANEL DE DISEÑO — herramienta de la maqueta, NO del catálogo.
+         Sirve para comparar paletas y formas en vivo. Para sacarlo:
+         borrar este bloque, la sección "PANEL DE DISEÑO" de
+         components.css y el bloque del mismo nombre en app.js.
+         ======================================================== -->
+    <div class="panel">
+
+        <button class="panel-toggle" type="button" aria-expanded="false" aria-controls="panel-diseno">
+            <svg class="panel-toggle-icono" aria-hidden="true" focusable="false" data-icono-abrir><use href="#i-paleta"></use></svg>
+            <svg class="panel-toggle-icono" aria-hidden="true" focusable="false" data-icono-cerrar hidden><use href="#i-cerrar"></use></svg>
+            <span class="visually-hidden">Opciones de diseño</span>
+        </button>
+
+        <div class="panel-cuerpo" id="panel-diseno" hidden>
+
+            <fieldset class="panel-grupo">
+                <legend>Paleta</legend>
+                <ul>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-cafe" value="cafe" checked>
+                        <label for="paleta-cafe">
+                            <span class="muestra muestra-cafe" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Café</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-verano" value="verano">
+                        <label for="paleta-verano">
+                            <span class="muestra muestra-verano" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Verano</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-primavera" value="primavera">
+                        <label for="paleta-primavera">
+                            <span class="muestra muestra-primavera" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Primavera</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-oro" value="oro">
+                        <label for="paleta-oro">
+                            <span class="muestra muestra-oro" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Oro</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-arcoiris" value="arcoiris">
+                        <label for="paleta-arcoiris">
+                            <span class="muestra muestra-arcoiris" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Arcoíris</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-tech" value="tech">
+                        <label for="paleta-tech">
+                            <span class="muestra muestra-tech" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Tech</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-alegre" value="alegre">
+                        <label for="paleta-alegre">
+                            <span class="muestra muestra-alegre" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Alegre</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-invierno" value="invierno">
+                        <label for="paleta-invierno">
+                            <span class="muestra muestra-invierno" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Invierno</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-piel" value="piel">
+                        <label for="paleta-piel">
+                            <span class="muestra muestra-piel" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Piel</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-halloween" value="halloween">
+                        <label for="paleta-halloween">
+                            <span class="muestra muestra-halloween" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Halloween</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-frio" value="frio">
+                        <label for="paleta-frio">
+                            <span class="muestra muestra-frio" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Frío</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="paleta" id="paleta-noche" value="noche">
+                        <label for="paleta-noche">
+                            <span class="muestra muestra-noche" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-nombre">Noche</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                </ul>
+            </fieldset>
+
+            <fieldset class="panel-grupo">
+                <legend>Bordes</legend>
+                <ul class="panel-fila">
+                    <li>
+                        <input type="radio" name="radios" id="radios-cuadrado" value="cuadrado" checked>
+                        <label for="radios-cuadrado"><span class="panel-nombre">Cuadrados</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radios" id="radios-redondo" value="redondo">
+                        <label for="radios-redondo"><span class="panel-nombre">Redondos</span></label>
+                    </li>
+                </ul>
+            </fieldset>
+
+            <fieldset class="panel-grupo">
+                <legend>Barra</legend>
+                <ul class="panel-fila">
+                    <li>
+                        <input type="radio" name="nav" id="nav-oscuro" value="oscuro" checked>
+                        <label for="nav-oscuro"><span class="panel-nombre">Tinta</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="nav" id="nav-color" value="color">
+                        <label for="nav-color"><span class="panel-nombre">De color</span></label>
+                    </li>
+                </ul>
+            </fieldset>
+
+            <fieldset class="panel-grupo">
+                <legend>Banner</legend>
+                <ul class="panel-fila">
+                    <li>
+                        <input type="radio" name="banner" id="banner-oscuro" value="oscuro" checked>
+                        <label for="banner-oscuro"><span class="panel-nombre">Velo oscuro</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="banner" id="banner-claro" value="claro">
+                        <label for="banner-claro"><span class="panel-nombre">Velo claro</span></label>
+                    </li>
+                </ul>
+            </fieldset>
+
+            <p class="panel-pie">
+                <button class="panel-reset" type="button">Volver a los valores por defecto</button>
+            </p>
+
+            <p class="panel-aviso" hidden>El navegador no deja guardar la elección acá, así que no se recuerda al recargar.</p>
+
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

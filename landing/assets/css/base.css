@@ -1,0 +1,330 @@
+/* ==========================================================================
+   BASE — reset, paleta, tipografía y contenedor
+   Las custom properties son SOLO de color y viven SIEMPRE en :root.
+   ========================================================================== */
+
+:root {
+    /* Marca */
+    --color-brand: #0f9268;
+    --color-brand-strong: #0a6e4f;
+    --color-brand-soft: #e7f5ef;
+    --color-brand-line: #bfe3d3;
+
+    /* Neutros */
+    --color-ink: #0c1512;
+    --color-ink-soft: #1a2b25;
+    --color-body: #4b5a55;
+    --color-muted: #7d8b86;
+    --color-surface: #ffffff;
+    --color-surface-alt: #f6f8f7;
+    --color-surface-sunken: #eef2f0;
+    --color-border: #e3e9e6;
+    --color-border-strong: #cfd8d4;
+
+    /* Sobre fondo oscuro */
+    --color-invert: #ffffff;
+    --color-invert-soft: #a9bcb5;
+    --color-invert-line: #22322c;
+
+    /* Acentos y estados */
+    --color-accent: #ffb020;
+    --color-accent-soft: #fff4dd;
+    --color-whatsapp: #25d366;
+    --color-danger: #d1544c;
+    --color-danger-soft: #fdeeed;
+
+    /* Sombras y velos */
+    --color-shadow-sm: rgba(12, 21, 18, 0.05);
+    --color-shadow-md: rgba(12, 21, 18, 0.08);
+    --color-shadow-lg: rgba(12, 21, 18, 0.12);
+    --color-overlay: rgba(12, 21, 18, 0.55);
+    --color-glass: rgba(255, 255, 255, 0.86);
+    --color-glass-dark: rgba(255, 255, 255, 0.06);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-surface);
+    color: var(--color-body);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    color: var(--color-ink);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+/* Escala tipográfica global: los tamaños se definen acá y no en los wraps,
+   para que no se multipliquen entre sí. */
+h1 {
+    font-size: 3.5rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+}
+
+h4 {
+    font-size: 1.063rem;
+}
+
+h5 {
+    font-size: 0.938rem;
+}
+
+h6 {
+    font-size: 0.813rem;
+}
+
+p {
+    margin: 0;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+dl,
+dt,
+dd,
+blockquote,
+figure {
+    margin: 0;
+}
+
+strong,
+b {
+    font-weight: 600;
+    color: var(--color-ink);
+}
+
+button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+summary {
+    cursor: pointer;
+    list-style: none;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+::selection {
+    background-color: var(--color-brand);
+    color: var(--color-invert);
+}
+
+/* --------------------------------------------------------------------------
+   Página y contenedor
+   -------------------------------------------------------------------------- */
+
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.page-main {
+    flex: 1;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.container-narrow {
+    max-width: 880px;
+}
+
+/* --------------------------------------------------------------------------
+   Utilidades
+   -------------------------------------------------------------------------- */
+
+[hidden] {
+    display: none !important;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.skip-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    transform: translateY(-150%);
+    transition: transform 0.2s ease;
+}
+
+.skip-link:focus-within {
+    transform: translateY(0);
+}
+
+.skip-link > a {
+    display: block;
+    margin: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    background-color: var(--color-ink);
+    color: var(--color-invert);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — notebook / tablet
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1199px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    h2 {
+        font-size: 2.125rem;
+    }
+
+    .container {
+        padding: 0 1.25rem;
+    }
+}
+
+@media (max-width: 991px) {
+    h1 {
+        font-size: 2.625rem;
+    }
+
+    h2 {
+        font-size: 1.875rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — mobile
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+    html {
+        scroll-padding-top: 5rem;
+    }
+
+    body {
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 2.125rem;
+    }
+
+    h2 {
+        font-size: 1.625rem;
+    }
+
+    h3 {
+        font-size: 1.125rem;
+    }
+
+    h4 {
+        font-size: 1rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 359px) {
+    h1 {
+        font-size: 1.875rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Accesibilidad — movimiento reducido
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}

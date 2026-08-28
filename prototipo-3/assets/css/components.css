@@ -1,0 +1,2512 @@
+/* ============================================================
+   COMPONENTS — cabecera y navegación
+   prototipo-3 · Mobile-first
+   Ningún hex acá: sólo var() de los tokens de base.css
+   ============================================================ */
+
+/* ============================================================
+   CABECERA — contenedor general
+   ============================================================ */
+
+.header {
+    position: relative;
+    z-index: 10;
+}
+
+/* ------------------------------------------------------------
+   Franja superior (fondo claro): marca + datos de atención
+   ------------------------------------------------------------ */
+
+.header-top {
+    background-color: var(--color-surface);
+    border-bottom: var(--border-thin) solid var(--color-border);
+}
+
+.header-top-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
+}
+
+/* Marca */
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch-min);
+    color: var(--color-text);
+}
+
+.brand-icon {
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    color: var(--color-accent);
+}
+
+/* Logotipo de la tienda. El archivo viene a 405x238, así que SIN esta
+   regla la imagen se pinta a tamaño natural y revienta la cabecera:
+   la altura la fija el token y el ancho sale de la proporción. */
+.brand-logo {
+    height: var(--logo-height);
+    width: auto;
+    flex-shrink: 0;
+}
+
+.brand-name {
+    font-family: var(--font-heading);
+    font-size: var(--brand-name);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.01em;
+}
+
+/* Segunda mitad del nombre: es sólo un cambio de color, no énfasis
+   semántico, así que va en un <span> con clase y no en un <strong> */
+.brand-name-alt {
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+}
+
+.brand:hover .brand-name-alt {
+    color: var(--color-accent-hover);
+}
+
+/* Datos de atención
+   En móvil y tablet no se muestran: horario, dirección y teléfono se
+   comen la cabecera entera y los tres están repetidos en el pie y en
+   contacto.html. Vuelven en escritorio. */
+
+.info-list {
+    display: none;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.info-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    color: var(--color-accent-soft);  /* ícono, no texto: 4.17:1 supera el mínimo de 3:1 */
+}
+
+.info-body {
+    display: flex;
+    flex-direction: column;
+    line-height: var(--leading-tight);
+}
+
+.info-title {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text);
+}
+
+.info-detail {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.info a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+}
+
+/* ============================================================
+   BARRA DE NAVEGACIÓN (fondo oscuro)
+   ============================================================ */
+
+/* Barra oscura (por defecto): usa la tinta del sistema */
+.nav {
+    --search-width:  62%;              /* lo que se despliega; se redefine por breakpoint */
+    --search-height: var(--touch-min);   /* en móvil manda el objetivo táctil de 44px */
+    --search-text:   var(--text-base);   /* 16px en móvil: menos que eso, iOS hace zoom al enfocar */
+    /* La lupa cerrada y la de dentro del campo comparten caja e ícono para
+       que no se muevan ni cambien de tamaño al abrir o cerrar */
+    --search-box:  var(--touch-min);
+    --search-icon: 1.375rem;
+
+    --nav-bg:          var(--color-primary);
+    --nav-text:        var(--color-on-dark-muted);
+    --nav-text-strong: var(--color-on-dark);
+    --nav-active:      var(--color-accent-invert);
+    --nav-brand:       var(--color-accent-invert);
+    --nav-border:      var(--color-on-dark-border);
+
+    /* En móvil y tablet NO hay barra: el <nav> se queda sólo como
+       contenedor del panel lateral y del velo, que son `fixed`, así
+       que no ocupa alto. El fondo de la barra se pinta recién en
+       escritorio. Los tokens de arriba se declaran igual: el panel
+       los usa para su propio fondo y su borde. */
+    color: var(--nav-text);
+}
+
+/* Barra de color: usa un tono real de la paleta (<html data-nav="color">) */
+[data-nav="color"] .nav {
+    --nav-bg:          var(--color-nav-bg);
+    --nav-text:        var(--color-on-nav);
+    --nav-text-strong: var(--color-on-nav);
+    --nav-active:      var(--color-nav-active);
+    --nav-brand:       var(--color-nav-brand);
+    --nav-border:      var(--color-nav-border);
+}
+
+.nav-inner {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* ------------------------------------------------------------
+   Botón de menú (sólo móvil/tablet)
+   ------------------------------------------------------------ */
+
+/* Vive en la franja superior, a la derecha del logo. El color NO puede
+   salir de los tokens del <nav>: está fuera de él y se pinta sobre el
+   fondo claro de la franja. */
+.nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch-min);
+    padding: var(--space-2) var(--space-3);
+    padding-right: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+}
+
+.nav-toggle-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* ------------------------------------------------------------
+   Panel lateral (móvil y tablet)
+   ------------------------------------------------------------ */
+
+/* El panel se sale de la caja de la barra a propósito: cubre la
+   pantalla entera desde el borde izquierdo, cabecera incluida, así el
+   menú no compite con el logo ni con los datos de atención.
+   Cerrado no alcanza con desplazarlo: `translateX` deja los enlaces
+   en el orden de tabulación. Por eso lleva `visibility: hidden`,
+   retrasado hasta el final de la transición para que el cierre se
+   vea — el mismo patrón del buscador de escritorio. */
+.nav-panel {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 41;
+    transform: translateX(-100%);
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    width: var(--panel-width);
+    padding: var(--panel-pad) 0;
+    overflow-y: auto;
+    /* Al llegar al final de la lista, la rueda no sigue en la página */
+    overscroll-behavior: contain;
+    background-color: var(--nav-bg);
+    /* El mismo degradado de la barra y del pie, pero en vertical: el
+       panel es angosto y alto, así que corre por su lado largo. El
+       color plano queda de respaldo debajo. */
+    background-image: linear-gradient(to bottom, var(--nav-bg), var(--color-grad-2));
+    border-right: var(--border-thin) solid var(--nav-border);
+    transition: transform var(--transition-medium),
+                visibility 0s linear var(--time-medium);
+}
+
+.nav.is-open .nav-panel {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform var(--transition-medium), visibility 0s;
+}
+
+/* El hamburger queda tapado por el panel, así que el cierre necesita
+   su propio botón acá adentro (además del velo y de Escape) */
+.nav-panel-close {
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--touch-min);
+    height: var(--touch-min);
+    margin-right: var(--panel-pad);
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    color: var(--nav-text-strong);
+}
+
+.nav-panel-close:hover {
+    color: var(--nav-active);
+}
+
+.nav-panel-close-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Velo: apaga la página de atrás y, de paso, es el área de cierre
+   más grande que hay. Se atenúa en vez de aparecer de golpe, y como
+   el panel, sale del orden de tabulación con `visibility`. */
+.nav-veil {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    opacity: 0;
+    visibility: hidden;
+    background-color: var(--color-veil);
+    transition: opacity var(--transition-medium),
+                visibility 0s linear var(--time-medium);
+}
+
+.nav.is-open .nav-veil {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--transition-medium), visibility 0s;
+}
+
+/* Con el panel abierto la página de atrás no se desplaza, y la
+   cabecera sube por encima del panel de diseño flotante (z-index 30)
+   para que el velo lo tape también a él. La clase la pone el script
+   en <html>. */
+.is-menu-open {
+    overflow: hidden;
+}
+
+.is-menu-open .header {
+    z-index: 60;
+}
+
+/* ------------------------------------------------------------
+   Menú principal
+   ------------------------------------------------------------ */
+
+.menu {
+    padding-bottom: var(--space-2);
+    border-top: var(--border-thin) solid var(--nav-border);
+}
+
+.menu-item + .menu-item {
+    border-top: var(--border-thin) solid var(--nav-border);
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    width: 100%;
+    min-height: var(--touch-min);
+    padding: var(--space-3) var(--panel-pad);
+    background: none;
+    border: 0;
+    border-radius: var(--radius-sm);
+    color: var(--nav-text);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-align: left;
+    text-transform: uppercase;
+    transition: color var(--transition-fast);
+}
+
+.menu-link:hover {
+    color: var(--nav-text-strong);
+}
+
+/* El panel recorta lo que se desborda (tiene `overflow-y`), y estos
+   enlaces ocupan todo su ancho: con el offset por defecto el anillo de
+   foco quedaría cortado a los costados. Se pinta hacia adentro. */
+.menu-link:focus-visible,
+.submenu a:focus-visible {
+    outline-offset: calc(var(--focus-offset) * -1);
+}
+
+/* Página actual: color + barra lateral (nunca sólo color).
+   El padding descuenta el ancho de la barra para que el texto quede
+   alineado con el de los demás enlaces del panel. */
+.menu-link[aria-current="page"] {
+    padding-left: calc(var(--panel-pad) - var(--focus-width));
+    border-left: var(--focus-width) solid var(--nav-brand);
+    color: var(--nav-active);
+}
+
+.menu-chevron {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    transition: transform var(--transition-fast);
+}
+
+.menu-btn[aria-expanded="true"] {
+    color: var(--nav-text-strong);
+}
+
+.menu-btn[aria-expanded="true"] .menu-chevron {
+    transform: rotate(180deg);
+}
+
+/* Submenú de categorías */
+
+.submenu {
+    padding-bottom: var(--space-2);
+}
+
+/* Sangrado respecto del enlace padre: el submenú se lee como un
+   nivel más adentro y no como cuatro ítems sueltos del menú */
+.submenu a {
+    display: block;
+    min-height: var(--touch-min);
+    padding: var(--space-2) calc(var(--panel-pad) + var(--space-3));
+    border-radius: var(--radius-sm);
+    color: var(--nav-text);
+    font-size: var(--text-sm);
+}
+
+.submenu a:hover {
+    color: var(--nav-active);
+    text-decoration: underline;
+}
+
+/* ------------------------------------------------------------
+   Horario y dirección al pie del panel (sólo móvil y tablet)
+   A este ancho no están en la franja superior, así que el panel es
+   el único lugar donde se ven sin bajar hasta el pie. En escritorio
+   el panel se disuelve y este bloque se esconde.
+   ------------------------------------------------------------ */
+
+/* La línea separadora NO usa `--nav-border` como el resto de los
+   filetes de la barra: ese token es `--color-on-dark-border`, que en
+   verano, primavera y alegre vale exactamente lo mismo que el fondo
+   (1.00:1) y en invierno, noche y frío no pasa de 2.30:1 — o sea, en
+   media paleta no se ve. Acá va `--nav-text`, que es el color del
+   texto del panel y por lo tanto tiene contraste garantizado en las
+   doce. Con más aire arriba y abajo que los ítems, para que se lea
+   como corte entre dos bloques y no como un ítem más. */
+.nav-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    padding: var(--space-5) var(--panel-pad) 0;
+    border-top: var(--border-thin) solid var(--nav-text);
+}
+
+/* Los `.info` nacen para la franja clara: sobre el fondo del panel
+   los tres colores se dan vuelta. El ícono usa `--nav-brand`, que es
+   el tono que las doce paletas garantizan ≥ 3:1 contra la barra. */
+.nav-info-list .info-icon {
+    color: var(--nav-brand);
+}
+
+.nav-info-list .info-title {
+    color: var(--nav-text-strong);
+}
+
+.nav-info-list .info-detail {
+    color: var(--nav-text);
+}
+
+/* ------------------------------------------------------------
+   Buscador
+   ------------------------------------------------------------ */
+
+/* Dentro del panel el buscador ocupa el ancho completo menos el aire
+   lateral. En escritorio el wrap deja de existir (`display: contents`)
+   y el padding se anula ahí mismo. */
+.nav-search {
+    padding: 0 var(--panel-pad);
+}
+
+/* La lupa es de la barra de escritorio: en el panel el campo está
+   siempre a la vista y no hay nada que desplegar */
+.search-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--search-box);
+    height: var(--search-box);
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    color: var(--nav-text-strong);
+}
+
+.search-toggle:hover {
+    color: var(--nav-active);
+}
+
+.search-toggle-icon {
+    width: var(--search-icon);
+    height: var(--search-icon);
+}
+
+/* En el panel el formulario es un campo fijo de ancho completo: se ve
+   apenas se abre el menú y no hay nada que desplegar. Lo que se anima
+   —el deslizamiento hacia la izquierda dentro de la barra— es de
+   escritorio y vive en el bloque de 62rem, al final del archivo. */
+.search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--search-height);
+    overflow: hidden;
+    /* La caja del campo es el formulario: así el botón de enviar queda
+       DENTRO del recuadro, alineado a la derecha. */
+    background-color: var(--color-surface);
+    /* Sin borde: lo que delimita el campo es su propio blanco contra la
+       barra oscura, que da de 5.8:1 (Piel) a 18:1 (Halloween) — muy por
+       encima del mínimo de 3:1 que pide el contorno de un control.
+       OJO con `data-nav="color"`: ahí la barra puede ser clara y el
+       contraste cae por debajo de 3:1 en verano, primavera, arcoiris y
+       alegre. Si esa variante se adopta, hay que devolverle un borde. */
+    border: 0;
+    border-radius: var(--radius-md);
+}
+
+/* El foco del campo se mide contra el BLANCO del campo, no contra la barra.
+   Heredado de `.nav :focus-visible` venía en `--color-focus-invert`, que
+   está pensado para la barra oscura: sobre blanco da 1.3:1 y el anillo sólo
+   se veía porque desbordaba sobre la barra. Con `--color-focus` da 7.4:1 en
+   Café. Además se pinta hacia adentro: el contenedor recorta, y así queda
+   dentro del campo en vez de envolverlo. */
+.search :focus-visible {
+    outline-color: var(--color-focus);
+    outline-offset: calc(var(--focus-offset) * -1 - 1px);
+}
+
+/* Abierto con el mouse no se pinta el anillo: quien hizo clic ya sabe
+   dónde está. Con teclado (`data-input="keyboard"`) se pinta siempre,
+   que es lo que exige la navegación por Tab. */
+[data-input="mouse"] .search :focus-visible {
+    outline: none;
+}
+
+.search-field {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
+    padding: 0 var(--space-3);
+    background-color: transparent;   /* el recuadro lo pone el formulario */
+    border: 0;
+    border-radius: inherit;
+    color: var(--color-text);
+    font-size: var(--search-text);
+}
+
+.search-field::placeholder {
+    color: var(--color-text-subtle);
+    opacity: 1;
+}
+
+.search-submit {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* Misma caja que la lupa cerrada y pegado al mismo borde derecho:
+       así el ícono no se mueve ni cambia de tamaño al abrir el campo */
+    width: var(--search-box);
+    height: 100%;
+    padding: 0;
+    /* Sin relleno: dentro del campo alcanza con el ícono. Va en
+       `--color-accent`, que está medido contra la superficie clara y
+       supera de sobra el mínimo de 3:1 que pide un ícono. */
+    background-color: transparent;
+    border: 0;
+    border-radius: var(--radius-sm);
+    color: var(--color-accent);
+    transition: color var(--transition-fast);
+}
+
+.search-submit:hover {
+    color: var(--color-accent-hover);
+}
+
+.search-submit-icon {
+    width: var(--search-icon);
+    height: var(--search-icon);
+}
+
+/* ============================================================
+   BOTONES — reutilizables fuera del banner
+   ============================================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: var(--touch-min);
+    padding: var(--space-3) var(--space-5);
+    border: var(--focus-width) solid transparent;
+    border-radius: var(--radius-md);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-align: center;
+    text-transform: uppercase;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-icon {
+    width: 1.4625rem;
+    height: 1.4625rem;
+    flex-shrink: 0;
+}
+
+/* Botones del banner: toman el color de la variante activa, no de un hex */
+.btn-cta {
+    background-color: var(--banner-cta-bg);
+    border-color: var(--banner-cta-bg);
+    color: var(--banner-cta-text);
+}
+
+.btn-cta:hover {
+    background-color: var(--banner-cta-bg-hover);
+    border-color: var(--banner-cta-bg-hover);
+}
+
+.btn-cta-border {
+    background-color: transparent;
+    border-color: currentColor;
+    color: var(--banner-text);
+}
+
+/* REGLA GENERAL de los botones outline: si el hover los rellena, el
+   contorno tiene que ser el color de ESE relleno, nunca el del texto ni
+   el del borde en reposo. `transparent` lo consigue solo: el fondo se
+   pinta también bajo el borde (`background-clip: border-box`), así que
+   el botón queda macizo y el contorno no puede desincronizarse del
+   relleno si mañana cambia el color del hover.
+   El borde no se puede quitar: es el que reserva el espacio en reposo,
+   y sin él el botón cambiaría de tamaño al pasar el puntero. */
+.btn-cta-border:hover {
+    background-color: var(--banner-text);
+    border-color: transparent;
+    color: var(--banner-cta-border-hover-text);
+}
+
+/* Botones sobre fondo claro (ficha de producto). A diferencia de los
+   del banner, no dependen de la variante de velo: toman los pares de
+   la paleta, que ya tienen su ratio anotado. */
+/* Los botones oscuros llevan el mismo degradado que la barra y el pie.
+   El borde va `transparent` y no en `--color-primary`: el fondo se pinta
+   también bajo el borde, así que el degradado llega hasta el filo. Con
+   un borde de color, el lado derecho no lo acompañaría.
+   El color plano queda de respaldo debajo.
+   OJO: `background-image` no se puede animar, así que el vuelco del
+   rollover es instantáneo aunque `.btn` tenga su `transition`. */
+.btn-primary {
+    background-color: var(--color-primary);
+    background-image: linear-gradient(to right, var(--color-primary), var(--color-grad-2));
+    border-color: transparent;
+    color: var(--color-on-primary);
+}
+
+/* Rollover: el mismo degradado dado vuelta */
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    background-image: linear-gradient(to left, var(--color-primary), var(--color-grad-2));
+    border-color: transparent;
+}
+
+.btn-border {
+    background-color: transparent;
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+}
+
+.btn-border:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* ============================================================
+   BANNER — foto + velo + llamado a la acción
+   ============================================================ */
+
+.content {
+    flex: 1 1 auto;
+}
+
+/* Variante OSCURA (por defecto): velo café, texto blanco */
+.banner {
+    --banner-veil:                  var(--color-banner-veil);
+    --banner-text:                  var(--color-on-banner);
+    --banner-cta-bg:                var(--color-surface-alt);
+    --banner-cta-bg-hover:          var(--color-surface);
+    --banner-cta-text:              var(--color-text);
+    --banner-cta-border-hover-text: var(--color-text);
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: var(--banner-height);
+    padding-top: var(--rhythm-section);
+    padding-bottom: var(--rhythm-section);
+    overflow: hidden;
+    background-color: var(--color-primary);  /* se ve mientras la foto carga */
+    color: var(--banner-text);
+}
+
+/* Variante CLARA: velo crema, texto café. La foto luminosa se mantiene */
+[data-banner="light"] .banner {
+    --banner-veil:                  var(--color-banner-veil-light);
+    --banner-text:                  var(--color-on-banner-light);
+    --banner-cta-bg:                var(--color-primary);
+    --banner-cta-bg-hover:          var(--color-primary-hover);
+    --banner-cta-text:              var(--color-on-primary);
+    --banner-cta-border-hover-text: var(--color-on-primary);
+
+    background-color: var(--color-surface-alt);
+}
+
+/* La foto es decorativa: alt="" y fuera del árbol de accesibilidad */
+.banner-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Velo: es lo que garantiza el contraste del texto encima */
+.banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--banner-veil);
+}
+
+.banner-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.banner-kicker {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+}
+
+.banner-title {
+    max-width: 22ch;
+    margin: var(--space-3) auto 0;
+    font-size: var(--banner-title);
+    letter-spacing: -0.01em;
+}
+
+/* Filete decorativo bajo el título, como en la referencia */
+.banner-title::after {
+    content: "";
+    display: block;
+    width: 4rem;
+    height: var(--focus-width);
+    margin: var(--space-4) auto 0;
+    background-color: currentColor;
+}
+
+.banner-text {
+    max-width: 48ch;
+    margin: var(--space-4) auto 0;
+    font-size: var(--text-base);
+}
+
+.banner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+}
+
+/* ============================================================
+   SECCIÓN
+   ============================================================ */
+
+.section {
+    padding-top: var(--rhythm-section);
+    padding-bottom: var(--rhythm-section);
+}
+
+.section-note {
+    max-width: 46ch;
+    margin-top: var(--rhythm-block);
+    color: var(--color-text-muted);
+}
+
+.section-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rhythm-block);
+}
+
+/* ============================================================
+   FILTRO POR CATEGORÍA
+   Botones con `aria-pressed`: el estado presionado se anuncia solo.
+   Visualmente NO se distingue por color: el activo suma relleno,
+   peso tipográfico y un ✓ que aparece.
+   ============================================================ */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch-min);
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-surface);
+    border: var(--border-thin) solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.chip:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+}
+
+.chip-icon {
+    width: 0;                    /* no ocupa lugar mientras el chip está apagado */
+    height: 1rem;
+    overflow: hidden;
+    transition: width var(--transition-fast);
+}
+
+/* Mismo degradado y mismo truco del borde transparente que
+   `.btn-primary` */
+.chip[aria-pressed="true"] {
+    background-color: var(--color-primary);
+    background-image: linear-gradient(to right, var(--color-primary), var(--color-grad-2));
+    border-color: transparent;
+    color: var(--color-on-primary);
+    font-weight: var(--weight-semibold);
+}
+
+/* Va después de `.chip:hover`, que tiene la misma especificidad: sin
+   esta regla el chip encendido se quedaba sin respuesta al rollover */
+.chip[aria-pressed="true"]:hover {
+    background-image: linear-gradient(to left, var(--color-primary), var(--color-grad-2));
+    border-color: transparent;
+    color: var(--color-on-primary);
+}
+
+.chip[aria-pressed="true"] .chip-icon {
+    width: 1rem;
+}
+
+/* Cantidad de resultados: `role="status"` lo hace región viva,
+   así el filtro también se percibe sin ver la grilla */
+.result {
+    margin-top: var(--rhythm-block);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+/* ============================================================
+   GRILLA DE PRODUCTOS
+   ============================================================ */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: var(--grid-gap);
+    margin-top: var(--rhythm-block);
+}
+
+.grid-item {
+    display: flex;               /* estira la tarjeta a toda la altura de la celda */
+}
+
+/* ------------------------------------------------------------
+   Tarjeta
+   ------------------------------------------------------------ */
+
+.product {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--color-surface);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--transition-fast), transform var(--transition-medium);
+}
+
+.product:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
+}
+
+/* El foco del enlace se dibuja alrededor de la tarjeta entera */
+.product:focus-within {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: var(--focus-offset);
+}
+
+.product-media {
+    position: relative;
+    background-color: var(--color-surface-alt);
+}
+
+.product-photo {
+    width: 100%;
+    aspect-ratio: var(--product-ratio);
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Agotado: la foto se apaga y pierde color. Es refuerzo del badge,
+   no la señal: el estado lo dicen el ícono y la palabra "Agotado" */
+.product[data-sold-out] .product-photo {
+    filter: grayscale(1);
+    opacity: 0.65;
+}
+
+.product-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding: var(--product-pad);
+}
+
+.product-name {
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+}
+
+/* Enlace que cubre la tarjeta: el área clicable es toda la tarjeta,
+   pero el nombre accesible sigue siendo el del producto */
+.product-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.product-link:focus-visible {
+    outline: none;               /* lo dibuja .product:focus-within */
+}
+
+.product:hover .product-link {
+    color: var(--color-accent);
+}
+
+/* ------------------------------------------------------------
+   Ficha técnica — lista de definición, no tabla
+   ------------------------------------------------------------ */
+
+.spec {
+    margin: var(--space-4) 0 0;
+}
+
+.spec-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 2.25rem;
+    padding: var(--space-2) 0;
+    border-bottom: var(--border-thin) solid var(--color-border);
+}
+
+.spec-key {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+.spec-value {
+    margin: 0;
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    text-align: right;
+}
+
+/* Muestras de color: el tono lo pone paletas.css */
+.swatches {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.swatch {
+    width: var(--swatch-size);
+    height: var(--swatch-size);
+    border: var(--border-thin) solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+}
+
+/* ------------------------------------------------------------
+   Precio — pegado al pie de la tarjeta
+   ------------------------------------------------------------ */
+
+.price {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    margin-top: auto;
+    padding-top: var(--space-4);
+}
+
+.price-currency {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+.price-value {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.01em;
+    line-height: var(--leading-tight);
+}
+
+/* ------------------------------------------------------------
+   Badges de estado — color + ícono + texto, nunca sólo color
+   ------------------------------------------------------------ */
+
+.badge {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    z-index: 1;
+    pointer-events: none;        /* no tapa el enlace que cubre la tarjeta */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border: var(--border-thin) solid transparent;   /* todos miden igual */
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    line-height: var(--leading-tight);
+    text-transform: uppercase;
+}
+
+.badge-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex-shrink: 0;
+}
+
+.badge-new {
+    background-color: var(--color-badge-new-bg);
+    color: var(--color-badge-new-text);
+}
+
+.badge-featured {
+    background-color: var(--color-badge-featured-bg);
+    /* Es el badge claro: sobre una foto clara se perdería sin borde.
+       `border-strong` da ≥ 3:1 sobre el fondo del badge en las 12 paletas */
+    border-color: var(--color-border-strong);
+    color: var(--color-badge-featured-text);
+}
+
+.badge-sold-out {
+    background-color: var(--color-badge-sold-out-bg);
+    color: var(--color-badge-sold-out-text);
+}
+
+/* ------------------------------------------------------------
+   Estado vacío
+   ------------------------------------------------------------ */
+
+.empty {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--rhythm-block);
+    padding: var(--space-6) var(--space-4);
+    background-color: var(--color-surface-alt);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-text-muted);
+    text-align: left;
+}
+
+.empty-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    color: var(--color-accent-soft);  /* ícono, no texto: 4.17:1 supera el mínimo de 3:1 */
+}
+
+/* ============================================================
+   PAGINACIÓN — centrada al pie de la grilla
+   ============================================================ */
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--rhythm-section);
+}
+
+/* Es <ol> porque el orden importa; el reset de listas de base.css
+   sólo alcanza a <ul>, así que acá se apaga el marcador */
+.pagination-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-width: var(--page-size);
+    min-height: var(--page-size);
+    padding: 0 var(--space-3);
+    background-color: var(--color-surface);
+    /* Sin borde: lo que delimita el campo es su propio blanco contra la
+       barra oscura, que da de 5.8:1 (Piel) a 18:1 (Halloween) — muy por
+       encima del mínimo de 3:1 que pide el contorno de un control.
+       OJO con `data-nav="color"`: ahí la barra puede ser clara y el
+       contraste cae por debajo de 3:1 en verano, primavera, arcoiris y
+       alegre. Si esa variante se adopta, hay que devolverle un borde. */
+    border: 0;
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.page:hover:not(:disabled) {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+}
+
+/* Página actual: relleno + peso + `aria-current`, no sólo color */
+/* Mismo degradado y mismo truco del borde transparente que
+   `.btn-primary` */
+.page[aria-current="page"] {
+    background-color: var(--color-primary);
+    background-image: linear-gradient(to right, var(--color-primary), var(--color-grad-2));
+    border-color: transparent;
+    color: var(--color-on-primary);
+    font-weight: var(--weight-semibold);
+}
+
+/* Al pasar el mouse la página actual da vuelta el degradado. Antes
+   saltaba al acento, pero ahora los tres botones oscuros responden
+   igual. Va DESPUÉS de la regla del activo porque tienen la misma
+   especificidad que `.page:hover:not(:disabled)` y gana la última. */
+.page[aria-current="page"]:hover {
+    background-image: linear-gradient(to left, var(--color-primary), var(--color-grad-2));
+    border-color: transparent;
+    color: var(--color-on-primary);
+}
+
+/* Deshabilitado: opacidad + cursor + el atributo `disabled`, que es
+   lo que lo saca del recorrido de teclado y lo anuncia */
+.page:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.page-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+/* El chevron apunta hacia arriba: se gira según la dirección */
+.page-prev .page-icon {
+    transform: rotate(90deg);
+}
+
+.page-next .page-icon {
+    transform: rotate(-90deg);
+}
+
+/* En móvil las flechas quedan sólo con ícono */
+.page-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ============================================================
+   PIE DE PÁGINA — cuatro columnas sobre fondo oscuro
+   Todos los ratios anotados acá se miden contra --color-primary,
+   que es el extremo MÁS CLARO del gradiente: el peor caso.
+   Los valores mínimos son los de las 12 paletas de paletas.css.
+   ============================================================ */
+
+.footer {
+    /* El cuerpo del pie va en BLANCO PURO (`--color-footer-text`).
+       No sirve `--color-on-dark`: en diez de las doce paletas ese token
+       es un tono de la paleta (en halloween, un naranja), y usado como
+       color de cuerpo pintaba todo el pie de ese tono y gritaba.
+       El blanco deja el color de la paleta para lo que sí es acento:
+       íconos, filetes y hover. Los TÍTULOS de columna son la excepción
+       y siguen en el tono de la paleta: se fija en `.footer-title`.
+       Las dos variables de abajo son el único lugar donde se cambia. */
+    --footer-text:   var(--color-footer-text);      /* blanco · ratio anotado por paleta */
+    --footer-accent: var(--color-accent-invert);  /* ≥ 4.80:1 sobre primary — AA */
+
+    background-color: var(--color-primary);   /* respaldo si el gradiente no pinta */
+    /* Mismo degradado que la barra, para que el pie la acompañe:
+       el tono oscuro a la izquierda y `--color-grad-2` a la derecha.
+       Antes caía en vertical hacia `--color-primary-hover`, que en seis
+       paletas vale lo mismo que `primary` y dejaba el pie plano. */
+    background-image: linear-gradient(to right, var(--color-primary), var(--color-grad-2));
+    color: var(--footer-text);
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: var(--footer-columns);
+    gap: var(--footer-gap);
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.footer-col {
+    min-width: 0;
+}
+
+/* ------------------------------------------------------------
+   Columna 1 — marca y descripción
+   ------------------------------------------------------------ */
+
+.brand-footer {
+    color: var(--footer-text);
+}
+
+/* El logotipo es un JPG con fondo blanco sólido: sobre el pie oscuro
+   quedaría un rectángulo blanco pegado. Va dentro de una placa clara,
+   que es lo que ese fondo necesita para leerse como parte del diseño. */
+.brand-plate {
+    display: inline-flex;
+    flex-shrink: 0;
+    padding: var(--space-2);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
+}
+
+.brand-footer .brand-logo {
+    height: var(--logo-height-footer);
+}
+
+.brand-footer .brand-icon,
+.brand-footer .brand-name-alt {
+    color: var(--footer-accent);
+}
+
+.brand-footer:hover .brand-name-alt {
+    color: var(--footer-text);
+}
+
+.footer-description {
+    max-width: 38ch;
+    margin-top: var(--rhythm-block);
+    font-size: var(--text-sm);
+}
+
+/* ------------------------------------------------------------
+   Títulos de columna — filete decorativo como en el banner
+   ------------------------------------------------------------ */
+
+/* Único texto del pie que NO es blanco: el título de columna se queda
+   con el tono de la paleta para que el bloque tenga una jerarquía de
+   color y no un muro blanco parejo */
+.footer-title {
+    position: relative;
+    padding-bottom: var(--space-3);
+    border-bottom: var(--border-thin) solid var(--color-on-dark-border);  /* ≈1.8:1 — separador decorativo */
+    color: var(--color-on-dark);  /* ≥ 4.56:1 sobre primary */
+    font-size: var(--text-md);
+}
+
+.footer-title::after {
+    content: "";
+    position: absolute;
+    bottom: calc(-1 * var(--border-thin));
+    left: 0;
+    width: 3rem;
+    height: var(--focus-width);
+    background-color: var(--footer-accent);
+}
+
+/* ------------------------------------------------------------
+   Listas y enlaces
+   ------------------------------------------------------------ */
+
+.footer-list {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--rhythm-block);
+}
+
+.footer-list-double {
+    grid-template-rows: var(--footer-list-rows);
+    grid-auto-flow: var(--footer-list-flow);
+    justify-content: start;
+    gap: var(--space-3) var(--space-6);
+}
+
+.footer-link {
+    font-size: var(--text-sm);
+    color: var(--footer-text);
+}
+
+.footer-link:hover {
+    color: var(--footer-accent);
+    text-decoration: underline;
+}
+
+.footer-link-strong {
+    font-weight: var(--weight-semibold);
+}
+
+/* Página actual: subrayado + peso. El color ya no la distingue —queda
+   blanca como el resto—, así que la señal son las otras dos */
+.footer-link[aria-current="page"] {
+    color: var(--footer-text);
+    font-weight: var(--weight-semibold);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+/* ------------------------------------------------------------
+   Columna 3 — contacto
+   ------------------------------------------------------------ */
+
+.footer-info-list {
+    font-size: var(--text-sm);
+}
+
+.footer-info {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.footer-info-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: var(--footer-accent);                 /* ícono: ≥ 4.80:1 supera el mínimo de 3:1 */
+}
+
+/* ------------------------------------------------------------
+   Columna 4 — redes
+   ------------------------------------------------------------ */
+
+.footer-note {
+    max-width: 32ch;
+    margin-top: var(--rhythm-block);
+    font-size: var(--text-sm);
+}
+
+.footer-social {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--touch-min);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--footer-text);
+}
+
+/* Las redes van pegadas: cada enlace ya reserva sus 44px de alto
+   táctil, así que el gap de `.footer-list` sólo agregaba aire de más */
+.footer-social-list {
+    gap: 0;
+}
+
+/* El texto ya es blanco: el hover se marca con el subrayado, que se
+   lee igual sin distinguir colores */
+.footer-social:hover {
+    text-decoration: underline;
+}
+
+/* El ícono va suelto, sin recuadro ni relleno: la caja es del tamaño
+   del dibujo */
+.footer-social-icon {
+    width: 1.375rem;
+    height: 1.375rem;
+    flex-shrink: 0;
+    color: var(--footer-accent);
+}
+
+/* ------------------------------------------------------------
+   Barra inferior
+   ------------------------------------------------------------ */
+
+.footer-bottom {
+    background-color: var(--color-primary-hover);
+    border-top: var(--border-thin) solid var(--color-on-dark-border);
+}
+
+.footer-bottom-inner {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+    text-align: center;
+}
+
+.footer-copy {
+    font-size: var(--text-xs);
+    color: var(--footer-text);                  /* blanco: ≥ 11.14:1 sobre primary-hover */
+}
+
+/* ============================================================
+   VARIANTE DE FONDO — imagen + velo (<html data-background="imagen">)
+   Los velos van al 70 % y SIN desenfoque: `backdrop-filter` se sacó a
+   pedido. El contraste ahora depende sólo de la opacidad del velo, así
+   que si se cambia la foto hay que volver a medirlo.
+   ============================================================ */
+
+[data-background="image"] .header-top {
+    background-color: var(--color-glass);
+    border-bottom-color: var(--color-glass-border);
+}
+
+/* El degradado de la barra es opaco y taparía el vidrio: acá se apaga
+   y manda el velo translúcido, que es lo que deja ver la foto detrás */
+[data-background="image"] .nav {
+    background-color: var(--color-glass-dark);
+    background-image: none;
+}
+
+[data-background="image"] .section .container {
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-5);
+    background-color: var(--color-glass);
+    border-radius: var(--radius-lg);
+}
+
+/* ============================================================
+   PANEL DE DISEÑO
+   Herramienta de la maqueta, no del catálogo. Se saca borrando
+   esta sección, el bloque del mismo nombre en index.html y el
+   bloque del mismo nombre en app.js.
+   ============================================================ */
+
+.panel {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    z-index: 30;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: row-reverse;   /* el cuerpo se abre hacia la izquierda */
+    align-items: center;
+}
+
+.panel-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--touch-min);
+    height: var(--touch-min);
+    padding: 0;
+    background-color: var(--color-primary);
+    border: 0;
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+    color: var(--color-on-primary);
+    transition: background-color var(--transition-fast);
+}
+
+.panel-toggle:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.panel-toggle-icon {
+    width: 1.375rem;
+    height: 1.375rem;
+}
+
+.panel-body {
+    width: 13.5rem;
+    max-height: 80dvh;
+    overflow-y: auto;
+    padding: var(--space-4);
+    background-color: var(--color-surface);
+    border: var(--border-thin) solid var(--color-border);
+    border-right: 0;
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.panel-group {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.panel-group + .panel-group {
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: var(--border-thin) solid var(--color-border);
+}
+
+.panel-group ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+}
+
+.panel-group ul.panel-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* El radio real sigue en el árbol de accesibilidad: se navega con flechas */
+.panel-group input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+}
+
+.panel-group label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch-min);
+    padding: var(--space-2);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.panel-group label:hover {
+    border-color: var(--color-border-strong);
+}
+
+/* Seleccionado: borde + peso + ícono. Nunca sólo color */
+.panel-group input:checked + label {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+}
+
+.panel-group input:focus-visible + label {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: var(--focus-offset);
+}
+
+.panel-name {
+    font-size: var(--text-sm);
+}
+
+.panel-check {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    margin-left: auto;
+    color: var(--color-accent);
+    visibility: hidden;
+}
+
+.panel-group input:checked + label .panel-check {
+    visibility: visible;
+}
+
+/* Muestras de color: los tonos los pone paletas.css */
+.sample {
+    display: flex;
+    flex-shrink: 0;
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.sample span {
+    width: 0.75rem;
+    height: 1.25rem;
+}
+
+.panel-footer {
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: var(--border-thin) solid var(--color-border);
+}
+
+.panel-reset {
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-sm);
+    color: var(--color-accent);
+    font-size: var(--text-xs);
+    text-align: left;
+    text-decoration: underline;
+}
+
+.panel-reset:hover {
+    color: var(--color-accent-hover);
+}
+
+.panel-notice {
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+}
+
+/* ============================================================
+   MIGAS DE PAN (producto.html)
+   ============================================================ */
+
+.breadcrumbs {
+    padding-top: var(--space-4);
+    font-size: var(--text-sm);
+}
+
+.breadcrumbs-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.breadcrumbs-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+}
+
+/* Enlace dentro de una línea de texto: subrayado, nunca sólo color */
+.breadcrumbs-link {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.breadcrumbs-link:hover {
+    color: var(--color-accent);
+}
+
+.breadcrumbs-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    transform: rotate(-90deg);       /* el chevron apunta hacia abajo */
+    color: var(--color-accent-soft);
+}
+
+.breadcrumbs-current {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+}
+
+/* ============================================================
+   FICHA DE PRODUCTO — galería + información
+   El reparto en columnas lo decide `--detail-columns`, que se
+   redefine por breakpoint en base.css.
+   ============================================================ */
+
+.detail-inner {
+    display: grid;
+    grid-template-columns: var(--detail-columns);
+    gap: var(--detail-gap);
+    align-items: start;
+}
+
+/* ------------------------------------------------------------
+   Galería — cambio de foto por desvanecido (fade)
+   Las fotos se apilan y sólo `.is-active` se ve. La primera ya
+   viene marcada desde el HTML: sin JS se ve esa, y las miniaturas
+   siguen siendo enlaces a cada foto.
+   ------------------------------------------------------------ */
+
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.gallery-viewer {
+    position: relative;
+    aspect-ratio: var(--gallery-ratio);   /* reserva el alto: no hay salto al cargar */
+    background-color: var(--color-surface-alt);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.gallery-slides {
+    position: absolute;
+    inset: 0;
+}
+
+/* `visibility` además de `opacity`: la foto oculta sale del árbol de
+   accesibilidad y no queda alcanzable con el tabulador */
+.gallery-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-slow), visibility var(--transition-slow);
+}
+
+.gallery-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Sin JS las miniaturas siguen siendo enlaces al ancla de cada foto:
+   `:target` la muestra y esconde la que estaba. En cuanto el script
+   arranca marca la galería con `data-ready` y estas dos reglas se
+   apagan, así el hash de la URL no pelea con el script. */
+.gallery:not([data-ready]) .gallery-slide:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+.gallery:not([data-ready]) .gallery-slides:has(:target) .gallery-slide.is-active:not(:target) {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.gallery-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Flechas: las muestra el script. Sin JS no aparecen porque no harían nada */
+.gallery-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--touch-min);
+    height: var(--touch-min);
+    padding: 0;
+    background-color: var(--color-surface);
+    border: var(--border-thin) solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    color: var(--color-text);
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.gallery-arrow:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+.gallery-prev {
+    left: var(--space-3);
+}
+
+.gallery-next {
+    right: var(--space-3);
+}
+
+.gallery-arrow-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.gallery-prev .gallery-arrow-icon {
+    transform: rotate(90deg);
+}
+
+.gallery-next .gallery-arrow-icon {
+    transform: rotate(-90deg);
+}
+
+/* Miniaturas */
+.gallery-thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.gallery-thumb {
+    display: block;
+    width: var(--thumb-size);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color var(--transition-fast);
+}
+
+.gallery-thumb img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.gallery-thumb:hover {
+    border-color: var(--color-border-strong);
+}
+
+/* La activa suma anillo y recupera opacidad plena; el estado también
+   viaja en `aria-current`, así que no depende del color */
+.gallery-thumb.is-active {
+    border-color: var(--color-accent);
+    box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+.gallery-thumb:not(.is-active) img {
+    opacity: 0.72;
+}
+
+/* ------------------------------------------------------------
+   Información del producto
+   ------------------------------------------------------------ */
+
+.detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rhythm-block);
+}
+
+.detail-title {
+    font-size: var(--detail-title);
+}
+
+.detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+.detail-meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.detail-meta-link {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.detail-meta-link:hover {
+    color: var(--color-accent);
+}
+
+.detail-meta-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    color: var(--color-accent-soft);
+}
+
+/* Disponibilidad: ícono + palabra. El color no dice nada por su cuenta */
+.detail-stock {
+    color: var(--color-text);
+    font-weight: var(--weight-medium);
+}
+
+/* Precio de la ficha: el de la tarjeta empuja hacia abajo, este no */
+.price-detail {
+    flex-wrap: wrap;
+    row-gap: var(--space-2);
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.price-detail .price-value {
+    font-size: var(--text-2xl);
+}
+
+/* Precio anterior: `<s>` + el prefijo oculto "Precio anterior:" */
+.price-before {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-decoration-thickness: 2px;
+}
+
+/* Descuento: mismo par que el badge "Nuevo", ya medido en las 12 paletas */
+/* El degradado va de `accent` a `accent-hover`, los dos tonos de acento
+   que la paleta ya declara: no hace falta un token nuevo como en la
+   barra. El texto (`on-accent`) queda en 6.81:1 en el peor caso (oro)
+   contra el extremo derecho. El color plano queda de respaldo. */
+.price-off {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    background-color: var(--color-badge-new-bg);
+    background-image: linear-gradient(to right, var(--color-accent), var(--color-accent-hover));
+    border-radius: var(--radius-sm);
+    color: var(--color-badge-new-text);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+}
+
+.price-off-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex-shrink: 0;
+}
+
+.detail-installments {
+    margin-top: calc(var(--space-2) * -1);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+.detail-summary {
+    max-width: 60ch;
+    color: var(--color-text-muted);
+}
+
+.spec-detail {
+    margin-top: 0;
+}
+
+.swatches-detail {
+    --swatch-size: 1.5rem;
+}
+
+.detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+/* En móvil y tablet los dos van uno debajo del otro, a ancho completo: en una
+   columna angosta, Compartir con el ancho de su texto quedaba suelto */
+.detail-actions > li {
+    flex: 1 1 100%;
+}
+
+.detail-actions .btn {
+    width: 100%;
+}
+
+/* ------------------------------------------------------------
+   Ventajas — ícono + título + detalle
+   ------------------------------------------------------------ */
+
+/* Acá el degradado no puede usar los tonos oscuros: la caja es clara y
+   el texto encima se mide contra ella. Va de `surface-alt` a
+   `--color-grad-alt-2`, que cada paleta declara con sus tres ratios
+   anotados: en cuatro es un tono entregado (verano sw-2, primavera
+   sw-2, arcoíris sw-3, alegre sw-3) y en las otras ocho un aclarado
+   del propio `surface-alt`, porque ningún tono de esas paletas aguanta
+   el texto encima.
+   NO va a `--color-surface`: terminar en blanco puro desteñía la caja
+   entera en las paletas saturadas. */
+.benefits {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background-color: var(--color-surface-alt);
+    background-image: linear-gradient(to right, var(--color-surface-alt), var(--color-grad-alt-2));
+    border-radius: var(--radius-lg);
+}
+
+.benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.benefit-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    color: var(--color-accent);
+}
+
+.benefit-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.benefit-title {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+}
+
+.benefit-detail {
+    color: var(--color-text-muted);       /* ≥ 4.62:1 sobre surface-alt y ≥ 5.42:1 sobre surface, los dos extremos del degradado */
+    font-size: var(--text-xs);
+}
+
+/* ============================================================
+   PESTAÑAS
+   Sin JS: la lista es un índice de enlaces y los tres paneles se
+   ven completos, cada uno con su <h3>. Con JS la lista pasa a ser
+   un `tablist` y sólo queda visible el panel elegido.
+   ============================================================ */
+
+.tabs {
+    margin-top: var(--rhythm-block);
+}
+
+.tabs-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    border-bottom: var(--border-thin) solid var(--color-border);
+}
+
+.tab {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-min);
+    padding: var(--space-3) var(--space-4);
+    /* El borde inferior ya existe apagado: al seleccionar sólo cambia
+       de color y la pestaña no se mueve un pixel */
+    border-bottom: 3px solid transparent;
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.tab:hover {
+    color: var(--color-text);
+    border-bottom-color: var(--color-border-strong);
+}
+
+/* Seleccionada: subrayado grueso + más peso + color. El estado real lo
+   dice `aria-selected`, así que no depende de ver el color */
+.tab[aria-selected="true"] {
+    border-bottom-color: var(--color-accent);
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+}
+
+.tabs-panel {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-5) 0;
+    color: var(--color-text-muted);
+}
+
+/* El panel es desplazable con el teclado (tabindex="0"): necesita foco visible */
+.tabs-panel:focus-visible {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: var(--focus-offset);
+}
+
+/* Con el script andando el título del panel lo dice la pestaña:
+   repetirlo sería decir dos veces lo mismo */
+.tabs[data-ready] .tabs-panel-title {
+    display: none;
+}
+
+/* Sin JS los tres paneles quedan a la vista, separados entre sí */
+.tabs:not([data-ready]) .tabs-panel + .tabs-panel {
+    border-top: var(--border-thin) solid var(--color-border);
+}
+
+/* ============================================================
+   PRODUCTOS RELACIONADOS
+   Las tarjetas son las del catálogo; sólo cambia cuántas entran
+   por fila (`--related-columns`, definida en base.css).
+   ============================================================ */
+
+.section-header-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.section-link:hover {
+    color: var(--color-accent-hover);
+}
+
+.section-link-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.grid-related {
+    --grid-columns: var(--related-columns);
+}
+
+/* ============================================================
+   CONTACTO (contacto.html)
+   Dos tarjetas —datos y horarios— y el mapa. El reparto en
+   columnas lo decide `--contact-columns`, que se redefine por
+   breakpoint en base.css: acá no hay ni un @media.
+   ============================================================ */
+
+/* El banner de contacto es el MISMO componente que el del catálogo:
+   el modificador no pisa colores ni composición, sólo el token del
+   alto. Así la variante de velo y los dos toggles lo siguen afectando. */
+.banner-short {
+    --banner-height: var(--banner-height-short);
+}
+
+.contact {
+    display: grid;
+    grid-template-columns: var(--contact-columns);
+    gap: var(--contact-gap);
+    align-items: start;
+    margin-top: var(--rhythm-block);
+}
+
+/* --------------------------------------------------------------
+   Tarjeta — la caja que comparten datos, horarios y formulario
+   -------------------------------------------------------------- */
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rhythm-block);
+    padding: var(--space-5);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+}
+
+.card-title {
+    font-size: var(--text-md);
+}
+
+.card-note {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+/* --------------------------------------------------------------
+   Datos de contacto — ícono + clave + valor
+   -------------------------------------------------------------- */
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.contact-info {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+/* El ícono es decorativo y acompaña a un texto que ya dice lo
+   mismo: le alcanza con el mínimo de 3:1 de accent-soft */
+.contact-info-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    color: var(--color-accent-soft);
+}
+
+.contact-info-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-info-key {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+}
+
+.contact-info-value {
+    font-weight: var(--weight-medium);
+}
+
+.contact-info-link:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+/* --------------------------------------------------------------
+   Horarios — lista de definición, no tabla
+   -------------------------------------------------------------- */
+
+.hours {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+}
+
+.hours-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: var(--border-thin) solid var(--color-border);
+}
+
+.hours-row:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.hours-day {
+    font-weight: var(--weight-medium);
+}
+
+.hours-time {
+    margin: 0;
+    color: var(--color-text-muted);
+}
+
+/* El día cerrado ya se distingue por la palabra; la cursiva es un
+   refuerzo, nunca la única señal */
+.hours-row-closed .hours-time {
+    font-style: italic;
+}
+
+/* --------------------------------------------------------------
+   Mapa
+   -------------------------------------------------------------- */
+
+.map {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rhythm-block);
+    margin: var(--rhythm-block) 0 0;
+}
+
+/* El alto es un token: sin él el iframe nace en 150px y el mapa
+   queda inservible en desktop */
+.map-frame {
+    display: block;
+    width: 100%;
+    height: var(--map-height);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.map-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin: 0;
+}
+
+.map-address {
+    color: var(--color-text-muted);
+}
+
+/* ============================================================
+   RESPONSIVE — un bloque por breakpoint, ordenados
+   340px es la base · 991px y 1440px se cubren acá
+   ============================================================ */
+
+@media (min-width: 48rem) {          /* 768px */
+
+    .nav {
+        --search-width: 20rem;
+    }
+}
+
+@media (min-width: 62rem) {          /* 992px — supera el corte de 991px */
+
+    .header-top-inner {
+        flex-wrap: nowrap;
+        min-height: var(--header-height);
+        padding-top: var(--space-4);
+        padding-bottom: var(--space-4);
+    }
+
+    .brand-icon {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    .info-list {
+        display: flex;
+        gap: var(--space-7);
+    }
+
+    .nav-toggle {
+        display: none;
+    }
+
+    /* Recién acá aparece la barra: fondo y alto propios */
+    .nav {
+        background-color: var(--nav-bg);
+    }
+
+    /* Degradado de la barra: el tono oscuro de la paleta a la izquierda
+       y `--color-grad-2` a la derecha, que cada bloque de paletas.css
+       declara con su ratio medido. En café son sw-5 → sw-4, que fue de
+       donde salió la idea. El color plano queda debajo de respaldo.
+       No aplica a `data-nav="color"`: esa barra tiene su propio fondo. */
+    /* El `:not()` va sobre `html`, que es donde vive el atributo: suelto
+       lo cumpliría cualquier ancestro (body, header) y el degradado se
+       colaría también en la barra de color. */
+    html:not([data-nav="color"]) .nav {
+        background-image: linear-gradient(to right, var(--nav-bg), var(--color-grad-2));
+    }
+
+    .nav-inner {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        min-height: var(--nav-height);
+    }
+
+    /* Se acabó el panel: el wrap desaparece con `display: contents` y
+       sus dos hijos —menú y buscador— vuelven a ser ítems del flex de
+       la barra, cada uno con su `order`. Lo que sólo tiene sentido
+       dentro del panel —el ✕, el velo y el bloque de horario y
+       dirección— se va: acá esos datos están en la franja superior. */
+    .nav-panel {
+        display: contents;
+        /* `display: contents` no genera caja, pero `visibility` SÍ se
+           hereda: sin esto el menú entero nacería oculto en escritorio,
+           porque el panel está cerrado y hereda su `hidden`. */
+        visibility: visible;
+    }
+
+    .nav-panel-close,
+    .nav-veil,
+    .nav-info-list {
+        display: none;
+    }
+
+    /* El menú vuelve a ser una fila y deja de depender del toggle */
+    .menu {
+        order: 1;
+        flex-basis: auto;
+        display: flex;
+        align-items: stretch;
+        padding-bottom: 0;
+        border-top: 0;
+    }
+
+    .menu-item {
+        position: relative;
+    }
+
+    .menu-item + .menu-item {
+        border-top: 0;
+    }
+
+    .menu-link {
+        min-height: var(--nav-height);
+        padding: 0 var(--nav-item-pad);
+        border-bottom: var(--focus-width) solid transparent;
+        white-space: nowrap;
+    }
+
+    .menu-item:first-child .menu-link {
+        padding-left: 0;
+    }
+
+    /* Ya no hay panel que recorte: el anillo vuelve a pintarse por fuera */
+    .menu-link:focus-visible,
+    .submenu a:focus-visible {
+        outline-offset: var(--focus-offset);
+    }
+
+    /* Página actual: barra inferior en vez de lateral */
+    .menu-link[aria-current="page"] {
+        padding-left: 0;
+        border-left: 0;
+        border-bottom-color: var(--nav-brand);
+    }
+
+    .menu-btn[aria-expanded="true"] {
+        border-bottom-color: var(--nav-text-strong);
+    }
+
+    /* Submenú como desplegable sobre fondo claro */
+    .submenu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 15;
+        min-width: 13rem;
+        padding: var(--space-2);
+        background-color: var(--color-surface);
+        border: var(--border-thin) solid var(--color-border);
+        border-radius: var(--radius-md);
+    }
+
+    .submenu a {
+        min-height: auto;
+        padding: var(--space-2) var(--space-3);
+        color: var(--color-text);
+    }
+
+    .submenu a:hover {
+        background-color: var(--color-surface-alt);
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+
+    .nav-search {
+        order: 2;
+        margin-left: var(--space-4);
+        padding: 0;
+    }
+
+    .search-toggle {
+        display: inline-flex;
+    }
+
+    /* Acá sí es un desplegable: el formulario está anclado a la derecha
+       de la barra, junto a la lupa, y lo que se anima es su ancho, de 0
+       a --search-width. Cerrado sale del orden de tabulación con
+       `visibility: hidden`, retrasado hasta el final de la transición
+       para que el cierre se vea. */
+    .search {
+        position: absolute;
+        top: 50%;
+        right: var(--container-pad);
+        z-index: 15;
+        transform: translateY(-50%);
+        width: 0;
+        visibility: hidden;
+        transition: width var(--transition-medium),
+                    visibility 0s linear var(--time-medium);
+    }
+
+    .nav.search-open .search {
+        width: var(--search-width);
+        visibility: visible;
+        transition: width var(--transition-medium), visibility 0s;
+    }
+
+    /* Abierto, el formulario ocupa el lugar de la lupa: sobra el segundo
+       ícono. Se oculta con `visibility` para no mover el resto de la barra. */
+    .nav.search-open .search-toggle {
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .nav {
+        --search-width:  22rem;
+        --search-height: 2.25rem;        /* 36px — proporcionado a una barra de 56px */
+        --search-text:   var(--text-sm);  /* con teclado físico no hay zoom que evitar */
+    }
+
+    .btn {
+        font-size: var(--text-base);
+        padding: var(--space-3) var(--space-6);
+    }
+
+    .banner-text {
+        font-size: var(--text-md);
+    }
+
+    .banner-actions {
+        margin-top: var(--space-6);
+    }
+
+    .section-header {
+        gap: var(--space-5);
+    }
+
+    .product-name {
+        font-size: var(--text-md);
+    }
+
+    /* Hay ancho: Comprar toma el resto de la fila y Compartir se queda
+       con el ancho de su texto */
+    .detail-actions > li:first-child {
+        flex: 1 1 12rem;
+    }
+
+    .detail-actions > li:last-child {
+        flex: 0 1 auto;
+    }
+
+    /* Hay lugar: las flechas de paginación recuperan su texto */
+    .page-text {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        clip-path: none;
+    }
+}
+
+@media (min-width: 90rem) {          /* 1440px */
+
+    :root {
+        --nav-item-pad: var(--space-5);
+    }
+}

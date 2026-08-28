@@ -1,0 +1,557 @@
+/* ==========================================================================
+   THEMES — paleta + personalidad visual intercambiables
+   Se activan con data-theme en <html>. El tema por defecto (cacao) vive en
+   :root de base.css.  Las medidas NO son variables: van literales por tema.
+
+   cacao    → marrón + dorado, radios medios, sombras suaves   (por defecto)
+   oceano   → azul profundo + cian, radios amplios, más aire y sombra
+   grafito  → gris casi negro + lima, radios rectos, compacto, sin sombras
+   ========================================================================== */
+
+/* ==========================================================================
+   OCÉANO — paleta
+   ========================================================================== */
+
+:root[data-theme="oceano"] {
+    --color-primary: #0f2e4a;
+    --color-primary-dark: #081c2e;
+    --color-primary-soft: #1d4a70;
+    --color-accent: #38a3c9;
+    --color-accent-dark: #1f7fa3;
+    --color-accent-soft: #e0f2f8;
+
+    --color-bg: #eef4f8;
+    --color-surface: #ffffff;
+    --color-surface-alt: #f5f9fc;
+    --color-surface-hover: #e8f1f7;
+    --color-overlay: rgba(8, 28, 46, 0.45);
+
+    --color-text: #12232f;
+    --color-text-soft: #55707f;
+    --color-text-muted: #8ba3b0;
+    --color-text-invert: #ffffff;
+
+    --color-border: #dae5ec;
+    --color-border-soft: #e9f0f5;
+    --color-border-strong: #c2d4df;
+
+    --color-sidebar-bg: #0f2e4a;
+    --color-sidebar-border: #1d4a70;
+    --color-sidebar-text: #a8c4d6;
+    --color-sidebar-text-strong: #ffffff;
+    --color-sidebar-hover: #17395a;
+    --color-sidebar-active: #1d4a70;
+    --color-sidebar-muted: #7699ad;
+
+    --color-success: #14795c;
+    --color-success-soft: #e2f4ef;
+    --color-danger: #c0392b;
+    --color-danger-soft: #fceceb;
+    --color-warning: #b57b12;
+    --color-warning-soft: #fdf4e3;
+    --color-info: #1f7fa3;
+    --color-info-soft: #e0f2f8;
+
+    --color-focus-ring: rgba(56, 163, 201, 0.35);
+    --color-shadow: rgba(8, 28, 46, 0.12);
+    --color-shadow-strong: rgba(8, 28, 46, 0.22);
+
+    --color-chart-1: #0f2e4a;
+    --color-chart-2: #38a3c9;
+    --color-chart-3: #6fbf9b;
+    --color-chart-4: #e0a458;
+    --color-chart-grid: #e4edf3;
+}
+
+/* OCÉANO — personalidad: radios amplios, más aire, sombra presente ---------- */
+
+:root[data-theme="oceano"] .btn,
+:root[data-theme="oceano"] .input,
+:root[data-theme="oceano"] .select,
+:root[data-theme="oceano"] .textarea,
+:root[data-theme="oceano"] .btn-icon,
+:root[data-theme="oceano"] .input-group-action {
+    border-radius: 10px;
+}
+
+:root[data-theme="oceano"] .card,
+:root[data-theme="oceano"] .stat,
+:root[data-theme="oceano"] .auth-card,
+:root[data-theme="oceano"] .category-card {
+    border-radius: 16px;
+}
+
+:root[data-theme="oceano"] .card,
+:root[data-theme="oceano"] .stat {
+    box-shadow: 0 4px 16px var(--color-shadow);
+}
+
+:root[data-theme="oceano"] .auth-card {
+    box-shadow: 0 20px 44px var(--color-shadow);
+}
+
+:root[data-theme="oceano"] .dropdown-menu,
+:root[data-theme="oceano"] .toast,
+:root[data-theme="oceano"] .store-link,
+:root[data-theme="oceano"] .plan-card {
+    border-radius: 14px;
+}
+
+:root[data-theme="oceano"] .nav-item > a,
+:root[data-theme="oceano"] .nav-toggle,
+:root[data-theme="oceano"] .sidebar-collapse,
+:root[data-theme="oceano"] .dropdown-item > a,
+:root[data-theme="oceano"] .dropdown-item > button {
+    border-radius: 10px;
+}
+
+:root[data-theme="oceano"] .card-body {
+    gap: 1.25rem;
+    padding: 1.5rem;
+}
+
+:root[data-theme="oceano"] .card-header {
+    padding: 1.375rem 1.5rem;
+}
+
+:root[data-theme="oceano"] .card-footer {
+    padding: 1rem 1.5rem;
+}
+
+:root[data-theme="oceano"] .stat {
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+:root[data-theme="oceano"] .table th,
+:root[data-theme="oceano"] .table td {
+    padding: 0.9375rem 1.5rem;
+}
+
+:root[data-theme="oceano"] .list li {
+    padding: 0.9375rem 1.5rem;
+}
+
+:root[data-theme="oceano"] .content {
+    gap: 1.75rem;
+    padding: 1.5rem 2rem 2.5rem;
+}
+
+:root[data-theme="oceano"] .breadcrumb {
+    padding: 1.25rem 2rem 0;
+}
+
+:root[data-theme="oceano"] .topbar {
+    padding: 0 2rem;
+}
+
+:root[data-theme="oceano"] .stat-grid,
+:root[data-theme="oceano"] .panel-grid {
+    gap: 1.25rem;
+}
+
+:root[data-theme="oceano"] .thumb,
+:root[data-theme="oceano"] .page-link > a,
+:root[data-theme="oceano"] .page-link > button,
+:root[data-theme="oceano"] .slug-preview {
+    border-radius: 10px;
+}
+
+:root[data-theme="oceano"] .uploader,
+:root[data-theme="oceano"] .gallery-item,
+:root[data-theme="oceano"] .layout-option,
+:root[data-theme="oceano"] .seo-preview,
+:root[data-theme="oceano"] .og-card,
+:root[data-theme="oceano"] .media-thumb {
+    border-radius: 14px;
+}
+
+:root[data-theme="oceano"] .color-field,
+:root[data-theme="oceano"] .input-prefix {
+    border-radius: 10px;
+}
+
+:root[data-theme="oceano"] .toolbar,
+:root[data-theme="oceano"] .bulkbar {
+    padding: 1rem 1.5rem;
+}
+
+/* ==========================================================================
+   GRAFITO — paleta
+   ========================================================================== */
+
+:root[data-theme="grafito"] {
+    --color-primary: #1c1c1e;
+    --color-primary-dark: #0a0a0b;
+    --color-primary-soft: #3a3a3d;
+    --color-accent: #a3d139;
+    --color-accent-dark: #759c1c;
+    --color-accent-soft: #f0f8dd;
+
+    --color-bg: #f2f2f2;
+    --color-surface: #ffffff;
+    --color-surface-alt: #f7f7f7;
+    --color-surface-hover: #ededed;
+    --color-overlay: rgba(10, 10, 11, 0.5);
+
+    --color-text: #141416;
+    --color-text-soft: #5c5c60;
+    --color-text-muted: #949498;
+    --color-text-invert: #ffffff;
+
+    --color-border: #dcdcde;
+    --color-border-soft: #e8e8ea;
+    --color-border-strong: #bcbcc0;
+
+    --color-sidebar-bg: #1c1c1e;
+    --color-sidebar-border: #303033;
+    --color-sidebar-text: #b4b4b8;
+    --color-sidebar-text-strong: #ffffff;
+    --color-sidebar-hover: #2a2a2d;
+    --color-sidebar-active: #3a3a3d;
+    --color-sidebar-muted: #7e7e83;
+
+    --color-success: #2c7a2c;
+    --color-success-soft: #eaf5e6;
+    --color-danger: #c1291f;
+    --color-danger-soft: #fbeae9;
+    --color-warning: #a86a09;
+    --color-warning-soft: #fcf2e0;
+    --color-info: #2b5f9e;
+    --color-info-soft: #eaf0f8;
+
+    --color-focus-ring: rgba(163, 209, 57, 0.4);
+    --color-shadow: rgba(10, 10, 11, 0.1);
+    --color-shadow-strong: rgba(10, 10, 11, 0.2);
+
+    --color-chart-1: #1c1c1e;
+    --color-chart-2: #a3d139;
+    --color-chart-3: #6b7a86;
+    --color-chart-4: #d18939;
+    --color-chart-grid: #e8e8ea;
+}
+
+/* GRAFITO — personalidad: recto, compacto, sin sombras --------------------- */
+
+:root[data-theme="grafito"] .btn,
+:root[data-theme="grafito"] .input,
+:root[data-theme="grafito"] .select,
+:root[data-theme="grafito"] .textarea,
+:root[data-theme="grafito"] .btn-icon,
+:root[data-theme="grafito"] .input-group-action,
+:root[data-theme="grafito"] .badge,
+:root[data-theme="grafito"] .thumb,
+:root[data-theme="grafito"] .stat-icon,
+:root[data-theme="grafito"] .notif-icon,
+:root[data-theme="grafito"] .brand-mark {
+    border-radius: 4px;
+}
+
+:root[data-theme="grafito"] .card,
+:root[data-theme="grafito"] .stat,
+:root[data-theme="grafito"] .auth-card,
+:root[data-theme="grafito"] .dropdown-menu,
+:root[data-theme="grafito"] .toast,
+:root[data-theme="grafito"] .store-link,
+:root[data-theme="grafito"] .plan-card,
+:root[data-theme="grafito"] .category-card,
+:root[data-theme="grafito"] .alert {
+    border-radius: 6px;
+}
+
+:root[data-theme="grafito"] .avatar,
+:root[data-theme="grafito"] .color-field,
+:root[data-theme="grafito"] .color-input,
+:root[data-theme="grafito"] .input-prefix,
+:root[data-theme="grafito"] .layout-option,
+:root[data-theme="grafito"] .layout-thumb,
+:root[data-theme="grafito"] .seo-preview,
+:root[data-theme="grafito"] .og-card,
+:root[data-theme="grafito"] .media-thumb,
+:root[data-theme="grafito"] .media-cover,
+:root[data-theme="grafito"] .uploader,
+:root[data-theme="grafito"] .gallery-item,
+:root[data-theme="grafito"] .slug-preview,
+:root[data-theme="grafito"] .page-link > a,
+:root[data-theme="grafito"] .page-link > button {
+    border-radius: 4px;
+}
+
+:root[data-theme="grafito"] .toolbar,
+:root[data-theme="grafito"] .bulkbar {
+    padding: 0.625rem 1rem;
+}
+
+:root[data-theme="grafito"] .uploader {
+    padding: 1.25rem 1rem;
+}
+
+:root[data-theme="grafito"] .nav-item > a,
+:root[data-theme="grafito"] .nav-toggle,
+:root[data-theme="grafito"] .sidebar-collapse,
+:root[data-theme="grafito"] .dropdown-item > a,
+:root[data-theme="grafito"] .dropdown-item > button,
+:root[data-theme="grafito"] .user-button {
+    border-radius: 4px;
+}
+
+:root[data-theme="grafito"] .card,
+:root[data-theme="grafito"] .stat,
+:root[data-theme="grafito"] .auth-card,
+:root[data-theme="grafito"] .dropdown-menu,
+:root[data-theme="grafito"] .toast {
+    box-shadow: none;
+}
+
+:root[data-theme="grafito"] .card,
+:root[data-theme="grafito"] .stat,
+:root[data-theme="grafito"] .auth-card,
+:root[data-theme="grafito"] .dropdown-menu,
+:root[data-theme="grafito"] .toast {
+    border-color: var(--color-border-strong);
+}
+
+:root[data-theme="grafito"] .card-body {
+    gap: 0.875rem;
+    padding: 1rem;
+}
+
+:root[data-theme="grafito"] .card-header {
+    padding: 0.875rem 1rem;
+}
+
+:root[data-theme="grafito"] .card-footer {
+    padding: 0.75rem 1rem;
+}
+
+:root[data-theme="grafito"] .stat {
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+:root[data-theme="grafito"] .table th,
+:root[data-theme="grafito"] .table td {
+    padding: 0.5625rem 1rem;
+}
+
+:root[data-theme="grafito"] .list li {
+    padding: 0.5625rem 1rem;
+}
+
+:root[data-theme="grafito"] .content {
+    gap: 1rem;
+    padding: 1rem 1.25rem 1.75rem;
+}
+
+:root[data-theme="grafito"] .breadcrumb {
+    padding: 0.875rem 1.25rem 0;
+}
+
+:root[data-theme="grafito"] .topbar {
+    height: 56px;
+    padding: 0 1.25rem;
+}
+
+:root[data-theme="grafito"] .sidebar-brand {
+    height: 56px;
+}
+
+:root[data-theme="grafito"] .stat-grid,
+:root[data-theme="grafito"] .panel-grid {
+    gap: 0.75rem;
+}
+
+:root[data-theme="grafito"] .auth-card {
+    gap: 1.25rem;
+    padding: 1.75rem;
+}
+
+/* Lima sobre blanco necesita texto oscuro */
+
+:root[data-theme="grafito"] .btn-accent,
+:root[data-theme="grafito"] .brand-mark {
+    color: var(--color-primary-dark);
+}
+
+:root[data-theme="grafito"] .progress-bar {
+    background-color: var(--color-accent);
+}
+
+/* ==========================================================================
+   ADMIN — tema oscuro exclusivo del panel de superadministración
+   Se fija con data-theme="admin" + data-theme-locked en <html>, así no lo
+   pisa la preferencia guardada del panel de tienda.
+   ========================================================================== */
+
+:root[data-theme="admin"] {
+    --color-primary: #5b6ae0;
+    --color-primary-dark: #4a58c9;
+    --color-primary-soft: #3a4270;
+    --color-accent: #4dd4ac;
+    --color-accent-dark: #2fb894;
+    --color-accent-soft: #17352e;
+
+    --color-bg: #14161a;
+    --color-surface: #1b1e24;
+    --color-surface-alt: #21252c;
+    --color-surface-hover: #272c34;
+    --color-overlay: rgba(0, 0, 0, 0.65);
+
+    --color-text: #e8eaed;
+    --color-text-soft: #a7adb8;
+    --color-text-muted: #757d8a;
+    --color-text-invert: #ffffff;
+
+    --color-border: #2c313a;
+    --color-border-soft: #23272e;
+    --color-border-strong: #3b4250;
+
+    --color-sidebar-bg: #0f1114;
+    --color-sidebar-border: #23272f;
+    --color-sidebar-text: #98a0ad;
+    --color-sidebar-text-strong: #ffffff;
+    --color-sidebar-hover: #1b1f26;
+    --color-sidebar-active: #272c36;
+    --color-sidebar-muted: #6b7280;
+
+    --color-success: #4ade80;
+    --color-success-soft: #17301f;
+    --color-danger: #f87171;
+    --color-danger-soft: #331b1b;
+    --color-warning: #fbbf24;
+    --color-warning-soft: #33280f;
+    --color-info: #60a5fa;
+    --color-info-soft: #16263a;
+
+    --color-focus-ring: rgba(91, 106, 224, 0.35);
+    --color-shadow: rgba(0, 0, 0, 0.45);
+    --color-shadow-strong: rgba(0, 0, 0, 0.6);
+
+    --color-chart-1: #5b6ae0;
+    --color-chart-2: #4dd4ac;
+    --color-chart-3: #fbbf24;
+    --color-chart-4: #f87171;
+    --color-chart-grid: #2c313a;
+}
+
+/* Ajustes propios del modo oscuro ----------------------------------------- */
+
+:root[data-theme="admin"] .brand-text span {
+    color: var(--color-accent);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+:root[data-theme="admin"] .brand-mark,
+:root[data-theme="admin"] .btn-accent,
+:root[data-theme="admin"] .gallery-tag,
+:root[data-theme="admin"] .preview-tag,
+:root[data-theme="admin"] .count {
+    color: var(--color-bg);
+}
+
+:root[data-theme="admin"] .select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a7adb8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+:root[data-theme="admin"] .thumb,
+:root[data-theme="admin"] .avatar {
+    border-color: var(--color-border);
+}
+
+:root[data-theme="admin"] .table thead th {
+    background-color: var(--color-surface-alt);
+}
+
+/* ==========================================================================
+   Selector de tema (topbar)
+   ========================================================================== */
+
+.theme-swatch {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.theme-swatch span {
+    width: 50%;
+    height: 100%;
+}
+
+.theme-cacao span:first-child {
+    background-color: #2f2723;
+}
+
+.theme-cacao span:last-child {
+    background-color: #c8a27a;
+}
+
+.theme-oceano span:first-child {
+    background-color: #0f2e4a;
+}
+
+.theme-oceano span:last-child {
+    background-color: #38a3c9;
+}
+
+.theme-grafito span:first-child {
+    background-color: #1c1c1e;
+}
+
+.theme-grafito span:last-child {
+    background-color: #a3d139;
+}
+
+.dropdown-item.is-current > button {
+    background-color: var(--color-surface-hover);
+    font-weight: 600;
+}
+
+.theme-check {
+    display: inline-flex;
+    margin-left: auto;
+    color: var(--color-success);
+    opacity: 0;
+}
+
+.theme-check svg {
+    width: 15px;
+    height: 15px;
+    color: var(--color-success);
+}
+
+.dropdown-item.is-current .theme-check {
+    opacity: 1;
+}
+
+/* Selector de tema en las pantallas de acceso ----------------------------- */
+
+.theme-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.theme-picker button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background-color: transparent;
+}
+
+.theme-picker button:hover {
+    border-color: var(--color-border-strong);
+}
+
+.theme-picker .dropdown-item.is-current button,
+.theme-picker button.is-current {
+    border-color: var(--color-accent-dark);
+}

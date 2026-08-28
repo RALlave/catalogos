@@ -1,0 +1,145 @@
+/* ============================================================
+   PALETA — respaldo y colores que no dependen de la paleta
+
+   Los colores de la tienda los inyecta el servidor: la API devuelve
+   la paleta elegida y el layout la escribe como un <style> con :root.
+   Acá queda la paleta por defecto como respaldo (si esa inyección
+   fallara, la página igual se lee) y los tres bloques que son iguales
+   en las doce paletas.
+
+   La fuente de verdad de los colores es
+   prototipo-3/assets/css/paletas.css y api/config/themes.php.
+   ============================================================ */
+
+:root {
+
+    /* Superficies — el fondo de página es blanco por decisión del brief */
+    --color-bg:            #FFFFFF;
+    --color-surface:       #FFFFFF;
+    --color-surface-alt:   #EDE0D4;  /* de la paleta · 10.2:1 con text */
+    --color-grad-alt-2:    #F3EBE3;  /* DERIVADO: surface-alt aclarado 35% · segundo tono del degradado de la caja clara · texto 11.20:1 · detalle 6.31:1 · ícono 6.31:1 */
+    --color-border:        #EDE0D4;  /* de la paleta · 1.3:1 sobre surface — separador decorativo */
+    --color-border-strong: #A47148;  /* de la paleta · 4.17:1 sobre surface — borde de control (mín. 3:1) */
+
+    /* Texto sobre fondo claro */
+    --color-text:        #3E2C23;  /* de la paleta · 13.21:1 sobre surface · 10.2:1 sobre surface-alt */
+    --color-text-muted:  #6F4E37;  /* de la paleta · 7.44:1 sobre surface · 5.75:1 sobre surface-alt */
+    --color-text-subtle: #6F4E37;  /* de la paleta · 7.44:1 sobre surface */
+
+    /* Primario y acento */
+    --color-primary:       #3E2C23;  /* de la paleta */
+    --color-primary-hover: #3E2C23;  /* de la paleta */
+    --color-on-primary:    #EDE0D4;  /* de la paleta · 10.2:1 sobre primary */
+
+    --color-accent:       #6F4E37;  /* de la paleta · 7.44:1 sobre surface */
+    --color-accent-hover: #3E2C23;  /* de la paleta */
+    --color-on-accent:    #EDE0D4;  /* de la paleta · 5.75:1 sobre accent */
+
+    --color-accent-soft:   #A47148;  /* de la paleta · 4.17:1 sobre surface — íconos y bordes, NUNCA texto */
+    --color-accent-invert: #EDE0D4;  /* de la paleta · 10.2:1 sobre primary — sólo sobre la barra */
+
+    /* Texto sobre la barra oscura */
+    --color-on-dark:        #EDE0D4;  /* 10.2:1 sobre primary */
+    --color-on-dark-muted:  #EDE0D4;  /* 10.2:1 sobre primary */
+    --color-on-dark-border: #A47148;  /* 3.17:1 sobre primary — separador decorativo */
+    --color-grad-2:         #6F4E37;  /* de la paleta · segundo tono del degradado sobre oscuro (barra y pie) · 5.75:1 con on-dark-muted encima, 1.77:1 contra primary */
+
+    /* Barra de navegación de color (data-nav="color") */
+    --color-nav-bg:     #6F4E37;  /* de la paleta */
+    --color-on-nav:     #FFFFFF;  /* DERIVADO · 7.44:1 sobre nav-bg */
+    --color-nav-active: #EDE0D4;  /* de la paleta · 5.75:1 sobre nav-bg */
+    --color-nav-brand:  #EDE0D4;  /* de la paleta · 5.75:1 — barra del activo y foco (mín. 3:1) */
+    --color-nav-border: #A47148;  /* de la paleta · separador decorativo */
+
+    /* Foco (mín. 3:1 contra el fondo donde se pinta) */
+    --color-focus:        #6F4E37;  /* 7.44:1 sobre surface */
+    --color-focus-invert: #EDE0D4;  /* 10.2:1 sobre primary */
+
+    /* Vidrio (fondo con imagen + blur) */
+    --color-glass:        rgba(255, 255, 255, 0.7);
+    --color-glass-dark:   rgba(62, 44, 35, 0.7);
+    --color-glass-border: rgba(237, 224, 212, 0.55);
+    --bg-image-fallback:  #EDE0D4;
+
+    /* Velos del banner */
+    --color-banner-veil:       rgba(62, 44, 35, 0.5);
+    --color-on-banner:         #FFFFFF;  /* 2.92:1 en el peor caso — NO LLEGA a 4.5:1 */
+    --color-banner-veil-light: rgba(237, 224, 212, 0.5);
+    --color-on-banner-light:   #3E2C23;  /* 2.71:1 en el peor caso — NO LLEGA a 4.5:1 */
+
+    /* Pie de página — el blanco del cuerpo y los dos colores de la
+       marca, sobre el degradado del pie (de primary a primary-hover).
+       Los tres medidos en los dos extremos. */
+    --color-footer-text: #FFFFFF;  /* 13.21:1 sobre primary · 13.21:1 sobre primary-hover */
+    --color-brand-1:     #FFFFFF;  /* DERIVADO · 13.21:1 sobre primary · 13.21:1 sobre primary-hover */
+    --color-brand-2:     #DE8445;  /* DERIVADO del matiz del acento · 4.71:1 sobre primary · 4.71:1 sobre primary-hover */
+}
+
+/* ============================================================
+   BADGES DE ESTADO — un solo bloque para las 12 paletas
+
+   No repiten hexadecimales: apuntan a pares que cada paleta ya
+   declara y que ya tienen su ratio anotado más arriba. Así una
+   paleta nueva hereda badges correctos sin tocar este bloque.
+
+       nuevo     → accent  + on-accent
+       destacado → surface + text          (+ borde border-strong)
+       agotado   → primary + on-primary
+
+   Los tres pares superan 4.5:1 en las 12 paletas. El más ajustado
+   es 4.56:1 (primary/on-primary en Frío); le siguen 4.77:1 (Tech)
+   y 4.82:1 (Frío) en accent/on-accent.
+
+   Se eligieron esos tres y no otros porque quedan en luminancias
+   separadas — media, clara y oscura — y así los estados se
+   distinguen también en escala de grises. El de "destacado" se
+   pinta sobre `surface`, que es claro, y por eso lleva borde
+   `border-strong` (≥ 3:1 sobre ese fondo en las 12 paletas): sin
+   él desaparecería sobre una foto de producto clara.
+
+   Igual el color nunca es la única señal: cada badge lleva ícono
+   + texto.
+   ============================================================ */
+
+:root {
+    --color-badge-new-bg:        var(--color-accent);
+    --color-badge-new-text:      var(--color-on-accent);
+    --color-badge-featured-bg:   var(--color-surface);
+    --color-badge-featured-text: var(--color-text);
+    --color-badge-sold-out-bg:   var(--color-primary);
+    --color-badge-sold-out-text: var(--color-on-primary);
+}
+
+
+/* ============================================================
+   VELO DEL PANEL LATERAL — uno solo para las 12 paletas
+
+   Es la capa que oscurece la página mientras el menú lateral está
+   abierto en móvil y tablet. No se deriva de la paleta a propósito:
+   su trabajo es apagar TODO lo que hay detrás (fotos de producto,
+   banner, pie de color) para que el panel se lea como la única capa
+   activa, y un velo teñido de primario no apaga parejo en las doce.
+
+   No lleva texto encima, así que no le aplica el mínimo de 4.5:1: no
+   es un par de contraste, es una atenuación. El 0.55 alcanza para que
+   nada de atrás compita con el panel y todavía deje ver dónde estaba
+   uno.
+   ============================================================ */
+
+:root {
+    --color-veil: rgba(0, 0, 0, 0.55);
+}
+
+
+/* ============================================================
+   TONOS DE PRODUCTO
+
+   Los tonos son DATO del producto: cada tienda carga el hexadecimal
+   real de la prenda o del armazón, así que la muestra se pinta con
+   `style` y acá no hay ninguna lista de colores.
+
+   No comunican estado: cada muestra lleva su valor en texto
+   (`.visually-hidden`), que es lo que lee el lector de pantalla, y
+   borde `--color-border-strong` para no desaparecer cuando el tono
+   es casi blanco.
+   ============================================================ */

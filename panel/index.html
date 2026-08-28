@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel — Catálogos</title>
+    <script>
+        /* El tema guardado se aplica antes de pintar para evitar el parpadeo. */
+        (function () {
+            var theme = window.localStorage.getItem("dash.theme");
+
+            if (theme && theme !== "cacao") {
+                document.documentElement.setAttribute("data-theme", theme);
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

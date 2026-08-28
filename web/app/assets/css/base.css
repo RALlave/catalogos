@@ -1,0 +1,412 @@
+/* ============================================================
+   BASE — forma, tipografía, espacio, layout y estilos de elementos
+   prototipo-3 · Moderno / minimalista
+   Este archivo NO tiene un solo hex: los colores viven en paletas.css.
+   ============================================================ */
+
+:root {
+
+    /* --------------------------------------------------------
+       COLOR
+       Los colores NO viven en este archivo: están en `paletas.css`,
+       un bloque por paleta, con su ratio WCAG anotado. Acá sólo hay
+       forma, tipografía, espacio y layout — lo que no cambia al
+       cambiar de paleta.
+       -------------------------------------------------------- */
+    /* `--blur-glass` quedó sin uso al sacar el `backdrop-filter` de los
+       velos: se conserva por si el vidrio esmerilado vuelve */
+    --blur-glass: 14px;
+    --bg-image:   url('/img/bg-4.jpg');
+
+
+    /* --------------------------------------------------------
+       TIPOGRAFÍA — familias
+       -------------------------------------------------------- */
+    --font-heading: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-body:    'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+    /* TIPOGRAFÍA — escala */
+    --text-xs:   0.75rem;   /* 12px — etiquetas */
+    --text-sm:   0.875rem;  /* 14px — metadatos, menú */
+    --text-base: 1rem;      /* 16px — cuerpo (mínimo en móvil) */
+    --text-md:   1.125rem;  /* 18px */
+    --text-lg:   1.375rem;  /* 22px — nombre del negocio */
+    --text-xl:   1.75rem;   /* 28px */
+    --text-2xl:  2.25rem;   /* 36px — desktop */
+
+    /* TIPOGRAFÍA — interlineado, peso y tracking */
+    --leading-tight:   1.2;
+    --leading-normal:  1.55;
+    --weight-regular:  400;
+    --weight-medium:   500;
+    --weight-semibold: 600;
+    --weight-bold:     700;
+    --tracking-wide:   0.04em;
+
+    /* --------------------------------------------------------
+       RITMO VERTICAL Y ESPACIADO (escala de 4px, en rem)
+       -------------------------------------------------------- */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+
+    --rhythm-section: var(--space-6);   /* separación entre secciones */
+    --rhythm-block:   var(--space-4);   /* separación dentro de un bloque */
+
+    /* Alturas propias de la cabecera */
+    --header-height:      4.5rem;   /* franja superior en desktop */
+    --logo-height:        2.25rem;  /* alto del logotipo (mobile) */
+    --brand-name:         var(--text-md);   /* tamaño del nombre junto al logo */
+    --logo-height-lg:     3rem;     /* alto del logotipo (desktop) */
+    --logo-height-footer: 3.25rem;  /* alto del logotipo dentro de la placa del pie */
+    --nav-height:         3.25rem;  /* barra oscura */
+    --nav-item-pad:       var(--space-4);
+
+    /* Panel lateral del menú (sólo móvil y tablet).
+       El tope en rem evita que en una tablet ancha el panel se estire
+       de más; el 80vw es para que en 340px siga quedando franja de
+       velo a la derecha, que es lo que se toca para cerrar. */
+    --panel-width: min(80vw, 17.5rem);
+    --panel-pad:   var(--space-4);
+
+    /* Panel del carrito. Es más ancho que el del menú porque adentro hay
+       una lista con foto, nombre, cantidad y precio; y a diferencia del
+       menú, en escritorio sigue siendo un panel. */
+    --cart-width:      min(92vw, 24rem);
+    --cart-thumb:      3.5rem;
+    --cart-step:       2rem;    /* botones de sumar y restar */
+    --cart-badge:      1.25rem; /* burbuja con la cantidad, sobre el ícono */
+
+    /* Banner */
+    --banner-height: 22rem;
+    --banner-title:  var(--text-xl);
+    /* Banner corto (contacto.html): la mitad del alto del catálogo.
+       Es un token aparte y no un cálculo sobre --banner-height porque
+       una custom property no puede referirse a sí misma. */
+    --banner-height-short: 11rem;
+
+    /* Grilla de productos y tarjeta */
+    --product-ratio: 1 / 1;            /* proporción de la foto */
+    --product-pad:   var(--space-4);   /* aire interno del cuerpo de la tarjeta */
+    --swatch-size:   1rem;             /* muestra de color del producto */
+    --page-size:     var(--touch-min); /* botón de paginación */
+
+    /* Ficha de producto (producto.html)
+       En móvil la galería va arriba y la información abajo: una sola
+       columna. En pantallas anchas se parten en dos. */
+    --detail-columns: minmax(0, 1fr);
+    --detail-gap:     var(--space-6);
+    --detail-title:   var(--text-xl);
+    --gallery-ratio:  1 / 1;           /* alto reservado del visor: sin salto al cargar */
+    --thumb-size:     4.5rem;          /* miniatura de la galería */
+    /* Los relacionados no siguen a `--grid-columns`: son cuatro fijos
+       y conviene que entren en una sola fila cuando hay lugar. */
+    --related-columns: 1;
+
+    /* Pie de página — columnas y aire propios. No usa `--grid-columns`
+       a propósito: esa es la grilla de productos y no tiene por qué
+       coincidir con la cantidad de columnas del pie. */
+    --footer-columns: minmax(0, 1fr);
+    --footer-gap:     var(--space-6);
+    /* Lista "Contenido": una sola columna en móvil. En pantallas anchas
+       se llena por columnas (--footer-list-flow) para que se lea de arriba
+       abajo y no en zigzag. */
+    --footer-list-rows: auto;
+    --footer-list-flow: row;
+
+    /* Contacto (contacto.html) — datos y horarios apilados en móvil */
+    --contact-columns: minmax(0, 1fr);
+    --contact-gap:     var(--space-5);
+    --map-height:      18rem;
+
+    /* --------------------------------------------------------
+       FORMA — por defecto CUADRADO.
+       <html data-radius="round"> pasa todo el sistema a redondeado.
+       -------------------------------------------------------- */
+    --radius-sm:   0;
+    --radius-md:   0;
+    --radius-lg:   0;
+    --radius-pill: 0;
+
+    --border-thin:  1px;
+    --focus-width:  3px;
+    --focus-offset: 2px;
+
+    /* --------------------------------------------------------
+       LAYOUT Y GRILLA
+       -------------------------------------------------------- */
+    --container-max: 75rem;   /* 1200px */
+    --container-pad: var(--space-4);
+    --grid-columns:  1;
+    --grid-gap:      var(--space-4);
+    --touch-min:     2.75rem; /* 44px — objetivo táctil mínimo */
+
+    /* --------------------------------------------------------
+       MOVIMIENTO
+       -------------------------------------------------------- */
+    /* La duración va aparte de la curva: una duración sola es lo único
+       que sirve como `transition-delay`. Meter ahí `200ms ease` invalida
+       la declaración entera y el navegador la descarta. */
+    --time-fast:   150ms;
+    --time-medium: 200ms;
+    --curve:       ease;
+
+    --transition-fast:   var(--time-fast) var(--curve);
+    --transition-medium: var(--time-medium) var(--curve);
+    --transition-slow:   400ms ease;   /* desvanecido de la galería */
+}
+
+/* Variante de forma: esquinas redondeadas */
+[data-radius="round"] {
+    --radius-sm:   0.25rem;
+    --radius-md:   0.5rem;
+    --radius-lg:   0.75rem;
+    --radius-pill: 999px;
+}
+
+/* ============================================================
+   RESET ACOTADO
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-normal);
+}
+
+/* Fondo con imagen, nítida. El color de respaldo se ve mientras carga */
+[data-background="image"] body {
+    background-color: var(--bg-image-fallback);
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+/* ============================================================
+   ELEMENTOS BASE (sin clases, según convención del proyecto)
+   ============================================================ */
+
+h1, h2, h3, h4 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    overflow-wrap: anywhere;
+}
+
+h1 { font-size: var(--text-xl); }
+h2 { font-size: var(--text-lg); }
+
+h3 {
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+}
+
+p {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+address {
+    font-style: normal;
+}
+
+button,
+input {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* ============================================================
+   FOCO VISIBLE — nunca se elimina
+   ============================================================ */
+
+:focus-visible {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: var(--focus-offset);
+    border-radius: var(--radius-sm);
+}
+
+/* Sobre fondo oscuro (barra de navegación y pie) el anillo cambia
+   para mantener ≥ 3:1 contra ese fondo */
+.nav :focus-visible,
+.footer :focus-visible {
+    outline-color: var(--color-focus-invert);
+}
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+
+[hidden] {
+    display: none !important;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: var(--container-pad);
+    padding-left: var(--container-pad);
+}
+
+.skip-link a {
+    position: absolute;
+    top: var(--space-4);
+    left: var(--space-4);
+    z-index: 20;
+    transform: translateY(-200%);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    border-radius: var(--radius-md);
+    font-weight: var(--weight-medium);
+}
+
+.skip-link a:focus-visible {
+    transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE — sólo se redefinen tokens
+   Cortes de referencia: 340px (base) · 991px · 1440px
+   ============================================================ */
+
+@media (min-width: 48rem) {          /* 768px */
+    :root {
+        --container-pad:   var(--space-5);
+        --grid-columns:    2;
+        --related-columns: 2;
+        --thumb-size:      5rem;
+        /* La ficha ya se parte en dos acá: en una sola columna la foto
+           cuadrada se comía toda la pantalla */
+        --detail-columns:   repeat(2, minmax(0, 1fr));
+        --detail-gap:       var(--space-5);
+        --footer-columns:   repeat(2, minmax(0, 1fr));
+        --footer-list-rows: repeat(3, auto);
+        --footer-list-flow: column;
+    }
+}
+
+@media (min-width: 62rem) {          /* 992px — supera el corte de 991px */
+    :root {
+        --container-pad:       var(--space-6);
+        --rhythm-section:      var(--space-7);
+        --grid-columns:        3;
+        --nav-height:          3.5rem;
+        --logo-height:         var(--logo-height-lg);
+        --brand-name:          var(--text-lg);
+        --banner-height:       28rem;
+        --banner-height-short: 14rem;
+        --banner-title:        var(--text-2xl);
+
+        /* Datos y horarios, lado a lado y con el mismo peso */
+        --contact-columns: repeat(2, minmax(0, 1fr));
+        --contact-gap:     var(--space-6);
+        --map-height:      25rem;
+
+        /* La ficha se parte en dos: la galería pide un poco más de ancho */
+        --detail-columns:  1.05fr 1fr;
+        --detail-gap:      var(--space-7);
+        --detail-title:    var(--text-2xl);
+        --related-columns: 4;
+
+        /* La marca necesita más ancho que las otras tres columnas */
+        --footer-columns: 1.4fr 1.15fr 1.25fr 1fr;
+        --footer-gap:     var(--space-6) var(--space-7);
+    }
+}
+
+@media (min-width: 90rem) {          /* 1440px */
+    :root {
+        --container-max:       82.5rem;
+        --grid-columns:        4;
+        --banner-height:       30rem;
+        --banner-height-short: 15rem;
+        --banner-title:        2.75rem;
+        --map-height:          28rem;
+        --detail-columns:      1.1fr 1fr;
+        --thumb-size:          5.5rem;
+        --footer-columns:      1.5fr 1.1fr 1.2fr 1fr;
+        --footer-gap:          var(--space-7) var(--space-8);
+        --logo-height-footer:  3.75rem;
+    }
+}
+
+/* ============================================================
+   MOVIMIENTO REDUCIDO
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

@@ -1,0 +1,1129 @@
+<!-- ÍCONOS — van dentro del <svg class="sprite"> de index.html -->
+
+        <symbol id="i-nuevo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.5 13.9 9l5.6 1.9-5.6 1.9L12 18.5l-1.9-5.7L4.5 10.9 10.1 9 12 3.5Z"></path>
+            <path d="M18.5 15.5l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2Z"></path>
+        </symbol>
+        <symbol id="i-estrella" viewBox="0 0 24 24" fill="currentColor">
+            <path d="m12 3.6 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L12 3.6Z"></path>
+        </symbol>
+        <symbol id="i-agotado" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="8.5"></circle>
+            <path d="m6.5 6.5 11 11"></path>
+        </symbol>
+        <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="m3.6 6.7 8.4 5.8 8.4-5.8"></path>
+        </symbol>
+        <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21.5c4.4-4.3 6.6-7.7 6.6-10.4a6.6 6.6 0 1 0-13.2 0c0 2.7 2.2 6.1 6.6 10.4Z"></path>
+            <circle cx="12" cy="10.6" r="2.5"></circle>
+        </symbol>
+        <symbol id="i-youtube" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.28 5 12 5 12 5s-6.28 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12c0 1.61.13 3.22.4 4.8a2.5 2.5 0 0 0 1.76 1.77C5.72 19 12 19 12 19s6.28 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77c.27-1.58.4-3.19.4-4.8 0-1.61-.13-3.22-.4-4.8ZM10.2 15.02V8.98L15.4 12l-5.2 3.02Z"></path>
+        </symbol>
+        <symbol id="i-facebook" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.6 21.5v-8.2h2.8l.4-3.2h-3.2V8.05c0-.93.26-1.56 1.59-1.56h1.7V3.61a22.6 22.6 0 0 0-2.48-.13c-2.45 0-4.13 1.5-4.13 4.25v2.37H7.44v3.2h2.84v8.2h3.32Z"></path>
+        </symbol>
+        <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="16.9" cy="7.1" r="1.2" fill="currentColor" stroke="none"></circle>
+        </symbol>
+        <symbol id="i-tiktok" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16.2 2h-2.9v13.4a2.5 2.5 0 1 1-2.1-2.47v-2.96a5.45 5.45 0 1 0 5 5.43V9.5a6.8 6.8 0 0 0 3.6 1.05V7.6a3.9 3.9 0 0 1-3.6-3.87V2Z"></path>
+        </symbol>
+
+<!-- SECCIÓN — reemplaza a <section class="seccion" id="productos"> dentro de <main> -->
+
+        <!-- ========================================================
+             CATÁLOGO — filtro por categoría + grilla + paginación
+             Sin JS: se ven los 24 productos, el filtro no actúa y la
+             paginación queda oculta (la muestra el script).
+             ======================================================== -->
+        <section class="seccion" id="productos" aria-labelledby="productos-titulo">
+            <div class="contenedor">
+
+                <div class="seccion-cabecera">
+                    <h2 id="productos-titulo">Productos</h2>
+
+                    <div class="filtros" role="group" aria-label="Filtrar por categoría">
+                        <button class="chip" type="button" data-filtro="todas" aria-pressed="true">
+                            <svg class="chip-icono" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                            Todas
+                        </button>
+                        <button class="chip" type="button" data-filtro="ropa-hombre" aria-pressed="false">
+                            <svg class="chip-icono" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                            Ropa de hombre
+                        </button>
+                        <button class="chip" type="button" data-filtro="gafas" aria-pressed="false">
+                            <svg class="chip-icono" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                            Gafas
+                        </button>
+                    </div>
+                </div>
+
+                <p class="resultado" role="status" data-resultado>24 productos</p>
+
+                <ul class="grilla" data-grilla>
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="jean slim fit índigo">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/0cfb33efcc5b8aaaaa9275d91a08df58.jpg" alt="Dos jeans slim fit en índigo y azul noche, usados con zapatillas blancas" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-destacado">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-estrella"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Jean Slim Fit Índigo</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 46</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim stretch</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Slim fit</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul noche</span></li>
+                                            <li class="tono tono-azul-medio"><span class="visually-hidden">Índigo</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">185.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="bermuda de jean clásica">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/154d5ab010b1d01b206185012189345d.jpg" alt="Bermudas de jean en cuatro lavados de azul apoyadas sobre un piso claro" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-nuevo">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-nuevo"></use></svg>
+                                Nuevo
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Bermuda de Jean Clásica</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 48</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim 100% algodón</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Regular</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul oscuro</span></li>
+                                            <li class="tono tono-azul-medio"><span class="visually-hidden">Azul medio</span></li>
+                                            <li class="tono tono-celeste"><span class="visually-hidden">Celeste</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">135.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="pantalón chino recto">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/2592623453a33ff3f7b3d8b89e3d2cea.jpg" alt="Tres pantalones chinos doblados en bordó, gris y negro" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Pantalón Chino Recto</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 46</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Gabardina</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Recto</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-bordo"><span class="visually-hidden">Bordó</span></li>
+                                            <li class="tono tono-gris"><span class="visually-hidden">Gris</span></li>
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">165.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="jean skinny celeste">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/4385b10315c63793fad6bbc590d6aa2d.jpg" alt="Jean skinny celeste combinado con remera negra y zapatillas blancas" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Jean Skinny Celeste</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 44</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim stretch</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Skinny</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-celeste"><span class="visually-hidden">Celeste</span></li>
+                                            <li class="tono tono-azul-medio"><span class="visually-hidden">Azul medio</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">179.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="pantalón casual estampado">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/464f8f1a8997d47ac868e07eeb266e3f.jpg" alt="Pantalones casuales apilados en marrón, azul y estampados" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Pantalón Casual Estampado</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 46</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Algodón liviano</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Relaxed</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-marron"><span class="visually-hidden">Marrón</span></li>
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul</span></li>
+                                            <li class="tono tono-beige"><span class="visually-hidden">Beige</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">149.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="jean clásico cinco bolsillos">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/4ec3879ffa00ec9536e9cc8012a2c6e0.jpg" alt="Cuatro jeans clásicos extendidos, del negro al celeste" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-destacado">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-estrella"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Jean Clásico Cinco Bolsillos</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 50</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim 12 oz</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Clásico</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul oscuro</span></li>
+                                            <li class="tono tono-celeste"><span class="visually-hidden">Celeste</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">159.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="jean regular lavado medio">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/5a214d3ff69cd232398229095cb604f4.jpg" alt="Dos jeans de lavado medio usados con zapatillas deportivas" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Jean Regular Lavado Medio</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 48</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim stretch</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Regular</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-azul-medio"><span class="visually-hidden">Azul medio</span></li>
+                                            <li class="tono tono-celeste"><span class="visually-hidden">Celeste</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">172.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="jean slim azul noche">
+                    <article class="producto" data-agotado>
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/7a5704c293a7d142730f1155133b3779.jpg" alt="Jean slim azul noche combinado con remera blanca y zapatillas" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-agotado">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-agotado"></use></svg>
+                                Agotado
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Jean Slim Azul Noche</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 46</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim stretch</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Slim fit</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul noche</span></li>
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">189.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="jean stretch confort">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/81a5249c82ca91a2ef94c5b6fadf2a83.jpg" alt="Jean azul de textura marcada con zapatillas blancas" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Jean Stretch Confort</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 50</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim stretch</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Confort</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-azul-medio"><span class="visually-hidden">Azul medio</span></li>
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul oscuro</span></li>
+                                            <li class="tono tono-gris"><span class="visually-hidden">Gris</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">168.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="jean recto desgastado">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/971f4fff8302e3ea7eaeca0b76580305.jpg" alt="Jean recto con desgaste, visto de frente y de espalda" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-nuevo">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-nuevo"></use></svg>
+                                Nuevo
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Jean Recto Desgastado</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 48</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Denim 14 oz</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Recto</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-azul-medio"><span class="visually-hidden">Azul medio</span></li>
+                                            <li class="tono tono-gris"><span class="visually-hidden">Gris</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">175.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="pantalón de vestir a cuadros">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/cbc51db8e200d4385e7b4015dbeede67.jpg" alt="Pantalones de vestir a cuadros en tonos azules, doblados sobre madera" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Pantalón de Vestir a Cuadros</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 46</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Poliviscosa</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Slim de vestir</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul marino</span></li>
+                                            <li class="tono tono-celeste"><span class="visually-hidden">Celeste</span></li>
+                                            <li class="tono tono-gris"><span class="visually-hidden">Gris</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">198.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="ropa-hombre" data-nombre="chino slim de colores">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/ropa-hombre/e9c58cc3615c6a99d5a33ae9fa06a7a8.jpg" alt="Pantalones chinos en gris, verde oliva, negro, celeste y beige" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-destacado">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-estrella"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Chino Slim de Colores</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Talles</dt>
+                                    <dd class="ficha-valor">38 al 48</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Tela</dt>
+                                    <dd class="ficha-valor">Gabardina stretch</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Corte</dt>
+                                    <dd class="ficha-valor">Slim</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-gris"><span class="visually-hidden">Gris</span></li>
+                                            <li class="tono tono-verde"><span class="visually-hidden">Verde oliva</span></li>
+                                            <li class="tono tono-celeste"><span class="visually-hidden">Celeste</span></li>
+                                            <li class="tono tono-beige"><span class="visually-hidden">Beige</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">155.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="armazón redondo acetato">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/16d17c0be9c65b16892fbbd33584f7f9.jpg" alt="Armazón redondo de acetato negro sobre fondo gris" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-nuevo">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-nuevo"></use></svg>
+                                Nuevo
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Armazón Redondo Acetato</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">Acetato</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Redonda</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">Luz azul</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-marron"><span class="visually-hidden">Carey</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">128.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="armazón rectangular azul">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/2648e52382e8646c57a6c285aac83277.jpg" alt="Armazón rectangular azul apoyado sobre su caja" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Armazón Rectangular Azul</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">TR90</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Rectangular</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">Luz azul</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul</span></li>
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-plateado"><span class="visually-hidden">Plata</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">112.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="gafas de sol cuadradas">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/536fc65b9f713f6367dfad85df1b649b.jpg" alt="Gafas de sol cuadradas negras sobre superficie gris" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-destacado">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-estrella"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Gafas de Sol Cuadradas</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">Policarbonato</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Cuadrada</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">UV400 polarizado</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-gris"><span class="visually-hidden">Gris humo</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">145.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="gafas de sol micro">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/582b8f41006a10f981f86fa4e0fe3c1a.jpg" alt="Gafas de sol rectangulares angostas con armazón metálico oscuro" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Gafas de Sol Micro</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">Metal</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Rectangular angosta</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">UV400</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-dorado"><span class="visually-hidden">Dorado</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">132.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="armazón browline metal">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/5ed50abd7c25dfda3b8a88692b277757.jpg" alt="Armazón browline de metal con ceja negra sobre fondo claro" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Armazón Browline Metal</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">Metal + acetato</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Browline</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">Luz azul</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-plateado"><span class="visually-hidden">Plata</span></li>
+                                            <li class="tono tono-dorado"><span class="visually-hidden">Dorado</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">138.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="armazón rimless ultraliviano">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/8b9698fd22e073e379441822caccc329.jpg" alt="Armazón sin marco sostenido en la palma de una mano" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-nuevo">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-nuevo"></use></svg>
+                                Nuevo
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Armazón Rimless Ultraliviano</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">Titanio</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Rimless</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">Luz azul</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-plateado"><span class="visually-hidden">Plata</span></li>
+                                            <li class="tono tono-dorado"><span class="visually-hidden">Dorado</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">165.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="armazón redondo con estuche">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/8f6cd4fff351f73e6925ee4126659726.jpg" alt="Armazón redondo de metal negro junto a su estuche rígido" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Armazón Redondo con Estuche</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">Metal</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Redonda</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">Luz azul</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-plateado"><span class="visually-hidden">Plata</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">142.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="armazón cuadrado bold">
+                    <article class="producto" data-agotado>
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/9113f6f0b6891ab341597292473e8e21.jpg" alt="Armazón cuadrado de acetato negro y grueso sobre fondo beige" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-agotado">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-agotado"></use></svg>
+                                Agotado
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Armazón Cuadrado Bold</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">Acetato</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Cuadrada</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">Luz azul</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-marron"><span class="visually-hidden">Carey</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">155.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="armazón metal minimal">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/adf4c566185e2a01295012d50fc6942c.jpg" alt="Armazón de metal fino apoyado sobre una repisa blanca" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Armazón Metal Minimal</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">Metal</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Panto</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">Luz azul</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-plateado"><span class="visually-hidden">Plata</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">119.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="armazón redondo translúcido">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/b5daf017d7bc1a462e4fc1ef3b6dd0a7.jpg" alt="Armazón redondo translúcido gris sobre fondo violeta" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Armazón Redondo Translúcido</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">Acetato translúcido</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Redonda</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">Luz azul</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-gris"><span class="visually-hidden">Gris humo</span></li>
+                                            <li class="tono tono-beige"><span class="visually-hidden">Nude</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">126.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="armazón panto azul">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/dc57345df402ce3f5cdd28fc0476bf1d.jpg" alt="Armazón panto azul dentro de un estuche abierto" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-destacado">
+                                <svg class="badge-icono" aria-hidden="true" focusable="false"><use href="#i-estrella"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Armazón Panto Azul</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">TR90</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Panto</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">Luz azul</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-azul-oscuro"><span class="visually-hidden">Azul</span></li>
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">134.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grilla-item" data-categoria="gafas" data-nombre="armazón panto negro">
+                    <article class="producto">
+                        <div class="producto-media">
+                            <img class="producto-foto" src="assets/img/gafas/ec16d87071adb25265da800695ef876d.jpg" alt="Armazón panto negro apoyado sobre su caja" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="producto-cuerpo">
+                            <h3 class="producto-nombre"><a class="producto-enlace" href="producto.html">Armazón Panto Negro</a></h3>
+
+                            <dl class="ficha">
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Material</dt>
+                                    <dd class="ficha-valor">Acetato</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Forma</dt>
+                                    <dd class="ficha-valor">Panto</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Filtro</dt>
+                                    <dd class="ficha-valor">Luz azul</dd>
+                                </div>
+                                <div class="ficha-fila">
+                                    <dt class="ficha-clave">Colores</dt>
+                                    <dd class="ficha-valor">
+                                        <ul class="tonos">
+                                            <li class="tono tono-negro"><span class="visually-hidden">Negro</span></li>
+                                            <li class="tono tono-marron"><span class="visually-hidden">Carey</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="precio">
+                                <span class="precio-moneda">Gs</span>
+                                <strong class="precio-valor">122.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+                </ul>
+
+                <p class="vacio" data-vacio hidden>
+                    <svg class="vacio-icono" aria-hidden="true" focusable="false"><use href="#i-lupa"></use></svg>
+                    No encontramos productos con ese filtro. Probá con otra categoría o borrá la búsqueda.
+                </p>
+
+                <nav class="paginacion" aria-label="Paginación de productos" data-paginacion hidden>
+                    <button class="pagina pagina-flecha pagina-anterior" type="button" data-anterior>
+                        <svg class="pagina-icono" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                        <span class="pagina-texto">Anterior</span>
+                    </button>
+
+                    <ol class="paginacion-lista" data-paginas></ol>
+
+                    <button class="pagina pagina-flecha pagina-siguiente" type="button" data-siguiente>
+                        <span class="pagina-texto">Siguiente</span>
+                        <svg class="pagina-icono" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                    </button>
+                </nav>
+
+            </div>
+        </section>

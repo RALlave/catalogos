@@ -1,0 +1,630 @@
+/* ============================================================
+   SECCIÓN
+   ============================================================ */
+
+.seccion {
+    padding-top: var(--ritmo-seccion);
+    padding-bottom: var(--ritmo-seccion);
+}
+
+.seccion-nota {
+    max-width: 46ch;
+    margin-top: var(--ritmo-bloque);
+    color: var(--color-text-muted);
+}
+
+.seccion-cabecera {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ritmo-bloque);
+}
+
+/* ============================================================
+   FILTRO POR CATEGORÍA
+   Botones con `aria-pressed`: el estado presionado se anuncia solo.
+   Visualmente NO se distingue por color: el activo suma relleno,
+   peso tipográfico y un ✓ que aparece.
+   ============================================================ */
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch-min);
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-surface);
+    border: var(--borde-fino) solid var(--color-border-strong);
+    border-radius: var(--radio-pill);
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    transition: background-color var(--transicion-rapida), color var(--transicion-rapida), border-color var(--transicion-rapida);
+}
+
+.chip:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+}
+
+.chip-icono {
+    width: 0;                    /* no ocupa lugar mientras el chip está apagado */
+    height: 1rem;
+    overflow: hidden;
+    transition: width var(--transicion-rapida);
+}
+
+.chip[aria-pressed="true"] {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: var(--weight-semibold);
+}
+
+.chip[aria-pressed="true"] .chip-icono {
+    width: 1rem;
+}
+
+/* Cantidad de resultados: `role="status"` lo hace región viva,
+   así el filtro también se percibe sin ver la grilla */
+.resultado {
+    margin-top: var(--ritmo-bloque);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+/* ============================================================
+   GRILLA DE PRODUCTOS
+   ============================================================ */
+
+.grilla {
+    display: grid;
+    grid-template-columns: repeat(var(--grilla-columnas), minmax(0, 1fr));
+    gap: var(--grilla-gap);
+    margin-top: var(--ritmo-bloque);
+}
+
+.grilla-item {
+    display: flex;               /* estira la tarjeta a toda la altura de la celda */
+}
+
+/* ------------------------------------------------------------
+   Tarjeta
+   ------------------------------------------------------------ */
+
+.producto {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--color-surface);
+    border: var(--borde-fino) solid var(--color-border);
+    border-radius: var(--radio-lg);
+    overflow: hidden;
+    transition: border-color var(--transicion-rapida), transform var(--transicion-media);
+}
+
+.producto:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
+}
+
+/* El foco del enlace se dibuja alrededor de la tarjeta entera */
+.producto:focus-within {
+    outline: var(--foco-ancho) solid var(--color-focus);
+    outline-offset: var(--foco-offset);
+}
+
+.producto-media {
+    position: relative;
+    background-color: var(--color-surface-alt);
+}
+
+.producto-foto {
+    width: 100%;
+    aspect-ratio: var(--producto-ratio);
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Agotado: la foto se apaga y pierde color. Es refuerzo del badge,
+   no la señal: el estado lo dicen el ícono y la palabra "Agotado" */
+.producto[data-agotado] .producto-foto {
+    filter: grayscale(1);
+    opacity: 0.65;
+}
+
+.producto-cuerpo {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding: var(--producto-pad);
+}
+
+.producto-nombre {
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+}
+
+/* Enlace que cubre la tarjeta: el área clicable es toda la tarjeta,
+   pero el nombre accesible sigue siendo el del producto */
+.producto-enlace::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.producto-enlace:focus-visible {
+    outline: none;               /* lo dibuja .producto:focus-within */
+}
+
+.producto:hover .producto-enlace {
+    color: var(--color-accent);
+}
+
+/* ------------------------------------------------------------
+   Ficha técnica — lista de definición, no tabla
+   ------------------------------------------------------------ */
+
+.ficha {
+    margin: var(--space-4) 0 0;
+}
+
+.ficha-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 2.25rem;
+    padding: var(--space-2) 0;
+    border-bottom: var(--borde-fino) solid var(--color-border);
+}
+
+.ficha-clave {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+.ficha-valor {
+    margin: 0;
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    text-align: right;
+}
+
+/* Muestras de color: el tono lo pone paletas.css */
+.tonos {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.tono {
+    width: var(--tono-tamano);
+    height: var(--tono-tamano);
+    border: var(--borde-fino) solid var(--color-border-strong);
+    border-radius: var(--radio-pill);
+}
+
+/* ------------------------------------------------------------
+   Precio — pegado al pie de la tarjeta
+   ------------------------------------------------------------ */
+
+.precio {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    margin-top: auto;
+    padding-top: var(--space-4);
+}
+
+.precio-moneda {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+.precio-valor {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.01em;
+    line-height: var(--leading-tight);
+}
+
+/* ------------------------------------------------------------
+   Badges de estado — color + ícono + texto, nunca sólo color
+   ------------------------------------------------------------ */
+
+.badge {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    z-index: 1;
+    pointer-events: none;        /* no tapa el enlace que cubre la tarjeta */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border: var(--borde-fino) solid transparent;   /* todos miden igual */
+    border-radius: var(--radio-sm);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    line-height: var(--leading-tight);
+    text-transform: uppercase;
+}
+
+.badge-icono {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex-shrink: 0;
+}
+
+.badge-nuevo {
+    background-color: var(--color-badge-nuevo-bg);
+    color: var(--color-badge-nuevo-text);
+}
+
+.badge-destacado {
+    background-color: var(--color-badge-destacado-bg);
+    /* Es el badge claro: sobre una foto clara se perdería sin borde.
+       `border-strong` da ≥ 3:1 sobre el fondo del badge en las 12 paletas */
+    border-color: var(--color-border-strong);
+    color: var(--color-badge-destacado-text);
+}
+
+.badge-agotado {
+    background-color: var(--color-badge-agotado-bg);
+    color: var(--color-badge-agotado-text);
+}
+
+/* ------------------------------------------------------------
+   Estado vacío
+   ------------------------------------------------------------ */
+
+.vacio {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--ritmo-bloque);
+    padding: var(--space-6) var(--space-4);
+    background-color: var(--color-surface-alt);
+    border: var(--borde-fino) solid var(--color-border);
+    border-radius: var(--radio-lg);
+    color: var(--color-text-muted);
+    text-align: left;
+}
+
+.vacio-icono {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    color: var(--color-accent-soft);  /* ícono, no texto: 4.17:1 supera el mínimo de 3:1 */
+}
+
+/* ============================================================
+   PAGINACIÓN — centrada al pie de la grilla
+   ============================================================ */
+
+.paginacion {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--ritmo-seccion);
+}
+
+/* Es <ol> porque el orden importa; el reset de listas de base.css
+   sólo alcanza a <ul>, así que acá se apaga el marcador */
+.paginacion-lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pagina {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-width: var(--pagina-tamano);
+    min-height: var(--pagina-tamano);
+    padding: 0 var(--space-3);
+    background-color: var(--color-surface);
+    border: var(--borde-fino) solid var(--color-border-strong);
+    border-radius: var(--radio-md);
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    transition: background-color var(--transicion-rapida), color var(--transicion-rapida), border-color var(--transicion-rapida);
+}
+
+.pagina:hover:not(:disabled) {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+}
+
+/* Página actual: relleno + peso + `aria-current`, no sólo color */
+.pagina[aria-current="page"] {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: var(--weight-semibold);
+}
+
+/* Deshabilitado: opacidad + cursor + el atributo `disabled`, que es
+   lo que lo saca del recorrido de teclado y lo anuncia */
+.pagina:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.pagina-icono {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+/* El chevron apunta hacia arriba: se gira según la dirección */
+.pagina-anterior .pagina-icono {
+    transform: rotate(90deg);
+}
+
+.pagina-siguiente .pagina-icono {
+    transform: rotate(-90deg);
+}
+
+/* En móvil las flechas quedan sólo con ícono */
+.pagina-texto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ============================================================
+   PIE DE PÁGINA — cuatro columnas sobre fondo oscuro
+   Todos los ratios anotados acá se miden contra --color-primary,
+   que es el extremo MÁS CLARO del gradiente: el peor caso.
+   Los valores mínimos son los de las 12 paletas de paletas.css.
+   ============================================================ */
+
+.pie {
+    /* El texto del pie es BLANCO, no `--color-on-dark-muted`.
+       Ese token es el tono claro de cada paleta y en varias (alegre,
+       arcoiris, verano, oro) es un amarillo o crema saturado: usado
+       como color de cuerpo pintaba todo el pie de ese tono y gritaba.
+       Blanco (`--color-on-dark`, blanco puro en las doce) deja el color de
+       la paleta para lo que sí es acento: íconos, filetes y hover.
+       Las dos variables de abajo son el único lugar donde se cambia. */
+    --pie-texto:  var(--color-on-dark);        /* ≥ 8.91:1 sobre primary — AAA */
+    --pie-acento: var(--color-accent-invert);  /* ≥ 4.80:1 sobre primary — AA */
+
+    background-color: var(--color-primary);   /* respaldo si el gradiente no pinta */
+    /* Gradiente cuidado: dos tokens ya medidos, sin hex nuevos */
+    background-image: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+    color: var(--pie-texto);
+}
+
+.pie-inner {
+    display: grid;
+    grid-template-columns: var(--pie-columnas);
+    gap: var(--pie-gap);
+    padding-top: var(--ritmo-seccion);
+    padding-bottom: var(--ritmo-seccion);
+}
+
+.pie-col {
+    min-width: 0;
+}
+
+/* ------------------------------------------------------------
+   Columna 1 — marca y descripción
+   ------------------------------------------------------------ */
+
+.marca-pie {
+    color: var(--pie-texto);
+}
+
+.marca-pie .marca-icono,
+.marca-pie .marca-nombre strong {
+    color: var(--pie-acento);
+}
+
+.marca-pie:hover .marca-nombre strong {
+    color: var(--pie-texto);
+}
+
+.pie-descripcion {
+    max-width: 38ch;
+    margin-top: var(--ritmo-bloque);
+    font-size: var(--text-sm);
+}
+
+/* ------------------------------------------------------------
+   Títulos de columna — filete decorativo como en el banner
+   ------------------------------------------------------------ */
+
+.pie-titulo {
+    position: relative;
+    padding-bottom: var(--space-3);
+    border-bottom: var(--borde-fino) solid var(--color-on-dark-border);  /* ≈1.8:1 — separador decorativo */
+    color: var(--pie-texto);
+    font-size: var(--text-md);
+}
+
+.pie-titulo::after {
+    content: "";
+    position: absolute;
+    bottom: calc(-1 * var(--borde-fino));
+    left: 0;
+    width: 3rem;
+    height: var(--foco-ancho);
+    background-color: var(--pie-acento);
+}
+
+/* ------------------------------------------------------------
+   Listas y enlaces
+   ------------------------------------------------------------ */
+
+.pie-lista {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--ritmo-bloque);
+}
+
+.pie-lista-doble {
+    grid-template-rows: var(--pie-lista-filas);
+    grid-auto-flow: var(--pie-lista-flujo);
+    justify-content: start;
+    gap: var(--space-3) var(--space-6);
+}
+
+.pie-enlace {
+    font-size: var(--text-sm);
+    color: var(--pie-texto);
+}
+
+.pie-enlace:hover {
+    color: var(--pie-acento);
+    text-decoration: underline;
+}
+
+.pie-enlace-fuerte {
+    font-weight: var(--weight-semibold);
+}
+
+/* Página actual: color + subrayado + peso. Nunca sólo color */
+.pie-enlace[aria-current="page"] {
+    color: var(--pie-acento);
+    font-weight: var(--weight-semibold);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+/* ------------------------------------------------------------
+   Columna 3 — contacto
+   ------------------------------------------------------------ */
+
+.pie-datos {
+    font-size: var(--text-sm);
+}
+
+.pie-dato {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.pie-dato-icono {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: var(--pie-acento);                 /* ícono: ≥ 4.80:1 supera el mínimo de 3:1 */
+}
+
+/* ------------------------------------------------------------
+   Columna 4 — redes
+   ------------------------------------------------------------ */
+
+.pie-nota {
+    max-width: 32ch;
+    margin-top: var(--ritmo-bloque);
+    font-size: var(--text-sm);
+}
+
+.pie-red {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--touch-min);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--pie-texto);
+}
+
+/* El texto ya es blanco: el hover se marca con subrayado y con la
+   inversión del ícono, no con un cambio de color que no se vería */
+.pie-red:hover {
+    text-decoration: underline;
+}
+
+.pie-red-icono {
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    padding: 0.4375rem;
+    border: var(--borde-fino) solid var(--pie-acento);
+    border-radius: var(--radio-pill);
+    color: var(--pie-acento);
+    transition: background-color var(--transicion-rapida), color var(--transicion-rapida);
+}
+
+/* Al pasar el mouse se invierte: el fondo pasa a ser accent-invert
+   y el ícono toma el color del pie → el mismo ≥ 4.80:1, al revés */
+.pie-red:hover .pie-red-icono {
+    background-color: var(--pie-acento);
+    color: var(--color-primary);
+}
+
+/* ------------------------------------------------------------
+   Barra inferior
+   ------------------------------------------------------------ */
+
+.pie-bottom {
+    background-color: var(--color-primary-hover);
+    border-top: var(--borde-fino) solid var(--color-on-dark-border);
+}
+
+.pie-bottom-inner {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+    text-align: center;
+}
+
+.pie-copy {
+    font-size: var(--text-xs);
+    color: var(--pie-texto);                  /* blanco: ≥ 11.14:1 sobre primary-hover */
+}
+
+
+/* ------------------------------------------------------------
+   Estas tres reglas van DENTRO del bloque @media (min-width: 62rem)
+   de components.css, no acá sueltas.
+   ------------------------------------------------------------ */
+/*
+    .seccion-cabecera {
+        gap: var(--space-5);
+    }
+
+    .producto-nombre {
+        font-size: var(--text-md);
+    }
+
+    .pagina-texto {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        clip-path: none;
+    }
+*/

@@ -1,0 +1,80 @@
+/* ============================================================
+   BADGES DE ESTADO — un solo bloque para las 12 paletas
+
+   No repiten hexadecimales: apuntan a pares que cada paleta ya
+   declara y que ya tienen su ratio anotado más arriba. Así una
+   paleta nueva hereda badges correctos sin tocar este bloque.
+
+       nuevo     → accent  + on-accent
+       destacado → surface + text          (+ borde border-strong)
+       agotado   → primary + on-primary
+
+   Los tres pares superan 4.5:1 en las 12 paletas. El más ajustado
+   es 4.56:1 (primary/on-primary en Frío); le siguen 4.77:1 (Tech)
+   y 4.82:1 (Frío) en accent/on-accent.
+
+   Se eligieron esos tres y no otros porque quedan en luminancias
+   separadas — media, clara y oscura — y así los estados se
+   distinguen también en escala de grises. El de "destacado" se
+   pinta sobre `surface`, que es claro, y por eso lleva borde
+   `border-strong` (≥ 3:1 sobre ese fondo en las 12 paletas): sin
+   él desaparecería sobre una foto de producto clara.
+
+   Igual el color nunca es la única señal: cada badge lleva ícono
+   + texto.
+   ============================================================ */
+
+:root {
+    --color-badge-nuevo-bg:       var(--color-accent);
+    --color-badge-nuevo-text:     var(--color-on-accent);
+    --color-badge-destacado-bg:   var(--color-surface);
+    --color-badge-destacado-text: var(--color-text);
+    --color-badge-agotado-bg:     var(--color-primary);
+    --color-badge-agotado-text:   var(--color-on-primary);
+}
+
+
+/* ============================================================
+   TONOS DE PRODUCTO
+
+   Son DATO del producto, no de la paleta: el color real de la
+   prenda o del armazón. Por eso no cambian al cambiar de paleta y
+   viven en su propio bloque.
+
+   No comunican estado ni información: cada muestra lleva su nombre
+   en texto (`.visually-hidden`), que es lo que lee el lector de
+   pantalla. El círculo de color es refuerzo visual, nunca la única
+   señal — por eso no aplica el mínimo de 4.5:1, que es para texto.
+
+   Lo que sí necesitan es no desaparecer sobre la tarjeta: todas
+   llevan borde `--color-border-strong` (≥ 3:1 sobre el fondo), que
+   es lo que las delimita cuando el tono es casi blanco.
+   ============================================================ */
+
+:root {
+    --tono-negro:       #1C1C1C;
+    --tono-gris:        #7A7A7A;
+    --tono-plateado:    #C2C6CA;
+    --tono-blanco:      #F3F1EE;
+    --tono-beige:       #C9B79C;
+    --tono-marron:      #5A4034;
+    --tono-bordo:       #6E2A32;
+    --tono-verde:       #6B7A4F;
+    --tono-azul-oscuro: #1F3A5F;
+    --tono-azul-medio:  #4A78B0;
+    --tono-celeste:     #9CC0E4;
+    --tono-dorado:      #C8A24A;
+}
+
+.tono-negro       { background-color: var(--tono-negro); }
+.tono-gris        { background-color: var(--tono-gris); }
+.tono-plateado    { background-color: var(--tono-plateado); }
+.tono-blanco      { background-color: var(--tono-blanco); }
+.tono-beige       { background-color: var(--tono-beige); }
+.tono-marron      { background-color: var(--tono-marron); }
+.tono-bordo       { background-color: var(--tono-bordo); }
+.tono-verde       { background-color: var(--tono-verde); }
+.tono-azul-oscuro { background-color: var(--tono-azul-oscuro); }
+.tono-azul-medio  { background-color: var(--tono-azul-medio); }
+.tono-celeste     { background-color: var(--tono-celeste); }
+.tono-dorado      { background-color: var(--tono-dorado); }

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar contraseña — Catálogos</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="assets/css/themes.css">
+    <script>
+        (function () {
+            var theme = window.localStorage.getItem("dash.theme");
+
+            if (theme && theme !== "cacao") {
+                document.documentElement.setAttribute("data-theme", theme);
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <main class="auth">
+        <div class="auth-brand">
+            <span class="brand-mark">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9h18l-1.5 10.5a2 2 0 0 1-2 1.5H6.5a2 2 0 0 1-2-1.5Z" />
+                    <path d="M8 9V6a4 4 0 0 1 8 0v3" />
+                </svg>
+            </span>
+            <strong>Catálogos</strong>
+        </div>
+
+        <section class="auth-card">
+            <header class="auth-head">
+                <span class="auth-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="5" width="18" height="14" rx="2" />
+                        <path d="m3 7 9 6 9-6" />
+                    </svg>
+                </span>
+                <h1>Recuperar contraseña</h1>
+                <p>Escribí tu correo y te mandamos un enlace para crear una nueva</p>
+            </header>
+
+            <form class="form" data-fake-submit="restablecer.html" novalidate>
+                <div class="field">
+                    <div class="field-label">
+                        <label for="recuperar-email">Correo electrónico</label>
+                    </div>
+                    <input class="input" type="email" id="recuperar-email" name="email" placeholder="tunombre@correo.com" autocomplete="email" required>
+                </div>
+
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Enviarme el enlace</button>
+            </form>
+
+            <div class="alert alert-info">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4" />
+                    <path d="M12 8h.01" />
+                </svg>
+                <div class="alert-body">
+                    <span>El enlace vence a la hora. Si no te llega, revisá el correo no deseado.</span>
+                </div>
+            </div>
+
+            <div class="auth-alt">
+                <p>¿Te acordaste? <span class="auth-link"><a href="login.html">Volver a iniciar sesión</a></span></p>
+            </div>
+        </section>
+
+        <footer class="auth-footer">
+            <a href="#">Términos</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Ayuda</a>
+
+            <div class="theme-picker">
+                <button type="button" data-theme-set="cacao" aria-label="Tema Cacao">
+                    <span class="theme-swatch theme-cacao">
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+                <button type="button" data-theme-set="oceano" aria-label="Tema Océano">
+                    <span class="theme-swatch theme-oceano">
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+                <button type="button" data-theme-set="grafito" aria-label="Tema Grafito">
+                    <span class="theme-swatch theme-grafito">
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <div class="toast-stack" data-toast-stack></div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
