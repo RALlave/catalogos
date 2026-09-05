@@ -7,10 +7,12 @@ import FormField from '@/components/FormField.vue'
 import PasswordInput from '@/components/PasswordInput.vue'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
+import { useAuthStore } from '@/stores/auth'
 import { useUiStore } from '@/stores/ui'
 
 const route = useRoute()
 const router = useRouter()
+const auth = useAuthStore()
 const ui = useUiStore()
 
 const id = computed(() => route.params.id)
@@ -91,6 +93,19 @@ async function submit() {
     }
 }
 
+/** Entrar al panel de esta tienda como su dueño. */
+async function enterPanel() {
+    try {
+        await auth.impersonate(id.value)
+
+        ui.toast('Entraste al panel', form.value.name)
+
+        await router.push({ name: 'dashboard' })
+    } catch {
+        ui.toast('No pudimos entrar al panel', form.value.name, 'danger')
+    }
+}
+
 onMounted(async () => {
     if (! isEdit.value) {
         return
@@ -123,6 +138,11 @@ onMounted(async () => {
         </div>
 
         <div class="page-actions">
+            <button v-if="isEdit" class="btn btn-outline" type="button" @click="enterPanel">
+                <AppIcon name="enter" />
+                Entrar al panel
+            </button>
+
             <RouterLink class="btn btn-outline" :to="{ name: 'admin-stores' }">Volver</RouterLink>
         </div>
     </div>

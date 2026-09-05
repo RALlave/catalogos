@@ -477,6 +477,15 @@
     padding: 1.25rem 1.5rem 2rem;
 }
 
+/* Un formulario que agrupa varias tarjetas las separa igual que el contenido.
+   Se excluyen los formularios que SON una tarjeta: ahí el gap separaría el
+   encabezado, el cuerpo y el pie. */
+.content > form:not(.card) {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 .page-header {
     display: flex;
     align-items: flex-start;

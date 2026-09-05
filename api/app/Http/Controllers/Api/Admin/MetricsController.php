@@ -9,10 +9,13 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\User;
+use App\Services\StatService;
 use Illuminate\Http\JsonResponse;
 
 class MetricsController extends Controller
 {
+    public function __construct(private readonly StatService $stats) {}
+
     public function __invoke(): JsonResponse
     {
         $latestStores = Store::query()
@@ -40,6 +43,8 @@ class MetricsController extends Controller
                     'featured' => Product::where('featured', true)->count(),
                 ],
             ],
+            'top_stores' => $this->stats->topStores(),
+            'days' => StatService::PERIOD,
             'latest_stores' => AdminStoreResource::collection($latestStores),
         ]);
     }

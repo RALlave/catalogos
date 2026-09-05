@@ -90,6 +90,8 @@ const whatsapp = computed(() => props.store.whatsapp
                 v-if="hero.image_url"
                 class="banner-photo"
                 :src="hero.image_url"
+                :srcset="hero.image_srcset || undefined"
+                sizes="100vw"
                 alt=""
                 width="1024"
                 height="411"

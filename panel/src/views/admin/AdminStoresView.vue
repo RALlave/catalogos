@@ -1,10 +1,14 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
 import AppIcon from '@/components/AppIcon.vue'
 import { api } from '@/services/api'
+import { useAuthStore } from '@/stores/auth'
 import { useUiStore } from '@/stores/ui'
 
+const router = useRouter()
+const auth = useAuthStore()
 const ui = useUiStore()
 
 const stores = ref([])
@@ -54,6 +58,19 @@ async function toggleActive(store) {
     Object.assign(store, response.store)
 
     ui.toast(store.active ? 'Tienda publicada' : 'Tienda oculta', store.name)
+}
+
+/** Entrar al panel de la tienda como su dueño. */
+async function enterPanel(store) {
+    try {
+        await auth.impersonate(store.id)
+
+        ui.toast('Entraste al panel', store.name)
+
+        await router.push({ name: 'dashboard' })
+    } catch {
+        ui.toast('No pudimos entrar al panel', store.name, 'danger')
+    }
 }
 
 onMounted(load)
@@ -166,6 +183,16 @@ onMounted(load)
                                     >
                                         <AppIcon name="external" />
                                     </a>
+
+                                    <button
+                                        class="btn btn-ghost btn-icon"
+                                        type="button"
+                                        title="Entrar al panel de la tienda"
+                                        aria-label="Entrar al panel de la tienda"
+                                        @click="enterPanel(store)"
+                                    >
+                                        <AppIcon name="enter" />
+                                    </button>
 
                                     <RouterLink
                                         class="btn btn-ghost btn-icon"

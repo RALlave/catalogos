@@ -771,6 +771,47 @@
     gap: var(--rhythm-block);
 }
 
+/* Centrado y con más aire abajo: el título hace de portada de la
+   sección y necesita separarse de lo que presenta */
+.section-header-center {
+    align-items: center;
+    margin-bottom: var(--space-5);
+    text-align: center;
+}
+
+/* Tamaño de título sin tomar su nivel: el elemento sigue siendo el
+   que le toca en la jerarquía y sólo cambia cuánto pesa a la vista.
+   Sirven también dentro de un título, para partirlo en dos alturas. */
+.h1 {
+    font-size: var(--text-4xl);
+}
+
+.h2 {
+    font-size: var(--text-3xl);
+}
+
+.h3 {
+    font-size: var(--heading-3);
+}
+
+/* Dos líneas y dos colores dentro del mismo título. El salto lo hace
+   el `display: block`, no un <br>: así el texto sigue siendo uno solo
+   para quien lo escucha con un lector de pantalla. El color del gancho
+   es el acento, que sobre este fondo mide ≥ 3:1 — el mínimo del texto
+   grande, y este título lo es en las 12 paletas. */
+.headline-lead,
+.headline-main {
+    display: block;
+}
+
+.headline-lead {
+    color: var(--color-accent);
+}
+
+.headline-main {
+    color: var(--color-text);
+}
+
 /* ============================================================
    FILTRO POR CATEGORÍA
    Botones con `aria-pressed`: el estado presionado se anuncia solo.
@@ -910,9 +951,36 @@
     padding: var(--product-pad);
 }
 
+/* La categoría, sobre el nombre. Va en su propia caja y no en
+   versalitas: es un dato con valor, no un rótulo decorativo. El
+   `align-self` la deja del ancho de su texto. */
+.product-eyebrow {
+    align-self: flex-start;
+    padding: var(--space-1) var(--space-3);
+    background-color: var(--color-surface-alt);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+}
+
 .product-name {
     font-size: var(--text-base);
     font-weight: var(--weight-semibold);
+}
+
+/* Resumen de la descripción: tres líneas y corta. El alto queda igual en
+   todas las tarjetas aunque el texto no llegue a llenarlo. */
+.product-excerpt {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
 }
 
 /* Enlace que cubre la tarjeta: el área clicable es toda la tarjeta,
@@ -979,8 +1047,11 @@
    Precio — pegado al pie de la tarjeta
    ------------------------------------------------------------ */
 
+/* Envuelve porque en la tarjeta el precio anterior no siempre entra
+   en la misma línea que el actual */
 .price {
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
     gap: var(--space-2);
     margin-top: auto;
@@ -2269,6 +2340,134 @@
 }
 
 /* ============================================================
+   DESTACADOS EN EL HOME — tres propuestas en paralelo
+   Cada una vive en su propio index-featured-*.html. Al elegir una
+   se borran las otras dos y esta sección se queda con lo que sirva.
+   ============================================================ */
+
+/* La sección se despega del catálogo con el fondo alterno, no con una
+   línea */
+.section-featured,
+.section-offers {
+    background-color: var(--color-surface-alt);
+}
+
+/* ------------------------------------------------------------
+   A · Grilla corta
+   No hay tarjeta nueva: es la grilla del catálogo con las columnas
+   de los relacionados, así las fotos entran más grandes.
+   ------------------------------------------------------------ */
+
+.grid-featured {
+    --grid-columns: var(--related-columns);
+}
+
+/* ------------------------------------------------------------
+   B · Fila que se desliza
+   El desplazamiento es nativo: sin una línea de JS ya anda con el
+   dedo, con la rueda y con el teclado. Sin `scroll-snap`: la fila
+   queda donde la suelta el visitante, sin tirón hacia la tarjeta.
+   ------------------------------------------------------------ */
+
+.rail {
+    display: flex;
+    gap: var(--grid-gap);
+    margin-top: var(--rhythm-block);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;   /* al llegar al final no arrastra la página */
+    scrollbar-width: none;            /* la barra se esconde: la tarjeta cortada ya avisa que sigue */
+    -ms-overflow-style: none;
+}
+
+.rail::-webkit-scrollbar {
+    display: none;
+}
+
+/* Menos del 100%: que asome la tarjeta siguiente es lo que avisa
+   que la fila continúa */
+.rail-item {
+    display: flex;
+    flex: 0 0 78%;
+}
+
+/* ------------------------------------------------------------
+   C · Vitrina
+   Un producto manda y los otros tres se leen como lista al costado.
+   ------------------------------------------------------------ */
+
+.showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--grid-gap);
+    margin-top: var(--rhythm-block);
+}
+
+/* El producto grande es la misma `.product`: sólo cambia la
+   proporción de la foto y el aire del cuerpo */
+.product-lead .product-photo {
+    aspect-ratio: 4 / 3;
+}
+
+/* Acá hay lugar: la descripción se lee entera, sin recortar */
+.product-lead .product-excerpt {
+    display: block;
+    overflow: visible;
+}
+
+.product-lead .product-body {
+    gap: var(--space-3);
+    padding: var(--space-5);
+}
+
+.product-lead .product-name {
+    font-size: var(--text-lg);
+}
+
+/* Las cuatro chicas se reparten el alto de la grande: si no, la
+   columna derecha termina antes y queda un hueco */
+.showcase-list {
+    display: grid;
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    gap: var(--grid-gap);
+}
+
+.showcase-list > li {
+    display: flex;
+}
+
+/* Tarjeta chica: foto a la izquierda, nombre y precio a la derecha.
+   Sin ficha técnica: a este ancho no se lee */
+.product-mini {
+    flex-direction: row;
+}
+
+.product-mini .product-media {
+    flex: 0 0 7.5rem;
+}
+
+.product-mini .product-photo {
+    height: 100%;
+}
+
+.product-mini .product-body {
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+}
+
+/* Dos líneas: al costado de la grande no hay lugar para más */
+.product-mini .product-excerpt {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+}
+
+/* En la tarjeta del catálogo el precio se va al pie con `margin-top:
+   auto`; acá el nombre, el resumen y el precio se leen juntos */
+.product-mini .price {
+    margin-top: 0;
+}
+
+/* ============================================================
    RESPONSIVE — un bloque por breakpoint, ordenados
    340px es la base · 991px y 1440px se cubren acá
    ============================================================ */
@@ -2277,6 +2476,16 @@
 
     .nav {
         --search-width: 20rem;
+    }
+
+    .rail-item {
+        flex-basis: 42%;
+    }
+
+    /* La vitrina se parte en dos apenas hay ancho: a una sola columna
+       la foto grande ocupa media pantalla */
+    .showcase {
+        grid-template-columns: 1.35fr 1fr;
     }
 }
 
@@ -2481,6 +2690,23 @@
 
     .product-name {
         font-size: var(--text-md);
+    }
+
+    /* Cuatro tarjetas y un tercio: la quinta asoma y avisa que la fila
+       sigue. Con cuatro justas no se notaría que hay más. Se descuentan
+       cuatro gap: los que quedan a la vista entre las cinco tarjetas */
+    .rail-item {
+        flex-basis: calc((100% - var(--grid-gap) * 4) / 4.333);
+    }
+
+    /* Más baja que en móvil: el alto de la grande manda sobre el de
+       toda la vitrina */
+    .product-lead .product-photo {
+        aspect-ratio: 3 / 2;
+    }
+
+    .product-mini .product-media {
+        flex-basis: 8rem;
     }
 
     /* Hay ancho: Comprar toma el resto de la fila y Compartir se queda

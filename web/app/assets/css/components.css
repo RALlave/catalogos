@@ -8,9 +8,19 @@
    CABECERA — contenedor general
    ============================================================ */
 
+/* Pegada al borde: en una pantalla chica la cabecera se lleva una franja
+   grande, así que se retira al bajar y vuelve al subir. `sticky` y no
+   `fixed` porque conserva su lugar en el flujo: nada salta al cargar.
+   En escritorio se desplaza con la página, como cualquier bloque. */
 .header {
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 10;
+    transition: transform var(--transition-medium);
+}
+
+.header.is-hidden {
+    transform: translateY(-100%);
 }
 
 /* ------------------------------------------------------------
@@ -180,10 +190,10 @@
 .nav-toggle {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
-    min-height: var(--touch-min);
-    padding: var(--space-2) var(--space-3);
-    padding-right: 0;
+    justify-content: center;
+    width: var(--touch-min);
+    height: var(--touch-min);
+    padding: 0;
     background: none;
     border: 0;
     border-radius: var(--radius-md);
@@ -553,6 +563,19 @@
     height: var(--search-icon);
 }
 
+/* El mismo formulario fuera de la barra, en la página de resultados. Ahí
+   no se despliega —está siempre abierto— y el fondo de la página también
+   es claro: el blanco contra el blanco no delimita nada, así que acá el
+   campo sí lleva contorno. El ancho se corta en una línea de lectura. */
+.search-page {
+    max-width: 32rem;
+    border: var(--border-thin) solid var(--color-border-strong);
+}
+
+.search-page:focus-within {
+    border-color: var(--color-accent);
+}
+
 /* ============================================================
    BOTONES — reutilizables fuera del banner
    ============================================================ */
@@ -578,6 +601,19 @@
 .btn-icon {
     width: 1.4625rem;
     height: 1.4625rem;
+    flex-shrink: 0;
+}
+
+/* Botón cuadrado: el ícono es todo el botón y la acción se lee por
+   `aria-label`. Mide lo mínimo táctil, ni más ni menos.
+
+   Va con doble clase a propósito: en escritorio `.btn` vuelve a fijar su
+   padding dentro de un @media, y con un solo `.btn-icon-only` ganaba esa
+   regla por orden. El padding volvía, el contenido quedaba en 0 y el
+   ícono desaparecía. */
+.btn.btn-icon-only {
+    width: var(--touch-min);
+    padding: 0;
     flex-shrink: 0;
 }
 
@@ -1031,6 +1067,31 @@
     font-weight: var(--weight-semibold);
 }
 
+/* Resumen de la descripción: tres líneas y corta. El alto queda igual en
+   todas las tarjetas aunque el texto no llegue a llenarlo. */
+.product-excerpt {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+/* Pie de la tarjeta: precio a la izquierda, botón a la derecha. El
+   `margin-top: auto` lo pega abajo, así los pies se alinean entre
+   tarjetas de distinta altura. */
+.product-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: auto;
+    padding-top: var(--space-4);
+}
+
 /* Enlace que cubre la tarjeta: el área clicable es toda la tarjeta,
    pero el nombre accesible sigue siendo el del producto */
 .product-link::after {
@@ -1092,15 +1153,17 @@
 }
 
 /* ------------------------------------------------------------
-   Precio — pegado al pie de la tarjeta
+   Precio — en la tarjeta lo ubica `.product-foot`
    ------------------------------------------------------------ */
 
+/* Envuelve porque en la tarjeta angosta el precio actual y el anterior
+   no entran en una línea */
 .price {
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
     gap: var(--space-2);
-    margin-top: auto;
-    padding-top: var(--space-4);
+    row-gap: var(--space-1);
 }
 
 .price-currency {
@@ -1145,9 +1208,32 @@
     flex-shrink: 0;
 }
 
+/* Cinta cruzada en la esquina en vez del badge rectangular. Es sólo la
+   geometría: el color lo pone el modificador que la acompaña. Hereda de
+   .badge el posicionamiento y anula la caja. */
+.badge-ribbon {
+    top: 0;
+    left: 0;
+    justify-content: center;
+    width: 12rem;                /* más largo que la diagonal: los extremos se recortan */
+    padding: 0.375rem 0;
+    border: 0;
+    border-radius: 0;
+    text-align: center;
+    /* Se lee de derecha a izquierda: baja 3rem sobre su propio eje (así cruza
+       la esquina en vez de rozarla), se apoya en el vértice y recién ahí gira */
+    transform-origin: 0 0;
+    transform: rotate(-45deg) translate(-50%, -100%) translateY(3rem);
+}
+
 .badge-new {
     background-color: var(--color-badge-new-bg);
     color: var(--color-badge-new-text);
+}
+
+.badge-sale {
+    background-color: var(--color-badge-sale-bg);
+    color: var(--color-badge-sale-text);
 }
 
 .badge-featured {
@@ -1811,12 +1897,10 @@
     font-weight: var(--weight-medium);
 }
 
-/* Precio de la ficha: el de la tarjeta empuja hacia abajo, este no */
+/* Precio de la ficha: acá sí conviven el anterior tachado y el
+   porcentaje, así que puede pasar a más de una línea */
 .price-detail {
-    flex-wrap: wrap;
     row-gap: var(--space-2);
-    margin-top: 0;
-    padding-top: 0;
 }
 
 .price-detail .price-value {
@@ -1830,7 +1914,7 @@
     text-decoration-thickness: 2px;
 }
 
-/* Descuento: mismo par que el badge "Nuevo", ya medido en las 12 paletas */
+/* Descuento: el par de "oferta", ya medido en las 12 paletas */
 /* El degradado va de `accent` a `accent-hover`, los dos tonos de acento
    que la paleta ya declara: no hace falta un token nuevo como en la
    barra. El texto (`on-accent`) queda en 6.81:1 en el peor caso (oro)
@@ -1840,10 +1924,10 @@
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-1) var(--space-3);
-    background-color: var(--color-badge-new-bg);
+    background-color: var(--color-badge-sale-bg);
     background-image: linear-gradient(to right, var(--color-accent), var(--color-accent-hover));
     border-radius: var(--radius-sm);
-    color: var(--color-badge-new-text);
+    color: var(--color-badge-sale-text);
     font-size: var(--text-xs);
     font-weight: var(--weight-semibold);
     letter-spacing: var(--tracking-wide);
@@ -2235,6 +2319,14 @@
 
 /* Vive en la franja clara, igual que `.nav-toggle`: el color no puede
    salir de los tokens del <nav>, que están pensados para la barra. */
+/* El botón del pie tiene que quedar por encima del `::after` de
+   `.product-link`, que cubre la tarjeta entera para hacerla clicable:
+   sin esto el clic va a la ficha del producto y el botón no responde. */
+.product-foot .btn {
+    position: relative;
+    z-index: 1;
+}
+
 .cart-toggle {
     position: relative;
     display: inline-flex;
@@ -2251,6 +2343,13 @@
 
 .cart-toggle:hover {
     color: var(--color-accent);
+}
+
+/* El mismo botón existe dos veces: en la franja clara y en la barra.
+   Se muestra uno solo por tamaño, así que el visitante nunca ve los dos.
+   Éste es el de la barra, que recién aparece en escritorio. */
+.cart-toggle-nav {
+    display: none;
 }
 
 .cart-toggle-icon {
@@ -2624,6 +2723,17 @@
 
 @media (min-width: 62rem) {          /* 992px — supera el corte de 991px */
 
+    /* Acá la cabecera ya no se lleva media pantalla: se queda quieta y
+       se va con el scroll, sin retirarse ni volver. */
+    .header {
+        position: relative;
+        transition: none;
+    }
+
+    .header.is-hidden {
+        transform: none;
+    }
+
     .header-top-inner {
         flex-wrap: nowrap;
         min-height: var(--header-height);
@@ -2636,9 +2746,13 @@
         height: 2.25rem;
     }
 
+    /* `margin-left: auto` y no `space-between`: acá `.header-actions`
+       queda vacío (el carrito se muda a la barra) pero sigue ocupando el
+       extremo derecho, y sin esto los datos flotan en el medio. */
     .info-list {
         display: flex;
         gap: var(--space-7);
+        margin-left: auto;
     }
 
     .nav-toggle {
@@ -2758,9 +2872,12 @@
         text-decoration: none;
     }
 
+    /* `auto` y no una medida fija: se come el espacio libre y deja al
+       menú contra el borde izquierdo, con la lupa y el carrito juntos
+       del otro lado. Lo que los separa entre sí es el `gap` de la barra. */
     .nav-search {
         order: 2;
-        margin-left: var(--space-4);
+        margin-left: auto;
         padding: 0;
     }
 
@@ -2768,12 +2885,30 @@
         display: inline-flex;
     }
 
+    /* El carrito pasa a la barra, a la derecha de la lupa. El de la
+       franja clara se retira: uno solo a la vez. */
+    .header-actions .cart-toggle {
+        display: none;
+    }
+
+    .cart-toggle-nav {
+        order: 3;
+        display: inline-flex;
+        color: var(--nav-text-strong);
+    }
+
+    .cart-toggle-nav:hover {
+        color: var(--nav-active);
+    }
+
     /* Acá sí es un desplegable: el formulario está anclado a la derecha
        de la barra, junto a la lupa, y lo que se anima es su ancho, de 0
        a --search-width. Cerrado sale del orden de tabulación con
        `visibility: hidden`, retrasado hasta el final de la transición
        para que el cierre se vea. */
-    .search {
+    /* Scopeado a la barra: el mismo formulario en la página de
+       resultados no se despliega ni se ancla a nada. */
+    .nav .search {
         position: absolute;
         top: 50%;
         right: var(--container-pad);
@@ -2783,6 +2918,13 @@
         visibility: hidden;
         transition: width var(--transition-medium),
                     visibility 0s linear var(--time-medium);
+    }
+
+    /* Con el carrito en la barra el formulario frena antes: si llegara
+       al borde lo taparía al abrirse. Sin carrito —la tienda lo tiene
+       apagado— sigue usando todo el ancho hasta el margen. */
+    .nav-inner:has(.cart-toggle-nav) .search {
+        right: calc(var(--container-pad) + var(--touch-min) + var(--space-2));
     }
 
     .nav.search-open .search {

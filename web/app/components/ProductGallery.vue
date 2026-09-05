@@ -8,7 +8,13 @@
 -->
 
 <script setup lang="ts">
-const props = defineProps<{ images: string[], name: string, featured: boolean, soldOut: boolean }>()
+import type { Image } from '~/types/catalog'
+
+const props = defineProps<{ images: Image[], name: string, isNew: boolean, soldOut: boolean }>()
+
+/* La ficha se parte en dos columnas a partir de 768px y la galería se
+   queda con poco más de la mitad del contenedor. */
+const VIEWER_SIZES = '(min-width: 62rem) 600px, (min-width: 48rem) 50vw, 100vw'
 
 const current = ref(0)
 const ready = ref(false)
@@ -41,13 +47,15 @@ function onKeydown(event: KeyboardEvent) {
                 <li
                     v-for="(image, index) in images"
                     :id="`photo-${index + 1}`"
-                    :key="image"
+                    :key="image.src"
                     class="gallery-slide"
                     :class="{ 'is-active': index === current }"
                 >
                     <img
                         class="gallery-photo"
-                        :src="image"
+                        :src="image.src"
+                        :srcset="image.srcset"
+                        :sizes="VIEWER_SIZES"
                         :alt="`${name} — foto ${index + 1}`"
                         width="900"
                         height="900"
@@ -62,9 +70,9 @@ function onKeydown(event: KeyboardEvent) {
                 <AppIcon name="sold-out" class="badge-icon" />
                 Agotado
             </p>
-            <p v-else-if="featured" class="badge badge-featured">
-                <AppIcon name="star" class="badge-icon" />
-                Destacado
+            <!-- La cinta no lleva ícono: en la diagonal no entra -->
+            <p v-else-if="isNew" class="badge badge-ribbon badge-new">
+                Nuevo
             </p>
 
             <template v-if="ready && images.length > 1">
@@ -83,7 +91,7 @@ function onKeydown(event: KeyboardEvent) {
         <p class="visually-hidden" role="status">Foto {{ current + 1 }} de {{ images.length }}</p>
 
         <ul v-if="images.length > 1" class="gallery-thumbs">
-            <li v-for="(image, index) in images" :key="image">
+            <li v-for="(image, index) in images" :key="image.src">
                 <a
                     class="gallery-thumb"
                     :class="{ 'is-active': index === current }"
@@ -91,7 +99,7 @@ function onKeydown(event: KeyboardEvent) {
                     :aria-current="index === current ? 'true' : undefined"
                     @click.prevent="show(index)"
                 >
-                    <img :src="image" :alt="`Ver foto ${index + 1}`" width="160" height="160" loading="lazy" decoding="async">
+                    <img :src="image.thumb" :alt="`Ver foto ${index + 1}`" width="160" height="160" loading="lazy" decoding="async">
                 </a>
             </li>
         </ul>

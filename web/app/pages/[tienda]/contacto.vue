@@ -8,6 +8,17 @@ const store = computed(() => storeData.value as Store)
 
 const consultMessage = computed(() => `Hola ${store.value.name}, quiero hacer una consulta.`)
 
+/* La foto del banner sale de un hero del home, al azar entre los que tienen
+   imagen. El sorteo va en useState para que el servidor y el cliente saquen el
+   mismo número: si cada uno eligiera el suyo, la foto parpadearía al hidratar. */
+const photos = computed(() => (store.value.heroes ?? []).filter(hero => hero.image_url))
+
+const draw = useState('contact-hero-draw', () => Math.random())
+
+const photo = computed(() => photos.value.length
+    ? photos.value[Math.floor(draw.value * photos.value.length) % photos.value.length]
+    : null)
+
 const websiteHref = computed(() => {
     const website = store.value.website
 
@@ -69,9 +80,11 @@ useSeoMeta({
              cambia el token del alto, no los colores ni los toggles -->
         <section class="banner banner-short">
             <img
-                v-if="store.cover_url"
+                v-if="photo"
                 class="banner-photo"
-                :src="store.cover_url"
+                :src="photo.image_url ?? undefined"
+                :srcset="photo.image_srcset || undefined"
+                sizes="100vw"
                 alt=""
                 width="1024"
                 height="411"

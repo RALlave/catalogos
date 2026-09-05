@@ -189,7 +189,7 @@ watch(() => props.open, (open) => {
                             @click="pick(media)"
                         >
                             <span class="media-card-image">
-                                <img :src="media.url" :alt="media.alt ?? ''">
+                                <img :src="media.thumb_url" :alt="media.alt ?? ''">
                             </span>
 
                             <span class="media-card-body">

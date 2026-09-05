@@ -6,34 +6,40 @@ use App\Models\Media;
 use App\Models\Store;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class MediaService
 {
-    private const DISK = 'public';
+    public function __construct(private readonly ImageOptimizer $optimizer) {}
 
     /**
      * @param  array<int, UploadedFile>  $files
      * @return Collection<int, Media>
      */
-    public function storeMany(Store $store, array $files): Collection
+    public function storeMany(Store $store, array $files, string $profile = 'library'): Collection
     {
-        return new Collection(array_map(fn (UploadedFile $file) => $this->store($store, $file), $files));
+        return new Collection(array_map(
+            fn (UploadedFile $file) => $this->store($store, $file, $profile),
+            $files
+        ));
     }
 
-    public function store(Store $store, UploadedFile $file): Media
+    /**
+     * The upload never reaches the disk as it was sent: it is converted to the
+     * WebP variants of the profile and the original is dropped.
+     */
+    public function store(Store $store, UploadedFile $file, string $profile = 'library'): Media
     {
-        // Se leen antes de mover el archivo: después la ruta temporal ya no existe.
-        $size = @getimagesize($file->getRealPath()) ?: [];
+        $image = $this->optimizer->optimize($file->getRealPath(), Media::directoryFor($store->id), $profile);
 
         return $store->media()->create([
-            'path' => $file->store('media/'.$store->id, self::DISK),
+            'path' => $image['path'],
+            'variants' => $image['variants'],
             'name' => $this->name($file),
-            'mime' => $file->getMimeType(),
-            'size' => $file->getSize(),
-            'width' => $size[0] ?? null,
-            'height' => $size[1] ?? null,
+            'mime' => ImageOptimizer::MIME,
+            'size' => $image['size'],
+            'width' => $image['width'],
+            'height' => $image['height'],
         ]);
     }
 
@@ -54,12 +60,11 @@ class MediaService
     public function delete(Media $media): void
     {
         $path = $media->path;
+        $variants = $media->variants;
 
         $media->delete();
 
-        if (Storage::disk(self::DISK)->exists($path)) {
-            Storage::disk(self::DISK)->delete($path);
-        }
+        $this->optimizer->forget($path, $variants);
     }
 
     /**

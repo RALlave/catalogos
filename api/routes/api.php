@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\UserRole;
+use App\Http\Controllers\Api\Admin\ImpersonationController as AdminImpersonationController;
 use App\Http\Controllers\Api\Admin\MetricsController as AdminMetricsController;
 use App\Http\Controllers\Api\Admin\StoreController as AdminStoreController;
 use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Api\Public\OrderController as PublicOrderController;
 use App\Http\Controllers\Api\Public\ProductController as PublicProductController;
 use App\Http\Controllers\Api\Public\StoreController as PublicStoreController;
 use App\Http\Controllers\Api\Public\ThemeController;
+use App\Http\Controllers\Api\Public\TrackController as PublicTrackController;
 use App\Http\Controllers\Api\Public\WaitlistController as PublicWaitlistController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\HeroController;
@@ -50,6 +52,11 @@ Route::post('stores/{slug}/orders', [PublicOrderController::class, 'store'])
 Route::post('stores/{slug}/waitlist', [PublicWaitlistController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('public.waitlist.store');
+
+/* Lo que el visitante hace en el navegador y la API no ve: el botón compartir. */
+Route::post('stores/{slug}/track', PublicTrackController::class)
+    ->middleware('throttle:30,1')
+    ->name('public.track');
 
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('me', [LoginController::class, 'me']);
@@ -123,6 +130,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
             Route::get('stores/{store}', [AdminStoreController::class, 'show'])->name('stores.show');
             Route::put('stores/{store}', [AdminStoreController::class, 'update'])->name('stores.update');
             Route::patch('stores/{store}/active', [AdminStoreController::class, 'active'])->name('stores.active');
+            Route::post('stores/{store}/impersonate', AdminImpersonationController::class)->name('stores.impersonate');
 
             Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
             Route::get('users/{user}', [AdminUserController::class, 'show'])->name('users.show');

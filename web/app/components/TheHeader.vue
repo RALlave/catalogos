@@ -29,6 +29,18 @@ const menuOpen = ref(false)
 const searchOpen = ref(false)
 const categoriesOpen = ref(false)
 
+/* La cabecera se retira al bajar y vuelve al subir. Sólo en móvil: es
+   donde ocupa una porción real de la pantalla. */
+const headerHidden = ref(false)
+
+/* Cuánto hay que mover el dedo para que cuente como un gesto: sin esto
+   el temblor de un scroll suave la haría titilar. */
+const SCROLL_STEP = 8
+
+/* Arriba del todo nunca se esconde: los primeros píxeles son justamente
+   donde el visitante espera ver la marca. */
+const SCROLL_FLOOR = 120
+
 const search = ref(String(route.query.q ?? ''))
 
 const navPanel = ref<HTMLElement | null>(null)
@@ -41,6 +53,12 @@ const searchField = ref<HTMLInputElement | null>(null)
    mientras está abierto. La clase vive en <html>, como en la maqueta. */
 watch(menuOpen, (open) => {
     document.documentElement.classList.toggle('is-menu-open', open)
+
+    /* El panel arranca desde el borde de la cabecera: retirada, el ✕ y
+       el buscador nacerían fuera de la pantalla. */
+    if (open) {
+        headerHidden.value = false
+    }
 })
 
 onBeforeUnmount(() => document.documentElement.classList.remove('is-menu-open'))
@@ -113,11 +131,15 @@ function onSearchBlur(event: FocusEvent) {
     }
 }
 
+/* Buscar es una página aparte, no un filtro del catálogo: se sale con el
+   término solo, sin arrastrar la categoría ni la página que hubiera. */
+const searchPath = computed(() => `${storePath.value}/buscar`)
+
 function submitSearch() {
     searchOpen.value = false
     menuOpen.value = false
 
-    navigateTo({ path: storePath.value, query: { ...route.query, q: search.value || undefined, page: undefined } })
+    navigateTo({ path: searchPath.value, query: { q: search.value.trim() || undefined } })
 }
 
 function onEscape(event: KeyboardEvent) {
@@ -151,15 +173,56 @@ onMounted(() => {
 
     desktop.addEventListener('change', sync)
 
+    /* Quien pidió menos movimiento no tiene por qué ver la cabecera
+       entrando y saliendo: para esa gente se queda donde está. */
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    let last = window.scrollY
+    let waiting = false
+
+    const onScroll = () => {
+        if (waiting) {
+            return
+        }
+
+        waiting = true
+
+        /* La decisión se toma en el cuadro siguiente: el evento llega
+           muchas veces por gesto y leer scrollY fuerza un reflow. */
+        requestAnimationFrame(() => {
+            waiting = false
+
+            const top = Math.max(0, window.scrollY)
+            const step = top - last
+
+            if (Math.abs(step) < SCROLL_STEP) {
+                return
+            }
+
+            last = top
+
+            if (still.matches || menuOpen.value || desktop.matches) {
+                headerHidden.value = false
+
+                return
+            }
+
+            headerHidden.value = step > 0 && top > SCROLL_FLOOR
+        })
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+
     onBeforeUnmount(() => {
         document.removeEventListener('keydown', onEscape)
         desktop.removeEventListener('change', sync)
+        window.removeEventListener('scroll', onScroll)
     })
 })
 </script>
 
 <template>
-    <header class="header">
+    <header class="header" :class="{ 'is-hidden': headerHidden }">
 
         <div class="header-top">
             <div class="container header-top-inner">
@@ -223,7 +286,7 @@ onMounted(() => {
                         @click="toggleMenu"
                     >
                         <AppIcon :name="menuOpen ? 'close' : 'menu'" class="nav-toggle-icon" />
-                        <span class="nav-toggle-text">Menú</span>
+                        <span class="visually-hidden">Menú</span>
                     </button>
                 </div>
 
@@ -256,7 +319,16 @@ onMounted(() => {
                             <span class="visually-hidden">Buscar productos</span>
                         </button>
 
-                        <form id="form-search" class="search" role="search" @submit.prevent="submitSearch">
+                        <!-- `action` y `method` son la versión sin JS: el
+                             navegador arma solo `/tienda/buscar?q=…`. -->
+                        <form
+                            id="form-search"
+                            class="search"
+                            role="search"
+                            method="get"
+                            :action="searchPath"
+                            @submit.prevent="submitSearch"
+                        >
                             <label class="visually-hidden" for="q">Buscar productos</label>
                             <input
                                 id="q"
@@ -268,6 +340,7 @@ onMounted(() => {
                                 placeholder="Buscar productos…"
                                 autocomplete="off"
                                 maxlength="120"
+                                @click="($event.target as HTMLInputElement).select()"
                             >
                             <button class="search-submit" type="submit">
                                 <AppIcon name="search" class="search-submit-icon" />
@@ -327,6 +400,14 @@ onMounted(() => {
                     </ul>
 
                 </div>
+
+                <!-- Va fuera del panel a propósito: adentro se lo llevaría el
+                     menú lateral en móvil. Acá queda a la derecha de la lupa
+                     en escritorio, que es el único tamaño donde se muestra;
+                     el de la franja superior atiende al resto. -->
+                <ClientOnly>
+                    <CartToggle v-if="store.cart_enabled" class="cart-toggle-nav" :store="store" />
+                </ClientOnly>
 
                 <!-- Velo: oscurece la página detrás del panel y cierra al tocarlo -->
                 <div class="nav-veil" @click="closeMenuAndReturn" />

@@ -117,7 +117,7 @@ onMounted(async () => {
 
             <div class="card-body">
                 <FormField label="Imagen" field-id="hero-image" :error="errors.media_id?.[0]">
-                    <img v-if="imageUrl" class="thumb thumb-wide" :src="imageUrl" alt="">
+                    <img v-if="imageUrl" class="preview-wide" :src="imageUrl" alt="">
 
                     <div class="table-actions">
                         <button class="btn btn-outline btn-sm" type="button" @click="picking = true">

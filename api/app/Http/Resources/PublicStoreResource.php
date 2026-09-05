@@ -16,7 +16,9 @@ class PublicStoreResource extends JsonResource
         return [
             'name' => $this->name,
             'slug' => $this->slug,
-            'logo_url' => $this->logoMedia?->url(),
+            /* The header draws the logo a few dozen pixels tall. */
+            'logo_url' => $this->logoMedia?->url('thumb'),
+            /* The cover is only the social sharing image, so it goes big. */
             'cover_url' => $this->coverMedia?->url(),
             'theme' => $this->theme(),
             'hero_effect' => $this->hero_effect,

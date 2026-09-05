@@ -24,9 +24,11 @@ class PublicProductResource extends JsonResource
             'sale_price' => $this->sale_price,
             'featured' => $this->featured,
             'sold_out' => $this->sold_out,
+            'is_new' => $this->is_new,
             'category' => new PublicCategoryResource($this->whenLoaded('category')),
+            /* One entry per photo, with the candidates for the srcset. */
             'images' => $this->whenLoaded('images', fn () => $this->images
-                ->map(fn ($image) => $image->media?->url())
+                ->map(fn ($image) => $image->media?->responsive())
                 ->filter()
                 ->values()
                 ->all()

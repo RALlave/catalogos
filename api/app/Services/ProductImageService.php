@@ -11,18 +11,25 @@ use Illuminate\Support\Facades\DB;
 
 class ProductImageService
 {
-    public function __construct(private readonly MediaService $media) {}
+    public function __construct(
+        private readonly MediaService $media,
+        private readonly CatalogCache $cache,
+    ) {}
 
     /**
      * Subir desde el producto también alimenta la biblioteca: el archivo entra
      * como media de la tienda y el producto solo la referencia.
+     *
+     * Uploading from here only builds the product variants: the gallery never
+     * shows a photo wider than the card. Picking one of these for the banner
+     * later stretches the card, because the original is not kept.
      *
      * @param  array<int, UploadedFile>  $files
      * @return Collection<int, ProductImage>
      */
     public function storeMany(Product $product, array $files): Collection
     {
-        $media = $this->media->storeMany($product->store, $files);
+        $media = $this->media->storeMany($product->store, $files, 'product');
 
         return $this->attach($product, $media->pluck('id')->all());
     }
@@ -83,11 +90,19 @@ class ProductImageService
      */
     public function reorder(array $ids): void
     {
+        $product = ProductImage::whereKey($ids)->value('product_id');
+
         DB::transaction(function () use ($ids): void {
             foreach ($ids as $position => $id) {
                 ProductImage::where('id', $id)->update(['order' => $position]);
             }
         });
+
+        /* El `update` masivo no dispara los eventos del modelo, así que la
+           caché pública se invalida a mano. */
+        if ($product !== null) {
+            $this->cache->forgetStore(Product::findOrFail($product)->store);
+        }
     }
 
     /**

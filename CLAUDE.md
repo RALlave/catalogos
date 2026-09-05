@@ -112,24 +112,18 @@ Nuxt y la SPA consumirán exactamente la misma API.
 
 ## Prototipo
 
-En `prototipo/` está el template estático (HTML/CSS/JS vanilla) que define la **estructura, el maquetado y los layouts** del catálogo público.
+En `prototipo-3/` está el template estático (HTML/CSS/JS vanilla) que define la
+**estructura, el maquetado y el diseño** del catálogo público. Es la única
+maqueta vigente: las dos iteraciones anteriores (`prototipo/` y `prototipo-2/`)
+se eliminaron el 2026-08-29 y quedaron solo en el historial de git.
 
-- `index.html` — listado de productos
-- `producto.html` — detalle del producto
-- `contacto.html` — contacto
-- `assets/css/` — `base.css`, `components.css` y `layouts/layout-XX.css`
-- `assets/js/` — `render.js` (plantillas) y `app.js` (datos + tema)
-- `data/tienda.json` — datos de la tienda, tema y productos
+Tiene su propio `CLAUDE.md` con las reglas de su sistema de diseño (las tres
+capas del CSS, tokens, las 12 paletas con sus ratios WCAG, breakpoints, mejora
+progresiva). **Leerlo antes de tocar cualquier archivo de esa carpeta.**
 
-Es la referencia visual a portar a componentes Nuxt/Vue en la Fase 5. El markup y los componentes CSS ya están pensados para eso: datos desacoplados del markup y paleta de colores por tienda.
-
-### Iteraciones posteriores del prototipo
-
-`prototipo-2/` y `prototipo-3/` son rehechos del mismo catálogo con otra
-identidad visual. **`prototipo-3/` es la iteración vigente** y tiene su propio
-`CLAUDE.md` con las reglas de su sistema de diseño (tokens, paletas con ratios
-WCAG, breakpoints, mejora progresiva). Leerlo antes de tocar cualquier archivo
-de esa carpeta.
+Es la referencia visual del catálogo de la Fase 5, ya portada a `web/`: el
+markup y los componentes CSS estaban pensados para eso, con los datos
+desacoplados del markup y la identidad visual entera en variables CSS.
 
 ## Fase 1 — Base del proyecto
 
@@ -214,6 +208,7 @@ Campos:
 - Producto destacado
 - Visible
 - Agotado (`sold_out`)
+- Nuevo (`is_new`)
 - Orden
 
 `specs`, `benefits` y `badges` se guardan como columnas JSON. La columna se llama `specs` y no `attributes` porque ese nombre está reservado por Eloquent.
@@ -221,6 +216,31 @@ Campos:
 La moneda no vive en el producto: es un setting de la tienda.
 
 No implementar inventario en esta etapa. `sold_out` es una marca manual, no un stock.
+
+`is_new` también es una marca manual: nada la deriva de `created_at`, porque la
+carga inicial de un catálogo dejaría todos los productos "nuevos" a la vez. Se
+llama `is_new` y no `new` porque esa es palabra reservada de PHP.
+
+### Qué se dibuja sobre la foto
+
+Un solo distintivo por producto, y en este orden: **agotado**, **oferta**,
+**nuevo**. "Destacado" **ya no se dibuja** (2026-08-29): el campo `featured`
+sigue vivo y ordena el catálogo y cuenta en el dashboard, pero no muestra nada
+al visitante.
+
+"Oferta" y "nuevo" no son badges rectangulares sino **cintas diagonales en la
+esquina superior izquierda**, hechas en CSS puro para que el color siga saliendo
+de la paleta. La geometría vive en `.badge-ribbon` y el color en `.badge-sale` /
+`.badge-new`. Van sin ícono: en la diagonal no entra.
+
+La oferta **no tiene campo propio**: es tener `sale_price` menor que `price`, y
+la cinta muestra el porcentaje calculado (`discountPercent()` en `useFormat.ts`,
+compartido con el badge de la ficha). Sólo se dibuja en la tarjeta de la grilla:
+en la ficha el descuento ya se lee en el precio anterior tachado más el badge
+del porcentaje, así que ahí la cadena es agotado > nuevo.
+
+La tarjeta de la grilla muestra el precio actual y, si hay oferta, el anterior
+tachado. El badge del porcentaje sigue siendo sólo de la ficha.
 
 ## Fase 5 — Catálogo público
 
@@ -247,6 +267,7 @@ Vive en `web/`, separado de `api/`. Estructura de URLs:
 /                          landing del SaaS
 /{tienda}                  catálogo        (?cat= &q= &page=)
 /{tienda}/producto/{slug}  detalle
+/{tienda}/buscar           resultados de búsqueda (?q= &cat= &page=)
 /{tienda}/contacto         contacto
 ```
 
@@ -290,6 +311,10 @@ texto—; los botones no se editan.
   sin foto, y la biblioteca avisa antes nombrando los heros afectados.
 - Sin heros cargados el banner no se renderiza: el catálogo abre en los
   productos. No hay textos de reserva.
+- El banner corto de **Contacto** usa la foto de **un hero al azar** entre los
+  que tienen imagen (ya no la portada). El sorteo va en un `useState`, para que
+  el servidor y el cliente saquen el mismo número y la foto no parpadee al
+  hidratar.
 - En el catálogo, el primer hero se renderiza en el servidor (se ve sin JS) y
   las flechas y los puntos son `<ClientOnly>`. Pasa solo cada 6 segundos, se
   frena al pasar el mouse o al usar los controles, y no se mueve si el visitante
@@ -353,17 +378,72 @@ y el router decide por el array `roles` que devuelve la respuesta —
 
 El token de Sanctum se guarda en `localStorage` y viaja como Bearer.
 
+### Entrar al panel de una tienda (impersonación)
+
+Desde el listado de tiendas y desde Editar tienda, el superadmin puede entrar al
+panel de una tienda **como su dueño**, para dar soporte. Es acceso completo: lo
+que se edite queda a nombre del dueño.
+
+`POST /api/admin/stores/{store}/impersonate` devuelve un token del dueño. El
+panel guarda el token del superadmin en `dash.admin_token` y el nombre de la
+tienda en `dash.impersonated_store`, así la sesión sobrevive a un F5; mientras
+dura, el layout muestra una barra con "Volver a superadmin". Al volver, el token
+del dueño se revoca (`POST /api/logout`) y se restaura el del superadmin.
+
+No se puede impersonar a otro superadmin, y el token impersonado no entra a
+`/api/admin` (el middleware de rol lo corta con 403). **No hay auditoría**: nada
+registra quién impersonó a quién.
+
 ### Fuera de esta fase
 
 `planes` y `moderación` del prototipo superadmin quedan sin conectar: no tienen
 tablas ni endpoints, y suscripciones/facturación están fuera del MVP. La
 verificación de email tampoco se implementa todavía.
 
+## Estadísticas del catálogo
+
+Los tres gráficos y el número de visitas del dashboard dejaron de ser datos de
+ejemplo. Se miden tres cosas: **visita** al catálogo, **vista** de un producto y
+**compartido** de un producto.
+
+No se guarda un evento por visita: la tabla `store_stats` (`store_id`,
+`product_id`, `type`, `date`, `count`) es el acumulado por día, con una fila por
+tienda, tipo, producto y día. `product_id` en `null` es el dato de la tienda
+entera. La tabla queda chica para siempre y no hay nada que limpiar.
+
+Quién cuenta qué:
+
+- **visita** y **vista de producto** las cuenta la API al servir
+  `GET /stores/{slug}` y `GET /stores/{slug}/products/{producto}`. El conteo va
+  **fuera** del `remember` de `CatalogCache`: adentro sólo correría la primera
+  vez y las respuestas cacheadas no se contarían.
+- **compartido** llega por `POST /api/stores/{slug}/track` (`type` + `product_slug`),
+  porque es un clic del visitante que la API no ve. Ese endpoint **sólo acepta
+  `share`**: si aceptara `visit`, cualquiera podría inflar el número de otra
+  tienda. Responde 204 siempre, incluso si la tienda no existe.
+
+El mismo visitante cuenta **una vez por día**, por tienda y por producto. Se
+identifica con un hash de IP y user agent que vive en la caché hasta que termina
+el día: no se guarda ninguna de las dos cosas. Los bots y las peticiones sin
+user agent no cuentan.
+
+Como el catálogo se renderiza en el servidor, la petición sale del servidor de
+Nuxt: `useCatalog.ts` reenvía la IP y el user agent del visitante (`X-Forwarded-For`
+y `User-Agent`). Sin eso todas las visitas serían la misma y no se contaría
+ninguna. `StatService` lee el **primer** valor de `X-Forwarded-For`, que es el
+visitante real cuando nginx va agregando la cadena.
+
+El dashboard muestra los **últimos 30 días** (`StatService::PERIOD`) y la
+variación contra los 30 anteriores; sin período anterior la variación es `null`
+y no se dibuja el badge. El del superadmin usa el mismo período para "Tiendas más
+visitadas". Sin datos, los gráficos no se dibujan: va un mensaje, porque un
+gráfico en cero parece un error.
+
 ## Multimedia — biblioteca de imágenes
 
 Todas las imágenes de una tienda viven en la tabla `media` (`store_id`, `path`,
-`name`, `alt`, `mime`, `size`, `width`, `height`). Nada guarda un archivo por su
-cuenta:
+`variants`, `name`, `alt`, `mime`, `size`, `width`, `height`). Nada guarda un
+archivo por su cuenta:
 
 - `product_images` es un pivot (`product_id` + `media_id` + `order`): la misma
   imagen puede estar en varios productos.
@@ -392,6 +472,42 @@ directa siguen existiendo: suben el archivo y de paso lo dejan en la biblioteca.
 En el panel: pantalla `Multimedia` (`/multimedia`) y el modal `MediaPicker`,
 reutilizado desde el formulario de producto y desde la configuración de la
 tienda.
+
+### Optimización: WebP en varias medidas
+
+Ninguna imagen se guarda como la subió el usuario. Al subir se convierte a
+**WebP** (calidad 82) en varias medidas y **el original se descarta**. Los
+tamaños y los perfiles están en `api/config/media.php`; el trabajo lo hace
+`ImageOptimizer` con `intervention/image` sobre GD.
+
+- `thumb` 400 · `card` 800 · `full` 1600, medidos sobre el lado mayor. Una foto
+  más chica que la medida **no se agranda**, y si dos medidas dan el mismo ancho
+  se escribe un solo archivo que las dos variantes comparten.
+- Qué variantes se generan depende de **desde dónde se sube**: perfil `library`
+  (biblioteca, hero, logo, portada) genera las tres; perfil `product` (galería
+  del producto) genera solo `thumb` y `card`, porque la ficha nunca muestra la
+  foto más ancha que la card.
+- Como no queda el original, **una imagen subida desde un producto se queda en
+  800px para siempre**: si después se elige para el banner, se estira la card.
+  Es una consecuencia aceptada, no un error.
+
+La columna `variants` es un JSON `{size: {path, width, height}}`. `path` sigue
+apuntando a la variante más grande, así que todo lo que ya leía `url()` no
+cambió. Un `variants` en `null` es una fila anterior a la conversión.
+
+`Media::responsive()` arma `{src, srcset, thumb, width, height}` y el `srcset`
+declara el **ancho real** de cada archivo, nunca el de la medida objetivo: una
+foto de 500px anunciada como 1600w hace que el navegador elija mal. Por eso
+`PublicProductResource` devuelve `images` como objetos y no como URLs sueltas.
+`logo_url` y `main_image_url` apuntan al `thumb`, porque solo se dibujan chicos.
+
+Todo vive en `media/{store_id}/`, sin excepción: borrar una tienda es borrar una
+carpeta. El límite de subida es de **4 MB** por archivo.
+
+Para rehacer lo ya subido está `php artisan media:optimize` (`--all` para
+reconvertir todo, `--profile=` para elegir el juego de medidas, `--keep` para no
+borrar los archivos de origen). Es la herramienta a usar si cambian los tamaños
+de `config/media.php`.
 
 ## API
 
@@ -447,7 +563,6 @@ No desarrollar todavía:
 - Cupones
 - IA
 - Facturación
-- Estadísticas
 - Usuarios múltiples
 - Dominios personalizados
 - Aplicación móvil

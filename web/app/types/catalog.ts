@@ -22,6 +22,16 @@ export interface Schedule {
     hours: string
 }
 
+/* Una foto con sus variantes: el navegador elige del srcset y src queda de
+   respaldo. thumb es la chica, para el carrito. */
+export interface Image {
+    src: string
+    srcset: string
+    thumb: string
+    width: number | null
+    height: number | null
+}
+
 export interface Product {
     name: string
     slug: string
@@ -34,12 +44,14 @@ export interface Product {
     sale_price: string | null
     featured: boolean
     sold_out: boolean
+    is_new: boolean
     category: Category | null
-    images: string[]
+    images: Image[]
 }
 
 export interface Hero {
     image_url: string | null
+    image_srcset: string | null
     eyebrow: string | null
     title: string
     text: string | null

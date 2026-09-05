@@ -18,7 +18,8 @@ class StoreResource extends JsonResource
             'slug' => $this->slug,
             'logo_media_id' => $this->logo_media_id,
             'logo' => $this->logoMedia?->path,
-            'logo_url' => $this->logoMedia?->url(),
+            /* Always drawn small, in the panel and in the catalog header. */
+            'logo_url' => $this->logoMedia?->url('thumb'),
             'cover_media_id' => $this->cover_media_id,
             'cover' => $this->coverMedia?->path,
             'cover_url' => $this->coverMedia?->url(),

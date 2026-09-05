@@ -6,12 +6,14 @@ import DashChart from '@/components/DashChart.vue'
 import { api } from '@/services/api'
 
 const metrics = ref(null)
+const topStores = ref([])
+const period = ref('Últimos 30 días')
 const latest = ref([])
 const loading = ref(true)
 
 /* ---------------------------------------------------------------------
-   Altas por mes, planes, tiendas más visitadas e ingresos todavía no
-   tienen backend: los datos son de ejemplo.
+   Altas por mes, planes e ingresos todavía no tienen backend: los datos
+   son de ejemplo. Las tiendas más visitadas sí son reales.
    --------------------------------------------------------------------- */
 
 function tooltip(colors) {
@@ -107,10 +109,10 @@ const plansChart = colors => ({
 const topStoresChart = colors => ({
     type: 'bar',
     data: {
-        labels: ['Aroma Sur', 'Kaya Deco', 'Mi Tienda', 'Luz Beauty', 'Nómade'],
+        labels: topStores.value.map(store => store.name),
         datasets: [{
             label: 'Visitas',
-            data: [8420, 6180, 4930, 3710, 2880],
+            data: topStores.value.map(store => store.count),
             backgroundColor: colors.accent,
             hoverBackgroundColor: colors.primary,
             borderRadius: 6,
@@ -168,6 +170,8 @@ onMounted(async () => {
         const payload = await api.get('/admin/metrics')
 
         metrics.value = payload.metrics
+        topStores.value = payload.top_stores
+        period.value = `Últimos ${payload.days} días`
         latest.value = payload.latest_stores
     } finally {
         loading.value = false
@@ -274,11 +278,14 @@ onMounted(async () => {
             <header class="card-header">
                 <div class="card-title">
                     <h2>Tiendas más visitadas</h2>
-                    <p>Top 5 del mes</p>
+                    <p>Top 5 · {{ period.toLowerCase() }}</p>
                 </div>
             </header>
             <div class="card-body">
-                <DashChart :factory="topStoresChart" short />
+                <DashChart v-if="topStores.length" :factory="topStoresChart" short />
+                <div v-else-if="! loading" class="empty">
+                    <p>Todavía no hay visitas registradas.</p>
+                </div>
             </div>
         </article>
 

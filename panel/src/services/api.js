@@ -2,6 +2,12 @@ const BASE = import.meta.env.VITE_API_BASE ?? 'http://127.0.0.1:8000/api'
 
 const STORAGE_TOKEN = 'dash.token'
 
+/* Mientras el superadmin entra al panel de una tienda, su propio token espera
+   acá y el nombre de la tienda queda guardado para la barra de aviso. Van en
+   localStorage y no en memoria para que un F5 no deje la sesión a medias. */
+const STORAGE_ADMIN_TOKEN = 'dash.admin_token'
+const STORAGE_IMPERSONATED = 'dash.impersonated_store'
+
 export function getToken() {
     return window.localStorage.getItem(STORAGE_TOKEN)
 }
@@ -11,6 +17,30 @@ export function setToken(token) {
         window.localStorage.setItem(STORAGE_TOKEN, token)
     } else {
         window.localStorage.removeItem(STORAGE_TOKEN)
+    }
+}
+
+export function getAdminToken() {
+    return window.localStorage.getItem(STORAGE_ADMIN_TOKEN)
+}
+
+export function setAdminToken(token) {
+    if (token) {
+        window.localStorage.setItem(STORAGE_ADMIN_TOKEN, token)
+    } else {
+        window.localStorage.removeItem(STORAGE_ADMIN_TOKEN)
+    }
+}
+
+export function getImpersonatedStore() {
+    return window.localStorage.getItem(STORAGE_IMPERSONATED)
+}
+
+export function setImpersonatedStore(name) {
+    if (name) {
+        window.localStorage.setItem(STORAGE_IMPERSONATED, name)
+    } else {
+        window.localStorage.removeItem(STORAGE_IMPERSONATED)
     }
 }
 

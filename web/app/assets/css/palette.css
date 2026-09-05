@@ -83,27 +83,34 @@
    paleta nueva hereda badges correctos sin tocar este bloque.
 
        nuevo     → accent  + on-accent
+       oferta    → accent  + on-accent
        destacado → surface + text          (+ borde border-strong)
        agotado   → primary + on-primary
 
-   Los tres pares superan 4.5:1 en las 12 paletas. El más ajustado
-   es 4.56:1 (primary/on-primary en Frío); le siguen 4.77:1 (Tech)
-   y 4.82:1 (Frío) en accent/on-accent.
+   Los pares superan 4.5:1 en las 12 paletas. El más ajustado es
+   4.56:1 (primary/on-primary en Frío); le siguen 4.77:1 (Tech) y
+   4.82:1 (Frío) en accent/on-accent.
 
-   Se eligieron esos tres y no otros porque quedan en luminancias
+   Se eligieron esos y no otros porque quedan en luminancias
    separadas — media, clara y oscura — y así los estados se
    distinguen también en escala de grises. El de "destacado" se
    pinta sobre `surface`, que es claro, y por eso lleva borde
    `border-strong` (≥ 3:1 sobre ese fondo en las 12 paletas): sin
    él desaparecería sobre una foto de producto clara.
 
-   Igual el color nunca es la única señal: cada badge lleva ícono
-   + texto.
+   "Oferta" comparte el par de "nuevo" a propósito: nunca se dibujan
+   los dos a la vez (la oferta le gana a nuevo) y el acento ya es el
+   color del descuento en la ficha. Lo que las distingue es el texto.
+
+   Igual el color nunca es la única señal: cada distintivo lleva su
+   texto, y los rectangulares además ícono.
    ============================================================ */
 
 :root {
     --color-badge-new-bg:        var(--color-accent);
     --color-badge-new-text:      var(--color-on-accent);
+    --color-badge-sale-bg:       var(--color-accent);
+    --color-badge-sale-text:     var(--color-on-accent);
     --color-badge-featured-bg:   var(--color-surface);
     --color-badge-featured-text: var(--color-text);
     --color-badge-sold-out-bg:   var(--color-primary);

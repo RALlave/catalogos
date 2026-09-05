@@ -11,6 +11,7 @@ const auth = useAuthStore()
 const ui = useUiStore()
 
 const metrics = ref(null)
+const stats = ref(null)
 const latest = ref([])
 const loading = ref(true)
 
@@ -51,9 +52,19 @@ const shareUrl = computed(() => {
 })
 
 /* ---------------------------------------------------------------------
-   Los gráficos y las visitas todavía no tienen backend: los datos son
-   de ejemplo hasta que exista el módulo de estadísticas.
+   Estadísticas del catálogo. Los gráficos se montan recién cuando llegan
+   los datos (v-if): el canvas se dibuja una sola vez, al montarse.
    --------------------------------------------------------------------- */
+
+const number = new Intl.NumberFormat('es')
+
+const visits = computed(() => stats.value?.visits ?? null)
+
+const period = computed(() => `Últimos ${stats.value?.days ?? 30} días`)
+
+/* Sin visitas no hay nada que graficar: el gráfico en cero es peor que un
+   mensaje, parece un error. */
+const hasVisits = computed(() => (visits.value?.total ?? 0) > 0)
 
 function tooltip(colors) {
     return {
@@ -68,10 +79,10 @@ function tooltip(colors) {
 const visitsChart = colors => ({
     type: 'line',
     data: {
-        labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+        labels: stats.value.daily.labels,
         datasets: [{
             label: 'Visitas',
-            data: [128, 165, 142, 210, 264, 318, 287],
+            data: stats.value.daily.values,
             borderColor: colors.primary,
             backgroundColor: colors.accentSoft,
             borderWidth: 2,
@@ -103,10 +114,10 @@ const visitsChart = colors => ({
 const viewedChart = colors => ({
     type: 'bar',
     data: {
-        labels: ['Perfume Ámbar', 'Gafas Retro', 'Zapatilla Urbana', 'Camisa Lino', 'Kit de Uñas'],
+        labels: stats.value.top_viewed.map(item => item.name),
         datasets: [{
             label: 'Vistas',
-            data: [412, 358, 291, 244, 187],
+            data: stats.value.top_viewed.map(item => item.count),
             backgroundColor: colors.accent,
             hoverBackgroundColor: colors.primary,
             borderRadius: 6,
@@ -133,9 +144,9 @@ const viewedChart = colors => ({
 const sharedChart = colors => ({
     type: 'doughnut',
     data: {
-        labels: ['WhatsApp', 'Facebook', 'Enlace directo', 'Instagram'],
+        labels: stats.value.top_shared.map(item => item.name),
         datasets: [{
-            data: [148, 62, 45, 31],
+            data: stats.value.top_shared.map(item => item.count),
             backgroundColor: [colors.green, colors.primary, colors.accent, colors.rose],
             borderColor: colors.surface,
             borderWidth: 3,
@@ -161,6 +172,7 @@ onMounted(async () => {
         const payload = await api.get('/dashboard')
 
         metrics.value = payload.metrics
+        stats.value = payload.stats
         latest.value = payload.latest_products
     } catch {
         metrics.value = null
@@ -233,8 +245,13 @@ onMounted(async () => {
                 </span>
             </div>
             <div class="stat-bottom">
-                <div class="stat-value">1.514</div>
-                <span class="stat-delta is-up">+18%</span>
+                <div class="stat-value">{{ visits ? number.format(visits.total) : '—' }}</div>
+                <span
+                    v-if="visits?.change !== null && visits?.change !== undefined"
+                    class="stat-delta"
+                    :class="visits.change < 0 ? 'is-down' : 'is-up'"
+                >{{ visits.change > 0 ? '+' : '' }}{{ visits.change }}%</span>
+                <span v-else class="stat-delta">{{ period.toLowerCase() }}</span>
             </div>
         </article>
 
@@ -257,12 +274,19 @@ onMounted(async () => {
             <header class="card-header">
                 <div class="card-title">
                     <h2>Visitas por día</h2>
-                    <p>Últimos 7 días</p>
+                    <p>{{ period }}</p>
                 </div>
-                <span class="badge badge-success badge-dot">+18%</span>
+                <span
+                    v-if="visits?.change !== null && visits?.change !== undefined"
+                    class="badge badge-dot"
+                    :class="visits.change < 0 ? 'badge-warning' : 'badge-success'"
+                >{{ visits.change > 0 ? '+' : '' }}{{ visits.change }}%</span>
             </header>
             <div class="card-body">
-                <DashChart :factory="visitsChart" />
+                <DashChart v-if="hasVisits" :factory="visitsChart" />
+                <div v-else-if="! loading" class="empty">
+                    <p>Todavía nadie visitó tu catálogo. Compartí el enlace para empezar.</p>
+                </div>
             </div>
         </article>
 
@@ -328,11 +352,14 @@ onMounted(async () => {
             <header class="card-header">
                 <div class="card-title">
                     <h2>Productos más vistos</h2>
-                    <p>Top 5 del mes</p>
+                    <p>Top 5 · {{ period.toLowerCase() }}</p>
                 </div>
             </header>
             <div class="card-body">
-                <DashChart :factory="viewedChart" short />
+                <DashChart v-if="stats?.top_viewed.length" :factory="viewedChart" short />
+                <div v-else-if="! loading" class="empty">
+                    <p>Todavía no hay vistas de productos.</p>
+                </div>
             </div>
         </article>
 
@@ -340,11 +367,14 @@ onMounted(async () => {
             <header class="card-header">
                 <div class="card-title">
                     <h2>Productos compartidos</h2>
-                    <p>Por canal, últimos 30 días</p>
+                    <p>Top 5 · {{ period.toLowerCase() }}</p>
                 </div>
             </header>
             <div class="card-body">
-                <DashChart :factory="sharedChart" short />
+                <DashChart v-if="stats?.top_shared.length" :factory="sharedChart" short />
+                <div v-else-if="! loading" class="empty">
+                    <p>Todavía nadie compartió un producto.</p>
+                </div>
             </div>
         </article>
     </section>

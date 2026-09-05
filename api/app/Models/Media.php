@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 #[Fillable([
     'store_id',
     'path',
+    'variants',
     'name',
     'alt',
     'mime',
@@ -32,6 +33,7 @@ class Media extends Model
     protected function casts(): array
     {
         return [
+            'variants' => 'array',
             'size' => 'integer',
             'width' => 'integer',
             'height' => 'integer',
@@ -68,8 +70,70 @@ class Media extends Model
         return $this->hasMany(Hero::class);
     }
 
-    public function url(): string
+    /**
+     * Every file of a store lives in the same folder, so removing the store is
+     * removing one directory.
+     */
+    public static function directoryFor(int $storeId): string
     {
-        return Storage::disk('public')->url($this->path);
+        return 'media/'.$storeId;
+    }
+
+    public function directory(): string
+    {
+        return self::directoryFor($this->store_id);
+    }
+
+    /**
+     * URL of one variant. Asking for a size that was not generated falls back
+     * to the biggest available file, so a product image picked for the banner
+     * still resolves — stretched, but never broken.
+     */
+    public function url(?string $size = null): string
+    {
+        $path = $this->variants[$size]['path'] ?? $this->path;
+
+        return Storage::disk('public')->url($path);
+    }
+
+    /**
+     * Everything a responsive <img> needs. The browser picks a file from the
+     * srcset, so `src` is only the fallback; `thumb` is the small one the panel
+     * grids and the cart use, where a srcset would be overkill.
+     *
+     * Widths are the real ones: a photo smaller than a target is not scaled up,
+     * and declaring a width it does not have makes the browser choose badly.
+     *
+     * @return array{src: string, srcset: string, thumb: string, width: int|null, height: int|null}
+     */
+    public function responsive(): array
+    {
+        return [
+            'src' => $this->url(),
+            'srcset' => $this->srcset(),
+            'thumb' => $this->url('thumb'),
+            'width' => $this->width,
+            'height' => $this->height,
+        ];
+    }
+
+    /**
+     * Candidates for the browser, narrowest first. Rows that predate the WebP
+     * conversion have no variants and get an empty srcset: the <img> falls back
+     * to `src` on its own.
+     */
+    public function srcset(): string
+    {
+        $candidates = [];
+
+        foreach ($this->variants ?? [] as $variant) {
+            $candidates[$variant['width']] = Storage::disk('public')->url($variant['path']).' '.$variant['width'].'w';
+        }
+
+        // Keyed by width: a photo too small to fill two targets wrote the same
+        // size twice and would repeat a descriptor, which is invalid.
+        ksort($candidates);
+
+        return implode(', ', $candidates);
     }
 }

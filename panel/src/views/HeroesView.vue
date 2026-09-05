@@ -204,7 +204,7 @@ onMounted(async () => {
                                 </td>
 
                                 <td>
-                                    <img v-if="hero.image_url" class="thumb thumb-wide" :src="hero.image_url" alt="">
+                                    <img v-if="hero.image_thumb_url" class="thumb thumb-wide" :src="hero.image_thumb_url" alt="">
                                     <span v-else class="badge badge-warning">Sin imagen</span>
                                 </td>
 

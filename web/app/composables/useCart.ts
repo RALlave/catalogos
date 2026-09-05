@@ -85,7 +85,8 @@ export function useCart(store: Ref<Store>) {
                 slug: product.slug,
                 name: product.name,
                 price: product.sale_price ?? product.price,
-                image: product.images[0] ?? null,
+                /* En el carrito la foto es de 56px: alcanza la chica. */
+                image: product.images[0]?.thumb ?? null,
                 quantity,
             })
         }

@@ -586,6 +586,18 @@
     width: 76px;
 }
 
+/* Vista previa a todo el ancho del campo, con la proporción con la que se ve
+   el banner en el catálogo. */
+.preview-wide {
+    width: 100%;
+    max-height: 15rem;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 8px;
+    background-color: var(--color-surface-alt);
+    aspect-ratio: 1024 / 411;
+    object-fit: cover;
+}
+
 /* Alertas ----------------------------------------------------------------- */
 
 .alert {
@@ -610,6 +622,12 @@
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
+}
+
+/* Una alerta puede traer una acción: va al otro extremo, centrada */
+.alert .btn {
+    margin-left: auto;
+    align-self: center;
 }
 
 .alert-body strong {

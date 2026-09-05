@@ -48,6 +48,7 @@ const form = ref({
     featured: false,
     visible: true,
     sold_out: false,
+    is_new: false,
 })
 
 const errors = ref({})
@@ -270,6 +271,7 @@ onMounted(async () => {
         featured: product.featured,
         visible: product.visible,
         sold_out: product.sold_out,
+        is_new: product.is_new,
     }
 
     images.value = product.images
@@ -438,7 +440,7 @@ onMounted(async () => {
                                 class="gallery-item"
                                 :class="{ 'is-main': index === 0 }"
                             >
-                                <img :src="image.url" alt="">
+                                <img :src="image.thumb_url" alt="">
 
                                 <span v-if="index === 0" class="gallery-tag">Principal</span>
 
@@ -476,7 +478,7 @@ onMounted(async () => {
                                 :key="media.id"
                                 class="gallery-item"
                             >
-                                <img :src="media.url" :alt="media.alt ?? ''">
+                                <img :src="media.thumb_url" :alt="media.alt ?? ''">
 
                                 <span class="gallery-tag">Al guardar</span>
 
@@ -657,6 +659,11 @@ onMounted(async () => {
                     <label class="check">
                         <input v-model="form.sold_out" type="checkbox">
                         <span>Agotado</span>
+                    </label>
+
+                    <label class="check">
+                        <input v-model="form.is_new" type="checkbox">
+                        <span>Nuevo</span>
                     </label>
                 </div>
             </div>

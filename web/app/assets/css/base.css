@@ -106,7 +106,7 @@
     --thumb-size:     4.5rem;          /* miniatura de la galería */
     /* Los relacionados no siguen a `--grid-columns`: son cuatro fijos
        y conviene que entren en una sola fila cuando hay lugar. */
-    --related-columns: 1;
+    --related-columns: 2;
 
     /* Pie de página — columnas y aire propios. No usa `--grid-columns`
        a propósito: esa es la grilla de productos y no tiene por qué
@@ -142,7 +142,7 @@
        -------------------------------------------------------- */
     --container-max: 75rem;   /* 1200px */
     --container-pad: var(--space-4);
-    --grid-columns:  1;
+    --grid-columns:  2;
     --grid-gap:      var(--space-4);
     --touch-min:     2.75rem; /* 44px — objetivo táctil mínimo */
 
@@ -337,8 +337,6 @@ button {
 @media (min-width: 48rem) {          /* 768px */
     :root {
         --container-pad:   var(--space-5);
-        --grid-columns:    2;
-        --related-columns: 2;
         --thumb-size:      5rem;
         /* La ficha ya se parte en dos acá: en una sola columna la foto
            cuadrada se comía toda la pantalla */

@@ -28,6 +28,7 @@ class ProductResource extends JsonResource
             'featured' => $this->featured,
             'visible' => $this->visible,
             'sold_out' => $this->sold_out,
+            'is_new' => $this->is_new,
             'order' => $this->order,
             'main_image_url' => $this->mainImageUrl(),
             'images' => ProductImageResource::collection($this->whenLoaded('images')),
@@ -36,7 +37,8 @@ class ProductResource extends JsonResource
     }
 
     /**
-     * First image of the gallery, handy for the listings that do not load the whole set.
+     * First image of the gallery, handy for the listings that do not load the
+     * whole set. Only ever drawn as a small square, so it serves the thumb.
      */
     private function mainImageUrl(): ?string
     {
@@ -44,6 +46,6 @@ class ProductResource extends JsonResource
             ? $this->images->first()
             : $this->images()->with('media')->first();
 
-        return $image?->media?->url();
+        return $image?->media?->url('thumb');
     }
 }

@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 class CategoryService
 {
+    public function __construct(private readonly CatalogCache $cache) {}
+
     /**
      * @param  array<string, mixed>  $data
      */
@@ -61,6 +63,10 @@ class CategoryService
                 Category::where('id', $id)->update(['order' => $slots[$position]]);
             }
         });
+
+        /* El reordenamiento escribe con `update` masivo, que no dispara los
+           eventos del modelo: la caché pública se invalida a mano. */
+        $this->cache->forgetStore($store);
     }
 
     /**

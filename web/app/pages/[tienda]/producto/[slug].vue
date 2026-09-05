@@ -33,18 +33,7 @@ const { siteUrl } = useRuntimeConfig().public
 
 const price = computed(() => product.value.sale_price ?? product.value.price)
 
-/* El porcentaje se calcula, no se carga: así no puede quedar
-   contradiciendo a los dos precios. */
-const discount = computed(() => {
-    const before = Number(product.value.price)
-    const now = Number(product.value.sale_price)
-
-    if (! product.value.sale_price || ! before || now >= before) {
-        return null
-    }
-
-    return Math.round((1 - now / before) * 100)
-})
+const discount = computed(() => discountPercent(product.value.price, product.value.sale_price))
 
 const productUrl = computed(() => `${siteUrl}${route.path}`)
 
@@ -58,6 +47,11 @@ const whatsapp = computed(() => store.value.whatsapp
     : null)
 
 const shareUrl = computed(() => `https://wa.me/?text=${encodeURIComponent(`${product.value.name} — ${productUrl.value}`)}`)
+
+/* El enlace se abre igual: el aviso a la API sale en paralelo. */
+function share(): void {
+    trackShare(store.value.slug, product.value.slug)
+}
 
 /* Las pestañas se arman con lo que el producto tenga cargado. Con una
    sola no se activa el modo tablist: se ve el panel abierto. */
@@ -74,7 +68,8 @@ useSeoMeta({
     ogType: 'product',
     ogTitle: () => product.value.name,
     ogDescription: () => product.value.description ?? undefined,
-    ogImage: () => product.value.images[0] ?? store.value.logo_url ?? undefined,
+    /* Para compartir va la más grande: las redes la recortan a su gusto. */
+    ogImage: () => product.value.images[0]?.src ?? store.value.logo_url ?? undefined,
 })
 </script>
 
@@ -111,7 +106,7 @@ useSeoMeta({
                     v-if="product.images.length"
                     :images="product.images"
                     :name="product.name"
-                    :featured="product.featured"
+                    :is-new="product.is_new"
                     :sold-out="product.sold_out"
                 />
 
@@ -171,20 +166,41 @@ useSeoMeta({
                         </div>
                     </dl>
 
+                    <!-- Con el carrito encendido la consulta directa desaparece:
+                         el pedido se arma en el carrito y se manda de una vez.
+                         Un producto agotado tampoco se consulta: para eso está
+                         la lista de espera de abajo. -->
                     <ul class="detail-actions">
-                        <li v-if="whatsapp">
+                        <li v-if="store.cart_enabled && ! product.sold_out">
+                            <ClientOnly>
+                                <AddToCartButton :product="product" :store="store" />
+                            </ClientOnly>
+                        </li>
+                        <li v-else-if="! store.cart_enabled && whatsapp">
                             <a class="btn btn-primary" :href="whatsapp" target="_blank" rel="noopener">
                                 <AppIcon name="whatsapp" class="btn-icon" />
                                 Consultar por WhatsApp
                             </a>
                         </li>
                         <li>
-                            <a class="btn btn-border" :href="shareUrl" target="_blank" rel="noopener">
+                            <a
+                                class="btn btn-border"
+                                :href="shareUrl"
+                                target="_blank"
+                                rel="noopener"
+                                @click="share"
+                            >
                                 <AppIcon name="share" class="btn-icon" />
                                 Compartir
                             </a>
                         </li>
                     </ul>
+
+                    <WaitlistForm
+                        v-if="store.waitlist_enabled && product.sold_out"
+                        :product="product"
+                        :store="store"
+                    />
 
                     <ul v-if="product.benefits?.length" class="benefits">
                         <li v-for="benefit in product.benefits" :key="benefit" class="benefit">

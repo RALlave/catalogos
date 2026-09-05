@@ -21,6 +21,9 @@ class MediaResource extends JsonResource
             'alt' => $this->alt,
             'path' => $this->path,
             'url' => $this->url(),
+            /* The library grid shows the small one; the picker preview, the big one. */
+            'thumb_url' => $this->url('thumb'),
+            'srcset' => $this->srcset(),
             'mime' => $this->mime,
             'size' => $this->size,
             'width' => $this->width,

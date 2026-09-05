@@ -1,12 +1,23 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
-import { api, getToken, setToken } from '@/services/api'
+import {
+    api,
+    getAdminToken,
+    getImpersonatedStore,
+    getToken,
+    setAdminToken,
+    setImpersonatedStore,
+    setToken,
+} from '@/services/api'
 
 export const useAuthStore = defineStore('auth', () => {
     const user = ref(null)
     const store = ref(null)
     const ready = ref(false)
+
+    /* Nombre de la tienda a la que entró el superadmin, o null si es él mismo. */
+    const impersonating = ref(getImpersonatedStore())
 
     const isLogged = computed(() => Boolean(user.value))
     const roles = computed(() => user.value?.roles ?? [])
@@ -78,6 +89,45 @@ export const useAuthStore = defineStore('auth', () => {
         ready.value = true
     }
 
+    /**
+     * Entrar al panel de una tienda como su dueño. El token del superadmin
+     * queda guardado para poder volver.
+     */
+    async function impersonate(storeId) {
+        const payload = await api.post(`/admin/stores/${storeId}/impersonate`)
+
+        setAdminToken(getToken())
+        setImpersonatedStore(payload.store.name)
+
+        impersonating.value = payload.store.name
+        user.value = payload.user
+        setToken(payload.token)
+
+        await loadStore()
+    }
+
+    /**
+     * Volver a la sesión de superadmin: el token del dueño se revoca antes de
+     * restaurar el propio, para no dejarlo vivo en la base.
+     */
+    async function stopImpersonating() {
+        const adminToken = getAdminToken()
+
+        try {
+            await api.post('/logout')
+        } catch {
+            /* Si el token ya no existe, volver igual: lo que importa es el del superadmin. */
+        }
+
+        setToken(adminToken)
+        setAdminToken(null)
+        setImpersonatedStore(null)
+
+        impersonating.value = null
+
+        await restore()
+    }
+
     async function logout() {
         try {
             await api.post('/logout')
@@ -89,7 +139,11 @@ export const useAuthStore = defineStore('auth', () => {
     function reset() {
         user.value = null
         store.value = null
+        impersonating.value = null
+
         setToken(null)
+        setAdminToken(null)
+        setImpersonatedStore(null)
     }
 
     return {
@@ -100,11 +154,14 @@ export const useAuthStore = defineStore('auth', () => {
         roles,
         isSuperadmin,
         isStoreOwner,
+        impersonating,
         initials,
         login,
         register,
         loadStore,
         restore,
+        impersonate,
+        stopImpersonating,
         logout,
     }
 })

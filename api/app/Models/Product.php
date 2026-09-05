@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'featured',
     'visible',
     'sold_out',
+    'is_new',
     'order',
 ])]
 class Product extends Model
@@ -43,6 +44,7 @@ class Product extends Model
             'featured' => 'boolean',
             'visible' => 'boolean',
             'sold_out' => 'boolean',
+            'is_new' => 'boolean',
             'order' => 'integer',
         ];
     }

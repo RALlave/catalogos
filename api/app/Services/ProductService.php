@@ -10,7 +10,10 @@ use Illuminate\Support\Str;
 
 class ProductService
 {
-    public function __construct(private readonly ProductImageService $images) {}
+    public function __construct(
+        private readonly ProductImageService $images,
+        private readonly CatalogCache $cache,
+    ) {}
 
     /**
      * @param  array<string, mixed>  $data
@@ -58,6 +61,7 @@ class ProductService
                 'featured' => false,
                 'visible' => false,
                 'sold_out' => $product->sold_out,
+                'is_new' => false,
                 'order' => $this->nextOrder($store),
             ]);
 
@@ -98,6 +102,10 @@ class ProductService
                 Product::where('id', $id)->update(['order' => $slots[$position]]);
             }
         });
+
+        /* El reordenamiento escribe con `update` masivo, que no dispara los
+           eventos del modelo: la caché pública se invalida a mano. */
+        $this->cache->forgetStore($store);
     }
 
     /**

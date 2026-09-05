@@ -34,3 +34,7 @@ api/storage/app/public/
 Thumbs.db
 .DS_Store
 desktop.ini
+
+
+# Claude Code
+.claude/settings.local.json

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use App\Services\StatService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -11,6 +12,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DashboardController extends Controller
 {
     private const LATEST = 5;
+
+    public function __construct(private readonly StatService $stats) {}
 
     public function __invoke(Request $request): JsonResponse
     {
@@ -39,6 +42,7 @@ class DashboardController extends Controller
                     'active' => $store->categories()->where('active', true)->count(),
                 ],
             ],
+            'stats' => $this->stats->report($store),
             'latest_products' => ProductResource::collection($latest),
         ]);
     }

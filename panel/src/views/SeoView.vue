@@ -65,7 +65,7 @@ async function uploadImage(event) {
 
     auth.store = response.store
 
-    ui.toast('Imagen actualizada')
+    ui.toast('Imagen guardada', 'Es la que se ve al compartir tu catálogo')
 }
 
 async function pickImage(media) {
@@ -73,13 +73,15 @@ async function pickImage(media) {
 
     auth.store = response.store
 
-    ui.toast('Imagen actualizada')
+    ui.toast('Imagen guardada', 'Es la que se ve al compartir tu catálogo')
 }
 
 async function removeImage() {
     const response = await api.delete('/store/cover')
 
     auth.store = response.store
+
+    ui.toast('Imagen quitada')
 }
 
 onMounted(() => {
@@ -193,7 +195,7 @@ onMounted(() => {
 
             <div class="card-body">
                 <FormField label="Imagen" field-id="seo-image">
-                    <img v-if="auth.store.cover_url" class="thumb thumb-wide" :src="auth.store.cover_url" alt="">
+                    <img v-if="auth.store.cover_url" class="preview-wide" :src="auth.store.cover_url" alt="">
 
                     <input
                         id="seo-image"

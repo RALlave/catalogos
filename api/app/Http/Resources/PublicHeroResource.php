@@ -14,6 +14,7 @@ class PublicHeroResource extends JsonResource
     {
         return [
             'image_url' => $this->media?->url(),
+            'image_srcset' => $this->media?->srcset(),
             'eyebrow' => $this->eyebrow,
             'title' => $this->title,
             'text' => $this->text,

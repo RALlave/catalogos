@@ -58,7 +58,7 @@ cd /var/www/catalogos
 git clone <tu-repo> .
 ```
 
-`prototipo/` no hace falta en el servidor.
+`prototipo-3/` es la maqueta estática de referencia: no hace falta en el servidor.
 
 ## 4. API (Laravel)
 

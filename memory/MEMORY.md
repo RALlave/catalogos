@@ -1,6 +1,5 @@
 # Memory Index
 
-- [Sistema de diseño del prototipo-2](prototipo-2-sistema-diseno.md) — tokens en `:root`, paleta con ratios WCAG anotados y regla de badges que no dependen del color
 - [Header y nav del prototipo-3](prototipo-3-header-nav.md) — cabecera clara + barra oscura, paleta "Café" con ratios WCAG y toggles de forma y fondo
 - [Pie del prototipo-3](prototipo-3-pie.md) — cuatro columnas sobre oscuro, texto blanco (el tono claro de la paleta es acento, no cuerpo) y el lío de editar en dos sesiones
 - [Grilla de productos del prototipo-3](prototipo-3-grilla.md) — badges por alias de tokens, tonos de producto, filtro y paginación como mejora progresiva

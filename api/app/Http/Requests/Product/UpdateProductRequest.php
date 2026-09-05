@@ -66,6 +66,7 @@ class UpdateProductRequest extends FormRequest
             'featured' => ['sometimes', 'boolean'],
             'visible' => ['sometimes', 'boolean'],
             'sold_out' => ['sometimes', 'boolean'],
+            'is_new' => ['sometimes', 'boolean'],
             'order' => ['sometimes', 'integer', 'min:0'],
         ];
     }

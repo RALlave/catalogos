@@ -17,6 +17,7 @@ class ProductImageResource extends JsonResource
             'media_id' => $this->media_id,
             'path' => $this->media?->path,
             'url' => $this->media?->url(),
+            'thumb_url' => $this->media?->url('thumb'),
             'alt' => $this->media?->alt,
             'order' => $this->order,
         ];

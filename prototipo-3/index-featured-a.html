@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="es" data-palette="cafe" data-radius="square" data-banner="dark" data-nav="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Destacados A · grilla corta — Catálogo</title>
+    <meta name="description" content="Catálogo online de Tienda Nube: celulares, moda y accesorios. Consultá por WhatsApp.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/paletas.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+
+    <!-- Parte del panel de diseño: aplica la paleta guardada antes de pintar -->
+    <script src="assets/js/tema.js"></script>
+</head>
+
+<body>
+
+    <!-- ========================================================
+         SPRITE DE ÍCONOS — SVG inline, nunca emojis
+         ======================================================== -->
+    <svg class="sprite" aria-hidden="true" hidden>
+        <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="13" r="8"></circle>
+            <path d="M12 9.5V13l2.5 1.5"></path>
+            <path d="M5 4.5 7.5 2.5M19 4.5 16.5 2.5"></path>
+        </symbol>
+        <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15.5 21a13 13 0 0 1-12.5-12.5 2 2 0 0 1 2-2.5h2.5a1 1 0 0 1 1 .8l.7 3a1 1 0 0 1-.5 1.1l-1.4.8a11 11 0 0 0 5 5l.8-1.4a1 1 0 0 1 1.1-.5l3 .7a1 1 0 0 1 .8 1V19a2 2 0 0 1-2.5 2Z"></path>
+        </symbol>
+        <symbol id="i-location" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"></path>
+            <circle cx="12" cy="10" r="2.6"></circle>
+        </symbol>
+        <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m16.5 16.5 4 4"></path>
+        </symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </symbol>
+        <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="m6 6 12 12M18 6 6 18"></path>
+        </symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"></path>
+        </symbol>
+        <symbol id="i-logo" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="16" cy="16" r="14"></circle>
+            <path d="M11 22V10h6a4 4 0 0 1 0 8h-6"></path>
+        </symbol>
+        <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.14.17-.24.25-.41.09-.16.04-.31-.02-.43-.06-.12-.56-1.35-.76-1.84-.2-.49-.4-.42-.56-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.17 1.71 2.61 4.15 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"></path>
+        </symbol>
+        <symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a9 9 0 1 0 0 18c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1-.3-.3-.4-.6-.4-1 0-.8.7-1.4 1.5-1.4H16a5 5 0 0 0 5-5c0-4-4-8-9-8Z"></path>
+            <circle cx="7.5" cy="12" r="1.1" fill="currentColor" stroke="none"></circle>
+            <circle cx="10" cy="8" r="1.1" fill="currentColor" stroke="none"></circle>
+            <circle cx="14.5" cy="8" r="1.1" fill="currentColor" stroke="none"></circle>
+            <circle cx="17" cy="11.5" r="1.1" fill="currentColor" stroke="none"></circle>
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m5 12.5 4.5 4.5L19 7"></path>
+        </symbol>
+        <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12h15m-6-6 6 6-6 6"></path>
+        </symbol>
+        <symbol id="i-new" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.5 13.9 9l5.6 1.9-5.6 1.9L12 18.5l-1.9-5.7L4.5 10.9 10.1 9 12 3.5Z"></path>
+            <path d="M18.5 15.5l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2Z"></path>
+        </symbol>
+        <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor">
+            <path d="m12 3.6 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L12 3.6Z"></path>
+        </symbol>
+        <symbol id="i-sold-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="8.5"></circle>
+            <path d="m6.5 6.5 11 11"></path>
+        </symbol>
+        <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="m3.6 6.7 8.4 5.8 8.4-5.8"></path>
+        </symbol>
+        <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21.5c4.4-4.3 6.6-7.7 6.6-10.4a6.6 6.6 0 1 0-13.2 0c0 2.7 2.2 6.1 6.6 10.4Z"></path>
+            <circle cx="12" cy="10.6" r="2.5"></circle>
+        </symbol>
+        <symbol id="i-youtube" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.28 5 12 5 12 5s-6.28 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12c0 1.61.13 3.22.4 4.8a2.5 2.5 0 0 0 1.76 1.77C5.72 19 12 19 12 19s6.28 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77c.27-1.58.4-3.19.4-4.8 0-1.61-.13-3.22-.4-4.8ZM10.2 15.02V8.98L15.4 12l-5.2 3.02Z"></path>
+        </symbol>
+        <symbol id="i-facebook" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.6 21.5v-8.2h2.8l.4-3.2h-3.2V8.05c0-.93.26-1.56 1.59-1.56h1.7V3.61a22.6 22.6 0 0 0-2.48-.13c-2.45 0-4.13 1.5-4.13 4.25v2.37H7.44v3.2h2.84v8.2h3.32Z"></path>
+        </symbol>
+        <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="16.9" cy="7.1" r="1.2" fill="currentColor" stroke="none"></circle>
+        </symbol>
+        <symbol id="i-tiktok" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16.2 2h-2.9v13.4a2.5 2.5 0 1 1-2.1-2.47v-2.96a5.45 5.45 0 1 0 5 5.43V9.5a6.8 6.8 0 0 0 3.6 1.05V7.6a3.9 3.9 0 0 1-3.6-3.87V2Z"></path>
+        </symbol>
+    </svg>
+
+    <p class="skip-link"><a href="#content">Saltar al contenido</a></p>
+
+    <!-- ========================================================
+         CABECERA
+         ======================================================== -->
+    <header class="header">
+
+        <!-- Franja superior: logo + datos de atención -->
+        <div class="header-top">
+            <div class="container header-top-inner">
+
+                <a class="brand" href="index.html">
+                    <img class="brand-logo" src="assets/img/logo-6-2.jpg" alt=""
+                         width="405" height="238" decoding="async">
+                    <span class="brand-name">Avni <span class="brand-name-alt">Design</span></span>
+                </a>
+
+                <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu-main">
+                    <svg class="nav-toggle-icon" aria-hidden="true" focusable="false" data-icon-open><use href="#i-menu"></use></svg>
+                    <svg class="nav-toggle-icon" aria-hidden="true" focusable="false" data-icon-close hidden><use href="#i-close"></use></svg>
+                    <span class="nav-toggle-text">Menú</span>
+                </button>
+
+                <ul class="info-list">
+                    <li class="info">
+                        <svg class="info-icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>
+                        <span class="info-body">
+                            <strong class="info-title">Lun a Sáb: 9:00 – 18:00</strong>
+                            <span class="info-detail">Domingo cerrado</span>
+                        </span>
+                    </li>
+                    <li class="info">
+                        <svg class="info-icon" aria-hidden="true" focusable="false"><use href="#i-location"></use></svg>
+                        <address class="info-body">
+                            <span class="info-title">Av. Ballivián 1234</span>
+                            <span class="info-detail">Calacoto, La Paz</span>
+                        </address>
+                    </li>
+                    <li class="info">
+                        <svg class="info-icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
+                        <span class="info-body">
+                            <a class="info-title" href="tel:+59170012345">(591) 700 12345</a>
+                            <a class="info-detail" href="mailto:hola@tiendanube.com">hola@tiendanube.com</a>
+                        </span>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        <!-- Barra de navegación -->
+        <nav class="nav" aria-label="Principal">
+            <div class="container nav-inner">
+
+                <!-- Panel lateral de móvil y tablet: adentro van el
+                     buscador y el menú, en ese orden. En escritorio el
+                     div se disuelve (display: contents) y los dos
+                     vuelven a su lugar de siempre en la barra. -->
+                <div class="nav-panel">
+
+                    <button class="nav-panel-close" type="button">
+                        <svg class="nav-panel-close-icon" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
+                        <span class="visually-hidden">Cerrar menú</span>
+                    </button>
+
+                    <div class="nav-search">
+                        <button class="search-toggle" type="button" aria-expanded="false" aria-controls="form-search">
+                            <svg class="search-toggle-icon" aria-hidden="true" focusable="false" data-icon-open><use href="#i-search"></use></svg>
+                            <svg class="search-toggle-icon" aria-hidden="true" focusable="false" data-icon-close hidden><use href="#i-close"></use></svg>
+                            <span class="visually-hidden">Buscar productos</span>
+                        </button>
+
+                        <form class="search" id="form-search" role="search" action="index.html" method="get">
+                            <label class="visually-hidden" for="q">Buscar productos</label>
+                            <input class="search-field" type="search" id="q" name="q" placeholder="Buscar productos…" autocomplete="off">
+                            <button class="search-submit" type="submit">
+                                <svg class="search-submit-icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+                                <span class="visually-hidden">Buscar</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <ul class="menu" id="menu-main">
+                        <li class="menu-item">
+                            <a class="menu-link" href="index.html" aria-current="page">Inicio</a>
+                        </li>
+                        <li class="menu-item">
+                            <button class="menu-link menu-btn" type="button" aria-expanded="false" aria-controls="submenu-categories">
+                                Categorías
+                                <svg class="menu-chevron" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                            </button>
+                            <ul class="submenu" id="submenu-categories" hidden>
+                                <li><a href="#celulares">Celulares</a></li>
+                                <li><a href="#zapatillas">Zapatillas</a></li>
+                                <li><a href="#ropa-hombre">Ropa de hombre</a></li>
+                                <li><a href="#perfumes">Perfumes</a></li>
+                                <li><a href="#gafas">Gafas</a></li>
+                                <li><a href="#unas">Uñas</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="#nosotros">About us</a>
+                        </li>
+                        <li class="menu-item">
+                            <a class="menu-link" href="contacto.html">Contact</a>
+                        </li>
+                    </ul>
+
+                    <!-- Horario y dirección: a este ancho no están en la franja
+                         superior, y el panel es el único lugar donde se ven sin
+                         bajar hasta el pie -->
+                    <ul class="nav-info-list">
+                        <li class="info">
+                            <svg class="info-icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>
+                            <span class="info-body">
+                                <strong class="info-title">Lun a Sáb: 9:00 – 18:00</strong>
+                                <span class="info-detail">Domingo cerrado</span>
+                            </span>
+                        </li>
+                        <li class="info">
+                            <svg class="info-icon" aria-hidden="true" focusable="false"><use href="#i-location"></use></svg>
+                            <address class="info-body">
+                                <span class="info-title">Av. Ballivián 1234</span>
+                                <span class="info-detail">Calacoto, La Paz</span>
+                            </address>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- Velo: oscurece la página detrás del panel y cierra al tocarlo -->
+                <div class="nav-veil"></div>
+
+            </div>
+        </nav>
+
+    </header>
+
+    <!-- ========================================================
+         CONTENIDO — placeholder de esta etapa
+         ======================================================== -->
+    <main class="content" id="content">
+
+        <!-- Banner: foto de fondo + velo + llamado a la acción -->
+        <section class="banner">
+            <img class="banner-photo" src="assets/img/banners/banner-1.jpg" alt="" width="1024" height="411" fetchpriority="high">
+
+            <div class="container banner-inner">
+                <p class="banner-kicker">Temporada nueva · Envíos a todo el país</p>
+                <h1 class="banner-title">Elegí lo que te gusta y pedilo por WhatsApp</h1>
+                <p class="banner-text">Celulares, moda y accesorios con precio a la vista. Sin registro y sin carrito: nos escribís y te lo reservamos el mismo día.</p>
+
+                <ul class="banner-actions">
+                    <li>
+                        <a class="btn btn-cta" href="#products">
+                            Ver catálogo
+                            <svg class="btn-icon" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="btn btn-cta-border" href="https://wa.me/59170012345" target="_blank" rel="noopener">
+                            <svg class="btn-icon" aria-hidden="true" focusable="false"><use href="#i-whatsapp"></use></svg>
+                            Pedir por WhatsApp
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             DESTACADOS — propuesta A: grilla corta
+             Misma tarjeta del catálogo, con las columnas de los relacionados.
+             Los destacados siguen apareciendo también en la grilla de abajo.
+             ======================================================== -->
+        <section class="section section-featured" id="featured" aria-labelledby="featured-title">
+            <div class="container">
+
+                <div class="section-header section-header-row">
+                    <h2 id="featured-title">Destacados</h2>
+
+                    <a class="section-link" href="#products">
+                        Ver todo el catálogo
+                        <svg class="section-link-icon" aria-hidden="true" focusable="false"><use href="#i-arrow"></use></svg>
+                    </a>
+                </div>
+
+                <ul class="grid grid-featured">
+                <li class="grid-item" data-category="ropa-hombre" data-name="jean slim fit índigo">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/0cfb33efcc5b8aaaaa9275d91a08df58.jpg" alt="Dos jeans slim fit en índigo y azul noche, usados con zapatillas blancas" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-featured">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Jean Slim Fit Índigo</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 46</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Denim stretch</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Slim fit</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul noche</span></li>
+                                            <li class="swatch swatch-blue-medium"><span class="visually-hidden">Índigo</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">185.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+                <li class="grid-item" data-category="ropa-hombre" data-name="jean clásico cinco bolsillos">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/4ec3879ffa00ec9536e9cc8012a2c6e0.jpg" alt="Cuatro jeans clásicos extendidos, del negro al celeste" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-featured">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Jean Clásico Cinco Bolsillos</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 50</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Denim 12 oz</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Clásico</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul oscuro</span></li>
+                                            <li class="swatch swatch-sky"><span class="visually-hidden">Celeste</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">159.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+                <li class="grid-item" data-category="gafas" data-name="gafas de sol cuadradas">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/536fc65b9f713f6367dfad85df1b649b.jpg" alt="Gafas de sol cuadradas negras sobre superficie gris" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-featured">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Gafas de Sol Cuadradas</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Policarbonato</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Cuadrada</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">UV400 polarizado</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-gray"><span class="visually-hidden">Gris humo</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">145.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+                <li class="grid-item" data-category="gafas" data-name="armazón panto azul">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/dc57345df402ce3f5cdd28fc0476bf1d.jpg" alt="Armazón panto azul dentro de un estuche abierto" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-featured">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Panto Azul</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">TR90</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Panto</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul</span></li>
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">134.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             CATÁLOGO — filtro por categoría + grilla + paginación
+             Sin JS: se ven los 24 productos, el filtro no actúa y la
+             paginación queda oculta (la muestra el script).
+             ======================================================== -->
+        <section class="section" id="products" aria-labelledby="products-title">
+            <div class="container">
+
+                <div class="section-header">
+                    <h2 id="products-title">Productos</h2>
+
+                    <div class="filters" role="group" aria-label="Filtrar por categoría">
+                        <button class="chip" type="button" data-filter="todas" aria-pressed="true">
+                            <svg class="chip-icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                            Todas
+                        </button>
+                        <button class="chip" type="button" data-filter="ropa-hombre" aria-pressed="false">
+                            <svg class="chip-icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                            Ropa de hombre
+                        </button>
+                        <button class="chip" type="button" data-filter="gafas" aria-pressed="false">
+                            <svg class="chip-icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                            Gafas
+                        </button>
+                    </div>
+                </div>
+
+                <p class="result" role="status" data-result>24 productos</p>
+
+                <ul class="grid" data-grid>
+                <li class="grid-item" data-category="ropa-hombre" data-name="jean slim fit índigo">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/0cfb33efcc5b8aaaaa9275d91a08df58.jpg" alt="Dos jeans slim fit en índigo y azul noche, usados con zapatillas blancas" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-featured">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Jean Slim Fit Índigo</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 46</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Denim stretch</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Slim fit</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul noche</span></li>
+                                            <li class="swatch swatch-blue-medium"><span class="visually-hidden">Índigo</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">185.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="bermuda de jean clásica">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/154d5ab010b1d01b206185012189345d.jpg" alt="Bermudas de jean en cuatro lavados de azul apoyadas sobre un piso claro" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-new">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-new"></use></svg>
+                                Nuevo
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Bermuda de Jean Clásica</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 48</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Denim 100% algodón</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Regular</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul oscuro</span></li>
+                                            <li class="swatch swatch-blue-medium"><span class="visually-hidden">Azul medio</span></li>
+                                            <li class="swatch swatch-sky"><span class="visually-hidden">Celeste</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">135.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="pantalón chino recto">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/2592623453a33ff3f7b3d8b89e3d2cea.jpg" alt="Tres pantalones chinos doblados en bordó, gris y negro" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Pantalón Chino Recto</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 46</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Gabardina</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Recto</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-burgundy"><span class="visually-hidden">Bordó</span></li>
+                                            <li class="swatch swatch-gray"><span class="visually-hidden">Gris</span></li>
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">165.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="jean skinny celeste">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/4385b10315c63793fad6bbc590d6aa2d.jpg" alt="Jean skinny celeste combinado con remera negra y zapatillas blancas" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Jean Skinny Celeste</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 44</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Denim stretch</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Skinny</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-sky"><span class="visually-hidden">Celeste</span></li>
+                                            <li class="swatch swatch-blue-medium"><span class="visually-hidden">Azul medio</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">179.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="pantalón casual estampado">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/464f8f1a8997d47ac868e07eeb266e3f.jpg" alt="Pantalones casuales apilados en marrón, azul y estampados" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Pantalón Casual Estampado</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 46</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Algodón liviano</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Relaxed</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-brown"><span class="visually-hidden">Marrón</span></li>
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul</span></li>
+                                            <li class="swatch swatch-beige"><span class="visually-hidden">Beige</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">149.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="jean clásico cinco bolsillos">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/4ec3879ffa00ec9536e9cc8012a2c6e0.jpg" alt="Cuatro jeans clásicos extendidos, del negro al celeste" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-featured">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Jean Clásico Cinco Bolsillos</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 50</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Denim 12 oz</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Clásico</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul oscuro</span></li>
+                                            <li class="swatch swatch-sky"><span class="visually-hidden">Celeste</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">159.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="jean regular lavado medio">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/5a214d3ff69cd232398229095cb604f4.jpg" alt="Dos jeans de lavado medio usados con zapatillas deportivas" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Jean Regular Lavado Medio</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 48</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Denim stretch</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Regular</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-blue-medium"><span class="visually-hidden">Azul medio</span></li>
+                                            <li class="swatch swatch-sky"><span class="visually-hidden">Celeste</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">172.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="jean slim azul noche">
+                    <article class="product" data-sold-out>
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/7a5704c293a7d142730f1155133b3779.jpg" alt="Jean slim azul noche combinado con remera blanca y zapatillas" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-sold-out">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-sold-out"></use></svg>
+                                Agotado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Jean Slim Azul Noche</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 46</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Denim stretch</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Slim fit</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul noche</span></li>
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">189.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="jean stretch confort">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/81a5249c82ca91a2ef94c5b6fadf2a83.jpg" alt="Jean azul de textura marcada con zapatillas blancas" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Jean Stretch Confort</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 50</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Denim stretch</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Confort</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-blue-medium"><span class="visually-hidden">Azul medio</span></li>
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul oscuro</span></li>
+                                            <li class="swatch swatch-gray"><span class="visually-hidden">Gris</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">168.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="jean recto desgastado">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/971f4fff8302e3ea7eaeca0b76580305.jpg" alt="Jean recto con desgaste, visto de frente y de espalda" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-new">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-new"></use></svg>
+                                Nuevo
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Jean Recto Desgastado</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 48</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Denim 14 oz</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Recto</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-blue-medium"><span class="visually-hidden">Azul medio</span></li>
+                                            <li class="swatch swatch-gray"><span class="visually-hidden">Gris</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">175.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="pantalón de vestir a cuadros">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/cbc51db8e200d4385e7b4015dbeede67.jpg" alt="Pantalones de vestir a cuadros en tonos azules, doblados sobre madera" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Pantalón de Vestir a Cuadros</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 46</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Poliviscosa</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Slim de vestir</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul marino</span></li>
+                                            <li class="swatch swatch-sky"><span class="visually-hidden">Celeste</span></li>
+                                            <li class="swatch swatch-gray"><span class="visually-hidden">Gris</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">198.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="ropa-hombre" data-name="chino slim de colores">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/ropa-hombre/e9c58cc3615c6a99d5a33ae9fa06a7a8.jpg" alt="Pantalones chinos en gris, verde oliva, negro, celeste y beige" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-featured">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Chino Slim de Colores</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Talles</dt>
+                                    <dd class="spec-value">38 al 48</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Tela</dt>
+                                    <dd class="spec-value">Gabardina stretch</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Corte</dt>
+                                    <dd class="spec-value">Slim</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-gray"><span class="visually-hidden">Gris</span></li>
+                                            <li class="swatch swatch-green"><span class="visually-hidden">Verde oliva</span></li>
+                                            <li class="swatch swatch-sky"><span class="visually-hidden">Celeste</span></li>
+                                            <li class="swatch swatch-beige"><span class="visually-hidden">Beige</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">155.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="armazón redondo acetato">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/16d17c0be9c65b16892fbbd33584f7f9.jpg" alt="Armazón redondo de acetato negro sobre fondo gris" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-new">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-new"></use></svg>
+                                Nuevo
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Redondo Acetato</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Acetato</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Redonda</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-brown"><span class="visually-hidden">Carey</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">128.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="armazón rectangular azul">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/2648e52382e8646c57a6c285aac83277.jpg" alt="Armazón rectangular azul apoyado sobre su caja" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Rectangular Azul</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">TR90</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Rectangular</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul</span></li>
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-silver"><span class="visually-hidden">Plata</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">112.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="gafas de sol cuadradas">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/536fc65b9f713f6367dfad85df1b649b.jpg" alt="Gafas de sol cuadradas negras sobre superficie gris" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-featured">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Gafas de Sol Cuadradas</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Policarbonato</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Cuadrada</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">UV400 polarizado</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-gray"><span class="visually-hidden">Gris humo</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">145.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="gafas de sol micro">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/582b8f41006a10f981f86fa4e0fe3c1a.jpg" alt="Gafas de sol rectangulares angostas con armazón metálico oscuro" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Gafas de Sol Micro</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Metal</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Rectangular angosta</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">UV400</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-gold"><span class="visually-hidden">Dorado</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">132.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="armazón browline metal">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/5ed50abd7c25dfda3b8a88692b277757.jpg" alt="Armazón browline de metal con ceja negra sobre fondo claro" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Browline Metal</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Metal + acetato</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Browline</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-silver"><span class="visually-hidden">Plata</span></li>
+                                            <li class="swatch swatch-gold"><span class="visually-hidden">Dorado</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">138.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="armazón rimless ultraliviano">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/8b9698fd22e073e379441822caccc329.jpg" alt="Armazón sin marco sostenido en la palma de una mano" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-new">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-new"></use></svg>
+                                Nuevo
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Rimless Ultraliviano</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Titanio</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Rimless</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-silver"><span class="visually-hidden">Plata</span></li>
+                                            <li class="swatch swatch-gold"><span class="visually-hidden">Dorado</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">165.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="armazón redondo con estuche">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/8f6cd4fff351f73e6925ee4126659726.jpg" alt="Armazón redondo de metal negro junto a su estuche rígido" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Redondo con Estuche</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Metal</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Redonda</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-silver"><span class="visually-hidden">Plata</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">142.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="armazón cuadrado bold">
+                    <article class="product" data-sold-out>
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/9113f6f0b6891ab341597292473e8e21.jpg" alt="Armazón cuadrado de acetato negro y grueso sobre fondo beige" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-sold-out">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-sold-out"></use></svg>
+                                Agotado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Cuadrado Bold</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Acetato</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Cuadrada</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-brown"><span class="visually-hidden">Carey</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">155.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="armazón metal minimal">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/adf4c566185e2a01295012d50fc6942c.jpg" alt="Armazón de metal fino apoyado sobre una repisa blanca" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Metal Minimal</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Metal</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Panto</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-silver"><span class="visually-hidden">Plata</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">119.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="armazón redondo translúcido">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/b5daf017d7bc1a462e4fc1ef3b6dd0a7.jpg" alt="Armazón redondo translúcido gris sobre fondo violeta" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Redondo Translúcido</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Acetato translúcido</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Redonda</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-gray"><span class="visually-hidden">Gris humo</span></li>
+                                            <li class="swatch swatch-beige"><span class="visually-hidden">Nude</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">126.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="armazón panto azul">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/dc57345df402ce3f5cdd28fc0476bf1d.jpg" alt="Armazón panto azul dentro de un estuche abierto" width="600" height="600" loading="lazy" decoding="async">
+                            <p class="badge badge-featured">
+                                <svg class="badge-icon" aria-hidden="true" focusable="false"><use href="#i-star"></use></svg>
+                                Destacado
+                            </p>
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Panto Azul</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">TR90</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Panto</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-blue-dark"><span class="visually-hidden">Azul</span></li>
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">134.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+
+                <li class="grid-item" data-category="gafas" data-name="armazón panto negro">
+                    <article class="product">
+                        <div class="product-media">
+                            <img class="product-photo" src="assets/img/gafas/ec16d87071adb25265da800695ef876d.jpg" alt="Armazón panto negro apoyado sobre su caja" width="600" height="600" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="product-body">
+                            <h3 class="product-name"><a class="product-link" href="producto.html">Armazón Panto Negro</a></h3>
+
+                            <dl class="spec">
+                                <div class="spec-row">
+                                    <dt class="spec-key">Material</dt>
+                                    <dd class="spec-value">Acetato</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Forma</dt>
+                                    <dd class="spec-value">Panto</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Filtro</dt>
+                                    <dd class="spec-value">Luz azul</dd>
+                                </div>
+                                <div class="spec-row">
+                                    <dt class="spec-key">Colores</dt>
+                                    <dd class="spec-value">
+                                        <ul class="swatches">
+                                            <li class="swatch swatch-black"><span class="visually-hidden">Negro</span></li>
+                                            <li class="swatch swatch-brown"><span class="visually-hidden">Carey</span></li>
+                                        </ul>
+                                    </dd>
+                                </div>
+                            </dl>
+
+                            <p class="price">
+                                <span class="price-currency">Gs</span>
+                                <strong class="price-value">122.000</strong>
+                            </p>
+                        </div>
+                    </article>
+                </li>
+                </ul>
+
+                <p class="empty" data-empty hidden>
+                    <svg class="empty-icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+                    No encontramos productos con ese filtro. Probá con otra categoría o borrá la búsqueda.
+                </p>
+
+                <nav class="pagination" aria-label="Paginación de productos" data-pagination hidden>
+                    <button class="page page-arrow page-prev" type="button" data-prev>
+                        <svg class="page-icon" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                        <span class="page-text">Anterior</span>
+                    </button>
+
+                    <ol class="pagination-list" data-pages></ol>
+
+                    <button class="page page-arrow page-next" type="button" data-next>
+                        <span class="page-text">Siguiente</span>
+                        <svg class="page-icon" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                    </button>
+                </nav>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================
+         PIE DE PÁGINA
+         Cuatro columnas sobre fondo oscuro + barra inferior.
+         Los títulos son <h2>: el <h1> de la página vive en el banner.
+         ======================================================== -->
+    <footer class="footer">
+
+        <div class="container footer-inner">
+
+            <!-- Columna 1: marca y descripción -->
+            <div class="footer-col footer-col-brand">
+                <a class="brand brand-footer" href="index.html">
+                    <span class="brand-name">Avni <span class="brand-name-alt">Design</span></span>
+                </a>
+                <p class="footer-description">
+                    Catálogo online de moda y accesorios. Precios a la vista,
+                    atención por WhatsApp y entrega el mismo día en la ciudad.
+                </p>
+            </div>
+
+            <!-- Columna 2: contenido -->
+            <nav class="footer-col" aria-labelledby="footer-content-title">
+                <h2 class="footer-title" id="footer-content-title">Contenido</h2>
+                <ul class="footer-list">
+                    <li><a class="footer-link" href="index.html" aria-current="page">Inicio</a></li>
+                    <li><a class="footer-link" href="#products">Categorías</a></li>
+                    <li><a class="footer-link" href="#nosotros">About us</a></li>
+                    <li><a class="footer-link" href="contacto.html">Contact</a></li>
+                    <li><a class="footer-link" href="#como-comprar">Cómo comprar</a></li>
+                    <li><a class="footer-link" href="#envios">Envíos y pagos</a></li>
+                </ul>
+            </nav>
+
+            <!-- Columna 3: contacto -->
+            <section class="footer-col" id="contact" aria-labelledby="footer-contact-title">
+                <h2 class="footer-title" id="footer-contact-title">Contacto</h2>
+                <address class="footer-info-list">
+                    <ul class="footer-list">
+                        <li class="footer-info">
+                            <svg class="footer-info-icon" aria-hidden="true" focusable="false"><use href="#i-whatsapp"></use></svg>
+                            <a class="footer-link footer-link-strong" href="https://wa.me/59170012345" target="_blank" rel="noopener">
+                                WhatsApp (591) 700 12345
+                            </a>
+                        </li>
+                        <li class="footer-info">
+                            <svg class="footer-info-icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
+                            <a class="footer-link" href="tel:+59122456789">(591) 2 456 789</a>
+                        </li>
+                        <li class="footer-info">
+                            <svg class="footer-info-icon" aria-hidden="true" focusable="false"><use href="#i-mail"></use></svg>
+                            <a class="footer-link" href="mailto:hola@tiendanube.com">hola@tiendanube.com</a>
+                        </li>
+                        <li class="footer-info">
+                            <svg class="footer-info-icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>
+                            <span>Lun a Sáb: 9:00 – 18:00</span>
+                        </li>
+                        <li class="footer-info">
+                            <svg class="footer-info-icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg>
+                            <span>Av. Ballivián 267, local 4<br>Santa Cruz de la Sierra</span>
+                        </li>
+                    </ul>
+                </address>
+            </section>
+
+            <!-- Columna 4: redes -->
+            <section class="footer-col" aria-labelledby="footer-social-list-title">
+                <h2 class="footer-title" id="footer-social-list-title">Seguinos</h2>
+                <p class="footer-note">Novedades, ofertas y stock nuevo todas las semanas.</p>
+                <ul class="footer-list footer-social-list">
+                    <li>
+                        <a class="footer-social" href="https://youtube.com/@tiendanube" target="_blank" rel="noopener">
+                            <svg class="footer-social-icon" aria-hidden="true" focusable="false"><use href="#i-youtube"></use></svg>
+                            YouTube
+                        </a>
+                    </li>
+                    <li>
+                        <a class="footer-social" href="https://facebook.com/tiendanube" target="_blank" rel="noopener">
+                            <svg class="footer-social-icon" aria-hidden="true" focusable="false"><use href="#i-facebook"></use></svg>
+                            Facebook
+                        </a>
+                    </li>
+                    <li>
+                        <a class="footer-social" href="https://instagram.com/tiendanube" target="_blank" rel="noopener">
+                            <svg class="footer-social-icon" aria-hidden="true" focusable="false"><use href="#i-instagram"></use></svg>
+                            Instagram
+                        </a>
+                    </li>
+                    <li>
+                        <a class="footer-social" href="https://tiktok.com/@tiendanube" target="_blank" rel="noopener">
+                            <svg class="footer-social-icon" aria-hidden="true" focusable="false"><use href="#i-tiktok"></use></svg>
+                            TikTok
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
+        </div>
+
+        <!-- Barra inferior -->
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <p class="footer-copy">© 2026 TiendaNube · Diseñado por <a class="footer-link" href="#">DiseProg</a></p>
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- ========================================================
+         PANEL DE DISEÑO — herramienta de la maqueta, NO del catálogo.
+         Sirve para comparar paletas y formas en vivo. Para sacarlo:
+         borrar este bloque, la sección "PANEL DE DISEÑO" de
+         components.css y el bloque del mismo nombre en app.js.
+         ======================================================== -->
+    <div class="panel">
+
+        <button class="panel-toggle" type="button" aria-expanded="false" aria-controls="panel-design">
+            <svg class="panel-toggle-icon" aria-hidden="true" focusable="false" data-icon-open><use href="#i-palette"></use></svg>
+            <svg class="panel-toggle-icon" aria-hidden="true" focusable="false" data-icon-close hidden><use href="#i-close"></use></svg>
+            <span class="visually-hidden">Opciones de diseño</span>
+        </button>
+
+        <div class="panel-body" id="panel-design" hidden>
+
+            <fieldset class="panel-group">
+                <legend>Paleta</legend>
+                <ul>
+                    <li>
+                        <input type="radio" name="palette" id="palette-cafe" value="cafe" checked>
+                        <label for="palette-cafe">
+                            <span class="sample sample-cafe" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Café</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-verano" value="verano">
+                        <label for="palette-verano">
+                            <span class="sample sample-verano" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Verano</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-primavera" value="primavera">
+                        <label for="palette-primavera">
+                            <span class="sample sample-primavera" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Primavera</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-oro" value="oro">
+                        <label for="palette-oro">
+                            <span class="sample sample-oro" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Oro</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-arcoiris" value="arcoiris">
+                        <label for="palette-arcoiris">
+                            <span class="sample sample-arcoiris" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Arcoíris</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-tech" value="tech">
+                        <label for="palette-tech">
+                            <span class="sample sample-tech" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Tech</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-alegre" value="alegre">
+                        <label for="palette-alegre">
+                            <span class="sample sample-alegre" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Alegre</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-invierno" value="invierno">
+                        <label for="palette-invierno">
+                            <span class="sample sample-invierno" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Invierno</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-piel" value="piel">
+                        <label for="palette-piel">
+                            <span class="sample sample-piel" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Piel</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-halloween" value="halloween">
+                        <label for="palette-halloween">
+                            <span class="sample sample-halloween" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Halloween</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-frio" value="frio">
+                        <label for="palette-frio">
+                            <span class="sample sample-frio" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Frío</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="palette" id="palette-noche" value="noche">
+                        <label for="palette-noche">
+                            <span class="sample sample-noche" aria-hidden="true">
+                                <span class="sw-1"></span><span class="sw-2"></span><span class="sw-3"></span><span class="sw-4"></span><span class="sw-5"></span>
+                            </span>
+                            <span class="panel-name">Noche</span>
+                            <svg class="panel-check" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>
+                        </label>
+                    </li>
+                </ul>
+            </fieldset>
+
+            <fieldset class="panel-group">
+                <legend>Bordes</legend>
+                <ul class="panel-row">
+                    <li>
+                        <input type="radio" name="radius" id="radius-square" value="square" checked>
+                        <label for="radius-square"><span class="panel-name">Cuadrados</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="radius" id="radius-round" value="round">
+                        <label for="radius-round"><span class="panel-name">Redondos</span></label>
+                    </li>
+                </ul>
+            </fieldset>
+
+            <fieldset class="panel-group">
+                <legend>Barra</legend>
+                <ul class="panel-row">
+                    <li>
+                        <input type="radio" name="nav" id="nav-dark" value="dark" checked>
+                        <label for="nav-dark"><span class="panel-name">Tinta</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="nav" id="nav-color" value="color">
+                        <label for="nav-color"><span class="panel-name">De color</span></label>
+                    </li>
+                </ul>
+            </fieldset>
+
+            <fieldset class="panel-group">
+                <legend>Banner</legend>
+                <ul class="panel-row">
+                    <li>
+                        <input type="radio" name="banner" id="banner-dark" value="dark" checked>
+                        <label for="banner-dark"><span class="panel-name">Velo oscuro</span></label>
+                    </li>
+                    <li>
+                        <input type="radio" name="banner" id="banner-light" value="light">
+                        <label for="banner-light"><span class="panel-name">Velo claro</span></label>
+                    </li>
+                </ul>
+            </fieldset>
+
+            <p class="panel-footer">
+                <button class="panel-reset" type="button">Volver a los valores por defecto</button>
+            </p>
+
+            <p class="panel-notice" hidden>El navegador no deja guardar la elección acá, así que no se recuerda al recargar.</p>
+
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
