@@ -28,7 +28,7 @@ proyecto CATALOGOS/
 | Backend | PHP 8.3 · Laravel 13.8 · Sanctum 4 (tokens Bearer) |
 | Permisos | spatie/laravel-permission 8.3 — solo roles: `superadmin`, `store_owner` |
 | Imágenes | intervention/image 4.3 sobre GD → WebP |
-| BD | MySQL 8 (`base_catalogos`; tests en `base_catalogos_testing`) |
+| BD | MySQL 8 (local `base_catalogos`, producción `catalogos`, tests `base_catalogos_testing`) |
 | Público | Nuxt 4.5 · Vue 3.5 · vue-router 4 — SSR, sin Pinia (`useFetch` alcanza) |
 | Panel | Vue 3.5 · Vite 7 · Pinia 3 · vue-router 4 · Chart.js 4 · vuedraggable |
 | Runtime | Node 20 · systemd (solo Nuxt necesita proceso) · nginx vía CloudPanel |

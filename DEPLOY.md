@@ -72,11 +72,15 @@ Desde CloudPanel → **Databases → Add Database**. No usar `root` ni la base d
 otro sitio.
 
 ```
-Nombre    base_catalogos
+Nombre    catalogos
 Usuario   catalogos
 ```
 
 CloudPanel genera la contraseña; se copia al `.env` de la API.
+
+> El nombre va **sin guion bajo**: CloudPanel valida con letras, números y
+> guiones medios, y rechaza `base_catalogos`. En local la base sigue llamándose
+> `base_catalogos`; lo único que las ata es `DB_DATABASE`.
 
 ## 2. Clonar el repo — tres veces
 
@@ -89,14 +93,29 @@ más y evita pelear contra el aislamiento por usuario.
 `root:root`, PHP-FPM no puede escribir en `storage/` y el build de Node tampoco
 puede escribir su salida.
 
+El repo es privado y cada site user tiene su propia **deploy key de sólo
+lectura** (en GitHub: repo → Settings → Deploy keys, una por sitio). Si hay que
+rehacerlas:
+
 ```bash
-sudo -u miotienda-api      git clone https://github.com/RALlave/catalogos.git \
+for u in miotienda-api miotienda-apex miotienda-tiendas; do
+  sudo -u $u bash -c "mkdir -p ~/.ssh && chmod 700 ~/.ssh && \
+    ssh-keygen -t ed25519 -N '' -C 'catalogos-$u' -f ~/.ssh/id_ed25519 && \
+    ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts"
+done
+
+# y subir a GitHub el contenido de cada ~/.ssh/id_ed25519.pub,
+# SIN marcar "Allow write access"
+```
+
+```bash
+sudo -u miotienda-api      git clone git@github.com:RALlave/catalogos.git \
     /home/miotienda-api/htdocs/api.miotienda.com
 
-sudo -u miotienda-apex     git clone https://github.com/RALlave/catalogos.git \
+sudo -u miotienda-apex     git clone git@github.com:RALlave/catalogos.git \
     /home/miotienda-apex/htdocs/miotienda.com
 
-sudo -u miotienda-tiendas  git clone https://github.com/RALlave/catalogos.git \
+sudo -u miotienda-tiendas  git clone git@github.com:RALlave/catalogos.git \
     /home/miotienda-tiendas/htdocs/tiendas.miotienda.com
 ```
 
