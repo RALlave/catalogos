@@ -154,8 +154,12 @@ CloudPanel: **CloudPanel → Sites → api.miotienda.com → Settings → Root
 Directory**
 
 ```
-htdocs/api.miotienda.com/api/public
+api.miotienda.com/api/public
 ```
+
+> **Sin `htdocs/` adelante.** CloudPanel antepone `/home/{site-user}/htdocs/`
+> por su cuenta: si se escribe la ruta completa queda `htdocs/htdocs/…` y el
+> sitio responde 404 a todo.
 
 > `APP_URL` es el subdominio pelado (`https://api.miotienda.com`), **sin
 > `/api`**. Las rutas de la API cuelgan de ese prefijo, pero las imágenes no: el
