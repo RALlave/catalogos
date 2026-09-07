@@ -2,7 +2,10 @@
 import type { Store } from '~/types/catalog'
 
 const route = useRoute()
-const { siteUrl } = useRuntimeConfig().public
+
+/* La URL absoluta sale del host y no del .env: con una tienda por subdominio,
+   una dirección fija en la configuración sería la de otra tienda. */
+const siteUrl = useSiteUrl()
 
 const { data, error } = await useCurrentStore()
 

@@ -14,8 +14,6 @@ const props = defineProps<{ store: Store }>()
 
 const route = useRoute()
 
-const storePath = computed(() => `/${props.store.slug}`)
-
 /* El nombre se parte para pintar la última palabra con el color de
    acento. Con una sola palabra no hay segunda mitad y no se pinta. */
 const brandWords = computed(() => props.store.name.trim().split(/\s+/))
@@ -133,7 +131,7 @@ function onSearchBlur(event: FocusEvent) {
 
 /* Buscar es una página aparte, no un filtro del catálogo: se sale con el
    término solo, sin arrastrar la categoría ni la página que hubiera. */
-const searchPath = computed(() => `${storePath.value}/buscar`)
+const searchPath = '/buscar'
 
 function submitSearch() {
     searchOpen.value = false
@@ -227,7 +225,7 @@ onMounted(() => {
         <div class="header-top">
             <div class="container header-top-inner">
 
-                <NuxtLink class="brand" :to="storePath">
+                <NuxtLink class="brand" to="/">
                     <img
                         v-if="store.logo_url"
                         class="brand-logo"
@@ -351,7 +349,7 @@ onMounted(() => {
 
                     <ul id="menu-main" class="menu">
                         <li class="menu-item">
-                            <NuxtLink class="menu-link" :to="storePath">Inicio</NuxtLink>
+                            <NuxtLink class="menu-link" to="/">Inicio</NuxtLink>
                         </li>
                         <li v-if="store.categories.length" class="menu-item">
                             <button
@@ -366,14 +364,14 @@ onMounted(() => {
                             </button>
                             <ul id="submenu-categories" class="submenu" :hidden="! categoriesOpen">
                                 <li v-for="category in store.categories" :key="category.slug">
-                                    <NuxtLink :to="{ path: storePath, query: { cat: category.slug } }">
+                                    <NuxtLink :to="{ path: '/', query: { cat: category.slug } }">
                                         {{ category.name }}
                                     </NuxtLink>
                                 </li>
                             </ul>
                         </li>
                         <li class="menu-item">
-                            <NuxtLink class="menu-link" :to="`${storePath}/contacto`">Contacto</NuxtLink>
+                            <NuxtLink class="menu-link" to="/contacto">Contacto</NuxtLink>
                         </li>
                     </ul>
 

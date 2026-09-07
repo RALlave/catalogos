@@ -21,15 +21,13 @@ if (error.value || ! productData.value) {
 const store = computed(() => storeData.value as Store)
 const product = computed(() => productData.value as Product)
 
-const storePath = computed(() => `/${store.value.slug}`)
-
 const { data: catalogPage } = await useRelatedProducts(productData)
 
 const related = computed(() => (catalogPage.value?.data ?? [])
     .filter((item) => item.slug !== product.value.slug)
     .slice(0, 3))
 
-const { siteUrl } = useRuntimeConfig().public
+const siteUrl = useSiteUrl()
 
 const price = computed(() => product.value.sale_price ?? product.value.price)
 
@@ -80,13 +78,13 @@ useSeoMeta({
             <div class="container">
                 <ol class="breadcrumbs-list">
                     <li class="breadcrumbs-item">
-                        <NuxtLink class="breadcrumbs-link" :to="storePath">Inicio</NuxtLink>
+                        <NuxtLink class="breadcrumbs-link" to="/">Inicio</NuxtLink>
                         <AppIcon name="chevron" class="breadcrumbs-icon" />
                     </li>
                     <li v-if="product.category" class="breadcrumbs-item">
                         <NuxtLink
                             class="breadcrumbs-link"
-                            :to="{ path: storePath, query: { cat: product.category.slug } }"
+                            :to="{ path: '/', query: { cat: product.category.slug } }"
                         >
                             {{ product.category.name }}
                         </NuxtLink>
@@ -121,7 +119,7 @@ useSeoMeta({
                         <li v-if="product.category" class="detail-meta-item">
                             <NuxtLink
                                 class="detail-meta-link"
-                                :to="{ path: storePath, query: { cat: product.category.slug } }"
+                                :to="{ path: '/', query: { cat: product.category.slug } }"
                             >
                                 {{ product.category.name }}
                             </NuxtLink>
@@ -256,7 +254,7 @@ useSeoMeta({
 
                 <div class="section-header section-header-row">
                     <h2 id="related-title">Productos relacionados</h2>
-                    <NuxtLink class="section-link" :to="`${storePath}#products`">
+                    <NuxtLink class="section-link" to="/#products">
                         Ver todo el catálogo
                         <AppIcon name="arrow" class="section-link-icon" />
                     </NuxtLink>

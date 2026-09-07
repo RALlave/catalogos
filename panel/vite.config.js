@@ -21,5 +21,14 @@ export default defineConfig(({ mode }) => ({
 
     server: {
         port: 5173,
+
+        /* Por defecto Vite escucha en `localhost`, que en Windows es ::1;
+           lvh.me resuelve a 127.0.0.1 y no llegaría nada. */
+        host: '127.0.0.1',
+
+        /* El panel de cada tienda se abre en su subdominio, también en
+           desarrollo (rex.lvh.me:5173). Vite bloquea los hosts que no conoce
+           para protegerse del DNS rebinding, así que hay que nombrarlos. */
+        allowedHosts: ['.lvh.me'],
     },
 }))

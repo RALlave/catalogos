@@ -7,34 +7,27 @@ return [
     | Slugs reservados
     |--------------------------------------------------------------------------
     |
-    | Las tiendas viven en la raíz del dominio (diseprog.com/mitienda), así que
-    | su slug no puede pisar una ruta de la plataforma. Si mañana se agrega una
-    | sección nueva en la raíz, hay que sumarla a esta lista.
+    | El slug de la tienda es su subdominio (mitienda.dominio.com), así que ya
+    | no compite con las rutas de la plataforma sino con los nombres de host
+    | que se usan para otra cosa. Si mañana se levanta un subdominio nuevo,
+    | hay que sumarlo a esta lista antes de que alguien registre esa tienda.
     |
     */
 
     'reserved_slugs' => [
         'admin',
         'api',
-        'assets',
-        'css',
-        'dashboard',
-        'favicon.ico',
-        'img',
-        'images',
-        'js',
-        'login',
-        'logout',
+        'cdn',
+        'dev',
+        'ftp',
+        'mail',
         'panel',
-        'password',
-        'profile',
-        'register',
-        'robots.txt',
-        'signup',
-        'sitemap.xml',
+        'smtp',
+        'staging',
         'static',
         'storage',
-        '_nuxt',
+        'webmail',
+        'www',
     ],
 
     /*

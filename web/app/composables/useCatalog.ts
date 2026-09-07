@@ -36,21 +36,21 @@ function visitorHeaders(): Record<string, string> {
 }
 
 /**
- * Tienda del slug de la ruta.
+ * Tienda del subdominio.
  *
  * Se usa useFetch con la URL como función: la clave se deriva de la URL, así
- * que el layout y la página comparten una sola petición y se rehace sola
- * cuando cambia el slug.
+ * que el layout y la página comparten una sola petición.
  *
- * La base de la API se lee una vez acá dentro: useRuntimeConfig() necesita la
+ * El slug ya no cambia sin recargar —está en el host, no en la ruta—, pero la
+ * base de la API se sigue leyendo acá dentro: useRuntimeConfig() necesita la
  * instancia de Nuxt y la función de URL se vuelve a evaluar fuera del setup.
  */
 export function useCurrentStore() {
-    const route = useRoute()
+    const slug = useRequiredStoreSlug()
     const { apiBase } = useRuntimeConfig().public
 
     /* Es la petición que la API usa para contar la visita al catálogo. */
-    return useFetch(() => `${apiBase}/stores/${route.params.tienda}`, {
+    return useFetch(() => `${apiBase}/stores/${slug}`, {
         headers: visitorHeaders(),
         transform: (response: StoreResponse) => response.store,
     })
@@ -64,21 +64,21 @@ export function useCurrentStore() {
  * fetch sale solo en cuanto los filtros cambian.
  */
 export function useStoreProducts(filters: Ref<ProductFilters>, options: { immediate?: boolean } = {}) {
-    const route = useRoute()
+    const slug = useRequiredStoreSlug()
     const { apiBase } = useRuntimeConfig().public
 
     return useFetch<Paginated<Product>>(
-        () => `${apiBase}/stores/${route.params.tienda}/products`,
+        () => `${apiBase}/stores/${slug}/products`,
         { query: filters, ...options },
     )
 }
 
 export function useStoreProduct(productSlug: Ref<string>) {
-    const route = useRoute()
+    const slug = useRequiredStoreSlug()
     const { apiBase } = useRuntimeConfig().public
 
     return useFetch(
-        () => `${apiBase}/stores/${route.params.tienda}/products/${productSlug.value}`,
+        () => `${apiBase}/stores/${slug}/products/${productSlug.value}`,
         {
             headers: visitorHeaders(),
             transform: (response: ProductResponse) => response.product,
@@ -106,13 +106,13 @@ export function trackShare(storeSlug: string, productSlug: string): void {
  * Sin categoría no hay nada que traer, por eso el fetch queda en pausa.
  */
 export function useRelatedProducts(product: Ref<Product | null>) {
-    const route = useRoute()
+    const slug = useRequiredStoreSlug()
     const { apiBase } = useRuntimeConfig().public
 
     const category = computed(() => product.value?.category?.slug)
 
     return useFetch<Paginated<Product>>(
-        () => `${apiBase}/stores/${route.params.tienda}/products`,
+        () => `${apiBase}/stores/${slug}/products`,
         {
             query: { category },
             immediate: Boolean(category.value),

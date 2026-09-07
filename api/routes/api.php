@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Admin\ImpersonationController as AdminImpersonation
 use App\Http\Controllers\Api\Admin\MetricsController as AdminMetricsController;
 use App\Http\Controllers\Api\Admin\StoreController as AdminStoreController;
 use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Api\Auth\HandoffController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\Auth\RegisterController;
@@ -39,6 +40,12 @@ Route::post('forgot-password', [PasswordResetController::class, 'forgot'])->midd
 
 Route::post('reset-password', [PasswordResetController::class, 'reset'])->middleware('throttle:6,1');
 
+/* Canje del código con el que una sesión salta de un subdominio a otro. No
+   lleva auth: el código es la credencial, dura un minuto y sirve una vez. */
+Route::post('auth/handoff/redeem', [HandoffController::class, 'redeem'])
+    ->middleware('throttle:10,1')
+    ->name('auth.handoff.redeem');
+
 Route::get('themes', ThemeController::class)->name('public.themes');
 
 Route::get('stores/{slug}', [PublicStoreController::class, 'show'])->name('public.store.show');
@@ -61,6 +68,10 @@ Route::post('stores/{slug}/track', PublicTrackController::class)
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('me', [LoginController::class, 'me']);
     Route::post('logout', [LoginController::class, 'logout']);
+
+    Route::post('auth/handoff', [HandoffController::class, 'issue'])
+        ->middleware('throttle:20,1')
+        ->name('auth.handoff.issue');
 
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 

@@ -11,10 +11,16 @@ export default defineNuxtConfig({
         '~/assets/css/components.css',
     ],
 
+    /* `baseDomain` es el dominio de la plataforma, sin tienda: el catálogo
+       saca el slug del subdominio que sobra en el host. En desarrollo se usa
+       lvh.me, que resuelve a 127.0.0.1 sin tocar el archivo hosts.
+
+       No hay `siteUrl`: con una tienda por subdominio, una URL fija sería la
+       de otra tienda. La absoluta sale del host (`useSiteUrl`). */
     runtimeConfig: {
         public: {
             apiBase: 'http://127.0.0.1:8000/api',
-            siteUrl: 'http://localhost:3000',
+            baseDomain: 'lvh.me:3000',
         },
     },
 

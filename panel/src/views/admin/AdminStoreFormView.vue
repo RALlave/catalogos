@@ -93,14 +93,13 @@ async function submit() {
     }
 }
 
-/** Entrar al panel de esta tienda como su dueño. */
+/**
+ * Entrar al panel de esta tienda como su dueño. Salta al subdominio de la
+ * tienda: si la ejecución sigue acá, es porque falló.
+ */
 async function enterPanel() {
     try {
         await auth.impersonate(id.value)
-
-        ui.toast('Entraste al panel', form.value.name)
-
-        await router.push({ name: 'dashboard' })
     } catch {
         ui.toast('No pudimos entrar al panel', form.value.name, 'danger')
     }

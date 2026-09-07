@@ -60,14 +60,14 @@ async function toggleActive(store) {
     ui.toast(store.active ? 'Tienda publicada' : 'Tienda oculta', store.name)
 }
 
-/** Entrar al panel de la tienda como su dueño. */
+/**
+ * Entrar al panel de la tienda como su dueño. El panel de cada tienda vive en
+ * su propio subdominio, así que esto se lleva el navegador: si vuelve de acá
+ * es porque algo falló.
+ */
 async function enterPanel(store) {
     try {
         await auth.impersonate(store.id)
-
-        ui.toast('Entraste al panel', store.name)
-
-        await router.push({ name: 'dashboard' })
     } catch {
         ui.toast('No pudimos entrar al panel', store.name, 'danger')
     }

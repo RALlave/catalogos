@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { currentStoreSlug, storeUrl } from '@/lib/host'
 import { useAuthStore } from '@/stores/auth'
 
 const routes = [
@@ -29,7 +30,7 @@ const routes = [
     },
 
     {
-        path: '/',
+        path: '/admin',
         component: () => import('@/layouts/PanelLayout.vue'),
         meta: { auth: true, role: 'store_owner' },
         children: [
@@ -127,7 +128,7 @@ const routes = [
     },
 
     {
-        path: '/admin',
+        path: '/superadmin',
         component: () => import('@/layouts/PanelLayout.vue'),
         meta: { auth: true, role: 'superadmin' },
         children: [
@@ -182,12 +183,14 @@ const routes = [
         ],
     },
 
-    { path: '/:pathMatch(.*)*', redirect: '/' },
+    { path: '/:pathMatch(.*)*', redirect: '/login' },
 ]
 
 export const router = createRouter({
-    /* BASE_URL lo pone Vite: "/" en local y "/panel/" en producción. */
-    history: createWebHistory(import.meta.env.BASE_URL),
+    /* El panel no cuelga de un prefijo: sus rutas conviven con las del
+       catálogo en el mismo origen y nginx decide cuál sirve cada una. Los
+       assets sí van bajo /panel/, pero eso es cosa de Vite, no del router. */
+    history: createWebHistory('/'),
     routes,
     scrollBehavior: () => ({ top: 0 }),
 })
@@ -197,8 +200,37 @@ function homeFor(auth) {
     return auth.isSuperadmin ? { name: 'admin-dashboard' } : { name: 'dashboard' }
 }
 
+/**
+ * El dueño administra desde el subdominio de su tienda. Si llegó por otro host
+ * —el apex, o el subdominio de una tienda ajena— hay que **saltar de origen**,
+ * no navegar: se pide un código de un solo uso, se cambia de dirección y la
+ * sesión se rearma del otro lado, porque el token no cruza entre orígenes.
+ *
+ * Quien todavía no creó su tienda no tiene subdominio: se queda donde está.
+ */
+async function movedToOwnSubdomain(auth) {
+    const slug = auth.store?.slug
+
+    if (! slug || currentStoreSlug() === slug) {
+        return false
+    }
+
+    window.location.href = storeUrl(slug, `/admin?handoff=${await auth.handoff()}`)
+
+    return true
+}
+
 router.beforeEach(async (to) => {
     const auth = useAuthStore()
+
+    /* Llega de otro origen —una impersonación o el propio dueño que se logueó
+       en el apex— con un código de un solo uso. Se canjea por un token de este
+       origen y se saca de la URL, que queda en el historial. */
+    if (to.query.handoff) {
+        await auth.redeemHandoff(String(to.query.handoff))
+
+        return { path: to.path, query: { ...to.query, handoff: undefined } }
+    }
 
     if (! auth.ready) {
         await auth.restore()
@@ -214,6 +246,13 @@ router.beforeEach(async (to) => {
 
     if (to.meta.role && auth.isLogged && ! auth.roles.includes(to.meta.role)) {
         return homeFor(auth)
+    }
+
+    /* Última parada: el dueño con el panel abierto en el host de otro. Va
+       acá y no en homeFor() para que valga también cuando la ruta es la
+       correcta y sólo está mal el subdominio. */
+    if (to.meta.role === 'store_owner' && auth.isLogged && await movedToOwnSubdomain(auth)) {
+        return false
     }
 
     return true

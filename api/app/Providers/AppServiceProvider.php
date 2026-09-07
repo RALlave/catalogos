@@ -28,8 +28,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        /* El correo cae siempre en el dominio principal: quien lo recibe puede
+           no tener tienda todavía, así que no hay subdominio a donde mandarlo.
+           La ruta es la del panel, en español. */
         ResetPassword::createUrlUsing(function (User $user, string $token): string {
-            return config('app.frontend_url').'/reset-password?token='.$token.'&email='.urlencode($user->email);
+            return config('app.frontend_url').'/restablecer?token='.$token.'&email='.urlencode($user->email);
         });
 
         /* Todo lo que se ve en el catálogo público tira su caché al guardarse. */

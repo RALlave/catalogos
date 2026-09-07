@@ -48,7 +48,7 @@ class StoreResource extends JsonResource
             'currency' => $this->currency,
             'schedules' => $this->schedules,
             'active' => $this->active,
-            'public_url' => config('app.frontend_url').'/'.$this->slug,
+            'public_url' => $this->publicUrl(),
             'created_at' => $this->created_at,
         ];
     }

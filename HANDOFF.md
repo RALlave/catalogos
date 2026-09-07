@@ -35,20 +35,31 @@ proyecto CATALOGOS/
 
 ## Arquitectura
 
-Un solo dominio, tres aplicaciones:
+Una tienda por subdominio:
 
 ```
-https://dominio.com/{tienda}   catálogo   → Nuxt SSR en 127.0.0.1:3000 (PM2)
-https://dominio.com/panel      panel      → dist/ estático
-https://dominio.com/api        API        → PHP-FPM
+https://dominio.com                 landing + login    → landing/ y panel/dist
+https://dominio.com/superadmin      panel superadmin   → panel/dist
+https://{tienda}.dominio.com        catálogo           → Nuxt SSR en 127.0.0.1:3000 (PM2)
+https://{tienda}.dominio.com/admin  panel de la tienda → panel/dist
+https://api.dominio.com             API                → PHP-FPM
 ```
+
+El slug de la tienda **es su subdominio**: Nuxt lo saca del header `Host`
+(`web/app/composables/useStoreHost.ts`), no de la ruta.
 
 Toda la lógica vive en Laravel. Nuxt y la SPA consumen la misma API REST.
 Capas: Controller → Form Request → Policy → Service → Resource.
 
 El panel es **una sola aplicación para los dos perfiles**: un único login
 (`POST /api/login`) y el router decide por el array `roles` — `store_owner` va
-a `/`, `superadmin` va a `/admin`.
+a `/admin`, `superadmin` a `/superadmin`. Sus rutas viven en la raíz junto a
+las del catálogo; sus archivos cuelgan de `/panel/` (`VITE_BASE`).
+
+Cada subdominio es un origen aparte y **no comparte `localStorage`**: para
+llevar una sesión de uno a otro —el dueño que entró por el dominio principal, o
+el superadmin que entra a una tienda— se usa un código de un solo uso de 60s
+(`App\Services\SessionHandoff`). Por eso `CACHE_STORE` no puede ser `array`.
 
 ## Modelo de datos
 
@@ -67,30 +78,43 @@ a `/`, `superadmin` va a `/admin`.
 
 Repositorio: `https://github.com/RALlave/catalogos` (privado, rama `main`).
 
-Sin desplegar todavía. El VPS es de Hostinger y el dominio está por comprarse.
+Sin desplegar todavía. El VPS es de Hostinger y el dominio se compró en
+Cloudflare.
 
 ## Deploy
 
-El procedimiento completo está en `DEPLOY.md`, escrito para `diseprog.com`.
+El procedimiento completo está en `DEPLOY.md`, escrito con `miotienda.com` de
+ejemplo. La arquitectura de subdominios **necesita un dominio**: no se puede
+instalar con la IP pelada, porque no hay subdominios que resolver.
 
-Sin dominio se puede instalar todo con la IP del VPS; después hay que cambiar
-cinco variables y **recompilar panel y web** (esas URLs se hornean en el build,
-no se leen en runtime), más `server_name` en el nginx y certbot:
+Al cambiar de dominio hay que tocar seis variables y **recompilar panel y web**
+(esas URLs se hornean en el build, no se leen en runtime), más los tres
+`server_name` del nginx:
 
 - `APP_URL` y `FRONTEND_URL` en `api/.env`
-- `VITE_API_BASE` en `panel/.env`
-- `NUXT_PUBLIC_API_BASE` y `NUXT_PUBLIC_SITE_URL` en `web/.env`
+- `VITE_API_BASE` y `VITE_BASE_DOMAIN` en `panel/.env`
+- `NUXT_PUBLIC_API_BASE` y `NUXT_PUBLIC_BASE_DOMAIN` en `web/.env`
+
+`FRONTEND_URL` es el dominio pelado y hace tres cosas a la vez: arma la URL del
+catálogo de cada tienda, es el destino del correo de recuperación y de ahí sale
+el patrón de CORS.
 
 ### Trampas que ya costaron
 
-- `VITE_BASE=/panel/` tiene que estar **antes** del build o el panel queda en blanco
+- `VITE_BASE=/panel/` tiene que estar **antes** del build o el panel queda en
+  blanco. Es de dónde cuelgan los archivos, no las rutas
+- `CACHE_STORE=array` rompe el salto entre subdominios: el código de un solo
+  uso se pierde entre una petición y la siguiente
 - Sin `php artisan storage:link` no se ve ninguna imagen
 - `APP_URL` termina en `/api`
-- Los slugs `api`, `panel`, `admin`, `storage`, `login`… están reservados en
-  `api/config/catalog.php`: ninguna tienda puede llamarse así, porque las
-  tiendas viven en la raíz del dominio
+- Los subdominios `api`, `www`, `mail`, `panel`… están reservados en
+  `api/config/catalog.php`: ninguna tienda puede llamarse así
 - Nuxt reenvía `X-Forwarded-For` y `User-Agent` del visitante a la API; sin eso
   todas las visitas se cuentan como una sola
+- Detrás de Cloudflare hace falta el bloque `real_ip` con `CF-Connecting-IP`, o
+  la IP que llega a las estadísticas la escribe el visitante
+- Cloudflare va en **Full (strict)** y con la nube naranja, o no hay
+  certificado wildcard
 
 ## Deuda técnica abierta
 

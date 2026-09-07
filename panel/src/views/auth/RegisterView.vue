@@ -7,6 +7,7 @@ import FormField from '@/components/FormField.vue'
 import PasswordInput from '@/components/PasswordInput.vue'
 import PasswordStrength from '@/components/PasswordStrength.vue'
 import AuthLayout from '@/layouts/AuthLayout.vue'
+import { BASE_DOMAIN as baseDomain } from '@/lib/host'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
 import { useAuthStore } from '@/stores/auth'
@@ -129,7 +130,7 @@ async function submit() {
             <FormField
                 label="Nombre de tu tienda"
                 field-id="register-store"
-                :hint="slugPreview ? `Tu catálogo quedará en /${slugPreview}` : 'Tu catálogo quedará en /nombre-de-tu-tienda'"
+                :hint="`Tu catálogo quedará en ${slugPreview || 'nombre-de-tu-tienda'}.${baseDomain}`"
             >
                 <input
                     id="register-store"

@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 import AdminSidebar from '@/components/AdminSidebar.vue'
 import AppIcon from '@/components/AppIcon.vue'
@@ -10,21 +10,17 @@ import { useAuthStore } from '@/stores/auth'
 import { useUiStore } from '@/stores/ui'
 
 const route = useRoute()
-const router = useRouter()
 const auth = useAuthStore()
 const ui = useUiStore()
 
-/** Volver a la sesión de superadmin y a su listado de tiendas. */
+/** Volver a la sesión de superadmin, que espera en el apex. */
 async function backToAdmin() {
+    /* Es un salto de origen, no una navegación: se va de esta página. */
     await auth.stopImpersonating()
-
-    ui.toast('Volviste a tu sesión')
-
-    await router.push({ name: 'admin-stores' })
 }
 
 /* El mismo layout sirve para los dos paneles: cambia el menú y el tema. */
-const isAdmin = computed(() => route.path.startsWith('/admin'))
+const isAdmin = computed(() => route.path.startsWith('/superadmin'))
 
 const title = computed(() => route.meta.title ?? '')
 

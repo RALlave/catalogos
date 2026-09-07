@@ -18,7 +18,11 @@ const props = defineProps<{ store: Store }>()
 const open = useCartPanel()
 const cart = useCart(toRef(props, 'store'))
 
-const { apiBase, siteUrl } = useRuntimeConfig().public
+const { apiBase } = useRuntimeConfig().public
+
+/* Los enlaces se pegan en WhatsApp: tienen que ser absolutos y del
+   subdominio de esta tienda, así que salen del host. */
+const siteUrl = useSiteUrl()
 
 const sending = ref(false)
 const panel = ref<HTMLElement | null>(null)
@@ -81,7 +85,7 @@ const message = computed(() => {
     const lines = cart.lines.value.map((line) => {
         const price = line.price ? ` — ${props.store.currency ?? ''} ${formatAmount(line.price)}`.trimEnd() : ''
 
-        return `• ${line.quantity} × ${line.name}${price}\n  ${siteUrl}/${props.store.slug}/producto/${line.slug}`
+        return `• ${line.quantity} × ${line.name}${price}\n  ${siteUrl}/producto/${line.slug}`
     })
 
     const total = cart.total.value === null
@@ -154,7 +158,7 @@ async function send() {
 
                     <div class="cart-line-body">
                         <h3 class="cart-line-name">
-                            <NuxtLink :to="`/${store.slug}/producto/${line.slug}`" @click="open = false">
+                            <NuxtLink :to="`/producto/${line.slug}`" @click="open = false">
                                 {{ line.name }}
                             </NuxtLink>
                         </h3>

@@ -58,6 +58,23 @@ class Store extends Model
     }
 
     /**
+     * Dirección del catálogo: el slug es el subdominio.
+     *
+     * Se arma sobre FRONTEND_URL, que apunta al dominio pelado de la
+     * plataforma, para no repetir el dominio en otra variable.
+     */
+    public function publicUrl(): string
+    {
+        $frontend = (string) config('app.frontend_url');
+
+        $scheme = parse_url($frontend, PHP_URL_SCHEME) ?: 'https';
+        $host = parse_url($frontend, PHP_URL_HOST) ?: $frontend;
+        $port = parse_url($frontend, PHP_URL_PORT);
+
+        return $scheme.'://'.$this->slug.'.'.$host.($port ? ':'.$port : '');
+    }
+
+    /**
      * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo

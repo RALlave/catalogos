@@ -20,7 +20,7 @@ const props = defineProps<{ product: Product, store: Store }>()
    columnas, y arriba de 1440px el contenedor deja de crecer. */
 const CARD_SIZES = '(min-width: 90rem) 320px, (min-width: 62rem) 33vw, 50vw'
 
-const productPath = computed(() => `/${props.store.slug}/producto/${props.product.slug}`)
+const productPath = computed(() => `/producto/${props.product.slug}`)
 
 const price = computed(() => props.product.sale_price ?? props.product.price)
 

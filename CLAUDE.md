@@ -110,6 +110,30 @@ Toda la lógica de negocio debe residir únicamente en Laravel.
 
 Nuxt y la SPA consumirán exactamente la misma API.
 
+### Reparto por dominio
+
+Cada tienda tiene su propio subdominio, y ahí conviven su catálogo y su panel:
+
+```
+dominio.com              landing + puerta de entrada al panel
+{tienda}.dominio.com     catálogo (Nuxt) + panel de esa tienda (SPA)
+api.dominio.com          Laravel
+```
+
+Consecuencias que atraviesan todo el proyecto:
+
+- Todas las peticiones del navegador a la API son **cross-origin**. Se
+  resuelven con CORS (`api/config/cors.php`), que permite el dominio y un nivel
+  de subdominio. Va **sin credenciales**: Sanctum se usa con tokens Bearer, no
+  con cookies de sesión.
+- El dominio se compró en **Cloudflare**, que da el certificado wildcard sin
+  renovación. A cambio, nginx necesita el bloque `real_ip` con
+  `CF-Connecting-IP`, o la IP del visitante que llega a las estadísticas es
+  falsificable. Está en `deploy/nginx.conf`; el detalle, en `DEPLOY.md`.
+- En desarrollo se entra por `lvh.me`, que resuelve a 127.0.0.1 sin tocar el
+  archivo `hosts`: `rex.lvh.me:3000` es el catálogo y `rex.lvh.me:5173` el
+  panel.
+
 ## Prototipo
 
 En `prototipo-3/` está el template estático (HTML/CSS/JS vanilla) que define la
@@ -168,13 +192,15 @@ Datos:
 - Moneda (setting global de la tienda, no por producto)
 - Horarios de atención (lista de `{días, horas}`)
 
-Cada tienda tendrá una URL pública.
-
-Ejemplo:
+Cada tienda tendrá una URL pública. **El slug es el subdominio**, no un
+segmento de la ruta:
 
 ```
-catalogo.com/mitienda
+https://mitienda.catalogo.com
 ```
+
+Por eso los slugs reservados de `api/config/catalog.php` son nombres de host
+(`api`, `www`, `mail`, `panel`…) y no rutas de la plataforma.
 
 ## Fase 3 — Categorías
 
@@ -264,12 +290,22 @@ Debe incluir:
 Vive en `web/`, separado de `api/`. Estructura de URLs:
 
 ```
-/                          landing del SaaS
-/{tienda}                  catálogo        (?cat= &q= &page=)
-/{tienda}/producto/{slug}  detalle
-/{tienda}/buscar           resultados de búsqueda (?q= &cat= &page=)
-/{tienda}/contacto         contacto
+{tienda}.dominio.com/                  catálogo   (?cat= &q= &page=)
+{tienda}.dominio.com/producto/{slug}   detalle
+{tienda}.dominio.com/buscar            resultados de búsqueda (?q= &cat= &page=)
+{tienda}.dominio.com/contacto          contacto
 ```
+
+La landing del SaaS **no la sirve Nuxt**: vive en `landing/` y la sirve nginx
+en el dominio principal. Nuxt sólo atiende subdominios de tienda; un host sin
+tienda —el dominio pelado, `www`, un slug que no existe— responde 404.
+
+La tienda sale del header `Host`, no de la ruta: lo resuelve
+`web/app/composables/useStoreHost.ts`, que también arma la URL absoluta de la
+tienda (`useSiteUrl`) para el canonical, el Open Graph y lo que se comparte por
+WhatsApp. **No existe una variable con la URL del sitio**: con una tienda por
+subdominio, una URL fija sería la de otra tienda. La única variable es
+`NUXT_PUBLIC_BASE_DOMAIN`, el dominio de la plataforma sin tienda.
 
 El catálogo es el diseño de `prototipo-3/`, portado el 2026-08-28. Ya no hay
 cuatro layouts: es **un solo diseño configurable** y lo que cambia es la paleta
@@ -372,11 +408,43 @@ paleta nueva es agregar un bloque a ese archivo.
 ### Dónde vive
 
 SPA en `panel/` (Vite + Vue 3 + Pinia + Vue Router), hermana de `api/` y `web/`.
-Es **una sola aplicación para los dos perfiles**: un único login (`POST /api/login`)
-y el router decide por el array `roles` que devuelve la respuesta —
-`store_owner` va a `/`, `superadmin` va a `/admin`.
+Es **una sola aplicación para los dos perfiles**: un único login
+(`POST /api/login`) y el router decide por el array `roles` que devuelve la
+respuesta — `store_owner` va a `/admin`, `superadmin` va a `/superadmin`.
 
-El token de Sanctum se guarda en `localStorage` y viaja como Bearer.
+La misma SPA se sirve desde **dos lugares**, porque el panel de cada tienda
+vive en el subdominio de esa tienda:
+
+```
+dominio.com/login          puerta universal: entra cualquiera
+dominio.com/registro       alta de cuenta (quien no tiene tienda no tiene subdominio)
+dominio.com/restablecer    destino del correo de recuperación
+dominio.com/superadmin     panel del superadmin
+{tienda}.dominio.com/login panel de esa tienda: login…
+{tienda}.dominio.com/admin …y administración
+```
+
+Sus **rutas** viven en la raíz, conviviendo con el catálogo en el mismo origen
+(nginx decide cuál sirve cada una); sus **archivos** cuelgan de `/panel/`, que
+es lo que declara `VITE_BASE`. Son dos cosas distintas: el router usa base `/`.
+
+El token de Sanctum se guarda en `localStorage` y viaja como Bearer. Como cada
+subdominio es un origen aparte, **el token no se comparte entre tiendas ni con
+el dominio principal**: cada origen tiene su propia sesión.
+
+### Saltar de un subdominio a otro
+
+Un dueño que entra por `dominio.com/login` tiene que terminar en su propio
+subdominio, ya logueado. Como el token no cruza entre orígenes, se usa un
+**código de un solo uso** (`App\Services\SessionHandoff`): dura un minuto, vive
+en la caché, viaja en la query y del otro lado se canjea por un token nuevo.
+
+- `POST /api/auth/handoff` (autenticado) emite el código
+- `POST /api/auth/handoff/redeem` lo canjea; va sin autenticar porque el código
+  **es** la credencial
+
+Por eso `CACHE_STORE` no puede ser `array` en ningún entorno donde se pruebe el
+panel: el código se guarda en una petición y se canjea en otra.
 
 ### Entrar al panel de una tienda (impersonación)
 
@@ -384,11 +452,17 @@ Desde el listado de tiendas y desde Editar tienda, el superadmin puede entrar al
 panel de una tienda **como su dueño**, para dar soporte. Es acceso completo: lo
 que se edite queda a nombre del dueño.
 
-`POST /api/admin/stores/{store}/impersonate` devuelve un token del dueño. El
-panel guarda el token del superadmin en `dash.admin_token` y el nombre de la
-tienda en `dash.impersonated_store`, así la sesión sobrevive a un F5; mientras
-dura, el layout muestra una barra con "Volver a superadmin". Al volver, el token
-del dueño se revoca (`POST /api/logout`) y se restaura el del superadmin.
+`POST /api/admin/stores/{store}/impersonate` devuelve un **código de un solo
+uso**, no un token: el panel de la tienda está en otro origen y desde el
+dominio principal no se puede escribir su `localStorage`. El navegador salta a
+`{tienda}.dominio.com/admin?handoff=<código>`, lo canjea ahí y limpia la URL.
+
+El token del superadmin **no se mueve**: sigue esperando intacto en el dominio
+principal, así que no hay nada que guardar para volver (se fue el
+`dash.admin_token`). En el subdominio queda `dash.impersonated_store` con el
+nombre de la tienda, para que la sesión sobreviva a un F5 y el layout muestre
+la barra "Volver a superadmin". Al volver, el token del dueño se revoca
+(`POST /api/logout`) y el navegador vuelve al dominio principal.
 
 No se puede impersonar a otro superadmin, y el token impersonado no entra a
 `/api/admin` (el middleware de rol lo corta con 403). **No hay auditoría**: nada

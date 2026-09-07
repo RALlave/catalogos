@@ -18,8 +18,6 @@ const route = useRoute()
 const { data: storeData } = await useCurrentStore()
 const store = computed(() => storeData.value as Store)
 
-const storePath = computed(() => `/${store.value.slug}`)
-
 const term = computed(() => String(route.query.q ?? '').trim())
 const category = computed(() => String(route.query.cat ?? ''))
 const page = computed(() => Number(route.query.page ?? 1))
@@ -72,7 +70,7 @@ useSeoMeta({
             <div class="container">
                 <ol class="breadcrumbs-list">
                     <li class="breadcrumbs-item">
-                        <NuxtLink class="breadcrumbs-link" :to="storePath">Inicio</NuxtLink>
+                        <NuxtLink class="breadcrumbs-link" to="/">Inicio</NuxtLink>
                         <AppIcon name="chevron" class="breadcrumbs-icon" />
                     </li>
                     <li class="breadcrumbs-item">
@@ -135,7 +133,7 @@ useSeoMeta({
                 <p v-else-if="term" class="empty">
                     <AppIcon name="search" class="empty-icon" />
                     No encontramos productos para «{{ term }}». Probá con otra palabra o
-                    <NuxtLink :to="storePath">mirá todo el catálogo</NuxtLink>.
+                    <NuxtLink to="/">mirá todo el catálogo</NuxtLink>.
                 </p>
 
                 <p v-else class="empty">

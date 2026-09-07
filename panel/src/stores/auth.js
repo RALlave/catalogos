@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
+import { apexUrl, storeUrl } from '@/lib/host'
 import {
     api,
-    getAdminToken,
     getImpersonatedStore,
     getToken,
-    setAdminToken,
     setImpersonatedStore,
     setToken,
 } from '@/services/api'
@@ -90,42 +89,60 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     /**
-     * Entrar al panel de una tienda como su dueño. El token del superadmin
-     * queda guardado para poder volver.
+     * Código de un solo uso para llevar esta sesión a otro subdominio.
+     *
+     * Los dos orígenes no comparten localStorage, así que el token no se puede
+     * copiar: se pide un código de vida corta, viaja en la URL y del otro lado
+     * se canjea por un token propio de ese origen.
+     */
+    async function handoff() {
+        return (await api.post('/auth/handoff')).code
+    }
+
+    /**
+     * Canjea el código con el que llegó el navegador. Sirve para los dos
+     * caminos: el dueño que se logueó en el apex y el superadmin que entra a
+     * administrar una tienda.
+     */
+    async function redeemHandoff(code) {
+        const payload = await api.post('/auth/handoff/redeem', { code, device_name: 'panel' })
+
+        session(payload)
+
+        impersonating.value = payload.impersonated ? payload.store?.name ?? null : null
+        setImpersonatedStore(impersonating.value)
+
+        await loadStore()
+
+        ready.value = true
+    }
+
+    /**
+     * Entrar al panel de una tienda como su dueño: se salta al subdominio de
+     * la tienda con un código de un solo uso. El token del superadmin no se
+     * mueve de su origen, así que no hay nada que guardar para volver.
      */
     async function impersonate(storeId) {
         const payload = await api.post(`/admin/stores/${storeId}/impersonate`)
 
-        setAdminToken(getToken())
-        setImpersonatedStore(payload.store.name)
-
-        impersonating.value = payload.store.name
-        user.value = payload.user
-        setToken(payload.token)
-
-        await loadStore()
+        window.location.href = storeUrl(payload.store.slug, `/admin?handoff=${payload.code}`)
     }
 
     /**
-     * Volver a la sesión de superadmin: el token del dueño se revoca antes de
-     * restaurar el propio, para no dejarlo vivo en la base.
+     * Volver a la sesión de superadmin. El token del dueño se revoca acá —no
+     * se puede dejar vivo en la base— y el del superadmin sigue esperando
+     * intacto en el apex, que es a donde vuelve el navegador.
      */
     async function stopImpersonating() {
-        const adminToken = getAdminToken()
-
         try {
             await api.post('/logout')
         } catch {
-            /* Si el token ya no existe, volver igual: lo que importa es el del superadmin. */
+            /* Si el token ya no existe, volver igual. */
         }
 
-        setToken(adminToken)
-        setAdminToken(null)
-        setImpersonatedStore(null)
+        reset()
 
-        impersonating.value = null
-
-        await restore()
+        window.location.href = apexUrl('/superadmin/tiendas')
     }
 
     async function logout() {
@@ -142,7 +159,6 @@ export const useAuthStore = defineStore('auth', () => {
         impersonating.value = null
 
         setToken(null)
-        setAdminToken(null)
         setImpersonatedStore(null)
     }
 
@@ -160,6 +176,8 @@ export const useAuthStore = defineStore('auth', () => {
         register,
         loadStore,
         restore,
+        handoff,
+        redeemHandoff,
         impersonate,
         stopImpersonating,
         logout,

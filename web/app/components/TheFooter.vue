@@ -11,8 +11,6 @@ import type { Store } from '~/types/catalog'
 
 const props = defineProps<{ store: Store }>()
 
-const storePath = computed(() => `/${props.store.slug}`)
-
 const brandWords = computed(() => props.store.name.trim().split(/\s+/))
 const brandName = computed(() => brandWords.value.slice(0, -1).join(' '))
 const brandAlt = computed(() => brandWords.value.length > 1 ? brandWords.value.at(-1) : props.store.name)
@@ -32,7 +30,7 @@ const year = new Date().getFullYear()
         <div class="container footer-inner">
 
             <div class="footer-col footer-col-brand">
-                <NuxtLink class="brand brand-footer" :to="storePath">
+                <NuxtLink class="brand brand-footer" to="/">
                     <span class="brand-name">
                         {{ brandName }}
                         <span class="brand-name-alt">{{ brandAlt }}</span>
@@ -44,9 +42,9 @@ const year = new Date().getFullYear()
             <nav class="footer-col" aria-labelledby="footer-content-title">
                 <h2 class="footer-title" id="footer-content-title">Contenido</h2>
                 <ul class="footer-list">
-                    <li><NuxtLink class="footer-link" :to="storePath">Inicio</NuxtLink></li>
-                    <li><NuxtLink class="footer-link" :to="`${storePath}#products`">Productos</NuxtLink></li>
-                    <li><NuxtLink class="footer-link" :to="`${storePath}/contacto`">Contacto</NuxtLink></li>
+                    <li><NuxtLink class="footer-link" to="/">Inicio</NuxtLink></li>
+                    <li><NuxtLink class="footer-link" to="/#products">Productos</NuxtLink></li>
+                    <li><NuxtLink class="footer-link" to="/contacto">Contacto</NuxtLink></li>
                 </ul>
             </nav>
 

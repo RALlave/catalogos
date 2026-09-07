@@ -220,7 +220,7 @@ onMounted(() => {
                         <FormField
                             label="Slug"
                             field-id="store-slug"
-                            hint="Es la dirección de tu catálogo."
+                            hint="Es el subdominio de tu catálogo."
                             :error="errors.slug?.[0]"
                         >
                             <input
