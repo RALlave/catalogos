@@ -17,7 +17,7 @@ proyecto CATALOGOS/
 ├── panel/        Vue 3 SPA — panel dueño + superadmin
 ├── landing/      HTML/CSS/JS vanilla — landing comercial del SaaS
 ├── prototipo-3/  maqueta estática de referencia (CONGELADA, no se toca)
-├── deploy/       nginx.conf, ecosystem PM2, .env de producción de ejemplo
+├── deploy/       service de systemd, bloques de vhost, .env de producción de ejemplo
 └── memory/       notas del proyecto
 ```
 
@@ -31,7 +31,7 @@ proyecto CATALOGOS/
 | BD | MySQL 8 (`base_catalogos`; tests en `base_catalogos_testing`) |
 | Público | Nuxt 4.5 · Vue 3.5 · vue-router 4 — SSR, sin Pinia (`useFetch` alcanza) |
 | Panel | Vue 3.5 · Vite 7 · Pinia 3 · vue-router 4 · Chart.js 4 · vuedraggable |
-| Runtime | Node 20 · PM2 (solo Nuxt necesita proceso) · nginx |
+| Runtime | Node 20 · systemd (solo Nuxt necesita proceso) · nginx vía CloudPanel |
 
 ## Arquitectura
 
@@ -40,7 +40,7 @@ Una tienda por subdominio:
 ```
 https://dominio.com                 landing + login    → landing/ y panel/dist
 https://dominio.com/superadmin      panel superadmin   → panel/dist
-https://{tienda}.dominio.com        catálogo           → Nuxt SSR en 127.0.0.1:3000 (PM2)
+https://{tienda}.dominio.com        catálogo           → Nuxt SSR en 127.0.0.1:3000 (systemd)
 https://{tienda}.dominio.com/admin  panel de la tienda → panel/dist
 https://api.dominio.com             API                → PHP-FPM
 ```
@@ -81,6 +81,11 @@ Repositorio: `https://github.com/RALlave/catalogos` (privado, rama `main`).
 Sin desplegar todavía. El VPS es de Hostinger y el dominio se compró en
 Cloudflare.
 
+El VPS **no está vacío**: comparte servidor con otros cuatro sitios en
+producción y lo administra **CloudPanel**, así que el código va en
+`/home/{site-user}/htdocs/{dominio}` y los vhosts los genera el panel. Los tres
+sitios, el DNS y el SSL ya están creados.
+
 ## Deploy
 
 El procedimiento completo está en `DEPLOY.md`, escrito con `miotienda.com` de
@@ -106,7 +111,8 @@ el patrón de CORS.
 - `CACHE_STORE=array` rompe el salto entre subdominios: el código de un solo
   uso se pierde entre una petición y la siguiente
 - Sin `php artisan storage:link` no se ve ninguna imagen
-- `APP_URL` termina en `/api`
+- `APP_URL` es el subdominio pelado, **sin `/api`**: el disco público arma las
+  URLs de las fotos como `APP_URL + /storage`
 - Los subdominios `api`, `www`, `mail`, `panel`… están reservados en
   `api/config/catalog.php`: ninguna tienda puede llamarse así
 - Nuxt reenvía `X-Forwarded-For` y `User-Agent` del visitante a la API; sin eso
@@ -115,6 +121,10 @@ el patrón de CORS.
   la IP que llega a las estadísticas la escribe el visitante
 - Cloudflare va en **Full (strict)** y con la nube naranja, o no hay
   certificado wildcard
+- En el VPS, `php` es 8.4 y el sitio de la API corre con 8.3: los comandos de
+  Laravel van con `php8.3` explícito
+- Clonar el repo como el site user y no como root, o PHP-FPM no puede escribir
+  en `storage/`
 
 ## Deuda técnica abierta
 

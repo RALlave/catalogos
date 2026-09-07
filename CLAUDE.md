@@ -129,7 +129,13 @@ Consecuencias que atraviesan todo el proyecto:
 - El dominio se compró en **Cloudflare**, que da el certificado wildcard sin
   renovación. A cambio, nginx necesita el bloque `real_ip` con
   `CF-Connecting-IP`, o la IP del visitante que llega a las estadísticas es
-  falsificable. Está en `deploy/nginx.conf`; el detalle, en `DEPLOY.md`.
+  falsificable. Está en `deploy/cloudflare-realip.conf`; el detalle, en
+  `DEPLOY.md`.
+- El VPS está administrado con **CloudPanel** y comparte servidor con otros
+  cuatro sitios en producción. Los vhosts los genera el panel: lo que se edita a
+  mano vive en `deploy/vhost-apex.conf` y `deploy/vhost-tiendas.conf`, y se
+  pierde cuando CloudPanel los regenera. El catálogo se levanta con **systemd**
+  (`deploy/catalogos-web.service`), no con PM2.
 - En desarrollo se entra por `lvh.me`, que resuelve a 127.0.0.1 sin tocar el
   archivo `hosts`: `rex.lvh.me:3000` es el catálogo y `rex.lvh.me:5173` el
   panel.

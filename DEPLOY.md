@@ -3,10 +3,10 @@
 Cada tienda vive en su propio subdominio:
 
 ```
-https://miotienda.com              landing + login del superadmin (landing/ + panel/)
-https://rex.miotienda.com          catálogo de la tienda "rex"    (web/  — Nuxt SSR)
-https://rex.miotienda.com/admin    panel de esa tienda            (panel/ — Vue SPA)
-https://api.miotienda.com          API                            (api/  — Laravel)
+https://miotienda.com              landing + login + superadmin (landing/ + panel/)
+https://rex.miotienda.com          catálogo de la tienda "rex"  (web/  — Nuxt SSR)
+https://rex.miotienda.com/admin    panel de esa tienda          (panel/ — Vue SPA)
+https://api.miotienda.com          API                          (api/  — Laravel)
 ```
 
 El único que necesita un proceso corriendo es Nuxt; los otros dos son PHP-FPM y
@@ -18,187 +18,256 @@ archivos estáticos.
 
 ---
 
-## 1. Preparar el VPS
+## El VPS no es nuestro solo
 
-```bash
-sudo apt update && sudo apt upgrade -y
+Es un KVM de Hostinger con **cuatro sitios en producción encima**
+(`youdenti.diseprog.com`, `diseprog.com`, `imaximagen.com`,
+`clinicadentalorthoclinic.com`) y está administrado con **CloudPanel**.
 
-# PHP 8.3 y extensiones que pide Laravel
-sudo apt install -y php8.3-fpm php8.3-cli php8.3-mysql php8.3-mbstring \
-    php8.3-xml php8.3-curl php8.3-zip php8.3-gd php8.3-bcmath php8.3-intl
+Consecuencias, todas importantes:
 
-sudo apt install -y nginx mysql-server git unzip
+- **El código no va en `/var/www`** sino en `/home/{site-user}/htdocs/{dominio}`.
+  Cada sitio tiene su propio usuario de sistema y su `htdocs` en 770: un sitio
+  no lee la carpeta del otro.
+- **Los vhosts los genera CloudPanel.** No se copian archivos a
+  `sites-available`: se editan desde el panel, y lo que se edita a mano se
+  pierde cuando CloudPanel regenera el vhost.
+- **nginx corre como `root`** (así lo deja CloudPanel), así que lee cualquier
+  `htdocs` sin tocar grupos ni ACLs.
+- **No se reinstala nada global** sin pensarlo dos veces: versiones de PHP,
+  `my.cnf`, firewall, límites de nginx. Hay cuatro sitios que dependen de eso.
+- **PHP de la línea de comandos es 8.4**, pero el sitio de la API corre con
+  **8.3**. Todo comando de Laravel se ejecuta con `php8.3` explícito, o se
+  instalan dependencias contra una versión distinta de la que sirve el sitio.
+- **PM2 no se usa.** Existe uno instalado dentro del home de YouDenti, para lo
+  suyo. El catálogo se levanta con **systemd**.
 
-# Composer
-curl -sS https://getcomposer.org/installer | php
-sudo mv composer.phar /usr/local/bin/composer
+## Lo que ya está hecho
 
-# Node 20 + PM2
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt install -y nodejs
-sudo npm install -g pm2
+No hace falta rehacerlo:
+
+| Qué | Estado |
+|---|---|
+| Los tres sitios en CloudPanel | creados, con SSL funcionando |
+| DNS en Cloudflare | registros A para `@`, `*`, `www` y `api`, todos proxeados |
+| SSL | certificado de origen de Cloudflare (`*.miotienda.com` + apex), vence 2041 |
+| Modo de la zona | Full (strict) + Always Use HTTPS |
+
+| Sitio | Tipo | Site user | Carpeta |
+|---|---|---|---|
+| `api.miotienda.com` | PHP 8.3 | `miotienda-api` | `/home/miotienda-api/htdocs/api.miotienda.com` |
+| `miotienda.com` (+ `www`) | Static | `miotienda-apex` | `/home/miotienda-apex/htdocs/miotienda.com` |
+| `*.miotienda.com` | Node.js | `miotienda-tiendas` | `/home/miotienda-tiendas/htdocs/tiendas.miotienda.com` |
+
+> **Nada de certbot.** El certificado es de Cloudflare y dura 15 años. Y el
+> tercer sitio se creó como `tiendas.miotienda.com` con el `server_name` editado
+> a mano a `*.miotienda.com`: **reinstalar un certificado en ese sitio regenera
+> el vhost y borra esa edición.**
+
+---
+
+## 1. Base de datos
+
+Desde CloudPanel → **Databases → Add Database**. No usar `root` ni la base de
+otro sitio.
+
+```
+Nombre    base_catalogos
+Usuario   catalogos
 ```
 
-## 2. Base de datos
+CloudPanel genera la contraseña; se copia al `.env` de la API.
 
-No usar `root`. Crear un usuario propio:
+## 2. Clonar el repo — tres veces
 
-```sql
-CREATE DATABASE base_catalogos CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'catalogos'@'localhost' IDENTIFIED BY 'una-contraseña-larga';
-GRANT ALL PRIVILEGES ON base_catalogos.* TO 'catalogos'@'localhost';
-FLUSH PRIVILEGES;
-```
+El repo es uno solo y trae las tres aplicaciones, pero cada sitio de CloudPanel
+tiene su propio usuario y no puede leer la carpeta del otro. Así que se clona
+**entero en cada sitio** y cada uno usa la carpeta que le toca. Ocupa unos MB de
+más y evita pelear contra el aislamiento por usuario.
 
-## 3. Subir el código
-
-```bash
-sudo mkdir -p /var/www/catalogos
-sudo chown -R $USER:www-data /var/www/catalogos
-
-cd /var/www/catalogos
-git clone <tu-repo> .
-```
-
-`prototipo-3/` es la maqueta estática de referencia: no hace falta en el servidor.
-
-## 4. DNS en Cloudflare
-
-Cuatro registros, **todos proxeados** (nube naranja):
-
-| Tipo | Nombre | Contenido |
-|---|---|---|
-| A | `@` | IP del VPS |
-| A | `*` | IP del VPS |
-| A | `www` | IP del VPS |
-| A | `api` | IP del VPS |
-
-El wildcard `*` es lo que hace que una tienda nueva funcione sin tocar nada.
-
-## 5. API (Laravel)
+**Clonar como el site user, nunca como root.** Si los archivos quedan de
+`root:root`, PHP-FPM no puede escribir en `storage/` y el build de Node tampoco
+puede escribir su salida.
 
 ```bash
-cd /var/www/catalogos/api
+sudo -u miotienda-api      git clone https://github.com/RALlave/catalogos.git \
+    /home/miotienda-api/htdocs/api.miotienda.com
 
-composer install --no-dev --optimize-autoloader
+sudo -u miotienda-apex     git clone https://github.com/RALlave/catalogos.git \
+    /home/miotienda-apex/htdocs/miotienda.com
 
-cp ../deploy/env.api.production.example .env
-nano .env                      # completar DB_PASSWORD, SMTP, APP_URL y FRONTEND_URL
+sudo -u miotienda-tiendas  git clone https://github.com/RALlave/catalogos.git \
+    /home/miotienda-tiendas/htdocs/tiendas.miotienda.com
+```
 
-php artisan key:generate
-php artisan migrate --force
-php artisan db:seed --class=RoleSeeder --force
-php artisan storage:link       # SIN ESTO NO SE VEN LAS IMÁGENES
+Las tres carpetas están casi vacías (un `public/` vacío en la API, un
+`index.html` de prueba en el apex). Si `git clone` se queja de que el destino no
+está vacío, se borra lo que hay: es la plantilla de CloudPanel, no hace falta.
 
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+`prototipo-3/` es la maqueta estática de referencia: sobra en el servidor, pero
+no molesta.
+
+## 3. API (Laravel)
+
+```bash
+cd /home/miotienda-api/htdocs/api.miotienda.com/api
+
+sudo -u miotienda-api composer install --no-dev --optimize-autoloader
+
+sudo -u miotienda-api cp ../deploy/env.api.production.example .env
+sudo -u miotienda-api nano .env        # DB_PASSWORD, SMTP, APP_URL, FRONTEND_URL
+
+sudo -u miotienda-api php8.3 artisan key:generate
+sudo -u miotienda-api php8.3 artisan migrate --force
+sudo -u miotienda-api php8.3 artisan db:seed --class=RoleSeeder --force
+sudo -u miotienda-api php8.3 artisan storage:link   # SIN ESTO NO SE VEN LAS IMÁGENES
+
+sudo -u miotienda-api php8.3 artisan config:cache
+sudo -u miotienda-api php8.3 artisan route:cache
+sudo -u miotienda-api php8.3 artisan view:cache
 
 # El superadmin se crea acá, no en el .env
-php artisan superadmin:create
+sudo -u miotienda-api php8.3 artisan superadmin:create
 ```
+
+Y el root del sitio, que por defecto apunta al `public/` de la plantilla de
+CloudPanel: **CloudPanel → Sites → api.miotienda.com → Settings → Root
+Directory**
+
+```
+htdocs/api.miotienda.com/api/public
+```
+
+> `APP_URL` es el subdominio pelado (`https://api.miotienda.com`), **sin
+> `/api`**. Las rutas de la API cuelgan de ese prefijo, pero las imágenes no: el
+> disco público arma sus URLs como `APP_URL + /storage`. Con `/api` al final no
+> carga ninguna foto.
 
 > `FRONTEND_URL` es el dominio pelado (`https://miotienda.com`), sin ruta y sin
 > tienda. De ahí salen tres cosas: la dirección del catálogo de cada tienda, el
-> enlace del correo de recuperación y **el patrón de CORS**. Si está mal, el
-> panel no puede hablar con la API y el error aparece recién en el navegador.
+> enlace del correo de "recuperar contraseña" y **el patrón de CORS**. Si está
+> mal, el panel no puede hablar con la API y el error aparece recién en el
+> navegador.
 
 > `CACHE_STORE` no puede quedar en `array`: el código con el que una sesión
 > salta de un subdominio a otro se guarda en la caché. Con `array` se pierde
 > entre una petición y la siguiente, y entrar al panel de una tienda falla
 > siempre. El `.env` de ejemplo ya trae `database`.
 
-Permisos: PHP necesita escribir en dos carpetas y en ninguna otra.
+Permisos: PHP necesita escribir en dos carpetas y en ninguna otra. Si se clonó
+como el site user ya están bien; esto es por las dudas.
 
 ```bash
-sudo chown -R www-data:www-data storage bootstrap/cache
+sudo chown -R miotienda-api:miotienda-api storage bootstrap/cache
 sudo chmod -R 775 storage bootstrap/cache
 ```
 
-## 6. Catálogo público (Nuxt)
+## 4. Catálogo público (Nuxt)
 
 ```bash
-cd /var/www/catalogos/web
+cd /home/miotienda-tiendas/htdocs/tiendas.miotienda.com/web
 
-cp ../deploy/env.web.production.example .env
-npm ci
-npm run build                  # deja el resultado en .output/
+sudo -u miotienda-tiendas cp ../deploy/env.web.production.example .env
+sudo -u miotienda-tiendas npm ci
+sudo -u miotienda-tiendas npm run build        # deja el resultado en .output/
 ```
 
-## 7. Panel (Vue)
+## 5. Panel (Vue) — se compila dos veces
+
+El panel se sirve desde **dos sitios**: el apex (`/login`, `/registro`,
+`/superadmin`) y el subdominio de cada tienda (`/admin`). Cada uno compila el
+suyo, en su propia carpeta.
 
 ```bash
-cd /var/www/catalogos/panel
+cd /home/miotienda-apex/htdocs/miotienda.com/panel
+sudo -u miotienda-apex cp ../deploy/env.panel.production.example .env
+sudo -u miotienda-apex npm ci
+sudo -u miotienda-apex npm run build
 
-cp ../deploy/env.panel.production.example .env
-npm ci
-npm run build                  # deja el resultado en dist/
+cd /home/miotienda-tiendas/htdocs/tiendas.miotienda.com/panel
+sudo -u miotienda-tiendas cp ../deploy/env.panel.production.example .env
+sudo -u miotienda-tiendas npm ci
+sudo -u miotienda-tiendas npm run build
 ```
 
 > `VITE_BASE=/panel/` tiene que estar **antes** del build. Es de dónde cuelgan
 > los archivos, no las rutas: sin esa variable el panel pide su JavaScript a la
-> raíz, Nuxt responde el catálogo y la SPA queda en blanco.
+> raíz, contesta Nuxt con el catálogo y la SPA queda en blanco.
 
-## 8. Nginx
+## 6. Nginx
+
+### 6.1 La IP real del visitante
 
 ```bash
-sudo cp /var/www/catalogos/deploy/nginx.conf /etc/nginx/sites-available/miotienda.com
-sudo nano /etc/nginx/sites-available/miotienda.com     # cambiar los tres server_name
-sudo ln -s /etc/nginx/sites-available/miotienda.com /etc/nginx/sites-enabled/
-sudo rm -f /etc/nginx/sites-enabled/default
+sudo cp /home/miotienda-api/htdocs/api.miotienda.com/deploy/cloudflare-realip.conf \
+    /etc/nginx/snippets/
+
+sudo nano /etc/nginx/global_settings      # agregar al final:
+#   include /etc/nginx/snippets/cloudflare-realip.conf;
 
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
-El archivo trae arriba un bloque `set_real_ip_from` con los rangos de
-Cloudflare. **No borrarlo**: sin eso, la IP que ve la API es la de Cloudflare y
-la primera línea de `X-Forwarded-For` pasa a ser un dato que escribe el
-visitante, con lo que cualquiera podría inflar las estadísticas de una tienda
-ajena. La lista se actualiza en <https://www.cloudflare.com/ips/>.
+Va en `global_settings` porque CloudPanel ya lo incluye en el server block de
+los cinco sitios. **Sin esto, `$remote_addr` es una IP de Cloudflare**: todas
+las visitas de todas las tiendas se cuentan como un solo visitante.
 
-## 9. Levantar Nuxt con PM2
+Es el único cambio que toca a los otros cuatro sitios, y sólo para bien: pasan a
+loguear la IP real. `set_real_ip_from` únicamente confía si la conexión viene de
+un rango de Cloudflare, así que un sitio sin proxy naranja no cambia en nada.
 
-```bash
-cd /var/www/catalogos
-pm2 start deploy/ecosystem.config.cjs
-pm2 save
-pm2 startup                    # copiar y ejecutar el comando que imprime
-```
+### 6.2 Los bloques de cada sitio
 
-## 10. SSL
+En **CloudPanel → Sites → {sitio} → Vhost**, dentro del server block de 443:
 
-**No se usa certbot.** El dominio está en Cloudflare, que emite el wildcard
-gratis y sin renovación. En el panel de Cloudflare:
+- `deploy/vhost-apex.conf` → en `miotienda.com`
+- `deploy/vhost-tiendas.conf` → en `tiendas.miotienda.com`
 
-1. **SSL/TLS → Overview**: modo **Full (strict)**. En *Flexible* el tramo hasta
-   el VPS viaja en claro y aparecen bucles de redirección.
-2. **SSL/TLS → Origin Server → Create Certificate**: cubrir `miotienda.com` y
-   `*.miotienda.com`. Guardar el certificado y la clave en el VPS:
-
-```bash
-sudo mkdir -p /etc/ssl/cloudflare
-sudo nano /etc/ssl/cloudflare/miotienda.pem      # pegar el certificado
-sudo nano /etc/ssl/cloudflare/miotienda.key      # pegar la clave privada
-sudo chmod 600 /etc/ssl/cloudflare/miotienda.key
-```
-
-3. Agregar a cada uno de los tres server blocks:
+Los dos archivos traen adentro qué pegar y dónde. En el vhost de la API no hay
+nada que agregar; sólo cambiar, ahí y en el del wildcard, la línea
 
 ```nginx
-listen 443 ssl;
-listen [::]:443 ssl;
-
-ssl_certificate     /etc/ssl/cloudflare/miotienda.pem;
-ssl_certificate_key /etc/ssl/cloudflare/miotienda.key;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 ```
 
-El Origin Certificate dura 15 años y **no es públicamente confiable**: vale
-sólo para el tramo Cloudflare↔VPS. Entrar por la IP del servidor va a dar error
-de certificado, y está bien que así sea.
+por
 
-Revisar también que Cloudflare no cachee `/login`, `/admin` ni
-`api.miotienda.com`. Por defecto no lo hace, pero una Page Rule demasiado
-amplia serviría el panel de una tienda a otra.
+```nginx
+proxy_set_header X-Forwarded-For $remote_addr;
+```
+
+`StatService` cuenta la visita leyendo el primer valor de `X-Forwarded-For`. Con
+`$proxy_add_x_forwarded_for` nginx antepone lo que mandó el cliente, y ese dato
+lo escribe el visitante: cualquiera podría inflar las estadísticas de una tienda
+ajena. Con `$remote_addr` viaja la IP que resolvió `real_ip`.
+
+Verificar de paso que el límite de subida alcanza (las imágenes son de hasta
+4 MB):
+
+```bash
+grep -rn "client_max_body_size" /etc/nginx/nginx.conf /etc/nginx/global_settings
+```
+
+## 7. Levantar Nuxt con systemd
+
+```bash
+sudo cp /home/miotienda-tiendas/htdocs/tiendas.miotienda.com/deploy/catalogos-web.service \
+    /etc/systemd/system/
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now catalogos-web
+
+systemctl status catalogos-web
+journalctl -u catalogos-web -f
+```
+
+Corre como `miotienda-tiendas`, no como root, con un techo de 500 MB de RAM
+para que no pueda arrastrar a los otros sitios. Antes de arrancarlo conviene
+mirar cuánta memoria hay libre:
+
+```bash
+free -m
+```
 
 ---
 
@@ -209,12 +278,12 @@ curl -I https://api.miotienda.com/api/themes    # 200
 curl -I https://miotienda.com/login             # 200
 curl -I https://rex.miotienda.com               # 200  (rex = una tienda real)
 curl -I https://rex.miotienda.com/admin         # 200
-pm2 status                                      # catalogos-web · online
+systemctl status catalogos-web                  # active (running)
 ```
 
 Y en el navegador, tres cosas que sólo se ven probándolas:
 
-1. Entrar al panel e **abrir un producto con foto**. Si la imagen no carga, el
+1. Entrar al panel y **abrir un producto con foto**. Si la imagen no carga, el
    problema está en `APP_URL` o falta el `storage:link`.
 2. Loguearse en `miotienda.com/login` con un dueño de tienda: tiene que
    **saltar solo** a `su-tienda.miotienda.com/admin`, ya logueado.
@@ -222,23 +291,45 @@ Y en el navegador, tres cosas que sólo se ven probándolas:
    un salto de dominio. Si vuelve al login, la caché está en `array` o el
    código venció.
 
+Y que los otros cuatro sitios sigan en pie, que comparten el server:
+
+```bash
+curl -I https://youdenti.diseprog.com
+free -m
+```
+
 ---
 
 ## Actualizar después de un cambio
 
+Son tres clones, así que son tres `git pull`. Cada sitio sólo reconstruye lo
+suyo.
+
 ```bash
-cd /var/www/catalogos && git pull
+# API
+cd /home/miotienda-api/htdocs/api.miotienda.com
+sudo -u miotienda-api git pull
+cd api
+sudo -u miotienda-api composer install --no-dev --optimize-autoloader
+sudo -u miotienda-api php8.3 artisan migrate --force
+sudo -u miotienda-api php8.3 artisan config:cache
+sudo -u miotienda-api php8.3 artisan route:cache
 
-cd api    && composer install --no-dev --optimize-autoloader \
-          && php artisan migrate --force \
-          && php artisan config:cache && php artisan route:cache
+# Catálogo + panel de las tiendas
+cd /home/miotienda-tiendas/htdocs/tiendas.miotienda.com
+sudo -u miotienda-tiendas git pull
+cd web   && sudo -u miotienda-tiendas npm ci && sudo -u miotienda-tiendas npm run build
+cd ../panel && sudo -u miotienda-tiendas npm ci && sudo -u miotienda-tiendas npm run build
+sudo systemctl restart catalogos-web
 
-cd ../web   && npm ci && npm run build && pm2 restart catalogos-web
-cd ../panel && npm ci && npm run build
+# Landing + panel del apex
+cd /home/miotienda-apex/htdocs/miotienda.com
+sudo -u miotienda-apex git pull
+cd panel && sudo -u miotienda-apex npm ci && sudo -u miotienda-apex npm run build
 ```
 
-El panel y el catálogo no necesitan reiniciar nginx: uno son archivos y el
-otro lo reinicia PM2.
+Nginx no se reinicia: el panel y la landing son archivos, y el catálogo lo
+reinicia systemd.
 
 ---
 
@@ -249,11 +340,16 @@ otro lo reinicia PM2.
 | Panel en blanco | Se compiló sin `VITE_BASE=/panel/` |
 | El panel no puede hablar con la API (error de CORS) | `FRONTEND_URL` no es el dominio pelado |
 | Entrar al panel de una tienda devuelve al login | `CACHE_STORE=array`: el código de salto se pierde |
+| No se ven las fotos | Falta `storage:link`, o `APP_URL` lleva `/api` al final |
+| El catálogo da 502 | Nuxt no está corriendo: `systemctl status catalogos-web` |
+| El catálogo daba 200 y de golpe da 404 en todas las tiendas | CloudPanel regeneró el vhost y se llevó el `server_name *.miotienda.com` |
+| El panel dejó de abrir en `/admin` o `/login` | Lo mismo: el vhost regenerado perdió los bloques de `deploy/vhost-*.conf` |
+| Todas las visitas se cuentan como una sola | Falta el `include` del snippet de Cloudflare en `global_settings` |
+| Las estadísticas de una tienda tienen números absurdos | El vhost quedó con `$proxy_add_x_forwarded_for` |
 | Una tienda nueva da 404 o error de certificado | Falta el registro DNS `*` proxeado |
-| Todas las visitas se cuentan igual, o el número es absurdo | Falta el bloque `real_ip` de Cloudflare |
-| No se ven las fotos | Falta `storage:link`, o `APP_URL` no termina en `/api` |
-| El catálogo da 502 | Nuxt no está corriendo: `pm2 status` y `pm2 logs` |
 | Bucle de redirecciones | Cloudflare en *Flexible* en vez de *Full (strict)* |
-| 419 o error de sesión | Falta `php artisan key:generate` |
+| `php artisan` se queja de una extensión o de la versión | Se corrió con `php` (8.4) en vez de `php8.3` |
+| PHP no puede escribir en `storage/` | Se clonó como root en vez de como el site user |
+| 419 o error de sesión | Falta `php8.3 artisan key:generate` |
 | No llega el correo de recuperación | `MAIL_MAILER` sigue en `log` |
 | "The selected slug is invalid" | El nombre choca con un subdominio reservado |

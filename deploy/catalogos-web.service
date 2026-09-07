@@ -1,0 +1,53 @@
+# Catálogo público (Nuxt SSR) como servicio de systemd.
+#
+# Nuxt no es un archivo que nginx pueda servir: es un servidor Node que tiene
+# que estar corriendo. systemd lo levanta, lo reinicia si se cae y lo arranca
+# solo cuando se reinicia el VPS. No hace falta PM2.
+#
+#   sudo cp deploy/catalogos-web.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now catalogos-web
+#
+#   systemctl status catalogos-web
+#   journalctl -u catalogos-web -f
+#
+# Las rutas y el usuario son los del sitio wildcard en CloudPanel: si cambia el
+# dominio o el site user, se cambian acá también.
+
+[Unit]
+Description=Catalogos - catalogo publico (Nuxt SSR)
+After=network.target
+
+[Service]
+Type=simple
+
+# El site user de CloudPanel, nunca root: el proceso escribe en su propio htdocs
+User=miotienda-tiendas
+Group=miotienda-tiendas
+
+WorkingDirectory=/home/miotienda-tiendas/htdocs/tiendas.miotienda.com/web
+
+# El mismo .env con el que se compiló. systemd lo lee literal: una línea por
+# variable, sin "export", sin comillas y sin espacios alrededor del "="
+EnvironmentFile=/home/miotienda-tiendas/htdocs/tiendas.miotienda.com/web/.env
+
+Environment=NODE_ENV=production
+Environment=NITRO_HOST=127.0.0.1
+Environment=NITRO_PORT=3000
+
+ExecStart=/usr/bin/node .output/server/index.mjs
+
+Restart=always
+RestartSec=5
+
+# Logs a journald: journalctl -u catalogos-web
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=catalogos-web
+
+# El VPS comparte 4 GB con otros cuatro sitios y MySQL. Si Nuxt se desmadra,
+# systemd lo corta antes de que el kernel empiece a matar procesos ajenos
+MemoryMax=500M
+
+[Install]
+WantedBy=multi-user.target
