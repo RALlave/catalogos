@@ -78,13 +78,16 @@ el superadmin que entra a una tienda— se usa un código de un solo uso de 60s
 
 Repositorio: `https://github.com/RALlave/catalogos` (privado, rama `main`).
 
-Sin desplegar todavía. El VPS es de Hostinger y el dominio se compró en
-Cloudflare.
+**Desplegado el 07/09/2026** en el VPS de Hostinger, bajo `miotienda.com`. Andan
+la landing, el panel del superadmin, el catálogo y el panel de tienda.
 
 El VPS **no está vacío**: comparte servidor con otros cuatro sitios en
 producción y lo administra **CloudPanel**, así que el código va en
-`/home/{site-user}/htdocs/{dominio}` y los vhosts los genera el panel. Los tres
-sitios, el DNS y el SSL ya están creados.
+`/home/{site-user}/htdocs/{dominio}` y los vhosts los genera el panel.
+
+Node del sistema es 20 y lo comparten los otros sitios; como Nuxt 4.5 pide ≥ 22,
+el site user del catálogo tiene el suyo con **nvm** y el service de systemd
+apunta a esa ruta.
 
 ## Deploy
 
