@@ -35,7 +35,11 @@ Environment=NODE_ENV=production
 Environment=NITRO_HOST=127.0.0.1
 Environment=NITRO_PORT=3000
 
-ExecStart=/usr/bin/node .output/server/index.mjs
+# El node del sistema es 20.20.2 (lo administra CloudPanel con "n" y lo comparten
+# los otros sitios). Nuxt 4.5 pide >= 22.19, así que ese usuario tiene su propio
+# node con nvm, dentro de su home. Si algún día se actualiza la versión, esta
+# ruta cambia: es literal, no sigue al "default" de nvm.
+ExecStart=/home/miotienda-tiendas/.nvm/versions/node/v22.19.0/bin/node .output/server/index.mjs
 
 Restart=always
 RestartSec=5
