@@ -9,6 +9,8 @@ import {
     setImpersonatedStore,
     setToken,
 } from '@/services/api'
+import { useCategoriesStore } from '@/stores/categories'
+import { useProductsStore } from '@/stores/products'
 
 export const useAuthStore = defineStore('auth', () => {
     const user = ref(null)
@@ -160,6 +162,10 @@ export const useAuthStore = defineStore('auth', () => {
 
         setToken(null)
         setImpersonatedStore(null)
+
+        /* Los datos guardados son de la tienda que se está dejando. */
+        useCategoriesStore().reset()
+        useProductsStore().reset()
     }
 
     return {

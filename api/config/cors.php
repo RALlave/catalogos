@@ -34,7 +34,9 @@ return [
 
     'allowed_headers' => ['*'],
 
-    'exposed_headers' => [],
+    /* El nombre del archivo que descarga el panel viaja acá. Sin exponerla, el
+       navegador esconde la cabecera y la descarga queda sin nombre. */
+    'exposed_headers' => ['Content-Disposition'],
 
     'max_age' => 60 * 60 * 24,
 

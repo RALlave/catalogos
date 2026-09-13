@@ -17,6 +17,11 @@ class ProductController extends Controller
     private const PER_PAGE = 20;
 
     /**
+     * Cuántos entran en la vitrina del home: uno grande y cuatro al costado.
+     */
+    private const FEATURED = 5;
+
+    /**
      * Lo único que puede viajar en la URL del listado. Cualquier otra cosa
      * (un `utm_source` pegado al link de WhatsApp, por ejemplo) sale sin
      * caché: entraría en los enlaces de paginación de la respuesta guardada.
@@ -41,6 +46,48 @@ class ProductController extends Controller
         );
     }
 
+    /**
+     * La vitrina de destacados del home.
+     *
+     * El mismo orden del listado —destacados primero— alcanza para rellenar:
+     * si la tienda marcó menos de cinco, los que faltan salen del catálogo por
+     * su orden, y la vitrina nunca queda coja.
+     *
+     * Los agotados quedan afuera: la vitrina recomienda, y recomendar algo que
+     * no se puede comprar es peor que mostrar una tarjeta menos. Por eso las
+     * tarjetas de acá tampoco llevan badge.
+     *
+     * La sección apagada devuelve la lista vacía en vez de un 404: no es que
+     * no exista, es que esa tienda eligió no mostrarla.
+     */
+    public function featured(string $slug): JsonResponse
+    {
+        $data = $this->cache->remember($slug, 'featured', function () use ($slug): array {
+            $store = $this->store($slug);
+
+            if (! $store->featured_enabled) {
+                return ['data' => []];
+            }
+
+            $products = $store->products()
+                ->where('visible', true)
+                ->where('sold_out', false)
+                ->with(['category', 'images.media'])
+                ->orderByDesc('featured')
+                ->orderBy('order')
+                ->orderBy('name')
+                ->limit(self::FEATURED)
+                ->get();
+
+            /* Por JSON y no con `resolve()`: ese aplana un solo nivel y deja
+               `category` adentro como objeto Resource, que la caché guarda
+               serializado para devolverlo roto. */
+            return ['data' => json_decode(PublicProductResource::collection($products)->toJson(), true)];
+        });
+
+        return response()->json($data);
+    }
+
     public function show(Request $request, string $slug, string $productSlug): JsonResponse
     {
         /* Fuera del `remember`: adentro sólo se ejecuta la primera vez y las
@@ -55,7 +102,10 @@ class ProductController extends Controller
                 ->with(['category', 'images.media'])
                 ->firstOrFail();
 
-            return ['product' => (new PublicProductResource($product))->resolve()];
+            /* Por JSON y no con `resolve()`: ese aplana un solo nivel y deja
+               `category` adentro como objeto Resource, que la caché guarda
+               serializado para devolverlo roto. */
+            return ['product' => json_decode((new PublicProductResource($product))->toJson(), true)];
         });
 
         return response()->json($data);

@@ -96,6 +96,58 @@ async function request(method, path, { body, query, raw } = {}) {
     return payload
 }
 
+/**
+ * Nombre con el que el servidor manda el archivo. La API lo arma con la fecha,
+ * así que el cliente no lo inventa: lo lee de la cabecera.
+ */
+function filename(response, fallback) {
+    const header = response.headers.get('Content-Disposition') ?? ''
+
+    const encoded = header.match(/filename\*=UTF-8''([^;]+)/i)
+
+    if (encoded) {
+        return decodeURIComponent(encoded[1])
+    }
+
+    return header.match(/filename="?([^";]+)"?/i)?.[1] ?? fallback
+}
+
+/** Empuja el blob al disco del visitante con un enlace de un solo uso. */
+function save(blob, name) {
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+
+    link.href = url
+    link.download = name
+
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+
+    window.URL.revokeObjectURL(url)
+}
+
+/**
+ * Descarga un archivo de la API. No pasa por request(): la respuesta es
+ * binaria y no se puede leer como JSON, salvo cuando falla.
+ */
+async function downloadFile(path, fallback) {
+    const headers = { Accept: '*/*' }
+    const token = getToken()
+
+    if (token) {
+        headers.Authorization = `Bearer ${token}`
+    }
+
+    const response = await fetch(`${BASE}${path}`, { headers })
+
+    if (! response.ok) {
+        throw new ApiError(response.status, await response.json().catch(() => null))
+    }
+
+    save(await response.blob(), filename(response, fallback))
+}
+
 export const api = {
     get: (path, query) => request('GET', path, { query }),
     post: (path, body) => request('POST', path, { body }),
@@ -103,4 +155,5 @@ export const api = {
     patch: (path, body) => request('PATCH', path, { body }),
     delete: path => request('DELETE', path),
     upload: (path, formData) => request('POST', path, { body: formData, raw: true }),
+    download: (path, fallback) => downloadFile(path, fallback),
 }

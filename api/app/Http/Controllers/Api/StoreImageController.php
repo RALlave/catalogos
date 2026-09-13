@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Store\SetPlatformLogoRequest;
 use App\Http\Requests\Store\SetStoreImageRequest;
 use App\Http\Requests\Store\StoreImageRequest;
 use App\Http\Resources\StoreResource;
 use App\Models\Media;
+use App\Models\PlatformLogo;
 use App\Models\Store;
+use App\Services\MediaService;
 use App\Services\StoreService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -39,6 +42,24 @@ class StoreImageController extends Controller
 
         return response()->json([
             'store' => new StoreResource($this->stores->setImage($store, $mediaId, $field)),
+        ]);
+    }
+
+    /**
+     * Tomar como logo uno de los que dejó el superadmin.
+     *
+     * La imagen se copia a la biblioteca de la tienda: de ahí en más es suya y
+     * no depende de que el logo siga en la galería.
+     */
+    public function platform(SetPlatformLogoRequest $request, MediaService $media): JsonResponse
+    {
+        $store = $this->store($request);
+        $logo = PlatformLogo::findOrFail($request->validated()['platform_logo_id']);
+
+        $copy = $media->copyFrom($store, $logo);
+
+        return response()->json([
+            'store' => new StoreResource($this->stores->setImage($store, $copy->id, 'logo')),
         ]);
     }
 

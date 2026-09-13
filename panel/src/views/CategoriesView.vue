@@ -1,38 +1,43 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import draggable from 'vuedraggable'
 
 import AppIcon from '@/components/AppIcon.vue'
+import SkeletonTable from '@/components/SkeletonTable.vue'
 import { api } from '@/services/api'
+import { useCategoriesStore } from '@/stores/categories'
+import { useConfirmStore } from '@/stores/confirm'
 import { useUiStore } from '@/stores/ui'
 
 const ui = useUiStore()
+const confirm = useConfirmStore()
+const store = useCategoriesStore()
 
-const categories = ref([])
-const loading = ref(true)
-
-async function load() {
-    loading.value = true
-
-    try {
-        const payload = await api.get('/categories')
-
-        categories.value = payload.data
-    } finally {
-        loading.value = false
-    }
-}
+/* El arrastre reordena la lista del store: por eso se escribe, no se copia. */
+const categories = computed({
+    get: () => store.items,
+    set: value => {
+        store.items = value
+    },
+})
 
 async function remove(category) {
-    if (! window.confirm(`¿Eliminar "${category.name}"? Los productos quedan sin categoría.`)) {
+    const confirmed = await confirm.ask({
+        title: `¿Eliminar "${category.name}"?`,
+        text: 'Los productos quedan sin categoría.',
+        action: 'Eliminar',
+        danger: true,
+    })
+
+    if (! confirmed) {
         return
     }
 
     await api.delete(`/categories/${category.id}`)
 
-    ui.toast('Categoría eliminada', category.name)
+    store.drop(category.id)
 
-    await load()
+    ui.toast('Categoría eliminada', category.name)
 }
 
 /* Orden previo al arrastre: si la API falla, la lista vuelve a como estaba. */
@@ -54,8 +59,6 @@ async function saveOrder() {
         await api.post('/categories/reorder', { ids })
 
         ui.toast('Orden actualizado')
-
-        await load()
     } catch {
         categories.value = orderBackup.map(id => categories.value.find(category => category.id === id))
 
@@ -63,7 +66,8 @@ async function saveOrder() {
     }
 }
 
-onMounted(load)
+/* Lo ya cargado se dibuja al instante y la petición confirma por detrás. */
+onMounted(store.fetch)
 </script>
 
 <template>
@@ -83,9 +87,7 @@ onMounted(load)
 
     <section class="card">
         <div class="card-body is-flush">
-            <div v-if="loading" class="empty">
-                <p>Cargando…</p>
-            </div>
+            <SkeletonTable v-if="! store.loaded" :rows="5" :columns="4" />
 
             <div v-else-if="! categories.length" class="empty">
                 <p>Todavía no creaste categorías.</p>
@@ -102,7 +104,6 @@ onMounted(load)
                             <th>Categoría</th>
                             <th>Descripción</th>
                             <th>Estado</th>
-                            <th>Orden</th>
                             <th><span class="visually-hidden">Acciones</span></th>
                         </tr>
                     </thead>
@@ -147,8 +148,6 @@ onMounted(load)
                                         {{ category.active ? 'Activa' : 'Oculta' }}
                                     </span>
                                 </td>
-
-                                <td>{{ category.order }}</td>
 
                                 <td>
                                     <div class="table-actions">

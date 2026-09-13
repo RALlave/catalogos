@@ -258,11 +258,10 @@ onMounted(() => {
                             <span v-if="store.city" class="info-detail">{{ store.city }}</span>
                         </address>
                     </li>
-                    <li v-if="store.phone || store.email" class="info">
+                    <li v-if="store.phone" class="info">
                         <AppIcon name="phone" class="info-icon" />
                         <span class="info-body">
-                            <a v-if="store.phone" class="info-title" :href="`tel:${store.phone}`">{{ store.phone }}</a>
-                            <a v-if="store.email" class="info-detail" :href="`mailto:${store.email}`">{{ store.email }}</a>
+                            <a class="info-title" :href="`tel:${store.phone}`">{{ store.phone }}</a>
                         </span>
                     </li>
                 </ul>

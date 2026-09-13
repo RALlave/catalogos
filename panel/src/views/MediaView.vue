@@ -3,10 +3,13 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
+import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
+import { useConfirmStore } from '@/stores/confirm'
 import { useUiStore } from '@/stores/ui'
 
 const ui = useUiStore()
+const confirm = useConfirmStore()
 
 const items = ref([])
 const meta = ref(null)
@@ -65,16 +68,33 @@ async function upload(event) {
     }
 }
 
+/* El detalle es un modal: los cambios sólo cuentan mientras está abierto. */
+const { markSaved, confirmLeave } = useUnsavedChanges({
+    state: () => form.value,
+    save,
+    active: () => Boolean(current.value),
+})
+
 function open(media) {
     current.value = media
     form.value = { name: media.name, alt: media.alt ?? '' }
     errors.value = {}
+
+    markSaved()
 }
 
-function close() {
+/** Cierra sin preguntar: la usa lo que ya resolvió qué hacer con los cambios. */
+function dismiss() {
     current.value = null
 }
 
+async function close() {
+    if (await confirmLeave()) {
+        dismiss()
+    }
+}
+
+/** @returns {Promise<boolean>} Si salió bien: lo mira el aviso de cambios sin guardar. */
 async function save() {
     saving.value = true
     errors.value = {}
@@ -85,50 +105,68 @@ async function save() {
         current.value = payload.media
         items.value = items.value.map(item => (item.id === payload.media.id ? payload.media : item))
 
+        markSaved()
+
         ui.toast('Imagen actualizada', payload.media.name)
+
+        return true
     } catch (error) {
         if (error instanceof ApiError) {
             errors.value = error.errors
         }
+
+        return false
     } finally {
         saving.value = false
     }
 }
 
 /**
- * El aviso nombra a quién afecta: una imagen puede estar en varios productos y
- * en varios heros, y además ser el logo o la imagen para compartir.
+ * Cuántas cosas se romperían si se borra. Se cuenta todo, no sólo los
+ * productos: una imagen que es el logo también está en uso, y hasta ahora eso
+ * recién se veía al confirmar el borrado.
  */
-function warning(media) {
-    const lines = [`¿Eliminar "${media.name}"?`, '']
+function uses(media) {
+    return (media.used_by?.length ?? 0)
+        + (media.used_in_heroes?.length ?? 0)
+        + (media.used_as_logo ? 1 : 0)
+        + (media.used_as_cover ? 1 : 0)
+}
+
+/** Qué la está usando, para el title de la tarjeta. */
+function usesTitle(media) {
+    const parts = []
 
     if (media.used_by?.length) {
-        lines.push(`Se usa en ${media.used_by.length} ${media.used_by.length === 1 ? 'producto' : 'productos'}:`)
-        media.used_by.forEach(product => lines.push(`  · ${product.name}`))
+        parts.push(`${media.used_by.length} ${media.used_by.length === 1 ? 'producto' : 'productos'}`)
     }
 
     if (media.used_in_heroes?.length) {
-        lines.push(`Se usa en ${media.used_in_heroes.length} ${media.used_in_heroes.length === 1 ? 'hero' : 'heros'}:`)
-        media.used_in_heroes.forEach(hero => lines.push(`  · ${hero.title}`))
+        parts.push(`${media.used_in_heroes.length} ${media.used_in_heroes.length === 1 ? 'hero' : 'heros'}`)
     }
 
     if (media.used_as_logo) {
-        lines.push('Es el logo de tu tienda.')
+        parts.push('el logo')
     }
 
     if (media.used_as_cover) {
-        lines.push('Es la imagen para compartir tu tienda.')
+        parts.push('la imagen para compartir')
     }
 
-    if (media.used_by?.length || media.used_in_heroes?.length || media.used_as_logo || media.used_as_cover) {
-        lines.push('', 'Si la borrás, desaparece de todos.')
-    }
-
-    return lines.join('\n')
+    return `Se usa en ${parts.join(', ')}`
 }
 
+/* Sólo llega acá una imagen que no usa nadie: el aviso de a quién afectaba el
+   borrado se fue con la regla de no borrar lo que está en uso. */
 async function remove(media) {
-    if (! window.confirm(warning(media))) {
+    const confirmed = await confirm.ask({
+        title: `¿Eliminar "${media.name}"?`,
+        text: 'Se borra el archivo y no se puede deshacer.',
+        action: 'Eliminar',
+        danger: true,
+    })
+
+    if (! confirmed) {
         return
     }
 
@@ -136,7 +174,7 @@ async function remove(media) {
 
     ui.toast('Imagen eliminada', media.name)
 
-    close()
+    dismiss()
 
     await load()
 }
@@ -231,7 +269,7 @@ onMounted(load)
                         <span>{{ media.width }}×{{ media.height }} · {{ weight(media.size) }}</span>
                     </span>
 
-                    <span v-if="media.used_by?.length" class="media-card-uses">{{ media.used_by.length }}</span>
+                    <span v-if="uses(media)" class="media-card-uses" :title="usesTitle(media)">En uso</span>
                 </button>
             </div>
         </div>
@@ -349,7 +387,21 @@ onMounted(load)
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-danger" type="button" @click="remove(current)">
+                    <!-- La copia de un logo de la plataforma no la borra el
+                         dueño: entra y sale sola al elegir el logo. -->
+                    <div v-if="current.from_platform" class="media-locked">
+                        <AppIcon name="info" />
+                        <span>La administra la plataforma</span>
+                    </div>
+
+                    <!-- En uso: borrarla dejaría sin foto a lo que la muestra.
+                         Primero hay que sacarla de ahí. -->
+                    <div v-else-if="uses(current)" class="media-locked">
+                        <AppIcon name="info" />
+                        <span>{{ usesTitle(current) }}: sacala de ahí para poder borrarla</span>
+                    </div>
+
+                    <button v-else class="btn btn-danger" type="button" @click="remove(current)">
                         <AppIcon name="trash" />
                         Eliminar
                     </button>

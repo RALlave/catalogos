@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 
 import AppDropdown from '@/components/AppDropdown.vue'
 import AppIcon from '@/components/AppIcon.vue'
+import { usePwaInstall } from '@/lib/pwa'
 import { useAuthStore } from '@/stores/auth'
 import { ADMIN_THEMES, THEMES, useUiStore } from '@/stores/ui'
 
@@ -14,6 +15,9 @@ const props = defineProps({
 const auth = useAuthStore()
 const ui = useUiStore()
 const router = useRouter()
+
+/* El superadmin la tiene en la barra lateral, no acá. */
+const { canInstall, install } = usePwaInstall()
 
 const themes = computed(() => (props.admin ? ADMIN_THEMES : THEMES))
 
@@ -150,6 +154,13 @@ async function logout() {
                             <AppIcon name="settings" />
                             Configuración
                         </RouterLink>
+                    </div>
+
+                    <div v-if="canInstall" class="dropdown-item">
+                        <button type="button" @click="install">
+                            <AppIcon name="monitor" />
+                            Instalar en el escritorio
+                        </button>
                     </div>
 
                     <hr>

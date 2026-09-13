@@ -4,13 +4,17 @@ import { useRoute, useRouter } from 'vue-router'
 
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
+import SkeletonForm from '@/components/SkeletonForm.vue'
+import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
+import { useCategoriesStore } from '@/stores/categories'
 import { useUiStore } from '@/stores/ui'
 
 const route = useRoute()
 const router = useRouter()
 const ui = useUiStore()
+const store = useCategoriesStore()
 
 const id = computed(() => route.params.id)
 const isEdit = computed(() => Boolean(id.value))
@@ -20,14 +24,32 @@ const errors = ref({})
 const message = ref('')
 const loading = ref(false)
 
-async function submit() {
+/* Hasta tener los datos va el esqueleto: un formulario vacío se llena solo
+   unos milisegundos después y se lleva puesto lo que el usuario escribió. */
+const ready = ref(false)
+
+const { markSaved, dirty } = useUnsavedChanges({ state: () => form.value, save: persist })
+
+function fill(category) {
+    form.value = {
+        name: category.name,
+        slug: category.slug,
+        description: category.description ?? '',
+        active: category.active,
+    }
+
+    markSaved()
+}
+
+/** Guarda y devuelve si salió bien. No navega: de eso se encarga submit(). */
+async function persist() {
     errors.value = checkRequired(form.value, ['name'])
     message.value = ''
 
     if (hasErrors(errors.value)) {
         ui.toast(REQUIRED_TOAST, '', 'danger')
 
-        return
+        return false
     }
 
     loading.value = true
@@ -40,15 +62,18 @@ async function submit() {
     }
 
     try {
-        if (isEdit.value) {
-            await api.put(`/categories/${id.value}`, payload)
-        } else {
-            await api.post('/categories', payload)
-        }
+        const response = isEdit.value
+            ? await api.put(`/categories/${id.value}`, payload)
+            : await api.post('/categories', payload)
+
+        /* El listado se entera sin volver a pedir la lista. */
+        store.upsert(response.category)
+
+        markSaved()
 
         ui.toast(isEdit.value ? 'Categoría actualizada' : 'Categoría creada', form.value.name)
 
-        await router.push({ name: 'categories' })
+        return true
     } catch (error) {
         if (error instanceof ApiError) {
             errors.value = error.errors
@@ -56,24 +81,44 @@ async function submit() {
         } else {
             message.value = 'No pudimos conectar con el servidor.'
         }
+
+        return false
     } finally {
         loading.value = false
     }
 }
 
+async function submit() {
+    if (await persist()) {
+        await router.push({ name: 'categories' })
+    }
+}
+
 onMounted(async () => {
     if (! isEdit.value) {
+        ready.value = true
+
         return
+    }
+
+    /* Lo que ya trajo el listado: el formulario abre lleno. */
+    const known = store.find(id.value)
+
+    if (known) {
+        fill(known)
+        ready.value = true
     }
 
     const payload = await api.get(`/categories/${id.value}`)
 
-    form.value = {
-        name: payload.category.name,
-        slug: payload.category.slug,
-        description: payload.category.description ?? '',
-        active: payload.category.active,
+    /* Si el usuario ya escribió sobre lo precargado, no se le pisa. */
+    if (! dirty.value) {
+        fill(payload.category)
     }
+
+    store.upsert(payload.category)
+
+    ready.value = true
 })
 </script>
 
@@ -97,7 +142,19 @@ onMounted(async () => {
         </div>
     </div>
 
-    <form class="card" novalidate @submit.prevent="submit">
+    <section v-if="! ready" class="card">
+        <header class="card-header">
+            <div class="card-title">
+                <h2>Datos de la categoría</h2>
+            </div>
+        </header>
+
+        <div class="card-body">
+            <SkeletonForm :fields="3" />
+        </div>
+    </section>
+
+    <form v-else class="card" novalidate @submit.prevent="submit">
         <header class="card-header">
             <div class="card-title">
                 <h2>Datos de la categoría</h2>

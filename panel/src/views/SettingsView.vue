@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 
 import AppIcon from '@/components/AppIcon.vue'
+import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { useAuthStore } from '@/stores/auth'
 import { THEMES, useUiStore } from '@/stores/ui'
@@ -16,9 +17,24 @@ const selected = ref({ palette: '', radius: '', nav: '', banner: '' })
 const message = ref('')
 const loading = ref(false)
 
+/* Las opciones de forma salen de la API, así que las pestañas también: sumar
+   una a config/themes.php no se toca acá. */
+const tabs = computed(() => [
+    { key: 'paleta', label: 'Paleta de colores' },
+    ...options.value.map(option => ({ key: option.key, label: option.name })),
+    { key: 'panel', label: 'Tema del panel' },
+])
+
+/* Arranca en la primera, que es fija: el resto de las pestañas recién existe
+   cuando responde la API. */
+const tab = ref('paleta')
+
 /* Vista previa del catálogo tal como está guardado hoy. */
 const previewUrl = computed(() => auth.store?.public_url ?? null)
 
+const { markSaved } = useUnsavedChanges({ state: () => selected.value, save })
+
+/** @returns {Promise<boolean>} Si salió bien: lo mira el aviso de cambios sin guardar. */
 async function save() {
     loading.value = true
     message.value = ''
@@ -28,11 +44,17 @@ async function save() {
 
         auth.store = response.store
 
+        markSaved()
+
         ui.toast('Apariencia guardada', 'Tu catálogo ya se ve con los colores nuevos.')
+
+        return true
     } catch (error) {
         message.value = error instanceof ApiError
             ? error.message
             : 'No pudimos conectar con el servidor.'
+
+        return false
     } finally {
         loading.value = false
     }
@@ -50,6 +72,8 @@ onMounted(async () => {
         nav: auth.store?.nav ?? payload.default.nav,
         banner: auth.store?.banner ?? payload.default.banner,
     }
+
+    markSaved()
 })
 </script>
 
@@ -84,7 +108,20 @@ onMounted(async () => {
         </div>
     </div>
 
-    <section class="card">
+    <nav class="tabs">
+        <button
+            v-for="item in tabs"
+            :key="item.key"
+            class="tab"
+            :class="{ 'is-active': tab === item.key }"
+            type="button"
+            @click="tab = item.key"
+        >
+            <span>{{ item.label }}</span>
+        </button>
+    </nav>
+
+    <section v-show="tab === 'paleta'" class="card">
         <header class="card-header">
             <div class="card-title">
                 <h2>Paleta de colores</h2>
@@ -117,7 +154,12 @@ onMounted(async () => {
         </div>
     </section>
 
-    <section v-for="option in options" :key="option.key" class="card">
+    <section
+        v-for="option in options"
+        v-show="tab === option.key"
+        :key="option.key"
+        class="card"
+    >
         <header class="card-header">
             <div class="card-title">
                 <h2>{{ option.name }}</h2>
@@ -141,16 +183,7 @@ onMounted(async () => {
         </div>
     </section>
 
-    <section class="card">
-        <div class="card-body">
-            <button class="btn btn-primary" type="button" :disabled="loading || ! auth.store" @click="save">
-                <span v-if="loading" class="btn-loader" />
-                <span>{{ loading ? 'Guardando…' : 'Guardar apariencia' }}</span>
-            </button>
-        </div>
-    </section>
-
-    <section class="card">
+    <section v-show="tab === 'panel'" class="card">
         <header class="card-header">
             <div class="card-title">
                 <h2>Tema del panel</h2>
@@ -178,4 +211,11 @@ onMounted(async () => {
             </div>
         </div>
     </section>
+
+    <div class="page-actions">
+        <button class="btn btn-primary" type="button" :disabled="loading || ! auth.store" @click="save">
+            <span v-if="loading" class="btn-loader" />
+            <span>{{ loading ? 'Guardando…' : 'Guardar apariencia' }}</span>
+        </button>
+    </div>
 </template>

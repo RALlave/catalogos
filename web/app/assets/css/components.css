@@ -2710,6 +2710,142 @@
 }
 
 /* ============================================================
+   DESTACADOS — la vitrina del home
+   Un producto grande manda y los otros cuatro se leen como lista
+   al costado. Se despega del catálogo con el fondo alterno, no
+   con una línea.
+   ============================================================ */
+
+.section-featured {
+    background-color: var(--color-surface-alt);
+}
+
+/* Centrado y con más aire abajo: el título hace de portada de la
+   sección y necesita separarse de lo que presenta */
+.section-header-center {
+    align-items: center;
+    margin-bottom: var(--space-5);
+    text-align: center;
+}
+
+/* Tamaño de título sin tomar su nivel: el elemento sigue siendo el
+   que le toca en la jerarquía y sólo cambia cuánto pesa a la vista.
+   Sirven también dentro de un título, para partirlo en dos alturas. */
+.h2 {
+    font-size: var(--text-lg);
+}
+
+.h3 {
+    font-size: var(--text-base);
+}
+
+/* Dos líneas y dos colores dentro del mismo título. El salto lo hace
+   el `display: block`, no un <br>: así el texto sigue siendo uno solo
+   para quien lo escucha con un lector de pantalla. */
+.headline-lead,
+.headline-main {
+    display: block;
+}
+
+.headline-lead {
+    color: var(--color-accent);
+}
+
+.headline-main {
+    color: var(--color-text);
+}
+
+.showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--grid-gap);
+    margin-top: var(--rhythm-block);
+}
+
+/* El producto grande es la misma `.product`: sólo cambia la
+   proporción de la foto y el aire del cuerpo */
+.product-lead .product-photo {
+    aspect-ratio: 4 / 3;
+}
+
+/* Acá hay lugar: la descripción se lee entera, sin recortar */
+.product-lead .product-excerpt {
+    display: block;
+    overflow: visible;
+}
+
+.product-lead .product-body {
+    gap: var(--space-3);
+    padding: var(--space-5);
+}
+
+.product-lead .product-name {
+    font-size: var(--text-lg);
+}
+
+/* La categoría, sobre el nombre. Va en su propia caja y no en
+   versalitas: es un dato con valor, no un rótulo decorativo. El
+   `align-self` la deja del ancho de su texto. */
+.product-eyebrow {
+    align-self: flex-start;
+    padding: var(--space-1) var(--space-3);
+    background-color: var(--color-surface-alt);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+}
+
+/* Las chicas se reparten el alto de la grande: si no, la columna
+   derecha termina antes y queda un hueco. Las filas se cuentan solas
+   (`grid-auto-rows`) y no van fijas en cuatro: una tienda con tres
+   productos dejaría una fila vacía colgando */
+.showcase-list {
+    display: grid;
+    grid-auto-rows: minmax(0, 1fr);
+    gap: var(--grid-gap);
+}
+
+.showcase-list > li {
+    display: flex;
+}
+
+/* Tarjeta chica: foto a la izquierda, nombre y precio a la derecha.
+   Sin ficha técnica: a este ancho no se lee */
+.product-mini {
+    flex-direction: row;
+}
+
+.product-mini .product-media {
+    flex: 0 0 7.5rem;
+}
+
+.product-mini .product-photo {
+    height: 100%;
+}
+
+.product-mini .product-body {
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+}
+
+/* Dos líneas: al costado de la grande no hay lugar para más */
+.product-mini .product-excerpt {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+}
+
+/* En la tarjeta de la grilla el aire lo ponen los `margin-top` de cada
+   hijo; en la vitrina el cuerpo separa con `gap`, y mezclar los dos
+   dejaría el resumen despegado del nombre */
+.product-lead .product-excerpt,
+.product-mini .product-excerpt {
+    margin-top: 0;
+}
+
+/* ============================================================
    RESPONSIVE — un bloque por breakpoint, ordenados
    340px es la base · 991px y 1440px se cubren acá
    ============================================================ */
@@ -2718,6 +2854,12 @@
 
     .nav {
         --search-width: 20rem;
+    }
+
+    /* La vitrina se parte en dos apenas hay ancho: a una sola columna
+       la foto grande ocupa media pantalla */
+    .showcase {
+        grid-template-columns: 1.35fr 1fr;
     }
 }
 
@@ -2744,6 +2886,16 @@
     .brand-icon {
         width: 2.25rem;
         height: 2.25rem;
+    }
+
+    /* Más baja que en móvil: el alto de la grande manda sobre el de
+       toda la vitrina */
+    .product-lead .product-photo {
+        aspect-ratio: 3 / 2;
+    }
+
+    .product-mini .product-media {
+        flex-basis: 8rem;
     }
 
     /* `margin-left: auto` y no `space-between`: acá `.header-actions`

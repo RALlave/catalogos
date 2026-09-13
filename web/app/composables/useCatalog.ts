@@ -73,6 +73,23 @@ export function useStoreProducts(filters: Ref<ProductFilters>, options: { immedi
     )
 }
 
+/**
+ * La vitrina de destacados del home: hasta cinco productos.
+ *
+ * Mientras no haga falta —la sección apagada, o un filtro activo— la petición
+ * no sale: el dato del interruptor ya llegó con la tienda. La URL es siempre la
+ * misma, así que sin `watch` volver al home sin filtro no la traería nunca.
+ */
+export function useFeaturedProducts(enabled: Ref<boolean>) {
+    const slug = useRequiredStoreSlug()
+    const { apiBase } = useRuntimeConfig().public
+
+    return useFetch<{ data: Product[] }>(
+        () => `${apiBase}/stores/${slug}/featured`,
+        { immediate: enabled.value, watch: [enabled] },
+    )
+}
+
 export function useStoreProduct(productSlug: Ref<string>) {
     const slug = useRequiredStoreSlug()
     const { apiBase } = useRuntimeConfig().public

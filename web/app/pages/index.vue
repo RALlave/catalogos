@@ -23,6 +23,13 @@ const filters = computed<ProductFilters>(() => ({
 
 const { data: products } = await useStoreProducts(filters)
 
+/* La vitrina de destacados: sólo en el home sin filtrar. Con un filtro o una
+   búsqueda activa el visitante ya sabe qué está buscando, y la vitrina se le
+   pondría delante de sus resultados. */
+const showcase = computed(() => Boolean(store.value.featured_enabled) && ! category.value && ! search.value && page.value === 1)
+
+const { data: featured } = await useFeaturedProducts(showcase)
+
 const total = computed(() => products.value?.meta.total ?? 0)
 const totalLabel = computed(() => `${total.value} ${total.value === 1 ? 'producto' : 'productos'}`)
 const lastPage = computed(() => products.value?.meta.last_page ?? 1)
@@ -45,6 +52,12 @@ useSeoMeta({
     <main id="content" class="content">
 
         <TheBanner :store="store" />
+
+        <TheFeatured
+            v-if="showcase && featured?.data.length"
+            :products="featured.data"
+            :store="store"
+        />
 
         <section id="products" class="section" aria-labelledby="products-title">
             <div class="container">

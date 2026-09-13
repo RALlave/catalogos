@@ -4,6 +4,7 @@ import { computed, onMounted, ref } from 'vue'
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
 import MediaPicker from '@/components/MediaPicker.vue'
+import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { useAuthStore } from '@/stores/auth'
 import { useUiStore } from '@/stores/ui'
@@ -24,8 +25,13 @@ function fill(store) {
         meta_title: store.meta_title ?? '',
         meta_description: store.meta_description ?? '',
     }
+
+    markSaved()
 }
 
+const { markSaved } = useUnsavedChanges({ state: () => form.value, save: submit })
+
+/** @returns {Promise<boolean>} Si salió bien: lo mira el aviso de cambios sin guardar. */
 async function submit() {
     errors.value = {}
     message.value = ''
@@ -38,6 +44,8 @@ async function submit() {
         fill(response.store)
 
         ui.toast('SEO guardado')
+
+        return true
     } catch (error) {
         if (error instanceof ApiError) {
             errors.value = error.errors
@@ -45,6 +53,8 @@ async function submit() {
         } else {
             message.value = 'No pudimos conectar con el servidor.'
         }
+
+        return false
     } finally {
         loading.value = false
     }

@@ -81,7 +81,7 @@ async function submit() {
 </script>
 
 <template>
-    <AuthLayout>
+    <AuthLayout wide>
         <header class="auth-head">
             <h1>Creá tu cuenta</h1>
             <p>Publicá tu catálogo en minutos, sin costo</p>
@@ -96,81 +96,83 @@ async function submit() {
         </div>
 
         <form class="form" novalidate @submit.prevent="submit">
-            <FormField label="Nombre y apellido" field-id="register-name" :error="errors.name?.[0]">
-                <input
-                    id="register-name"
-                    maxlength="255"
-                    v-model="form.name"
-                    class="input"
-                    :class="{ 'has-error': errors.name }"
-                    type="text"
-                    placeholder="Rafael Albino"
-                    autocomplete="name"
+            <div class="auth-fields">
+                <FormField label="Nombre y apellido" field-id="register-name" :error="errors.name?.[0]">
+                    <input
+                        id="register-name"
+                        maxlength="255"
+                        v-model="form.name"
+                        class="input"
+                        :class="{ 'has-error': errors.name }"
+                        type="text"
+                        placeholder="Rafael Albino"
+                        autocomplete="name"
+                    >
+                </FormField>
+
+                <FormField
+                    label="Usuario"
+                    hint="Entre 4 y 15 letras o números, sin espacios"
+                    field-id="register-username"
+                    :error="errors.username?.[0]"
                 >
-            </FormField>
+                    <input
+                        id="register-username"
+                        maxlength="15"
+                        v-model="form.username"
+                        class="input"
+                        :class="{ 'has-error': errors.username }"
+                        type="text"
+                        placeholder="rafael99"
+                        autocomplete="username"
+                    >
+                </FormField>
 
-            <FormField
-                label="Usuario"
-                hint="Entre 4 y 15 letras o números, sin espacios"
-                field-id="register-username"
-                :error="errors.username?.[0]"
-            >
-                <input
-                    id="register-username"
-                    maxlength="15"
-                    v-model="form.username"
-                    class="input"
-                    :class="{ 'has-error': errors.username }"
-                    type="text"
-                    placeholder="rafael99"
-                    autocomplete="username"
+                <FormField
+                    label="Nombre de tu tienda"
+                    field-id="register-store"
+                    :hint="`Tu catálogo quedará en ${slugPreview || 'nombre-de-tu-tienda'}.${baseDomain}`"
                 >
-            </FormField>
+                    <input
+                        id="register-store"
+                        maxlength="255"
+                        v-model="form.store"
+                        class="input"
+                        type="text"
+                        placeholder="Mi Tienda"
+                    >
+                </FormField>
 
-            <FormField
-                label="Nombre de tu tienda"
-                field-id="register-store"
-                :hint="`Tu catálogo quedará en ${slugPreview || 'nombre-de-tu-tienda'}.${baseDomain}`"
-            >
-                <input
-                    id="register-store"
-                    maxlength="255"
-                    v-model="form.store"
-                    class="input"
-                    type="text"
-                    placeholder="Mi Tienda"
-                >
-            </FormField>
+                <FormField label="Correo electrónico" field-id="register-email" :error="errors.email?.[0]">
+                    <input
+                        id="register-email"
+                        maxlength="255"
+                        v-model="form.email"
+                        class="input"
+                        :class="{ 'has-error': errors.email }"
+                        type="email"
+                        placeholder="tunombre@correo.com"
+                        autocomplete="email"
+                    >
+                </FormField>
 
-            <FormField label="Correo electrónico" field-id="register-email" :error="errors.email?.[0]">
-                <input
-                    id="register-email"
-                    maxlength="255"
-                    v-model="form.email"
-                    class="input"
-                    :class="{ 'has-error': errors.email }"
-                    type="email"
-                    placeholder="tunombre@correo.com"
-                    autocomplete="email"
-                >
-            </FormField>
+                <FormField label="Contraseña" field-id="register-password" :error="errors.password?.[0]">
+                    <PasswordInput
+                        id="register-password"
+                        v-model="form.password"
+                        autocomplete="new-password"
+                    />
+                    <PasswordStrength :value="form.password" />
+                </FormField>
 
-            <FormField label="Contraseña" field-id="register-password" :error="errors.password?.[0]">
-                <PasswordInput
-                    id="register-password"
-                    v-model="form.password"
-                    autocomplete="new-password"
-                />
-                <PasswordStrength :value="form.password" />
-            </FormField>
-
-            <FormField label="Repetir contraseña" field-id="register-password-confirm">
-                <PasswordInput
-                    id="register-password-confirm"
-                    v-model="form.password_confirmation"
-                    autocomplete="new-password"
-                />
-            </FormField>
+                <FormField label="Repetir contraseña" field-id="register-password-confirm">
+                    <PasswordInput
+                        id="register-password-confirm"
+                        v-model="form.password_confirmation"
+                        autocomplete="new-password"
+                    />
+                </FormField>
+            </div>
 
             <label class="check">
                 <input v-model="form.terms" type="checkbox">

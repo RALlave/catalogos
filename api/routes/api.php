@@ -1,8 +1,11 @@
 <?php
 
 use App\Enums\UserRole;
+use App\Http\Controllers\Api\Admin\BackupController as AdminBackupController;
 use App\Http\Controllers\Api\Admin\ImpersonationController as AdminImpersonationController;
 use App\Http\Controllers\Api\Admin\MetricsController as AdminMetricsController;
+use App\Http\Controllers\Api\Admin\PlatformLogoController as AdminPlatformLogoController;
+use App\Http\Controllers\Api\Admin\PlatformStoreLogoController as AdminPlatformStoreLogoController;
 use App\Http\Controllers\Api\Admin\StoreController as AdminStoreController;
 use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\Auth\HandoffController;
@@ -13,6 +16,8 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CategoryReorderController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\Public\OrderController as PublicOrderController;
+use App\Http\Controllers\Api\Public\PlatformController;
+use App\Http\Controllers\Api\Public\PlatformIconController;
 use App\Http\Controllers\Api\Public\ProductController as PublicProductController;
 use App\Http\Controllers\Api\Public\StoreController as PublicStoreController;
 use App\Http\Controllers\Api\Public\ThemeController;
@@ -29,6 +34,7 @@ use App\Http\Controllers\Api\ProductImageController;
 use App\Http\Controllers\Api\ProductReorderController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\StoreImageController;
+use App\Http\Controllers\Api\StoreLogoController;
 use App\Http\Controllers\Api\WaitlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,8 +54,20 @@ Route::post('auth/handoff/redeem', [HandoffController::class, 'redeem'])
 
 Route::get('themes', ThemeController::class)->name('public.themes');
 
+/* La marca de la plataforma la piden las pantallas de acceso, antes de que
+   exista una sesión: no puede ir detrás de auth. */
+Route::get('platform', PlatformController::class)->name('public.platform');
+
+/* El ícono de la app instalada, por medida. Lo pide el manifest del panel, que
+   es un archivo estático y no puede nombrar el archivo subido. */
+Route::get('platform/icon/{size}', PlatformIconController::class)
+    ->whereIn('size', ['192', '512'])
+    ->name('public.platform.icon');
+
 Route::get('stores/{slug}', [PublicStoreController::class, 'show'])->name('public.store.show');
 Route::get('stores/{slug}/products', [PublicProductController::class, 'index'])->name('public.products.index');
+/* La vitrina del home: los cinco de arriba, no una página del listado. */
+Route::get('stores/{slug}/featured', [PublicProductController::class, 'featured'])->name('public.products.featured');
 Route::get('stores/{slug}/products/{productSlug}', [PublicProductController::class, 'show'])->name('public.products.show');
 
 /* Los dos son anónimos y escriben en la base: van con límite de peticiones. */
@@ -92,6 +110,12 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::delete('store/logo', [StoreImageController::class, 'destroy'])
         ->defaults('field', 'logo')
         ->name('store.logo.destroy');
+
+    /* Los logos que dejó el superadmin y el que la tienda elige de esa lista.
+       Elegirlo copia la imagen a la biblioteca de la tienda. */
+    Route::get('store-logos', [StoreLogoController::class, 'index'])->name('store-logos.index');
+    Route::post('store/logo/platform', [StoreImageController::class, 'platform'])
+        ->name('store.logo.platform');
 
     Route::post('store/cover', [StoreImageController::class, 'upload'])
         ->defaults('field', 'cover')
@@ -136,6 +160,43 @@ Route::middleware('auth:sanctum')->group(function (): void {
         ->group(function (): void {
             Route::get('metrics', AdminMetricsController::class)->name('metrics');
 
+            /* Tres logos: el de las pantallas de acceso, el de la barra
+               lateral y el ícono cuadrado de la app. Cada ruta fija el suyo,
+               como el logo y la portada de una tienda. */
+            Route::post('platform/logo/auth', [AdminPlatformLogoController::class, 'store'])
+                ->defaults('variant', 'auth')
+                ->name('platform.logo.auth.store');
+            Route::delete('platform/logo/auth', [AdminPlatformLogoController::class, 'destroy'])
+                ->defaults('variant', 'auth')
+                ->name('platform.logo.auth.destroy');
+
+            Route::post('platform/logo/panel', [AdminPlatformLogoController::class, 'store'])
+                ->defaults('variant', 'panel')
+                ->name('platform.logo.panel.store');
+            Route::delete('platform/logo/panel', [AdminPlatformLogoController::class, 'destroy'])
+                ->defaults('variant', 'panel')
+                ->name('platform.logo.panel.destroy');
+
+            Route::post('platform/logo/icon', [AdminPlatformLogoController::class, 'store'])
+                ->defaults('variant', 'icon')
+                ->name('platform.logo.icon.store');
+            Route::delete('platform/logo/icon', [AdminPlatformLogoController::class, 'destroy'])
+                ->defaults('variant', 'icon')
+                ->name('platform.logo.icon.destroy');
+
+            /* La galería de logos para las tiendas: son muchos y se listan, al
+               revés de los tres de arriba, que son fijos. */
+            Route::get('platform/store-logos', [AdminPlatformStoreLogoController::class, 'index'])
+                ->name('platform.store-logos.index');
+            Route::post('platform/store-logos', [AdminPlatformStoreLogoController::class, 'store'])
+                ->name('platform.store-logos.store');
+            Route::put('platform/store-logos/{platformLogo}', [AdminPlatformStoreLogoController::class, 'update'])
+                ->name('platform.store-logos.update');
+            Route::patch('platform/store-logos/{platformLogo}/default', [AdminPlatformStoreLogoController::class, 'markDefault'])
+                ->name('platform.store-logos.default');
+            Route::delete('platform/store-logos/{platformLogo}', [AdminPlatformStoreLogoController::class, 'destroy'])
+                ->name('platform.store-logos.destroy');
+
             Route::get('stores', [AdminStoreController::class, 'index'])->name('stores.index');
             Route::post('stores', [AdminStoreController::class, 'store'])->name('stores.store');
             Route::get('stores/{store}', [AdminStoreController::class, 'show'])->name('stores.show');
@@ -147,5 +208,12 @@ Route::middleware('auth:sanctum')->group(function (): void {
             Route::get('users/{user}', [AdminUserController::class, 'show'])->name('users.show');
             Route::put('users/{user}', [AdminUserController::class, 'update'])->name('users.update');
             Route::patch('users/{user}/suspend', [AdminUserController::class, 'suspend'])->name('users.suspend');
+
+            /* Respaldo de la plataforma entera. El GET descarga y el POST del
+               mismo camino restaura: son la misma cosa en los dos sentidos. */
+            Route::get('backup/database', [AdminBackupController::class, 'database'])->name('backup.database');
+            Route::post('backup/database', [AdminBackupController::class, 'restoreDatabase'])->name('backup.database.restore');
+            Route::get('backup/files', [AdminBackupController::class, 'files'])->name('backup.files');
+            Route::post('backup/files', [AdminBackupController::class, 'restoreFiles'])->name('backup.files.restore');
         });
 });

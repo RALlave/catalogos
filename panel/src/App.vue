@@ -1,7 +1,9 @@
 <script setup>
 import { onBeforeUnmount, onMounted } from 'vue'
 
+import ConfirmModal from '@/components/ConfirmModal.vue'
 import ToastStack from '@/components/ToastStack.vue'
+import UnsavedModal from '@/components/UnsavedModal.vue'
 
 const TEXT_INPUTS = ['text', 'email', 'password', 'search', 'tel', 'url', 'number', 'date']
 
@@ -49,4 +51,6 @@ onBeforeUnmount(() => {
 <template>
     <RouterView />
     <ToastStack />
+    <UnsavedModal />
+    <ConfirmModal />
 </template>

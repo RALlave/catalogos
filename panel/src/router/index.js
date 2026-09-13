@@ -77,10 +77,10 @@ const routes = [
                 meta: { title: 'Editar categoría' },
             },
             {
-                path: 'hero',
-                name: 'heroes',
-                component: () => import('@/views/HeroesView.vue'),
-                meta: { title: 'Hero (banner)' },
+                path: 'paginas/home',
+                name: 'page-home',
+                component: () => import('@/views/HomePageView.vue'),
+                meta: { title: 'Home' },
             },
             {
                 path: 'hero/nuevo',
@@ -180,6 +180,12 @@ const routes = [
                 component: () => import('@/views/admin/AdminAppearanceView.vue'),
                 meta: { title: 'Apariencia' },
             },
+            {
+                path: 'import-export',
+                name: 'admin-backup',
+                component: () => import('@/views/admin/AdminBackupView.vue'),
+                meta: { title: 'Import & Export' },
+            },
         ],
     },
 
@@ -192,7 +198,10 @@ export const router = createRouter({
        assets sí van bajo /panel/, pero eso es cosa de Vite, no del router. */
     history: createWebHistory('/'),
     routes,
-    scrollBehavior: () => ({ top: 0 }),
+    /* Cambiar de pantalla arranca arriba, pero quedarse en la misma y sólo
+       mover la query —las pestañas viajan ahí— no mueve el scroll: el usuario
+       está mirando esa parte de la página. */
+    scrollBehavior: (to, from) => (to.path === from.path ? false : { top: 0 }),
 })
 
 /** A dónde va cada rol cuando entra por la puerta equivocada. */

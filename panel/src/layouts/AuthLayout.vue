@@ -1,20 +1,38 @@
 <script setup>
-import AppIcon from '@/components/AppIcon.vue'
+import { onMounted } from 'vue'
+
+import { usePlatformStore } from '@/stores/platform'
 import { THEMES, useUiStore } from '@/stores/ui'
 
+/* Wide card for forms laid out in two columns (register). */
+defineProps({
+    wide: {
+        type: Boolean,
+        default: false,
+    },
+})
+
 const ui = useUiStore()
+const platform = usePlatformStore()
+
+/* El logo lo sube el superadmin y es el mismo en todos los accesos, sea el
+   dominio principal o el subdominio de una tienda. Si no hay ninguno cargado
+   la marca no se dibuja: no hay texto de reserva. */
+onMounted(() => platform.load())
 </script>
 
 <template>
     <main class="auth">
-        <div class="auth-brand">
-            <span class="brand-mark">
-                <AppIcon name="bag" />
-            </span>
-            <strong>Catálogos</strong>
+        <div v-if="platform.logos.auth" class="auth-brand">
+            <img
+                :src="platform.logos.auth.src"
+                :srcset="platform.logos.auth.srcset"
+                sizes="260px"
+                alt="Logo"
+            >
         </div>
 
-        <section class="auth-card">
+        <section class="auth-card" :class="{ 'is-wide': wide }">
             <slot />
         </section>
 

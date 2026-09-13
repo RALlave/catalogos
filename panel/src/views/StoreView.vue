@@ -4,6 +4,8 @@ import { computed, onMounted, ref } from 'vue'
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
 import MediaPicker from '@/components/MediaPicker.vue'
+import PlatformLogoPicker from '@/components/PlatformLogoPicker.vue'
+import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
 import { useAuthStore } from '@/stores/auth'
@@ -64,7 +66,11 @@ function fill(store) {
         schedules: store.schedules ?? [],
         active: store.active,
     }
+
+    markSaved()
 }
+
+const { markSaved } = useUnsavedChanges({ state: () => form.value, save: submit })
 
 function payload() {
     const data = { ...form.value }
@@ -81,6 +87,7 @@ function payload() {
     return data
 }
 
+/** @returns {Promise<boolean>} Si salió bien: lo mira el aviso de cambios sin guardar. */
 async function submit() {
     errors.value = checkRequired(form.value, ['name'])
     message.value = ''
@@ -88,7 +95,7 @@ async function submit() {
     if (hasErrors(errors.value)) {
         ui.toast(REQUIRED_TOAST, '', 'danger')
 
-        return
+        return false
     }
 
     loading.value = true
@@ -102,6 +109,8 @@ async function submit() {
         fill(response.store)
 
         ui.toast('Tienda guardada', response.store.name)
+
+        return true
     } catch (error) {
         if (error instanceof ApiError) {
             errors.value = error.errors
@@ -109,6 +118,8 @@ async function submit() {
         } else {
             message.value = 'No pudimos conectar con el servidor.'
         }
+
+        return false
     } finally {
         loading.value = false
     }
@@ -116,6 +127,7 @@ async function submit() {
 
 /* La portada se administra en SEO: acá solo queda el logo. */
 const picking = ref(false)
+const pickingPlatform = ref(false)
 
 async function uploadImage(event, field) {
     const file = event.target.files?.[0]
@@ -142,6 +154,18 @@ async function pickImage(media) {
     auth.store = response.store
 
     ui.toast('Logo actualizado')
+}
+
+/**
+ * Tomar uno de los logos que dejó la plataforma. La imagen se copia a la
+ * biblioteca de la tienda, así que desde acá es una imagen propia más.
+ */
+async function pickPlatformLogo(logo) {
+    const response = await api.post('/store/logo/platform', { platform_logo_id: logo.id })
+
+    auth.store = response.store
+
+    ui.toast('Logo actualizado', logo.name)
 }
 
 async function removeImage(field) {
@@ -294,7 +318,7 @@ onMounted(() => {
                 <div class="form">
                     <div class="form-row">
                         <FormField label="Logo" field-id="store-logo">
-                            <img v-if="auth.store.logo_url" class="thumb" :src="auth.store.logo_url" alt="Logo">
+                            <img v-if="auth.store.logo_url" class="preview-logo" :src="auth.store.logo_url" alt="Logo">
                             <input
                                 id="store-logo"
                                 class="input"
@@ -302,10 +326,22 @@ onMounted(() => {
                                 accept="image/jpeg,image/png,image/webp"
                                 @change="uploadImage($event, 'logo')"
                             >
-                            <div class="table-actions">
+                        </FormField>
+
+                        <div class="field">
+                            <div class="field-label">
+                                <span>O elegí uno ya cargado</span>
+                            </div>
+
+                            <div class="field-actions">
                                 <button class="btn btn-outline btn-sm" type="button" @click="picking = true">
                                     <AppIcon name="image" />
                                     Elegir de la biblioteca
+                                </button>
+
+                                <button class="btn btn-outline btn-sm" type="button" @click="pickingPlatform = true">
+                                    <AppIcon name="image" />
+                                    Elegir un logo de la plataforma
                                 </button>
 
                                 <button
@@ -317,8 +353,7 @@ onMounted(() => {
                                     Quitar logo
                                 </button>
                             </div>
-                        </FormField>
-
+                        </div>
                     </div>
                 </div>
             </div>
@@ -463,5 +498,11 @@ onMounted(() => {
         title="Elegir el logo"
         @close="picking = false"
         @select="pickImage"
+    />
+
+    <PlatformLogoPicker
+        :open="pickingPlatform"
+        @close="pickingPlatform = false"
+        @select="pickPlatformLogo"
     />
 </template>

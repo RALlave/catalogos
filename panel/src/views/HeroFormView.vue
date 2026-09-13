@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
 import MediaPicker from '@/components/MediaPicker.vue'
+import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
 import { useUiStore } from '@/stores/ui'
@@ -33,14 +34,17 @@ function removeImage() {
     imageUrl.value = null
 }
 
-async function submit() {
+const { markSaved } = useUnsavedChanges({ state: () => form.value, save: persist })
+
+/** Guarda y devuelve si salió bien. No navega: de eso se encarga submit(). */
+async function persist() {
     errors.value = checkRequired(form.value, ['title'])
     message.value = ''
 
     if (hasErrors(errors.value)) {
         ui.toast(REQUIRED_TOAST, '', 'danger')
 
-        return
+        return false
     }
 
     loading.value = true
@@ -52,9 +56,11 @@ async function submit() {
             await api.post('/heroes', form.value)
         }
 
+        markSaved()
+
         ui.toast(isEdit.value ? 'Hero actualizado' : 'Hero creado', form.value.title)
 
-        await router.push({ name: 'heroes' })
+        return true
     } catch (error) {
         if (error instanceof ApiError) {
             errors.value = error.errors
@@ -62,8 +68,16 @@ async function submit() {
         } else {
             message.value = 'No pudimos conectar con el servidor.'
         }
+
+        return false
     } finally {
         loading.value = false
+    }
+}
+
+async function submit() {
+    if (await persist()) {
+        await router.push({ name: 'page-home', query: { seccion: 'hero' } })
     }
 }
 
@@ -83,6 +97,8 @@ onMounted(async () => {
     }
 
     imageUrl.value = payload.hero.image_url
+
+    markSaved()
 })
 </script>
 
@@ -94,7 +110,7 @@ onMounted(async () => {
         </div>
 
         <div class="page-actions">
-            <RouterLink class="btn btn-outline" :to="{ name: 'heroes' }">Volver</RouterLink>
+            <RouterLink class="btn btn-outline" :to="{ name: 'page-home', query: { seccion: 'hero' } }">Volver</RouterLink>
         </div>
     </div>
 
@@ -202,7 +218,7 @@ onMounted(async () => {
             </div>
 
             <footer class="card-footer">
-                <RouterLink class="btn btn-outline" :to="{ name: 'heroes' }">Cancelar</RouterLink>
+                <RouterLink class="btn btn-outline" :to="{ name: 'page-home', query: { seccion: 'hero' } }">Cancelar</RouterLink>
 
                 <button class="btn btn-primary" type="submit" :disabled="loading">
                     <span v-if="loading" class="btn-loader" />

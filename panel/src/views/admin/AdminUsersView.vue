@@ -5,12 +5,15 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
 import PasswordInput from '@/components/PasswordInput.vue'
+import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { useAuthStore } from '@/stores/auth'
+import { useConfirmStore } from '@/stores/confirm'
 import { useUiStore } from '@/stores/ui'
 
 const auth = useAuthStore()
 const ui = useUiStore()
+const confirm = useConfirmStore()
 
 const users = ref([])
 const meta = ref(null)
@@ -60,16 +63,33 @@ watch(() => [filters.value.role, filters.value.suspended], () => {
 
 watch(page, load)
 
+/* La edición es un modal: los cambios sólo cuentan mientras está abierto. */
+const { markSaved, confirmLeave } = useUnsavedChanges({
+    state: () => form.value,
+    save,
+    active: () => Boolean(editing.value),
+})
+
 function edit(user) {
     editing.value = user
     errors.value = {}
     form.value = { name: user.name, username: user.username, email: user.email, password: '' }
+
+    markSaved()
 }
 
-function closeEdit() {
+/** Cierra sin preguntar: la usa lo que ya resolvió qué hacer con los cambios. */
+function dismiss() {
     editing.value = null
 }
 
+async function closeEdit() {
+    if (await confirmLeave()) {
+        dismiss()
+    }
+}
+
+/** @returns {Promise<boolean>} Si salió bien: lo mira el aviso de cambios sin guardar. */
 async function save() {
     const user = editing.value
 
@@ -90,13 +110,19 @@ async function save() {
         const response = await api.put(`/admin/users/${user.id}`, payload)
 
         Object.assign(user, response.user)
-        closeEdit()
+
+        markSaved()
+        dismiss()
 
         ui.toast('Usuario actualizado', user.name)
+
+        return true
     } catch (error) {
         if (error instanceof ApiError) {
             errors.value = error.errors
         }
+
+        return false
     } finally {
         saving.value = false
     }
@@ -111,8 +137,17 @@ function onKeydown(event) {
 async function toggleSuspend(user) {
     const suspend = ! user.suspended
 
-    if (suspend && ! window.confirm(`¿Suspender a ${user.name}? No va a poder entrar al panel.`)) {
-        return
+    if (suspend) {
+        const confirmed = await confirm.ask({
+            title: `¿Suspender a ${user.name}?`,
+            text: 'No va a poder entrar al panel.',
+            action: 'Suspender',
+            danger: true,
+        })
+
+        if (! confirmed) {
+            return
+        }
     }
 
     try {

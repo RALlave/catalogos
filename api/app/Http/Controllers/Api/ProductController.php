@@ -28,7 +28,7 @@ class ProductController extends Controller
             ->with(['category', 'images.media']);
 
         $products = $this->products
-            ->applyFilters($query, $request->only('category_id', 'visible', 'featured', 'search'))
+            ->applyFilters($query, $request->only('category_id', 'visible', 'featured', 'is_new', 'on_sale', 'search'))
             ->orderBy('order')
             ->orderBy('name')
             ->paginate(self::PER_PAGE)

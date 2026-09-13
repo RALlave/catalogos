@@ -6,6 +6,7 @@ import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
 import PasswordInput from '@/components/PasswordInput.vue'
 import PasswordStrength from '@/components/PasswordStrength.vue'
+import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
 import { useAuthStore } from '@/stores/auth'
@@ -24,13 +25,18 @@ const passwordErrors = ref({})
 const passwordLoading = ref(false)
 const passwordMessage = ref('')
 
+/* Los dos formularios se vigilan por separado: cada uno guarda por su lado. */
+const profileChanges = useUnsavedChanges({ state: () => profile.value, save: saveProfile })
+const passwordChanges = useUnsavedChanges({ state: () => password.value, save: savePassword })
+
+/** @returns {Promise<boolean>} Si salió bien: lo mira el aviso de cambios sin guardar. */
 async function saveProfile() {
     profileErrors.value = checkRequired(profile.value, ['name', 'email'])
 
     if (hasErrors(profileErrors.value)) {
         ui.toast(REQUIRED_TOAST, '', 'danger')
 
-        return
+        return false
     }
 
     profileLoading.value = true
@@ -40,16 +46,23 @@ async function saveProfile() {
 
         auth.user = response.user
 
+        profileChanges.markSaved()
+
         ui.toast('Perfil actualizado')
+
+        return true
     } catch (error) {
         if (error instanceof ApiError) {
             profileErrors.value = error.errors
         }
+
+        return false
     } finally {
         profileLoading.value = false
     }
 }
 
+/** @returns {Promise<boolean>} Si salió bien: lo mira el aviso de cambios sin guardar. */
 async function savePassword() {
     passwordErrors.value = checkRequired(password.value, ['current_password', 'password', 'password_confirmation'])
     passwordMessage.value = ''
@@ -57,7 +70,7 @@ async function savePassword() {
     if (hasErrors(passwordErrors.value)) {
         ui.toast(REQUIRED_TOAST, '', 'danger')
 
-        return
+        return false
     }
 
     passwordLoading.value = true
@@ -67,12 +80,18 @@ async function savePassword() {
 
         password.value = { current_password: '', password: '', password_confirmation: '' }
 
+        passwordChanges.markSaved()
+
         ui.toast('Contraseña actualizada', 'Se cerraron las otras sesiones.')
+
+        return true
     } catch (error) {
         if (error instanceof ApiError) {
             passwordErrors.value = error.errors
             passwordMessage.value = error.isValidation ? '' : error.message
         }
+
+        return false
     } finally {
         passwordLoading.value = false
     }
@@ -88,6 +107,8 @@ onMounted(() => {
         name: auth.user?.name ?? '',
         email: auth.user?.email ?? '',
     }
+
+    profileChanges.markSaved()
 })
 </script>
 

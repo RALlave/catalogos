@@ -19,6 +19,30 @@ Antes de crear una nota nueva, revisar si ya existe una del mismo tema y actuali
 
 No anotar lo que ya se deduce del código, del historial de git o de este archivo.
 
+## Regla: el disco no acumula imágenes basura
+
+Un SaaS de catálogos vive de imágenes: si cada subida deja archivos que ya no
+mira nadie, el disco se llena de basura y el costo lo paga la plataforma. Por
+eso, en cualquier funcionalidad que suba o reemplace imágenes:
+
+- **El borrado es físico.** Borrar una imagen borra la fila **y** todos sus
+  archivos del disco, variantes incluidas. Nunca alcanza con soltar la
+  referencia. Lo hace `MediaService::delete()` / `ImageOptimizer::forget()`.
+- **Nada escribe archivos por su cuenta.** Todo lo que sube pasa por
+  `ImageOptimizer`: se convierte a WebP, se genera sólo el juego de medidas del
+  perfil que corresponde y **el original se descarta**.
+- **No se generan variantes que ninguna pantalla muestra.** Si un tamaño no se
+  dibuja, no se escribe: para eso están los perfiles de `config/media.php`.
+- **Reemplazar es borrar lo anterior.** Cambiar el logo, la portada, la foto de
+  un hero o un logo de la plataforma borra el archivo viejo en el mismo momento,
+  salvo que otra cosa lo esté usando —una media de la biblioteca puede estar en
+  varios productos—.
+- **Lo que se copia se limpia solo.** Una copia que existe sólo mientras se usa
+  —como el logo tomado de la galería de la plataforma— se marca al crearla y se
+  borra en cuanto deja de usarse. Lo que subió el dueño no se toca nunca.
+- **Antes de sumar una funcionalidad que suba imágenes hay que responder quién
+  las borra y cuándo.** Si no hay respuesta, falta diseño, no código.
+
 ## Rol del asistente de desarrollo
 
 Eres un Arquitecto de Software Senior y Desarrollador Full Stack con más de 15 años de experiencia.
@@ -365,6 +389,29 @@ texto—; los botones no se editan.
 Endpoints: `GET|POST /api/heroes`, `GET|PUT|DELETE /api/heroes/{hero}` y
 `POST /api/heroes/reorder`.
 
+## Destacados del home — la vitrina
+
+Entre el banner y la grilla va la **vitrina de destacados**: un producto grande
+y hasta cuatro chicos al costado. Es la propuesta **C** de las tres que se
+maquetaron el 2026-08-29 (`prototipo-3/index-featured-c.html`); las otras dos
+quedaron sin usar, y `.rail` sigue reservado para la futura sección Ofertas.
+
+- Los productos **no se eligen a mano**: salen de los marcados como `featured`
+  en su ficha y, si son menos de cinco, **se completa con el resto del
+  catálogo** por su orden. La vitrina no queda coja nunca.
+- Los **agotados quedan afuera**: recomendar algo que no se puede comprar es
+  peor que mostrar una tarjeta menos. Por eso las tarjetas de la vitrina son
+  las únicas del catálogo **sin badge**.
+- La sección se prende y se apaga por tienda (`featured_enabled`) y sus dos
+  títulos se editan (`featured_title` 60 · `featured_subtitle` 80). Los dos
+  traen un texto por defecto en la columna, así una tienda recién migrada ya
+  muestra algo legible.
+- Sólo se dibuja en el **home sin filtrar**: con `?cat=`, `?q=` o `?page=`
+  activos el visitante ya sabe qué busca y la vitrina se le pondría delante.
+
+Endpoint: `GET /api/stores/{slug}/featured`, cacheado con clave fija. Con la
+sección apagada devuelve la lista vacía, no un 404.
+
 ## SEO de la tienda
 
 El SEO es independiente del hero: `stores.meta_title` (60) y
@@ -402,14 +449,67 @@ Editar:
 - Apariencia: paleta de colores y las tres opciones de forma
 - Información de contacto
 - Redes sociales
-- Hero (banner): los heros del home y el efecto del carrusel
+- Páginas → Home: las secciones de la portada, una por pestaña
 - SEO: meta title, meta description e imagen para compartir
+
+Las secciones del home viven todas en la misma pantalla (`/admin/paginas/home`),
+repartidas en pestañas: **Hero (banner)** —los heros y el efecto del carrusel— y
+**Destacados** —el interruptor de la vitrina y sus dos títulos—. La pestaña
+viaja en `?seccion=`, así que volver de editar un hero cae donde corresponde.
+Hero dejó de ser una entrada suelta de "Mi tienda".
 
 La apariencia se elige de una lista, no se arma a mano: las paletas y las
 opciones viven en `api/config/themes.php` y se consultan con `GET /api/themes`.
 La tienda guarda solo las claves (`palette`, `radius`, `nav`, `banner`), así que
 retocar una paleta ahí actualiza a todas las tiendas que la usan. Agregar una
 paleta nueva es agregar un bloque a ese archivo.
+
+### Regla: las confirmaciones son del panel, no del navegador
+
+**Nada de `window.confirm`, `window.alert` ni `window.prompt`.** Los dibuja el
+navegador: no se pueden estilar, cambian de forma en cada sistema y no se
+parecen en nada al resto del panel.
+
+Toda confirmación va en el modal propio: `stores/confirm.js` más
+`ConfirmModal.vue`, montado una sola vez en `App.vue`. Se usa esperando la
+respuesta, y lo destructivo se pinta en rojo:
+
+```js
+const confirmed = await confirm.ask({
+    title: `¿Eliminar "${product.name}"?`,
+    text: 'No se puede deshacer.',
+    action: 'Eliminar',
+    danger: true,
+})
+```
+
+El foco arranca en **Cancelar**, Escape cancela y el detalle respeta los saltos
+de línea, así que un aviso de varias líneas —el de borrar una imagen en uso—
+entra tal cual.
+
+### Nadie pierde un formulario a medio llenar
+
+Ningún formulario del panel se abandona en silencio. Si tiene cambios sin
+guardar y el usuario se va —a otra pantalla, cerrando la pestaña o cerrando el
+modal que lo contiene—, primero aparece un aviso con tres salidas: **Seguir
+editando**, **Salir sin guardar** y **Guardar y salir**.
+
+Lo resuelve `useUnsavedChanges` (`panel/src/composables/`), que compara el
+formulario contra cómo estaba al cargarse. Consecuencias para el código nuevo:
+
+- La pantalla llama `markSaved()` al terminar de cargar los datos y cada vez
+  que guarda: ese es el punto de partida contra el que se compara.
+- La función de guardado devuelve `true`/`false` —es lo que mira "Guardar y
+  salir"— y **no navega**. Por eso las vistas que volvían al listado quedaron
+  partidas en `persist()` (guarda) y `submit()` (redirige).
+- Un formulario dentro de un modal declara `active` y cierra con
+  `confirmLeave()`; `dismiss()` es el cierre directo, para lo que ya resolvió
+  qué hacer con los cambios.
+- Lo que se guarda al instante no lleva aviso: el efecto y el orden de los
+  heros, los logos de la plataforma, el logo y la portada de la tienda.
+
+El aviso al cerrar la pestaña lo dibuja el navegador y **no se puede
+personalizar**: ahí no hay tres botones, sólo su propio cartel.
 
 ### Dónde vive
 
@@ -473,6 +573,170 @@ la barra "Volver a superadmin". Al volver, el token del dueño se revoca
 No se puede impersonar a otro superadmin, y el token impersonado no entra a
 `/api/admin` (el middleware de rol lo corta con 403). **No hay auditoría**: nada
 registra quién impersonó a quién.
+
+### Marca de la plataforma
+
+Son **tres logos**, los tres los sube el superadmin en Apariencia:
+
+- **`auth`** — las cuatro pantallas de acceso: ingreso, registro, recuperar y
+  restablecer
+- **`panel`** — la barra lateral, la misma para el superadmin y para el dueño
+  de una tienda
+- **`icon`** — el cuadrado: el favicon del panel y el ícono de la aplicación
+  instalada en el escritorio
+
+Son de la plataforma, no de la tienda: el mismo logo en el dominio principal y
+en todos los subdominios. Reemplazan el bloque entero que estaba escrito en el
+código (el ícono más "Catálogos"), así que **sin logo cargado no se dibuja
+nada**, ni en el login ni arriba del menú.
+
+Viven en la tabla `settings` (`key`, `value`), la única del negocio **sin
+`store_id`** porque el dato es del SaaS entero. Es clave-valor para que sumar
+después el nombre del SaaS no sea otra migración; el mapeo de cada logo a su
+clave está en `Setting::LOGOS`. Los archivos no entran a la biblioteca —`media`
+exige una tienda— y se guardan en `platform/`, convertidos a WebP como todo lo
+demás. **SVG no se acepta**: la conversión es con GD, que no lee vectores.
+
+El ícono usa su propio perfil de medidas (`icon` 192 · `icon_large` 512 en
+`config/media.php`) en vez de las del catálogo: son las que pide el manifest.
+**No se valida la forma** —se acepta cualquier imagen—, pero el navegador sólo
+ofrece instalar la aplicación si el archivo es cuadrado y de 512 px o más, y
+como el original no se guarda, una imagen chica no se puede agrandar después.
+
+Endpoints: `GET /api/platform` (público y sin auth, porque lo piden las
+pantallas donde todavía no hay sesión) y
+`POST|DELETE /api/admin/platform/logo/{auth|panel|icon}`. En el panel los tiene
+el store `platform`, que los pide una sola vez por carga y de paso pone el
+favicon.
+
+### Logos para las tiendas
+
+Aparte de esos tres, el superadmin sube una **galería de logos** que cualquier
+tienda puede tomar como propio, para la que no tiene uno hecho. Se administra en
+la misma pantalla de Apariencia, en su propia pestaña, y el dueño la abre desde
+Mi tienda → Información, al lado de "Elegir de la biblioteca".
+
+La pantalla de Apariencia del superadmin son **dos grupos de pestañas**: arriba
+los logos (los tres de la plataforma · los de las tiendas) y abajo, bajo el
+título "Opciones para las tiendas", lo que cada tienda elige (paletas · bordes ·
+barra · banner). Las de abajo salen de `config/themes.php`, así que agregar una
+opción ahí agrega su pestaña sola. Las dos viajan en la URL (`?logos=` y
+`?seccion=`).
+
+Viven en la tabla **`platform_logos`** y no en `settings`: son muchos, se
+listan, se renombran y se borran de a uno, y eso pide columnas y no un
+clave-valor. Tampoco entran en `media`, que exige una tienda. Los archivos van a
+la misma carpeta `platform/`, convertidos a WebP con el perfil `library`.
+
+Elegir uno **copia** la imagen a la biblioteca de la tienda y la deja como
+`logo_media_id`. Las consecuencias de que sea copia y no referencia:
+
+- El logo elegido es una imagen más de la tienda: se ve en Multimedia, se puede
+  borrar y se puede reutilizar. Pero **no se acumula**: la copia queda marcada
+  (`media.from_platform`) y se borra sola en cuanto deja de ser el logo, sea
+  porque el dueño eligió otro de la galería, subió el suyo, tomó otro de la
+  biblioteca o quitó el logo. Lo que subió el dueño no se toca nunca. La
+  limpieza vive en `StoreService::setImage()`, el único camino por el que cambia
+  el logo.
+- El superadmin puede **sacar un logo de la galería sin dejar a nadie sin
+  logo**: quien lo eligió ya tiene el suyo. Por eso, al revés que en Multimedia,
+  el borrado no avisa a quién afecta — no afecta a nadie.
+- La misma imagen queda duplicada por tienda. Es el precio de que nadie dependa
+  de la galería.
+
+Lo único que se edita de un logo es el **nombre** (100): es lo que identifica al
+logo en las dos pantallas.
+
+Uno de ellos puede quedar marcado **por defecto** (`is_default`): es el logo con
+el que **arranca una tienda recién creada**, por las dos vías —el dueño desde Mi
+tienda y el superadmin desde su listado—, porque las dos pasan por
+`StoreService::create()`. Se copia igual que cuando el dueño elige uno, así que
+la tienda puede cambiarlo o borrarlo desde el primer día. Detalles:
+
+- Hay **uno o ninguno**: marcar uno desmarca al anterior en la misma
+  transacción, y no se puede desmarcar sin elegir otro.
+- Es una marca en la fila y no una clave en `settings`: borrar el logo se lleva
+  la marca sola. Eso sí, **borrar el marcado deja a la plataforma sin logo por
+  defecto** hasta que se marque otro.
+- Las tiendas que ya existen no se tocan.
+
+Endpoints: `GET|POST /api/admin/platform/store-logos`,
+`PUT|DELETE /api/admin/platform/store-logos/{logo}` y
+`PATCH /api/admin/platform/store-logos/{logo}/default` para el superadmin;
+`GET /api/store-logos` (sólo lectura) y `POST /api/store/logo/platform`
+(`platform_logo_id`) para el dueño.
+
+### Instalar el panel en el escritorio
+
+El panel se instala como aplicación (PWA): queda con su ícono en el escritorio
+y abre en su propia ventana, sin barra de direcciones. Es para el dueño y para
+el superadmin; el catálogo público no se instala.
+
+- El dueño lo tiene en el **menú de su usuario**, arriba a la derecha.
+- El superadmin, al final de la **barra lateral**.
+
+El botón no instala nada por su cuenta: el navegador decide si se puede y avisa
+con `beforeinstallprompt`; el botón sólo dispara ese aviso guardado
+(`panel/src/lib/pwa.js`). Consecuencias:
+
+- **Sin el ícono cargado no hay instalación.** El navegador exige las dos
+  medidas del manifest, y ninguna otra parte del panel las tiene. Tampoco la
+  ofrece si el ícono subido no es cuadrado o no llega a 512 px: el archivo real
+  no coincidiría con lo que declara el manifest.
+- **Sólo Chrome y Edge.** Firefox y Safari no emiten el evento: ahí el botón no
+  aparece, y tampoco hay a quién avisarle.
+- **Se instala una app por origen.** El dueño instala la de su subdominio y el
+  superadmin la del dominio principal: para el sistema operativo son dos
+  aplicaciones distintas.
+- **En desarrollo no se puede probar**: `rex.lvh.me:5173` va por HTTP y una PWA
+  necesita HTTPS.
+
+El manifest lo genera el build del panel (`vite.config.js`), no es un archivo
+suelto: necesita la URL de la API. Sus íconos apuntan a
+`GET /api/platform/icon/{192|512}`, una ruta fija que redirige al archivo del
+momento, porque el archivo real cambia de nombre con cada subida. `start_url` es
+**`/login`**, la única ruta que existe en los dos orígenes donde vive el panel
+(en el dominio principal la raíz es la landing y en el subdominio, el catálogo).
+
+El `sw.js` **no cachea nada**: está sólo porque el navegador todavía lo pide
+para ofrecer la instalación. Cachear el panel sería servir la versión anterior
+después de cada despliegue.
+
+Los dos archivos se sirven desde la **raíz** del dominio, aunque el build los
+deje bajo `/panel/`: un service worker no alcanza a rutas fuera de su carpeta, y
+`/login`, `/admin` y `/superadmin` están en la raíz. Eso son dos `location` a
+mano en cada vhost (`deploy/vhost-apex.conf` y `deploy/vhost-tiendas.conf`), con
+la misma advertencia de siempre: CloudPanel se los lleva puestos al regenerar el
+vhost.
+
+### Import & Export
+
+El superadmin se lleva la plataforma entera en dos archivos, desde
+`/superadmin/import-export`. Son **dos respaldos separados y bajo demanda**:
+nada queda guardado en el servidor, no hay historial ni respaldos programados.
+
+- **Base de datos** — `mysqldump` completo. Al importar se dropean **todas** las
+  tablas y vistas antes de cargar el `.sql`, y no sólo las que el archivo
+  recrea: si no, una tabla creada después del respaldo sobreviviría con filas
+  viejas.
+- **Archivos** — un `.zip` con `media/` y `platform/`. Al importar también
+  reemplaza: borra esas carpetas y deja exactamente lo que trae el zip. Lo que
+  en el zip esté fuera de ellas se ignora, que es lo que además corta el zip
+  slip.
+
+Dos consecuencias que hay que tener presentes:
+
+- **Restaurar la base cierra la sesión.** El dump trae los tokens del momento
+  del respaldo, así que el actual deja de existir; el panel hace logout y manda
+  al login en vez de esperar el primer 401.
+- **Los dos respaldos van juntos.** Una base restaurada sin sus imágenes deja
+  productos apuntando a fotos que ya no están en el disco.
+
+Endpoints: `GET|POST /api/admin/backup/database` y
+`GET|POST /api/admin/backup/files` — el GET descarga y el POST del mismo camino
+restaura. Los binarios de MySQL y el límite de subida están en
+`api/config/backup.php`. Necesita **ext-zip**, y el límite real de subida lo
+ponen PHP y nginx, no esa config.
 
 ### Fuera de esta fase
 
@@ -543,6 +807,13 @@ Consecuencias del modelo compartido:
   devuelve `used_by` (los **nombres** de los productos que la usan) y los flags
   `used_as_logo` / `used_as_cover`: el panel avisa a quién afecta antes de
   borrar.
+
+En la grilla de Multimedia, la imagen que está en uso lleva el distintivo **"En
+uso"**, contando todo —productos, heros, logo y portada— y no sólo los
+productos: una imagen que es sólo el logo se veía libre hasta el momento de
+confirmar el borrado. La copia de un logo de la plataforma **no se puede
+borrar** desde ahí: no la subió el dueño y se limpia sola. El endpoint también
+la rechaza, no sólo la pantalla.
 
 Endpoints: `GET|POST /api/media`, `GET|PUT|DELETE /api/media/{media}`,
 `POST /api/products/{product}/images/attach` (`media_ids[]`) y

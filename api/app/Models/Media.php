@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 #[Fillable([
     'store_id',
+    'from_platform',
     'path',
     'variants',
     'name',
@@ -34,6 +35,7 @@ class Media extends Model
     {
         return [
             'variants' => 'array',
+            'from_platform' => 'boolean',
             'size' => 'integer',
             'width' => 'integer',
             'height' => 'integer',
@@ -68,6 +70,21 @@ class Media extends Model
     public function heroes(): HasMany
     {
         return $this->hasMany(Hero::class);
+    }
+
+    /**
+     * Is anything showing this image? An image in use cannot be deleted: it
+     * has to be taken out of its products, heroes, the logo or the cover
+     * first. Otherwise deleting it would silently leave them without a photo.
+     */
+    public function isInUse(): bool
+    {
+        $store = $this->store;
+
+        return $this->products()->exists()
+            || $this->heroes()->exists()
+            || $store?->logo_media_id === $this->id
+            || $store?->cover_media_id === $this->id;
     }
 
     /**

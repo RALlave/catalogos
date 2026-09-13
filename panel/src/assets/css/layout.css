@@ -27,11 +27,24 @@
     display: flex;
     align-items: center;
     gap: 0.625rem;
-    height: 62px;
+    height: 100px;
     padding: 0 1rem;
     flex: 0 0 auto;
     border-bottom: 1px solid var(--color-sidebar-border);
     overflow: hidden;
+}
+
+/* El logo lo sube el superadmin y puede venir de cualquier proporción: la
+   franja mide siempre lo mismo y la imagen se acomoda adentro, centrada. Con
+   el menú plegado sobran 36px de ancho, así que ahí manda el ancho.
+
+   La franja mide más que la barra superior, así que su línea divisoria queda
+   más abajo: se eligió el tamaño del logo antes que la alineación. */
+.sidebar-brand img {
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100px;
+    object-fit: contain;
 }
 
 .brand-mark {
@@ -77,6 +90,27 @@
     flex: 1 1 auto;
     padding: 0.875rem 0.625rem;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-sidebar-scroll) transparent;
+}
+
+/* Barra fina y siempre a la vista, sin el riel gris del sistema (WebKit y
+   los Chrome anteriores a las propiedades estándar de arriba). */
+.sidebar-nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background-color: var(--color-sidebar-scroll);
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-sidebar-text);
 }
 
 .nav-group {
@@ -223,7 +257,9 @@
     white-space: nowrap;
 }
 
-.sidebar-collapse {
+/* Los botones del pie de la barra lateral: contraer el menú e instalar la
+   aplicación. Lo propio de cada uno va en su modificador. */
+.sidebar-action {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -236,12 +272,12 @@
     font-size: 13px;
 }
 
-.sidebar-collapse:hover {
+.sidebar-action:hover {
     background-color: var(--color-sidebar-hover);
     color: var(--color-sidebar-text-strong);
 }
 
-.sidebar-collapse svg {
+.sidebar-action svg {
     width: 18px;
     height: 18px;
     flex: 0 0 auto;
@@ -259,7 +295,7 @@
 .shell.is-collapsed .nav-arrow,
 .shell.is-collapsed .nav-group-label,
 .shell.is-collapsed .plan-card,
-.shell.is-collapsed .sidebar-collapse span {
+.shell.is-collapsed .sidebar-action span {
     display: none;
 }
 
@@ -269,7 +305,7 @@
 
 .shell.is-collapsed .nav-item > a,
 .shell.is-collapsed .nav-toggle,
-.shell.is-collapsed .sidebar-collapse {
+.shell.is-collapsed .sidebar-action {
     justify-content: center;
     padding-left: 0.5rem;
     padding-right: 0.5rem;

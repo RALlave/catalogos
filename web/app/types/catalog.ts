@@ -93,6 +93,9 @@ export interface Store {
     categories: Category[]
     cart_enabled: boolean
     waitlist_enabled: boolean
+    featured_enabled: boolean
+    featured_title: string | null
+    featured_subtitle: string | null
 }
 
 export interface Paginated<T> {

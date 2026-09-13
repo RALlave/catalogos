@@ -24,6 +24,15 @@ export default defineNuxtConfig({
         },
     },
 
+    /* Cada tienda se abre en su subdominio, también en desarrollo
+       (rex.lvh.me:3000). Vite bloquea los hosts que no conoce para protegerse
+       del DNS rebinding, así que hay que nombrarlos. */
+    vite: {
+        server: {
+            allowedHosts: ['.lvh.me'],
+        },
+    },
+
     app: {
         head: {
             htmlAttrs: { lang: 'es' },

@@ -28,6 +28,10 @@ return [
         'thumb' => 400,
         'card' => 800,
         'full' => 1600,
+
+        /* Las dos que pide el manifest de una PWA para el ícono de la app. */
+        'icon' => 192,
+        'icon_large' => 512,
     ],
 
     /*
@@ -42,11 +46,15 @@ return [
     | The original file is not kept, so a product image cannot be upscaled
     | later: picking one for the banner stretches its card variant.
     |
+    | `icon` is the platform icon, the only square upload: it is not a photo of
+    | anything, so the catalog sizes do not apply to it.
+    |
     */
 
     'profiles' => [
         'library' => ['thumb', 'card', 'full'],
         'product' => ['thumb', 'card'],
+        'icon' => ['icon', 'icon_large'],
     ],
 
 ];

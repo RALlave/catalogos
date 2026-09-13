@@ -32,7 +32,10 @@ class StoreController extends Controller
                 ->where('active', true)
                 ->firstOrFail();
 
-            return ['store' => (new PublicStoreResource($store))->resolve()];
+            /* Por JSON y no con `resolve()`: ese aplana un solo nivel y deja
+               `heroes` y `categories` adentro como objetos Resource, que la
+               caché guarda serializados para devolverlos rotos. */
+            return ['store' => json_decode((new PublicStoreResource($store))->toJson(), true)];
         });
 
         return response()->json($data);

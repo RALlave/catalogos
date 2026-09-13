@@ -193,6 +193,13 @@
     border-color: var(--color-danger);
 }
 
+/* Edge dibuja su propio ojo y su propia cruz dentro del campo: sobran, porque
+   PasswordInput ya pone el suyo y quedaban dos ojos pegados. */
+.input::-ms-reveal,
+.input::-ms-clear {
+    display: none;
+}
+
 .textarea {
     min-height: 110px;
     resize: vertical;
@@ -598,6 +605,25 @@
     object-fit: cover;
 }
 
+/* Vista previa de un logo: entero y a todo el ancho del campo. Va con
+   `contain` y no con `cover` porque lo que se está mirando es la imagen
+   completa, no si llena un recuadro. */
+.preview-logo {
+    width: 100%;
+    height: 10rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 8px;
+    background-color: var(--color-surface-alt);
+    object-fit: contain;
+}
+
+/* El ícono de la app es cuadrado: mostrarlo del ancho de la caja lo dejaría
+   perdido en el medio. */
+.preview-icon {
+    width: 10rem;
+}
+
 /* Alertas ----------------------------------------------------------------- */
 
 .alert {
@@ -725,6 +751,16 @@
     align-items: center;
     justify-content: flex-end;
     gap: 0.25rem;
+}
+
+/* Botones que ocupan una columna del form: apilados y al pie, a la altura del
+   control del campo de al lado. */
+.field-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: auto;
 }
 
 /* Toolbar de listados ----------------------------------------------------- */
@@ -2116,8 +2152,12 @@
 
 /* Reordenar por arrastre -------------------------------------------------- */
 
+/* Lo justo para el asa: la celda se encoge a lo que ocupa el botón. */
 .table-handle {
-    width: 44px;
+    width: 1%;
+    padding-left: 0.75rem;
+    padding-right: 0.5rem;
+    white-space: nowrap;
 }
 
 .drag-handle {
@@ -2137,6 +2177,7 @@
 .drag-handle svg {
     width: 18px;
     height: 18px;
+    flex: 0 0 auto;
 }
 
 .is-dragging {
@@ -2197,6 +2238,73 @@
 .modal-lg {
     max-width: 940px;
     height: 100%;
+}
+
+.modal-sm {
+    max-width: 480px;
+}
+
+/* El icono que encabeza un modal de confirmación. */
+.modal-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background-color: var(--color-warning-soft);
+    color: var(--color-warning);
+}
+
+.modal-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Lo que se va a destruir se avisa en rojo. */
+.modal-icon.is-danger {
+    background-color: var(--color-danger-soft);
+    color: var(--color-danger);
+}
+
+/* El aviso de cambios sin guardar puede abrirse sobre otro modal. */
+.modal-confirm {
+    z-index: 80;
+}
+
+/* Todo centrado: es un aviso corto, no un formulario. */
+.modal-confirm .modal-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+}
+
+.modal-confirm .modal-title {
+    align-items: center;
+}
+
+/* El detalle puede venir en varias líneas: se respetan como se escribieron. */
+.modal-confirm .modal-title p {
+    white-space: pre-line;
+}
+
+.modal-confirm .modal-footer {
+    justify-content: center;
+    padding: 1rem 0.75rem;
+}
+
+.modal-confirm .modal-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.375rem;
+    margin-left: 0;
+}
+
+/* Con el diálogo angosto, los tres entran en una fila apretando el costado. */
+.modal-confirm .modal-actions .btn {
+    padding: 0.625rem 0.75rem;
 }
 
 .modal-header {
@@ -2347,6 +2455,61 @@
     height: 13px;
 }
 
+/* Imagen que el dueño no administra: ocupa el lugar del botón de borrar. */
+.media-locked {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--color-text-muted);
+    font-size: 13px;
+}
+
+.media-locked svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Logos que la plataforma le ofrece a las tiendas ------------------------- */
+
+/* Un logo no se recorta como una foto: se ve entero sobre el fondo. */
+.logo-card-image img {
+    object-fit: contain;
+    padding: 0.75rem;
+}
+
+/* El que se le pone a una tienda recién creada: se lee sobre la imagen. */
+.logo-card-flag {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 999px;
+    background-color: var(--color-accent);
+    color: var(--color-text-invert);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.logo-card-flag svg {
+    width: 12px;
+    height: 12px;
+}
+
+.logo-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.logo-card-meta span {
+    font-size: 11px;
+    color: var(--color-text-muted);
+}
+
 .media-detail {
     display: flex;
     gap: 1.25rem;
@@ -2415,6 +2578,89 @@
     .media-detail-image {
         flex: 0 0 auto;
     }
+
+    /* Los tres botones del aviso no entran en una fila: se apilan. */
+    .modal-confirm .modal-actions {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .modal-confirm .modal-actions .btn {
+        width: 100%;
+    }
+}
+
+/* Esqueletos de carga ----------------------------------------------------- */
+
+.skeleton {
+    display: block;
+    height: 14px;
+    border-radius: 6px;
+    background-color: var(--color-surface-alt);
+    background-image: linear-gradient(90deg, transparent, var(--color-surface-hover), transparent);
+    background-repeat: no-repeat;
+    background-size: 40% 100%;
+    animation: skeleton 1.3s ease-in-out infinite;
+}
+
+.skeleton-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.0625rem 1.25rem;
+    border-bottom: 1px solid var(--color-border-soft);
+}
+
+.skeleton-row:last-child {
+    border-bottom: 0;
+}
+
+.skeleton-row .skeleton {
+    flex: 1;
+}
+
+/* El asa y la columna de acciones son angostas también en la tabla real. */
+.skeleton-row .skeleton:first-child {
+    flex: 0 0 28px;
+}
+
+.skeleton-row .skeleton:last-child {
+    flex: 0 0 48px;
+}
+
+.skeleton-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.skeleton-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.skeleton-label {
+    width: 120px;
+    height: 12px;
+}
+
+.skeleton-input {
+    height: 38px;
+    border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton {
+        animation: none;
+    }
 }
 
 /* Animaciones ------------------------------------------------------------- */
@@ -2422,6 +2668,16 @@
 @keyframes spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes skeleton {
+    from {
+        background-position: -60% 0;
+    }
+
+    to {
+        background-position: 160% 0;
     }
 }
 

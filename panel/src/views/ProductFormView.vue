@@ -5,18 +5,29 @@ import { useRoute, useRouter } from 'vue-router'
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
 import MediaPicker from '@/components/MediaPicker.vue'
+import SkeletonForm from '@/components/SkeletonForm.vue'
+import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
+import { useCategoriesStore } from '@/stores/categories'
+import { useProductsStore } from '@/stores/products'
 import { useUiStore } from '@/stores/ui'
 
 const route = useRoute()
 const router = useRouter()
 const ui = useUiStore()
+const store = useProductsStore()
+const categoriesStore = useCategoriesStore()
 
 const id = ref(route.params.id ?? null)
 const isEdit = computed(() => Boolean(id.value))
 
-const categories = ref([])
+const categories = computed(() => categoriesStore.items)
+
+/* Hasta tener los datos va el esqueleto: un formulario vacío se llena solo
+   unos milisegundos después y se lleva puesto lo que el usuario escribió. */
+const ready = ref(false)
+
 const images = ref([])
 const pending = ref([])
 const pendingMedia = ref([])
@@ -186,77 +197,20 @@ function payload() {
     return data
 }
 
-/**
- * @param {boolean} stay Guardar quedándose en la ficha en vez de volver al listado.
- */
-async function submit(stay = false) {
-    errors.value = checkRequired(form.value, REQUIRED)
-    message.value = ''
+/*
+   Lo elegido en la biblioteca y los archivos que esperan al guardado también
+   son cambios sin guardar, aunque no estén en el formulario. Del archivo va el
+   nombre: un File no se serializa. */
+const { markSaved, dirty } = useUnsavedChanges({
+    state: () => ({
+        form: form.value,
+        pending: pending.value.map(file => file.name),
+        pendingMedia: pendingMedia.value.map(media => media.id),
+    }),
+    save: persist,
+})
 
-    if (hasErrors(errors.value)) {
-        ui.toast(REQUIRED_TOAST, '', 'danger')
-        goToFirstError()
-
-        return
-    }
-
-    loading.value = true
-
-    try {
-        const created = isEdit.value
-            ? null
-            : await api.post('/products', payload())
-
-        if (created) {
-            id.value = created.product.id
-        } else {
-            await api.put(`/products/${id.value}`, payload())
-        }
-
-        await uploadPending(id.value)
-        await attachPending(id.value)
-
-        ui.toast(created ? 'Producto creado' : 'Producto actualizado', form.value.name)
-
-        if (! stay) {
-            await router.push({ name: 'products' })
-
-            return
-        }
-
-        /* Recién creado: la URL pasa a ser la de edición para no duplicarlo. */
-        if (created) {
-            await router.replace({ name: 'product-edit', params: { id: id.value } })
-        }
-    } catch (error) {
-        if (error instanceof ApiError) {
-            errors.value = error.errors
-            message.value = error.isValidation ? '' : error.message
-
-            if (error.isValidation) {
-                ui.toast('Revisá los datos cargados', '', 'danger')
-                goToFirstError()
-            }
-        } else {
-            message.value = 'No pudimos conectar con el servidor.'
-        }
-    } finally {
-        loading.value = false
-    }
-}
-
-onMounted(async () => {
-    const list = await api.get('/categories')
-
-    categories.value = list.data
-
-    if (! isEdit.value) {
-        return
-    }
-
-    const payloadProduct = await api.get(`/products/${id.value}`)
-    const product = payloadProduct.product
-
+function fill(product) {
     form.value = {
         name: product.name,
         sku: product.sku ?? '',
@@ -274,7 +228,121 @@ onMounted(async () => {
         is_new: product.is_new,
     }
 
+    markSaved()
+}
+
+/** Guarda y devuelve si salió bien. No navega: de eso se encarga submit(). */
+async function persist() {
+    errors.value = checkRequired(form.value, REQUIRED)
+    message.value = ''
+
+    if (hasErrors(errors.value)) {
+        ui.toast(REQUIRED_TOAST, '', 'danger')
+        goToFirstError()
+
+        return false
+    }
+
+    loading.value = true
+
+    try {
+        const created = isEdit.value
+            ? null
+            : await api.post('/products', payload())
+
+        let saved = created?.product ?? null
+
+        if (created) {
+            id.value = created.product.id
+        } else {
+            const updated = await api.put(`/products/${id.value}`, payload())
+
+            saved = updated.product
+        }
+
+        await uploadPending(id.value)
+        await attachPending(id.value)
+
+        /* El listado se entera sin volver a pedir la lista. */
+        store.upsert({ ...saved, images: images.value })
+
+        markSaved()
+
+        ui.toast(created ? 'Producto creado' : 'Producto actualizado', form.value.name)
+
+        return true
+    } catch (error) {
+        if (error instanceof ApiError) {
+            errors.value = error.errors
+            message.value = error.isValidation ? '' : error.message
+
+            if (error.isValidation) {
+                ui.toast('Revisá los datos cargados', '', 'danger')
+                goToFirstError()
+            }
+        } else {
+            message.value = 'No pudimos conectar con el servidor.'
+        }
+
+        return false
+    } finally {
+        loading.value = false
+    }
+}
+
+/**
+ * @param {boolean} stay Guardar quedándose en la ficha en vez de volver al listado.
+ */
+async function submit(stay = false) {
+    const wasNew = ! isEdit.value
+
+    if (! await persist()) {
+        return
+    }
+
+    if (! stay) {
+        await router.push({ name: 'products' })
+
+        return
+    }
+
+    /* Recién creado: la URL pasa a ser la de edición para no duplicarlo. */
+    if (wasNew) {
+        await router.replace({ name: 'product-edit', params: { id: id.value } })
+    }
+}
+
+onMounted(async () => {
+    /* Las categorías salen del store: si ya se abrió el listado, no se piden. */
+    categoriesStore.fetch()
+
+    if (! isEdit.value) {
+        ready.value = true
+
+        return
+    }
+
+    /* Lo que ya trajo el listado: la ficha abre llena. Las imágenes no vienen
+       ahí, así que la galería espera a la respuesta. */
+    const known = store.find(id.value)
+
+    if (known) {
+        fill(known)
+        ready.value = true
+    }
+
+    const payloadProduct = await api.get(`/products/${id.value}`)
+    const product = payloadProduct.product
+
+    /* Si el usuario ya escribió sobre lo precargado, no se le pisa. */
+    if (! dirty.value) {
+        fill(product)
+    }
+
     images.value = product.images
+    store.upsert(product)
+
+    ready.value = true
 })
 </script>
 
@@ -298,7 +366,13 @@ onMounted(async () => {
         </div>
     </div>
 
-    <form novalidate @submit.prevent="submit(true)">
+    <section v-if="! ready" class="card">
+        <div class="card-body">
+            <SkeletonForm :fields="5" />
+        </div>
+    </section>
+
+    <form v-else novalidate @submit.prevent="submit(true)">
         <section class="card">
             <nav class="tabs">
                 <button

@@ -42,6 +42,7 @@
     --color-sidebar-hover: #17395a;
     --color-sidebar-active: #1d4a70;
     --color-sidebar-muted: #7699ad;
+    --color-sidebar-scroll: #3a648a;
 
     --color-success: #14795c;
     --color-success-soft: #e2f4ef;
@@ -210,6 +211,7 @@
     --color-sidebar-hover: #2a2a2d;
     --color-sidebar-active: #3a3a3d;
     --color-sidebar-muted: #7e7e83;
+    --color-sidebar-scroll: #55555a;
 
     --color-success: #2c7a2c;
     --color-success-soft: #eaf5e6;
@@ -353,7 +355,7 @@
 }
 
 :root[data-theme="grafito"] .sidebar-brand {
-    height: 56px;
+    height: 100px;
 }
 
 :root[data-theme="grafito"] .stat-grid,
@@ -413,6 +415,7 @@
     --color-sidebar-hover: #1b1f26;
     --color-sidebar-active: #272c36;
     --color-sidebar-muted: #6b7280;
+    --color-sidebar-scroll: #454b57;
 
     --color-success: #4ade80;
     --color-success-soft: #17301f;

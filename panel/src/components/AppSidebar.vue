@@ -1,14 +1,18 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import AppIcon from '@/components/AppIcon.vue'
 import NavItem from '@/components/NavItem.vue'
+import { usePlatformStore } from '@/stores/platform'
 import { useUiStore } from '@/stores/ui'
 
 const ui = useUiStore()
+const platform = usePlatformStore()
+
+onMounted(() => platform.load())
 
 /* Ramas desplegables del menú: arranca abierta la del catálogo. */
-const open = ref({ catalog: true, store: false, account: false })
+const open = ref({ catalog: true, pages: false, store: false, account: false })
 
 function toggle(key) {
     open.value[key] = ! open.value[key]
@@ -17,14 +21,13 @@ function toggle(key) {
 
 <template>
     <aside class="sidebar">
-        <div class="sidebar-brand">
-            <span class="brand-mark">
-                <AppIcon name="bag" />
-            </span>
-            <span class="brand-text">
-                <strong>Catálogos</strong>
-                <span>Panel de administración</span>
-            </span>
+        <div v-if="platform.logos.panel" class="sidebar-brand">
+            <img
+                :src="platform.logos.panel.src"
+                :srcset="platform.logos.panel.srcset"
+                sizes="218px"
+                alt="Logo"
+            >
         </div>
 
         <nav class="sidebar-nav" aria-label="Menú principal">
@@ -82,6 +85,35 @@ function toggle(key) {
                         </li>
 
                         <li>
+                            <div class="nav-branch" :class="{ 'is-open': open.pages }">
+                                <button
+                                    class="nav-toggle"
+                                    type="button"
+                                    :aria-expanded="open.pages"
+                                    @click="toggle('pages')"
+                                >
+                                    <span class="nav-icon">
+                                        <AppIcon name="layers" />
+                                    </span>
+                                    <span class="nav-text">Páginas</span>
+                                    <span class="nav-arrow">
+                                        <AppIcon name="chevronRight" stroke-width="2.5" />
+                                    </span>
+                                </button>
+
+                                <div class="nav-sub">
+                                    <ul>
+                                        <li>
+                                            <NavItem :to="{ name: 'page-home' }">
+                                                <span class="nav-text">Home</span>
+                                            </NavItem>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
                             <div class="nav-branch" :class="{ 'is-open': open.store }">
                                 <button
                                     class="nav-toggle"
@@ -103,11 +135,6 @@ function toggle(key) {
                                         <li>
                                             <NavItem :to="{ name: 'store' }">
                                                 <span class="nav-text">Información</span>
-                                            </NavItem>
-                                        </li>
-                                        <li>
-                                            <NavItem :to="{ name: 'heroes' }">
-                                                <span class="nav-text">Hero (banner)</span>
                                             </NavItem>
                                         </li>
                                         <li>
@@ -184,7 +211,7 @@ function toggle(key) {
                 <p>24 de 50 productos usados</p>
             </div>
 
-            <button class="sidebar-collapse" type="button" @click="ui.toggleSidebar()">
+            <button class="sidebar-action sidebar-collapse" type="button" @click="ui.toggleSidebar()">
                 <AppIcon name="chevronsLeft" />
                 <span>Contraer menú</span>
             </button>

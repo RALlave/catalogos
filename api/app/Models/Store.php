@@ -38,6 +38,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'schedules',
     'cart_enabled',
     'waitlist_enabled',
+    'featured_enabled',
+    'featured_title',
+    'featured_subtitle',
     'active',
 ])]
 class Store extends Model
@@ -53,6 +56,7 @@ class Store extends Model
             'schedules' => 'array',
             'cart_enabled' => 'boolean',
             'waitlist_enabled' => 'boolean',
+            'featured_enabled' => 'boolean',
             'active' => 'boolean',
         ];
     }

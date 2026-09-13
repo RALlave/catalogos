@@ -38,6 +38,9 @@ class MediaResource extends JsonResource
                 ->values()),
             'used_as_logo' => $store?->logo_media_id === $this->id,
             'used_as_cover' => $store?->cover_media_id === $this->id,
+            /* Copia de un logo de la plataforma: la administra el sistema, así
+               que la biblioteca no la deja borrar. */
+            'from_platform' => $this->from_platform,
             'created_at' => $this->created_at,
         ];
     }

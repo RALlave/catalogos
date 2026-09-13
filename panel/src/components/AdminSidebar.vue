@@ -1,29 +1,30 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted } from 'vue'
 
 import AppIcon from '@/components/AppIcon.vue'
 import NavItem from '@/components/NavItem.vue'
+import { usePwaInstall } from '@/lib/pwa'
+import { usePlatformStore } from '@/stores/platform'
 import { useUiStore } from '@/stores/ui'
 
 const ui = useUiStore()
+const platform = usePlatformStore()
 
-const open = ref({ platform: false })
+/* El dueño de una tienda la tiene en el menú de su usuario, no acá. */
+const { canInstall, install } = usePwaInstall()
 
-function toggle(key) {
-    open.value[key] = ! open.value[key]
-}
+onMounted(() => platform.load())
 </script>
 
 <template>
     <aside class="sidebar">
-        <div class="sidebar-brand">
-            <span class="brand-mark">
-                <AppIcon name="shieldCheck" />
-            </span>
-            <span class="brand-text">
-                <strong>Catálogos</strong>
-                <span>Plataforma</span>
-            </span>
+        <div v-if="platform.logos.panel" class="sidebar-brand">
+            <img
+                :src="platform.logos.panel.src"
+                :srcset="platform.logos.panel.srcset"
+                sizes="218px"
+                alt="Logo"
+            >
         </div>
 
         <nav class="sidebar-nav" aria-label="Menú principal">
@@ -77,46 +78,52 @@ function toggle(key) {
                             </NavItem>
                         </li>
 
+                    </ul>
+                </div>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-label">Configuración</div>
+
+                <div class="nav-list">
+                    <ul>
                         <li>
-                            <div class="nav-branch" :class="{ 'is-open': open.platform }">
-                                <button
-                                    class="nav-toggle"
-                                    type="button"
-                                    :aria-expanded="open.platform"
-                                    @click="toggle('platform')"
-                                >
+                            <NavItem :to="{ name: 'admin-appearance' }">
+                                <span class="nav-icon">
+                                    <AppIcon name="theme" />
+                                </span>
+                                <span class="nav-text">Apariencia</span>
+                            </NavItem>
+                        </li>
+
+                        <li>
+                            <NavItem :to="{ name: 'admin-backup' }">
+                                <span class="nav-icon">
+                                    <AppIcon name="database" />
+                                </span>
+                                <span class="nav-text">Import &amp; Export</span>
+                            </NavItem>
+                        </li>
+
+                        <li>
+                            <div class="nav-item">
+                                <a href="#">
+                                    <span class="nav-icon">
+                                        <AppIcon name="mail" />
+                                    </span>
+                                    <span class="nav-text">Correos</span>
+                                </a>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="nav-item">
+                                <a href="#">
                                     <span class="nav-icon">
                                         <AppIcon name="settings" />
                                     </span>
-                                    <span class="nav-text">Plataforma</span>
-                                    <span class="nav-arrow">
-                                        <AppIcon name="chevronRight" stroke-width="2.5" />
-                                    </span>
-                                </button>
-
-                                <div class="nav-sub">
-                                    <ul>
-                                        <li>
-                                            <NavItem :to="{ name: 'admin-appearance' }">
-                                                <span class="nav-text">Apariencia</span>
-                                            </NavItem>
-                                        </li>
-                                        <li>
-                                            <div class="nav-item">
-                                                <a href="#">
-                                                    <span class="nav-text">Correos</span>
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="nav-item">
-                                                <a href="#">
-                                                    <span class="nav-text">Ajustes</span>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                    <span class="nav-text">Ajustes</span>
+                                </a>
                             </div>
                         </li>
                     </ul>
@@ -125,7 +132,17 @@ function toggle(key) {
         </nav>
 
         <div class="sidebar-footer">
-            <button class="sidebar-collapse" type="button" @click="ui.toggleSidebar()">
+            <button
+                v-if="canInstall"
+                class="sidebar-action"
+                type="button"
+                @click="install"
+            >
+                <AppIcon name="monitor" />
+                <span>Instalar en el escritorio</span>
+            </button>
+
+            <button class="sidebar-action sidebar-collapse" type="button" @click="ui.toggleSidebar()">
                 <AppIcon name="chevronsLeft" />
                 <span>Contraer menú</span>
             </button>

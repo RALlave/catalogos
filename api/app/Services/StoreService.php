@@ -9,7 +9,10 @@ use Illuminate\Support\Str;
 
 class StoreService
 {
-    public function __construct(private readonly MediaService $media) {}
+    public function __construct(
+        private readonly MediaService $media,
+        private readonly PlatformLogoService $logos,
+    ) {}
 
     /**
      * @param  array<string, mixed>  $data
@@ -19,7 +22,25 @@ class StoreService
         $data['slug'] = $data['slug'] ?? $this->uniqueSlug($data['name']);
 
         // Refreshed so the database defaults (active) reach the response.
-        return $user->store()->create($data)->refresh();
+        $store = $user->store()->create($data)->refresh();
+
+        return $this->applyDefaultLogo($store);
+    }
+
+    /**
+     * La tienda nueva arranca con el logo que dejó marcado el superadmin, si
+     * hay uno. Se copia a su biblioteca, igual que cuando el dueño elige uno:
+     * desde el primer día el logo es suyo y puede cambiarlo o borrarlo.
+     */
+    private function applyDefaultLogo(Store $store): Store
+    {
+        $logo = $this->logos->default();
+
+        if (! $logo) {
+            return $store;
+        }
+
+        return $this->setImage($store, $this->media->copyFrom($store, $logo)->id, 'logo');
     }
 
     /**
@@ -69,7 +90,30 @@ class StoreService
     {
         $store->update([$field.'_media_id' => $mediaId]);
 
+        if ($field === 'logo') {
+            $this->forgetPlatformCopies($store, $mediaId);
+        }
+
         return $store->refresh();
+    }
+
+    /**
+     * Borra las copias de logos de la plataforma que ya no son el logo.
+     *
+     * El dueño puede probar varios: sin esto, cada uno dejaría una imagen más
+     * en la biblioteca. Lo que subió él no se toca nunca — sólo se borra lo que
+     * entró como copia y dejó de usarse.
+     */
+    private function forgetPlatformCopies(Store $store, ?int $keep): void
+    {
+        $copies = $store->media()
+            ->where('from_platform', true)
+            ->when($keep, fn ($query) => $query->whereKeyNot($keep))
+            ->get();
+
+        foreach ($copies as $copy) {
+            $this->media->delete($copy);
+        }
     }
 
     /**

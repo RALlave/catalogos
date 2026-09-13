@@ -3,66 +3,65 @@ import { computed, onMounted, ref, watch } from 'vue'
 import draggable from 'vuedraggable'
 
 import AppIcon from '@/components/AppIcon.vue'
+import SkeletonTable from '@/components/SkeletonTable.vue'
 import { api } from '@/services/api'
+import { useCategoriesStore } from '@/stores/categories'
+import { useConfirmStore } from '@/stores/confirm'
+import { useProductsStore } from '@/stores/products'
 import { useUiStore } from '@/stores/ui'
 
 const ui = useUiStore()
+const confirm = useConfirmStore()
+const store = useProductsStore()
+const categoriesStore = useCategoriesStore()
 
-const products = ref([])
-const categories = ref([])
-const meta = ref(null)
-const loading = ref(true)
+/* El arrastre reordena la lista del store: por eso se escribe, no se copia. */
+const products = computed({
+    get: () => store.items,
+    set: value => {
+        store.items = value
+    },
+})
+
+const categories = computed(() => categoriesStore.items)
+const meta = computed(() => store.meta)
+
+/* `mark` es cuál de las tres marcas del producto se está mirando: destacado,
+   nuevo o en oferta. Es uno solo a la vez, así que va como un valor y no como
+   tres banderas sueltas. Los filtros viven en el store: al volver de editar,
+   el listado se ve tal como se dejó. */
+const filters = computed(() => store.filters)
+
 const selected = ref([])
 const featuring = ref(null)
 const cloning = ref(null)
 
-const filters = ref({ search: '', category_id: '', visible: '' })
-const page = ref(1)
-
 const allChecked = computed(() => products.value.length > 0
     && selected.value.length === products.value.length)
 
-async function load() {
-    loading.value = true
+/** Pide la lista y deja seleccionado sólo lo que sigue estando. */
+async function refresh() {
+    await store.fetch()
 
-    try {
-        const payload = await api.get('/products', {
-            search: filters.value.search,
-            category_id: filters.value.category_id,
-            visible: filters.value.visible,
-            page: page.value,
-        })
-
-        products.value = payload.data
-        meta.value = payload.meta
-        selected.value = []
-    } finally {
-        loading.value = false
-    }
-}
-
-async function loadCategories() {
-    const payload = await api.get('/categories')
-
-    categories.value = payload.data
+    selected.value = selected.value.filter(id => store.items.some(item => item.id === id))
 }
 
 let searchTimer
 
-watch(() => filters.value.search, () => {
+watch(() => store.filters.search, () => {
     clearTimeout(searchTimer)
     searchTimer = setTimeout(() => {
-        page.value = 1
-        load()
+        store.page = 1
+        refresh()
     }, 350)
 })
 
-watch(() => [filters.value.category_id, filters.value.visible], () => {
-    page.value = 1
-    load()
+watch(() => [store.filters.category_id, store.filters.visible, store.filters.mark], () => {
+    store.page = 1
+    refresh()
 })
 
-watch(page, load)
+watch(() => store.page, refresh)
 
 function toggleAll(event) {
     selected.value = event.target.checked ? products.value.map(item => item.id) : []
@@ -92,9 +91,6 @@ async function saveOrder() {
         await api.post('/products/reorder', { ids })
 
         ui.toast('Orden actualizado')
-
-        /* Se recarga para que la columna "Orden" muestre los valores guardados. */
-        await load()
     } catch {
         products.value = orderBackup.map(id => products.value.find(product => product.id === id))
 
@@ -119,6 +115,16 @@ async function toggleFeatured(product) {
 }
 
 async function duplicate(product) {
+    const confirmed = await confirm.ask({
+        title: `¿Clonar "${product.name}"?`,
+        text: 'La copia se crea oculta.',
+        action: 'Clonar',
+    })
+
+    if (! confirmed) {
+        return
+    }
+
     cloning.value = product.id
 
     try {
@@ -126,7 +132,7 @@ async function duplicate(product) {
 
         ui.toast('Producto clonado', payload.product.name)
 
-        await load()
+        await refresh()
     } catch {
         ui.toast('No pudimos clonar el producto', product.name, 'danger')
     } finally {
@@ -135,15 +141,22 @@ async function duplicate(product) {
 }
 
 async function remove(product) {
-    if (! window.confirm(`¿Eliminar "${product.name}"? No se puede deshacer.`)) {
+    const confirmed = await confirm.ask({
+        title: `¿Eliminar "${product.name}"?`,
+        text: 'No se puede deshacer.',
+        action: 'Eliminar',
+        danger: true,
+    })
+
+    if (! confirmed) {
         return
     }
 
     await api.delete(`/products/${product.id}`)
 
-    ui.toast('Producto eliminado', product.name)
+    store.drop(product.id)
 
-    await load()
+    ui.toast('Producto eliminado', product.name)
 }
 
 /* La API no tiene endpoints en lote: se resuelve con una llamada por producto. */
@@ -152,11 +165,18 @@ async function bulkVisibility(visible) {
 
     ui.toast(visible ? 'Productos publicados' : 'Productos ocultados')
 
-    await load()
+    await refresh()
 }
 
 async function bulkRemove() {
-    if (! window.confirm(`¿Eliminar ${selected.value.length} productos? No se puede deshacer.`)) {
+    const confirmed = await confirm.ask({
+        title: `¿Eliminar ${selected.value.length} productos?`,
+        text: 'No se puede deshacer.',
+        action: 'Eliminar',
+        danger: true,
+    })
+
+    if (! confirmed) {
         return
     }
 
@@ -164,7 +184,7 @@ async function bulkRemove() {
 
     ui.toast('Productos eliminados')
 
-    await load()
+    await refresh()
 }
 
 function money(product) {
@@ -177,8 +197,10 @@ function money(product) {
     return new Intl.NumberFormat('es-PY', { maximumFractionDigits: 2 }).format(Number(amount))
 }
 
-onMounted(async () => {
-    await Promise.all([load(), loadCategories()])
+/* Lo ya cargado se dibuja al instante y las peticiones confirman por detrás. */
+onMounted(() => {
+    refresh()
+    categoriesStore.fetch()
 })
 </script>
 
@@ -223,6 +245,13 @@ onMounted(async () => {
                     <option value="1">Visible</option>
                     <option value="0">Oculto</option>
                 </select>
+
+                <select v-model="filters.mark" class="select" aria-label="Filtrar por marca">
+                    <option value="">Todos</option>
+                    <option value="featured">Destacados</option>
+                    <option value="is_new">Nuevos</option>
+                    <option value="on_sale">En oferta</option>
+                </select>
             </div>
 
             <div class="toolbar-count">{{ meta?.total ?? 0 }} resultados</div>
@@ -237,9 +266,7 @@ onMounted(async () => {
         </div>
 
         <div class="card-body is-flush">
-            <div v-if="loading" class="empty">
-                <p>Cargando…</p>
-            </div>
+            <SkeletonTable v-if="! store.loaded" :rows="6" :columns="5" />
 
             <div v-else-if="! products.length" class="empty">
                 <p>No hay productos con esos filtros.</p>
@@ -267,7 +294,6 @@ onMounted(async () => {
                             <th>Precio</th>
                             <th>Destacado</th>
                             <th>Estado</th>
-                            <th>Orden</th>
                             <th><span class="visually-hidden">Acciones</span></th>
                         </tr>
                     </thead>
@@ -354,8 +380,6 @@ onMounted(async () => {
                                     </span>
                                 </td>
 
-                                <td>{{ product.order }}</td>
-
                                 <td>
                                     <div class="table-actions">
                                         <button
@@ -403,17 +427,17 @@ onMounted(async () => {
             <nav class="pagination" aria-label="Paginación">
                 <button
                     class="page-link"
-                    :class="{ 'is-disabled': page <= 1 }"
+                    :class="{ 'is-disabled': store.page <= 1 }"
                     type="button"
-                    @click="page > 1 && page--"
+                    @click="store.page > 1 && store.page--"
                 >
                     Anterior
                 </button>
                 <button
                     class="page-link"
-                    :class="{ 'is-disabled': page >= meta.last_page }"
+                    :class="{ 'is-disabled': store.page >= meta.last_page }"
                     type="button"
-                    @click="page < meta.last_page && page++"
+                    @click="store.page < meta.last_page && store.page++"
                 >
                     Siguiente
                 </button>

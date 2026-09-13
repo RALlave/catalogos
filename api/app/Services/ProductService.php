@@ -140,7 +140,26 @@ class ProductService
             ->when(isset($filters['category_id']), fn (Builder $q) => $q->where('category_id', $filters['category_id']))
             ->when(isset($filters['visible']), fn (Builder $q) => $q->where('visible', filter_var($filters['visible'], FILTER_VALIDATE_BOOLEAN)))
             ->when(isset($filters['featured']), fn (Builder $q) => $q->where('featured', filter_var($filters['featured'], FILTER_VALIDATE_BOOLEAN)))
+            ->when(isset($filters['is_new']), fn (Builder $q) => $q->where('is_new', filter_var($filters['is_new'], FILTER_VALIDATE_BOOLEAN)))
+            ->when(isset($filters['on_sale']), fn (Builder $q) => $this->onSale($q, filter_var($filters['on_sale'], FILTER_VALIDATE_BOOLEAN)))
             ->when(isset($filters['search']), fn (Builder $q) => $q->where('name', 'like', '%'.$filters['search'].'%'));
+    }
+
+    /**
+     * On sale is not a column: it is having a lower price than the regular one.
+     * A product without a price cannot be on sale, and null loses the
+     * comparison on its own.
+     *
+     * @param  Builder<Product>  $query
+     * @return Builder<Product>
+     */
+    private function onSale(Builder $query, bool $onSale): Builder
+    {
+        $condition = fn (Builder $q) => $q
+            ->whereNotNull('sale_price')
+            ->whereColumn('sale_price', '<', 'price');
+
+        return $onSale ? $query->where($condition) : $query->whereNot($condition);
     }
 
     /**

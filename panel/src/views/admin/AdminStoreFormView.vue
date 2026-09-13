@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
 import PasswordInput from '@/components/PasswordInput.vue'
+import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
 import { useAuthStore } from '@/stores/auth'
@@ -52,7 +53,14 @@ function payload() {
     return isEdit.value ? data : { ...owner.value, ...data }
 }
 
-async function submit() {
+/* En el alta, los datos del dueño también son cambios sin guardar. */
+const { markSaved } = useUnsavedChanges({
+    state: () => ({ form: form.value, owner: owner.value }),
+    save: persist,
+})
+
+/** Guarda y devuelve si salió bien. No navega: de eso se encarga submit(). */
+async function persist() {
     /* En el alta también son obligatorios los datos del dueño. */
     errors.value = isEdit.value
         ? checkRequired(form.value, ['name'])
@@ -66,7 +74,7 @@ async function submit() {
     if (hasErrors(errors.value)) {
         ui.toast(REQUIRED_TOAST, '', 'danger')
 
-        return
+        return false
     }
 
     loading.value = true
@@ -78,9 +86,11 @@ async function submit() {
             await api.post('/admin/stores', payload())
         }
 
+        markSaved()
+
         ui.toast(isEdit.value ? 'Tienda actualizada' : 'Tienda creada', form.value.name)
 
-        await router.push({ name: 'admin-stores' })
+        return true
     } catch (error) {
         if (error instanceof ApiError) {
             errors.value = error.errors
@@ -88,8 +98,16 @@ async function submit() {
         } else {
             message.value = 'No pudimos conectar con el servidor.'
         }
+
+        return false
     } finally {
         loading.value = false
+    }
+}
+
+async function submit() {
+    if (await persist()) {
+        await router.push({ name: 'admin-stores' })
     }
 }
 
@@ -126,6 +144,8 @@ onMounted(async () => {
         currency: store.currency ?? '',
         active: store.active,
     }
+
+    markSaved()
 })
 </script>
 
