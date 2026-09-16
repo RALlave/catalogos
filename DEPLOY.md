@@ -354,7 +354,9 @@ sudo -u miotienda-api php8.3 artisan route:cache
 # Catálogo + panel de las tiendas
 cd /home/miotienda-tiendas/htdocs/tiendas.miotienda.com
 sudo -u miotienda-tiendas git pull
-cd web   && sudo -u miotienda-tiendas npm ci && sudo -u miotienda-tiendas npm run build
+# Nuxt necesita el Node 22 de nvm: sudo -u usa el Node 20 del sistema
+NODE22="env PATH=/home/miotienda-tiendas/.nvm/versions/node/v22.19.0/bin:/usr/bin:/bin NUXT_TELEMETRY_DISABLED=1"
+cd web   && sudo -u miotienda-tiendas $NODE22 npm ci && sudo -u miotienda-tiendas $NODE22 npm run build
 cd ../panel && sudo -u miotienda-tiendas npm ci && sudo -u miotienda-tiendas npm run build
 sudo systemctl restart catalogos-web
 
@@ -366,6 +368,20 @@ cd panel && sudo -u miotienda-apex npm ci && sudo -u miotienda-apex npm run buil
 
 Nginx no se reinicia: el panel y la landing son archivos, y el catálogo lo
 reinicia systemd.
+
+El build de `web` **tiene que correr con Node 22**. Con `sudo -u` a secas toma
+el Node 20 del sistema y falla con `partsBSet.isSubsetOf is not a function`;
+por eso va el `$NODE22`. El panel compila con cualquiera de los dos.
+
+Tres pasos que dependen de lo que traiga el cambio:
+
+- **Si trae migraciones**, respaldar la base antes del `migrate`. Para ver si
+  hay pendientes: `php8.3 artisan migrate:status | grep Pending`.
+- **Si cambió la forma de las respuestas de la API**, correr
+  `php8.3 artisan cache:clear`: la caché pública guarda respuestas por 10
+  minutos.
+- **Si cambió `deploy/vhost-*.conf`**, pegar los bloques a mano en CloudPanel:
+  no llegan con el pull.
 
 ---
 
