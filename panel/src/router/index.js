@@ -192,6 +192,12 @@ const routes = [
                 component: () => import('@/views/admin/AdminSettingsView.vue'),
                 meta: { title: 'Ajustes' },
             },
+            {
+                path: 'cuenta',
+                name: 'admin-account',
+                component: () => import('@/views/AccountView.vue'),
+                meta: { title: 'Cuenta' },
+            },
         ],
     },
 

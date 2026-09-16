@@ -22,6 +22,9 @@ const { canInstall, install } = usePwaInstall()
 
 const themes = computed(() => (props.admin ? ADMIN_THEMES : THEMES))
 
+/* Los dos roles usan la misma pantalla de cuenta, cada uno bajo su prefijo. */
+const accountRoute = computed(() => (props.admin ? 'admin-account' : 'account'))
+
 async function logout() {
     await auth.logout()
     await router.push({ name: 'login' })
@@ -133,21 +136,21 @@ async function logout() {
 
                 <hr>
 
+                <div class="dropdown-item">
+                    <RouterLink :to="{ name: accountRoute, hash: '#perfil' }">
+                        <AppIcon name="user" />
+                        Mi perfil
+                    </RouterLink>
+                </div>
+
+                <div class="dropdown-item">
+                    <RouterLink :to="{ name: accountRoute, hash: '#seguridad' }">
+                        <AppIcon name="shield" />
+                        Seguridad
+                    </RouterLink>
+                </div>
+
                 <template v-if="! admin">
-                    <div class="dropdown-item">
-                        <RouterLink :to="{ name: 'account', hash: '#perfil' }">
-                            <AppIcon name="user" />
-                            Mi perfil
-                        </RouterLink>
-                    </div>
-
-                    <div class="dropdown-item">
-                        <RouterLink :to="{ name: 'account', hash: '#seguridad' }">
-                            <AppIcon name="shield" />
-                            Seguridad
-                        </RouterLink>
-                    </div>
-
                     <div class="dropdown-item">
                         <RouterLink :to="{ name: 'settings' }">
                             <AppIcon name="settings" />
@@ -161,9 +164,9 @@ async function logout() {
                             Instalar en el escritorio
                         </button>
                     </div>
-
-                    <hr>
                 </template>
+
+                <hr>
 
                 <div class="dropdown-item is-danger">
                     <button type="button" @click="logout">
