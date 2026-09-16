@@ -899,6 +899,57 @@
     margin-top: var(--space-5);
 }
 
+/* Content aligned to the left, chosen for each hero */
+.banner-slide[data-align="left"] .banner-inner {
+    text-align: left;
+}
+
+.banner-slide[data-align="left"] .banner-title,
+.banner-slide[data-align="left"] .banner-title::after,
+.banner-slide[data-align="left"] .banner-text {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.banner-slide[data-align="left"] .banner-actions {
+    justify-content: flex-start;
+}
+
+/* ------------------------------------------------------------
+   RICH TEXT — HTML written with the panel editor. It only brings
+   p, br, strong, em, u, ul, ol and li, so it is styled from the
+   wrapper: the tags inside carry no classes.
+   ------------------------------------------------------------ */
+
+.rich-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.rich-text ul,
+.rich-text ol {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding-left: 1.25rem;
+}
+
+.rich-text ul {
+    list-style: disc;
+}
+
+.rich-text ol {
+    list-style: decimal;
+}
+
+/* Centered banners: the bullets travel with the text */
+.banner-text.rich-text ul,
+.banner-text.rich-text ol {
+    padding-left: 0;
+    list-style-position: inside;
+}
+
 /* ============================================================
    SECCIÓN
    ============================================================ */
@@ -986,6 +1037,21 @@
     width: 1rem;
 }
 
+/* Ruedita del chip mientras llega el listado filtrado: toma el color
+   del texto del chip, así sigue la paleta sin un color propio */
+.chip-spinner {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: chip-spin 0.7s linear infinite;
+}
+
+@keyframes chip-spin {
+    to { transform: rotate(360deg); }
+}
+
 /* Cantidad de resultados: `role="status"` lo hace región viva,
    así el filtro también se percibe sin ver la grilla */
 .result {
@@ -1022,11 +1088,11 @@
     border: var(--border-thin) solid var(--color-border);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: border-color var(--transition-fast), transform var(--transition-medium);
+    transition: box-shadow var(--transition-fast), transform var(--transition-medium);
 }
 
 .product:hover {
-    border-color: var(--color-border-strong);
+    box-shadow: 0 8px 24px var(--color-shadow);
     transform: translateY(-2px);
 }
 
@@ -1168,7 +1234,7 @@
 
 .price-currency {
     color: var(--color-text-muted);
-    font-size: var(--text-sm);
+    font-size: 1.125rem;
 }
 
 .price-value {
@@ -1903,8 +1969,9 @@
     row-gap: var(--space-2);
 }
 
+/* Two steps below the product title: 18px here, 22px from 992px up. */
 .price-detail .price-value {
-    font-size: var(--text-2xl);
+    font-size: var(--text-md);
 }
 
 /* Precio anterior: `<s>` + el prefijo oculto "Precio anterior:" */
@@ -1990,8 +2057,8 @@
    entera en las paletas saturadas. */
 .benefits {
     display: grid;
-    gap: var(--space-4);
-    padding: var(--space-4);
+    gap: 0.875rem;
+    padding: 1.5rem var(--space-4);
     background-color: var(--color-surface-alt);
     background-image: linear-gradient(to right, var(--color-surface-alt), var(--color-grad-alt-2));
     border-radius: var(--radius-lg);
@@ -2627,6 +2694,76 @@
 }
 
 /* ============================================================
+   SHARE MODAL — network picker on the product page
+   ============================================================ */
+
+.share-modal {
+    width: min(100% - 2rem, 24rem);
+    max-width: none;
+    padding: 0;
+    background-color: var(--color-surface);
+    border: 0;
+    border-radius: var(--radius-lg);
+    color: var(--color-text);
+}
+
+.share-modal::backdrop {
+    background-color: var(--color-veil);
+}
+
+.share-modal-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.share-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+    border-bottom: var(--border-thin) solid var(--color-border);
+}
+
+.share-modal-title h2 {
+    font-size: var(--text-md);
+}
+
+.share-modal-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--touch-min);
+    height: var(--touch-min);
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+}
+
+.share-modal-close:hover {
+    color: var(--color-accent);
+}
+
+.share-modal-close-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.share-modal-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+}
+
+.share-option {
+    justify-content: flex-start;
+    width: 100%;
+}
+
+/* ============================================================
    LISTA DE ESPERA — formulario de la ficha de un producto agotado
    ============================================================ */
 
@@ -2732,7 +2869,8 @@
    que le toca en la jerarquía y sólo cambia cuánto pesa a la vista.
    Sirven también dentro de un título, para partirlo en dos alturas. */
 .h2 {
-    font-size: var(--text-lg);
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
 }
 
 .h3 {
@@ -2845,6 +2983,59 @@
     margin-top: 0;
 }
 
+/* ------------------------------------------------------------
+   BACK TO TOP — fixed bottom right, shows after scrolling
+   ------------------------------------------------------------ */
+.back-to-top {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 30;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--touch-min);
+    height: var(--touch-min);
+    padding: 0;
+    border: 0;
+    /* Follows the store shape: 0 with square corners, round otherwise */
+    border-radius: var(--radius-pill);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    box-shadow: 0 8px 24px var(--color-shadow);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0.5rem);
+    transition: opacity var(--transition-medium),
+                transform var(--transition-medium),
+                visibility 0s linear var(--time-medium);
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity var(--transition-medium),
+                transform var(--transition-medium),
+                visibility 0s;
+}
+
+.back-to-top:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.back-to-top:focus-visible {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+.back-to-top-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    transform: rotate(180deg);
+}
+
 /* ============================================================
    RESPONSIVE — un bloque por breakpoint, ordenados
    340px es la base · 991px y 1440px se cubren acá
@@ -2864,6 +3055,10 @@
 }
 
 @media (min-width: 62rem) {          /* 992px — supera el corte de 991px */
+
+    .price-detail .price-value {
+        font-size: var(--text-lg);
+    }
 
     /* Acá la cabecera ya no se lleva media pantalla: se queda quieta y
        se va con el scroll, sin retirarse ni volver. */
@@ -2901,9 +3096,11 @@
     /* `margin-left: auto` y no `space-between`: acá `.header-actions`
        queda vacío (el carrito se muda a la barra) pero sigue ocupando el
        extremo derecho, y sin esto los datos flotan en el medio. */
+    /* Tight gap: between 992px and 1440px the three items do not fit in a
+       row and wrap; a big gap would open a hole between the two lines. */
     .info-list {
         display: flex;
-        gap: var(--space-7);
+        gap: var(--space-3);
         margin-left: auto;
     }
 
@@ -3144,5 +3341,9 @@
 
     :root {
         --nav-item-pad: var(--space-5);
+    }
+
+    .info-list {
+        gap: var(--space-7);
     }
 }

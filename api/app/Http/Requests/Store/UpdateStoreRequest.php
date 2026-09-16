@@ -2,15 +2,24 @@
 
 namespace App\Http\Requests\Store;
 
+use App\Http\Requests\Concerns\SanitizesRichText;
+use App\Rules\RichTextMax;
 use App\Services\ThemeService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateStoreRequest extends FormRequest
 {
+    use SanitizesRichText;
+
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->sanitizeRichText(['description']);
     }
 
     /**
@@ -39,7 +48,7 @@ class UpdateStoreRequest extends FormRequest
             'featured_enabled' => ['sometimes', 'boolean'],
             'featured_title' => ['sometimes', 'nullable', 'string', 'max:60'],
             'featured_subtitle' => ['sometimes', 'nullable', 'string', 'max:80'],
-            'description' => ['nullable', 'string', 'max:2000'],
+            'description' => ['nullable', 'string', new RichTextMax(2000)],
             'meta_title' => ['nullable', 'string', 'max:60'],
             'meta_description' => ['nullable', 'string', 'max:160'],
             'industry' => ['nullable', 'string', 'max:255'],

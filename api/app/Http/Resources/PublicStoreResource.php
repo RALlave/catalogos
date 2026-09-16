@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Services\ThemeService;
+use App\Support\RichText;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -29,6 +30,8 @@ class PublicStoreResource extends JsonResource
             'featured_title' => $this->featured_title,
             'featured_subtitle' => $this->featured_subtitle,
             'description' => $this->description,
+            /* Without formatting: the footer and the meta tags. */
+            'description_text' => RichText::toText($this->description),
             'meta_title' => $this->meta_title,
             'meta_description' => $this->meta_description,
             'industry' => $this->industry,

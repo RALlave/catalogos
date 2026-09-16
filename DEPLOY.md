@@ -177,6 +177,19 @@ api.miotienda.com/api/public
 > entre una petición y la siguiente, y entrar al panel de una tienda falla
 > siempre. El `.env` de ejemplo ya trae `database`.
 
+### El cron de Laravel
+
+La papelera de tiendas se vacía sola con un comando diario
+(`stores:purge-trash`), y eso sólo corre si el servidor llama al scheduler cada
+minuto. **CloudPanel → Sites → api.miotienda.com → Cron Jobs**:
+
+```
+* * * * *   php8.3 /home/miotienda-api/htdocs/api.miotienda.com/api/artisan schedule:run >> /dev/null 2>&1
+```
+
+Sin este cron no falla nada visible: las tiendas simplemente se quedan en la
+papelera para siempre, hasta que alguien las borre a mano.
+
 Permisos: PHP necesita escribir en dos carpetas y en ninguna otra. Si se clonó
 como el site user ya están bien; esto es por las dudas.
 

@@ -1,0 +1,25 @@
+LINKS DE ORIGEN — Celulares y accesorios
+=========================================================
+Un renglon por producto: nombre del archivo (sin el -NN) y el link.
+
+Ejemplo:
+honor-magic6-lite | https://tienda.com/producto/...
+
+De ahi saco specs, que incluye y precio. El texto lo reescribo yo,
+no se copia de la tienda.
+
+Si un producto no tiene link, dejalo igual y pone al lado lo que sepas.
+
+::::::::::::::::::
+01. honor-one-plus | https://tecnopolis.com.bo/products/oneplus-15-16-gb-ram-512-gb-dual-sim-arena
+02. iphone-17-pro | https://tecnopolis.com.bo/products/apple-iphone-17-pro-512gb-deep-blue-esim-a3256?pr_prod_strat=e5_desc&pr_rec_id=6aa64e6ee&pr_rec_pid=9003766546651&pr_ref_pid=9304987173083&pr_seq=uniform
+03. iphone-17-256gb-white | https://tecnopolis.com.bo/products/iphone-17-256gb-white-dual-esim-a3519
+04. google-pixell-11-pro | https://tecnopolis.com.bo/products/google-pixel-11-pro-xl-256-gb-obsidian-copia
+05. redmagic-11s-pro | https://tecnopolis.com.bo/products/redmagic-11s-pro-subzero-16gb-512gb
+06. google-pixel-10-pro | https://tecnopolis.com.bo/products/google-pixel-10-pro-xl-256-gb-moonstone
+07. honor-magic-8-lite-5g | https://www.camsa.com.bo/product/celular-honor-magic-8-lite-5g-8-256-dorado-htdat
+08. celular-realme-c85-8gb | https://www.camsa.com.bo/product/celular-realme-c85-8gb-256gb-azul-hxhbd
+09. galaxy-z-fold7 | https://shop.samsung.com.bo/smartphones/galaxy-z/galaxy-z-fold7-blue-shadow-512gb-sm-f966bdbkcho/
+10. galaxy-s26-ultra-cobalt | https://shop.samsung.com.bo/smartphones/galaxy-s/galaxy-s26-ultra-cobalt-violet-512gb-sm-s948bzvkbvo/
+11. zte-nubia-v80 | https://www.dismac.com.bo/telefono-celular-zte-nubia-v80-max-4-256gb-color-negroz2577-negro-256.html
+12. MOTOROLA-RAZR-FOLD-2026-PANTONE-LILY-WHITE-01 | https://crazystore.com.bo/producto/motorola-razr-fold-xt2651-2-512-gb-16-gb-ram-pantone-lily-white/

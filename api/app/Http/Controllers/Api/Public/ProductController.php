@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\PublicProductResource;
 use App\Models\Store;
 use App\Services\CatalogCache;
+use App\Services\ProductService;
 use App\Services\StatService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -22,6 +23,11 @@ class ProductController extends Controller
     private const FEATURED = 5;
 
     /**
+     * How many offers the contact page shows, drawn at random.
+     */
+    private const OFFERS = 3;
+
+    /**
      * Lo único que puede viajar en la URL del listado. Cualquier otra cosa
      * (un `utm_source` pegado al link de WhatsApp, por ejemplo) sale sin
      * caché: entraría en los enlaces de paginación de la respuesta guardada.
@@ -31,6 +37,7 @@ class ProductController extends Controller
     public function __construct(
         private readonly CatalogCache $cache,
         private readonly StatService $stats,
+        private readonly ProductService $productService,
     ) {}
 
     public function index(Request $request, string $slug): JsonResponse
@@ -86,6 +93,38 @@ class ProductController extends Controller
         });
 
         return response()->json($data);
+    }
+
+    /**
+     * Offers shown below the contact page: three at random.
+     *
+     * The cache keeps every offer and the draw happens outside it, so each
+     * request gets a different set instead of the one frozen by the cache.
+     *
+     * Sold out products never enter: an offer on something that cannot be
+     * bought is not an offer.
+     */
+    public function offers(string $slug): JsonResponse
+    {
+        $offers = $this->cache->remember($slug, 'offers', function () use ($slug): array {
+            $products = $this->productService->onSale(
+                $this->store($slug)
+                    ->products()
+                    ->where('visible', true)
+                    ->where('sold_out', false)
+                    ->with(['category', 'images.media'])
+                    ->getQuery()
+            )->get();
+
+            /* Through JSON and not `resolve()`: that one flattens a single
+               level and leaves `category` as a Resource object, which the
+               cache would store serialized and return broken. */
+            return json_decode(PublicProductResource::collection($products)->toJson(), true);
+        });
+
+        return response()->json([
+            'data' => collect($offers)->shuffle()->take(self::OFFERS)->values(),
+        ]);
     }
 
     public function show(Request $request, string $slug, string $productSlug): JsonResponse
@@ -151,6 +190,6 @@ class ProductController extends Controller
 
     private function store(string $slug): Store
     {
-        return Store::where('slug', $slug)->where('active', true)->firstOrFail();
+        return Store::where('slug', $slug)->public()->firstOrFail();
     }
 }

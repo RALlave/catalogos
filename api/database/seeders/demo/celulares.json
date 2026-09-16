@@ -1,0 +1,895 @@
+{
+  "store": "nexo-movil",
+  "categories": [
+    {
+      "slug": "gama-alta",
+      "name": "Gama alta",
+      "order": 1,
+      "description": "Los equipos tope de línea de cada marca, con la mejor cámara y el procesador más rápido del año."
+    },
+    {
+      "slug": "plegables",
+      "name": "Plegables",
+      "order": 2,
+      "description": "Pantallas grandes que se doblan. Para quien quiere una tablet que entre en el bolsillo."
+    },
+    {
+      "slug": "gaming",
+      "name": "Gaming",
+      "order": 3,
+      "description": "Refrigeración activa, gatillos táctiles y pantallas de alta frecuencia para jugar sin que el equipo se frene."
+    },
+    {
+      "slug": "gama-media",
+      "name": "Gama media",
+      "order": 4,
+      "description": "Buena batería y almacenamiento amplio a precio contenido. Lo que la mayoría necesita todos los días."
+    }
+  ],
+  "products": [
+    {
+      "images": [
+        "galaxy-s26-ultra-cobalt-01.png"
+      ],
+      "slug": "samsung-galaxy-s26-ultra-512gb-cobalt-violet",
+      "name": "Samsung Galaxy S26 Ultra 512 GB Cobalt Violet",
+      "category": "gama-alta",
+      "sku": "SAM-S26U-512-CV",
+      "description": "El tope de línea de Samsung, con cámara principal de 200 MP y el Snapdragon 8 Elite Gen 5 afinado para Galaxy.\n\nLa pantalla Dynamic AMOLED 2X de 6,9 pulgadas llega a 1440 x 3120 y sostiene 120 Hz, protegida con Gorilla Glass Armor 2. Atrás hay cuatro sensores: el principal de 200 MP con estabilización, un ultra gran angular de 50 MP y dos teleobjetivos, uno de 3x y otro de 5x, para que el zoom no dependa del recorte digital. La batería de 5000 mAh carga a 60 W con cable y a 25 W sin él. Resistencia IP68 y 214 gramos.",
+      "specs": [
+        {
+          "label": "Pantalla",
+          "value": "6,9\" Dynamic AMOLED 2X · 1440 x 3120 · 120 Hz"
+        },
+        {
+          "label": "Procesador",
+          "value": "Snapdragon 8 Elite Gen 5 for Galaxy"
+        },
+        {
+          "label": "Memoria",
+          "value": "12 GB RAM · 512 GB de almacenamiento"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "200 MP principal + 50 MP ultra gran angular + 50 MP 5x + 10 MP 3x"
+        },
+        {
+          "label": "Cámara frontal",
+          "value": "12 MP"
+        },
+        {
+          "label": "Batería",
+          "value": "5000 mAh · carga de 60 W · inalámbrica de 25 W"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP68"
+        },
+        {
+          "label": "Peso",
+          "value": "214 g"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#5B4B8A"
+          ]
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Equipo nuevo, sellado de fábrica"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Tope de línea"
+        }
+      ],
+      "price": 21320.0,
+      "featured": true,
+      "is_new": true,
+      "source": "https://shop.samsung.com.bo/smartphones/galaxy-s/galaxy-s26-ultra-cobalt-violet-512gb-sm-s948bzvkbvo/",
+      "price_note": "Precio de lista de Samsung Bolivia, septiembre 2026",
+      "sold_out": false,
+      "sale_price": null,
+      "order": 1
+    },
+    {
+      "images": [
+        "iphone-17-pro-01.webp",
+        "iphone-17-pro-02.webp"
+      ],
+      "slug": "apple-iphone-17-pro-512gb-deep-blue",
+      "name": "Apple iPhone 17 Pro 512 GB Deep Blue",
+      "category": "gama-alta",
+      "sku": "APL-17P-512-DB",
+      "description": "Chip A19 Pro, cuerpo unibody de aluminio y tres cámaras de 48 MP. Solo eSIM.\n\nLa pantalla LTPO OLED de 6,3 pulgadas sostiene 120 Hz con ProMotion y alcanza 3000 nits, cubierta por Ceramic Shield 2. El sistema trasero repite 48 MP en los tres lentes, incluido el teleobjetivo periscópico, así que el gran angular y el zoom entregan el mismo detalle. Batería de 4250 mAh para hasta 31 horas de video. Wi-Fi 7, Bluetooth 6.0 y USB-C 3.2 Gen 2.",
+      "specs": [
+        {
+          "label": "Pantalla",
+          "value": "6,3\" LTPO OLED Super Retina XDR · 120 Hz · 3000 nits"
+        },
+        {
+          "label": "Procesador",
+          "value": "Apple A19 Pro"
+        },
+        {
+          "label": "Memoria",
+          "value": "12 GB RAM · 512 GB de almacenamiento"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "48 MP principal + 48 MP ultra gran angular + 48 MP teleobjetivo periscópico"
+        },
+        {
+          "label": "Cámara frontal",
+          "value": "18 MP Center Stage"
+        },
+        {
+          "label": "Batería",
+          "value": "4250 mAh · hasta 31 h de video"
+        },
+        {
+          "label": "Conectividad",
+          "value": "Dual eSIM · 5G · Wi-Fi 7 · USB-C 3.2 Gen 2"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP68"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#2B3A55"
+          ]
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Solo eSIM: no usa chip físico"
+      ],
+      "badges": [
+        {
+          "type": "discount",
+          "text": "-3%",
+          "detail": "OFF"
+        }
+      ],
+      "price": 18123.3,
+      "sale_price": 17538.3,
+      "featured": true,
+      "source": "https://tecnopolis.com.bo/products/apple-iphone-17-pro-512gb-deep-blue-esim-a3256",
+      "price_note": "Precio de Tecnópolis Bolivia, septiembre 2026",
+      "is_new": false,
+      "sold_out": false,
+      "order": 2
+    },
+    {
+      "images": [
+        "galaxy-z-fold7-01.png",
+        "galaxy-z-fold7-02.png"
+      ],
+      "slug": "samsung-galaxy-z-fold7-512gb-blue-shadow",
+      "name": "Samsung Galaxy Z Fold7 512 GB Blue Shadow",
+      "category": "plegables",
+      "sku": "SAM-ZF7-512-BS",
+      "description": "Ocho pulgadas que se doblan hasta caber en el bolsillo, con cámara de 200 MP y 4,2 mm de grosor una vez abierto.\n\nLa pantalla interior de 8 pulgadas y la exterior de 6,5 comparten los 120 Hz y los 2600 nits, así que trabajar plegado o desplegado se siente igual. Lleva el Snapdragon 8 Elite for Galaxy y 12 GB de RAM. Atrás, el sensor principal de 200 MP se acompaña de un ultra gran angular de 12 MP y un teleobjetivo de 10 MP con zoom óptico 3x. Pesa 215 gramos y mide 8,9 mm plegado.",
+      "specs": [
+        {
+          "label": "Pantalla interior",
+          "value": "8\" · 120 Hz · 2600 nits"
+        },
+        {
+          "label": "Pantalla exterior",
+          "value": "6,5\" · 120 Hz · 2600 nits"
+        },
+        {
+          "label": "Procesador",
+          "value": "Snapdragon 8 Elite for Galaxy"
+        },
+        {
+          "label": "Memoria",
+          "value": "12 GB RAM · 512 GB de almacenamiento"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "200 MP principal + 12 MP ultra gran angular + 10 MP teleobjetivo 3x"
+        },
+        {
+          "label": "Cámaras frontales",
+          "value": "10 MP en cada pantalla"
+        },
+        {
+          "label": "Batería",
+          "value": "4400 mAh · carga de 25 W · inalámbrica de 15 W"
+        },
+        {
+          "label": "Grosor",
+          "value": "8,9 mm plegado · 4,2 mm desplegado"
+        },
+        {
+          "label": "Peso",
+          "value": "215 g"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP48"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#2F3E5B"
+          ]
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Equipo nuevo, sellado de fábrica"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Plegable"
+        }
+      ],
+      "price": 27995.0,
+      "featured": true,
+      "source": "https://shop.samsung.com.bo/smartphones/galaxy-z/galaxy-z-fold7-blue-shadow-512gb-sm-f966bdbkcho/",
+      "price_note": "Precio de lista de Samsung Bolivia, septiembre 2026",
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 3
+    },
+    {
+      "images": [
+        "MOTOROLA-RAZR-FOLD-2026-PANTONE-LILY-WHITE-01.jpg"
+      ],
+      "slug": "motorola-razr-fold-512gb-pantone-lily-white",
+      "name": "Motorola Razr Fold 512 GB Pantone Lily White",
+      "category": "plegables",
+      "sku": "MOT-RZF-512-LW",
+      "description": "El plegable de Motorola con 16 GB de RAM, tres cámaras de 50 MP y acabado Pantone Lily White.\n\nAbierto despliega 8,09 pulgadas P-OLED a 120 Hz con Gorilla Glass Ceramic 2, y cerrado deja una pantalla externa de 6,56 pulgadas utilizable sin abrirlo. Corre sobre Snapdragon 8 Gen 5. Las tres cámaras traseras son de 50 MP: principal Sony LYTIA 828, ultra gran angular de 122° y teleobjetivo de 71 mm, con video hasta 8K. Batería de 6000 mAh con carga de 80 W por cable y 50 W inalámbrica.",
+      "specs": [
+        {
+          "label": "Pantalla interior",
+          "value": "8,09\" P-OLED · 2232 x 2484 · 120 Hz"
+        },
+        {
+          "label": "Pantalla exterior",
+          "value": "6,56\""
+        },
+        {
+          "label": "Procesador",
+          "value": "Snapdragon 8 Gen 5"
+        },
+        {
+          "label": "Memoria",
+          "value": "16 GB RAM · 512 GB de almacenamiento"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "50 MP principal + 50 MP ultra gran angular + 50 MP teleobjetivo"
+        },
+        {
+          "label": "Cámaras frontales",
+          "value": "32 MP + 20 MP"
+        },
+        {
+          "label": "Batería",
+          "value": "6000 mAh · carga de 80 W · inalámbrica de 50 W"
+        },
+        {
+          "label": "Grosor",
+          "value": "9,9 mm plegado"
+        },
+        {
+          "label": "Peso",
+          "value": "243 g"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP48"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#F2EFE9"
+          ]
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Incluye cable USB-C a USB-C",
+        "Video en 8K a 30 fps"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Plegable"
+        }
+      ],
+      "price": 23388.3,
+      "is_new": true,
+      "source": "https://crazystore.com.bo/producto/motorola-razr-fold-xt2651-2-512-gb-16-gb-ram-pantone-lily-white/",
+      "price_note": "ESTIMADO: la tienda publica 1.999 $ sin aclarar moneda; convertido a Bs al tipo de cambio que usan las otras tiendas (11,70)",
+      "featured": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 4
+    },
+    {
+      "images": [
+        "google-pixell-11-pro-01.webp",
+        "google-pixell-11-pro-02.webp"
+      ],
+      "slug": "google-pixel-11-pro-xl-256gb",
+      "name": "Google Pixel 11 Pro XL 256 GB",
+      "category": "gama-alta",
+      "sku": "GOO-P11PXL-256",
+      "description": "Tensor G6, triple cámara Pro y siete años de actualizaciones garantizadas.\n\nLa pantalla LTPO OLED de 6,8 pulgadas llega a 2400 nits y adapta el refresco hasta 120 Hz. El conjunto trasero combina un principal de 50 MP, un ultra gran angular de 48 MP y un periscópico de 48 MP con zoom óptico 5x; adelante hay 42 MP ultra gran angular. La batería de 5115 mAh admite 45 W por cable y 25 W inalámbricos. Cristal Gorilla Glass Victus 2, IP68 y 226 gramos.",
+      "specs": [
+        {
+          "label": "Pantalla",
+          "value": "6,8\" LTPO OLED · 1344 x 2992 · 120 Hz · 2400 nits"
+        },
+        {
+          "label": "Procesador",
+          "value": "Google Tensor G6"
+        },
+        {
+          "label": "Memoria",
+          "value": "16 GB RAM · 256 GB de almacenamiento"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "50 MP principal + 48 MP periscópico 5x + 48 MP ultra gran angular"
+        },
+        {
+          "label": "Cámara frontal",
+          "value": "42 MP ultra gran angular"
+        },
+        {
+          "label": "Batería",
+          "value": "5115 mAh · carga de 45 W · inalámbrica de 25 W"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP68"
+        },
+        {
+          "label": "Peso",
+          "value": "226 g"
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Siete años de actualizaciones de Android"
+      ],
+      "badges": [],
+      "price": 16368.3,
+      "is_new": true,
+      "source": "https://tecnopolis.com.bo/products/google-pixel-11-pro-xl-256-gb-obsidian-copia",
+      "price_note": "Precio de Tecnópolis Bolivia, septiembre 2026",
+      "featured": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 5
+    },
+    {
+      "images": [
+        "honor-oneplus-01.webp",
+        "honor-oneplus-02.webp"
+      ],
+      "slug": "oneplus-15-512gb-arena",
+      "name": "OnePlus 15 512 GB Arena",
+      "category": "gama-alta",
+      "sku": "OPL-15-512-AR",
+      "description": "16 GB de RAM, batería de 7300 mAh y una pantalla de 165 Hz. El más cargado de la lista en relación precio y ficha.\n\nEl panel LTPO AMOLED de 6,78 pulgadas trabaja en 1.5K, escala hasta 165 Hz y alcanza 1800 nits. Lo mueve el Snapdragon 8 Elite Gen 5 con 16 GB LPDDR5X y 512 GB UFS 4.1. Las tres cámaras traseras son de 50 MP, incluido un periscopio con zoom 3,5x, y la frontal de 32 MP tiene enfoque automático. La batería de 7300 mAh carga a 120 W por cable y a 50 W sin cable. Certificación IP68 e IP69K, con OxygenOS 16 sobre Android 16.",
+      "specs": [
+        {
+          "label": "Pantalla",
+          "value": "6,78\" LTPO AMOLED 1.5K · 165 Hz · 1800 nits"
+        },
+        {
+          "label": "Procesador",
+          "value": "Snapdragon 8 Elite Gen 5"
+        },
+        {
+          "label": "Memoria",
+          "value": "16 GB LPDDR5X · 512 GB UFS 4.1"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "50 MP principal con OIS + 50 MP ultra gran angular + 50 MP periscopio 3,5x"
+        },
+        {
+          "label": "Cámara frontal",
+          "value": "32 MP con enfoque automático"
+        },
+        {
+          "label": "Batería",
+          "value": "7300 mAh · carga de 120 W · inalámbrica de 50 W"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP68 · IP69K"
+        },
+        {
+          "label": "Sistema",
+          "value": "OxygenOS 16 sobre Android 16"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#D8C4A8"
+          ]
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Dual SIM"
+      ],
+      "badges": [
+        {
+          "type": "discount",
+          "text": "-8%",
+          "detail": "OFF"
+        }
+      ],
+      "price": 15198.3,
+      "sale_price": 14028.3,
+      "source": "https://tecnopolis.com.bo/products/oneplus-15-16-gb-ram-512-gb-dual-sim-arena",
+      "price_note": "Precio de Tecnópolis Bolivia, septiembre 2026",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "order": 6
+    },
+    {
+      "images": [
+        "google-pixel-10-pro-01.webp",
+        "google-pixel-10-pro-02.webp"
+      ],
+      "slug": "google-pixel-10-pro-xl-256gb-moonstone",
+      "name": "Google Pixel 10 Pro XL 256 GB Moonstone",
+      "category": "gama-alta",
+      "sku": "GOO-P10PXL-256-MS",
+      "description": "La generación anterior del Pixel grande, con Tensor G5 y el mismo compromiso de siete años de actualizaciones.\n\nPantalla LTPO OLED de 6,8 pulgadas a 120 Hz. Atrás, principal de 50 MP, ultra gran angular de 48 MP y teleobjetivo con zoom 5x estabilizado; la cámara frontal es de 42 MP. La batería de 5200 mAh carga a 45 W y admite Qi2. Resistencia IP68.",
+      "specs": [
+        {
+          "label": "Pantalla",
+          "value": "6,8\" LTPO OLED · 120 Hz"
+        },
+        {
+          "label": "Procesador",
+          "value": "Google Tensor G5"
+        },
+        {
+          "label": "Memoria",
+          "value": "16 GB RAM · 256 GB de almacenamiento"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "50 MP principal + 48 MP ultra gran angular + teleobjetivo 5x con OIS"
+        },
+        {
+          "label": "Cámara frontal",
+          "value": "42 MP"
+        },
+        {
+          "label": "Batería",
+          "value": "5200 mAh · carga de 45 W · inalámbrica Qi2"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP68"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#8C98A8"
+          ]
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Siete años de actualizaciones de Android"
+      ],
+      "badges": [
+        {
+          "type": "discount",
+          "text": "-11%",
+          "detail": "OFF"
+        }
+      ],
+      "price": 16368.3,
+      "sale_price": 14613.3,
+      "source": "https://tecnopolis.com.bo/products/google-pixel-10-pro-xl-256-gb-moonstone",
+      "price_note": "Precio de Tecnópolis Bolivia, septiembre 2026",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "order": 7
+    },
+    {
+      "images": [
+        "redmagic-11s-pro-01.webp",
+        "redmagic-11s-pro-02.webp"
+      ],
+      "slug": "redmagic-11s-pro-512gb-subzero",
+      "name": "REDMAGIC 11S Pro 512 GB Subzero",
+      "category": "gaming",
+      "sku": "RMG-11SP-512-SZ",
+      "description": "Un teléfono para jugar: ventilador interno de 24.000 rpm, refrigeración líquida y gatillos táctiles configurables.\n\nLa pantalla AMOLED de 6,85 pulgadas trabaja a 2688 x 1216 con hasta 144 Hz y 1800 nits, sin recorte para la cámara frontal, que va debajo del panel. Lleva el Snapdragon 8 Elite Gen 5 en su versión Leading con el coprocesador RedCore R4, 16 GB LPDDR5X Ultra y 512 GB UFS 4.1. La batería de 7500 mAh carga a 80 W, con y sin cable. Mantiene el conector de 3,5 mm.",
+      "specs": [
+        {
+          "label": "Pantalla",
+          "value": "6,85\" AMOLED · 2688 x 1216 · 144 Hz · 1800 nits"
+        },
+        {
+          "label": "Procesador",
+          "value": "Snapdragon 8 Elite Gen 5 Leading Version + RedCore R4"
+        },
+        {
+          "label": "Memoria",
+          "value": "16 GB LPDDR5X Ultra · 512 GB UFS 4.1"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "50 MP + 50 MP + 2 MP con OIS"
+        },
+        {
+          "label": "Cámara frontal",
+          "value": "16 MP bajo la pantalla"
+        },
+        {
+          "label": "Batería",
+          "value": "7500 mAh · carga de 80 W con y sin cable"
+        },
+        {
+          "label": "Refrigeración",
+          "value": "Líquida AquaCore con ventilador de 24.000 rpm"
+        },
+        {
+          "label": "Audio",
+          "value": "Estéreo doble · conector de 3,5 mm"
+        },
+        {
+          "label": "Peso",
+          "value": "230 g"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#EAF2F6"
+          ]
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Gatillos táctiles configurables",
+        "Compatible con monitores externos"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Gaming"
+        }
+      ],
+      "price": 13443.3,
+      "sold_out": true,
+      "source": "https://tecnopolis.com.bo/products/redmagic-11s-pro-subzero-16gb-512gb",
+      "price_note": "Precio de Tecnópolis Bolivia, septiembre 2026",
+      "featured": false,
+      "is_new": false,
+      "sale_price": null,
+      "order": 8
+    },
+    {
+      "images": [
+        "iphone-17-256gb-white-01.webp",
+        "iphone-17-256gb-white-02.webp"
+      ],
+      "slug": "apple-iphone-17-256gb-white",
+      "name": "Apple iPhone 17 256 GB White",
+      "category": "gama-alta",
+      "sku": "APL-17-256-WH",
+      "description": "El iPhone base que por fin trae 120 Hz y arranca en 256 GB. Solo eSIM.\n\nLa pantalla LTPO Super Retina XDR de 6,3 pulgadas sostiene 120 Hz y llega a 3000 nits, sobre Ceramic Shield 2. Atrás hay dos cámaras de 48 MP, principal y ultra gran angular; la frontal es de 18 MP con enfoque automático. Lo mueve el chip A19 con GPU de cinco núcleos. Carga a 25 W por cable y 25 W por MagSafe. Marco de aluminio, IP68 y 177 gramos.",
+      "specs": [
+        {
+          "label": "Pantalla",
+          "value": "6,3\" LTPO Super Retina XDR · 120 Hz · 3000 nits"
+        },
+        {
+          "label": "Procesador",
+          "value": "Apple A19"
+        },
+        {
+          "label": "Memoria",
+          "value": "8 GB RAM · 256 GB de almacenamiento"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "48 MP principal con OIS + 48 MP ultra gran angular"
+        },
+        {
+          "label": "Cámara frontal",
+          "value": "18 MP con enfoque automático"
+        },
+        {
+          "label": "Batería",
+          "value": "3692 mAh · carga de 25 W · MagSafe de 25 W"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP68"
+        },
+        {
+          "label": "Peso",
+          "value": "177 g"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#F5F5F3"
+          ]
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Solo eSIM: no usa chip físico"
+      ],
+      "badges": [
+        {
+          "type": "discount",
+          "text": "-10%",
+          "detail": "OFF"
+        }
+      ],
+      "price": 11688.3,
+      "sale_price": 10518.3,
+      "source": "https://tecnopolis.com.bo/products/iphone-17-256gb-white-dual-esim-a3519",
+      "price_note": "Precio de Tecnópolis Bolivia, septiembre 2026",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "order": 9
+    },
+    {
+      "images": [
+        "honor-magic-8-lite-5g-01.jpg",
+        "honor-magic-8-lite-5g-02.jpg"
+      ],
+      "slug": "honor-magic-8-lite-5g-256gb-dorado",
+      "name": "HONOR Magic 8 Lite 5G 256 GB Dorado",
+      "category": "gama-media",
+      "sku": "HON-M8L-256-DO",
+      "description": "Batería enorme en un cuerpo de 7,8 mm: la gama media con más autonomía del catálogo.\n\nLa pantalla AMOLED de 6,79 pulgadas trabaja a 1200 x 2640 con 120 Hz. Atrás, cámara principal de 108 MP con estabilización óptica y un ultra gran angular de 5 MP; la frontal es de 16 MP. Lo mueve un Snapdragon 6 Gen 4 con 8 GB de RAM. La batería supera los 7500 mAh y carga a 66 W. Certificación IP68 e IP69K, y menos de 200 gramos.",
+      "specs": [
+        {
+          "label": "Pantalla",
+          "value": "6,79\" AMOLED · 1200 x 2640 · 120 Hz"
+        },
+        {
+          "label": "Procesador",
+          "value": "Snapdragon 6 Gen 4"
+        },
+        {
+          "label": "Memoria",
+          "value": "8 GB RAM · 256 GB de almacenamiento"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "108 MP principal con OIS + 5 MP ultra gran angular"
+        },
+        {
+          "label": "Cámara frontal",
+          "value": "16 MP"
+        },
+        {
+          "label": "Batería",
+          "value": "Más de 7500 mAh · carga de 66 W"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP68 · IP69K"
+        },
+        {
+          "label": "Grosor",
+          "value": "7,8 mm"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#D9C3A0"
+          ]
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Liberado para todas las operadoras"
+      ],
+      "badges": [],
+      "price": 5499.0,
+      "source": "https://www.camsa.com.bo/product/celular-honor-magic-8-lite-5g-8-256-dorado-htdat",
+      "price_note": "Precio de CAMSA Bolivia, septiembre 2026",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 10
+    },
+    {
+      "images": [
+        "celular-realme-c85-8gb-01.jpg",
+        "celular-realme-c85-8gb-02.jpg"
+      ],
+      "slug": "realme-c85-256gb-azul",
+      "name": "realme C85 256 GB Azul",
+      "category": "gama-media",
+      "sku": "RLM-C85-256-AZ",
+      "description": "7000 mAh y certificación IP69 Pro por menos de tres mil bolivianos.\n\nLa pantalla de 6,8 pulgadas alcanza 144 Hz y 1200 nits en exteriores. Lleva un Snapdragon 685 con 8 GB de RAM ampliables y 256 GB de almacenamiento. La cámara principal es de 50 MP con apertura f/1.8 y la frontal de 8 MP. Lo que lo distingue es la batería de 7000 mAh con carga de 45 W y el sellado IP69 Pro, poco común en este rango.",
+      "specs": [
+        {
+          "label": "Pantalla",
+          "value": "6,8\" · 1570 x 720 · 144 Hz · 1200 nits"
+        },
+        {
+          "label": "Procesador",
+          "value": "Snapdragon 685"
+        },
+        {
+          "label": "Memoria",
+          "value": "8 GB RAM · 256 GB de almacenamiento"
+        },
+        {
+          "label": "Cámara trasera",
+          "value": "50 MP f/1.8 con enfoque automático"
+        },
+        {
+          "label": "Cámara frontal",
+          "value": "8 MP f/2.0"
+        },
+        {
+          "label": "Batería",
+          "value": "7000 mAh · carga de 45 W"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP69 Pro"
+        },
+        {
+          "label": "Peso",
+          "value": "212 g"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#4A7BC8"
+          ]
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Liberado para todas las operadoras"
+      ],
+      "badges": [],
+      "price": 2999.0,
+      "sold_out": true,
+      "source": "https://www.camsa.com.bo/product/celular-realme-c85-8gb-256gb-azul-hxhbd",
+      "price_note": "Precio de CAMSA Bolivia, septiembre 2026",
+      "featured": false,
+      "is_new": false,
+      "sale_price": null,
+      "order": 11
+    },
+    {
+      "images": [
+        "zte-nubia-v80-01.webp",
+        "zte-nubia-v80-02.webp"
+      ],
+      "slug": "zte-nubia-v80-max-256gb-negro",
+      "name": "ZTE nubia V80 Max 256 GB Negro",
+      "category": "gama-media",
+      "sku": "ZTE-V80M-256-NE",
+      "description": "La entrada del catálogo: 256 GB, 5G y 6000 mAh al precio más bajo de la tienda.\n\nLa pantalla de 6,9 pulgadas es Full HD+ a 120 Hz con 780 nits. Adentro, un octa-core de 1,8 GHz con 4 GB de RAM y 256 GB de almacenamiento sobre Android 16. La cámara principal es de 50 MP acompañada de un sensor de 2 MP, y la frontal de 16 MP. La batería de 6000 mAh admite carga inversa de 10 W. Resistencia IP64.",
+      "specs": [
+        {
+          "label": "Pantalla",
+          "value": "6,9\" Full HD+ · 120 Hz · 780 nits"
+        },
+        {
+          "label": "Procesador",
+          "value": "Octa-core de 1,8 GHz"
+        },
+        {
+          "label": "Memoria",
+          "value": "4 GB RAM · 256 GB de almacenamiento"
+        },
+        {
+          "label": "Cámaras traseras",
+          "value": "50 MP + 2 MP"
+        },
+        {
+          "label": "Cámara frontal",
+          "value": "16 MP"
+        },
+        {
+          "label": "Batería",
+          "value": "6000 mAh · carga inversa de 10 W"
+        },
+        {
+          "label": "Conectividad",
+          "value": "5G · Dual SIM · NFC"
+        },
+        {
+          "label": "Resistencia",
+          "value": "IP64"
+        },
+        {
+          "label": "Sistema",
+          "value": "Android 16"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#1C1C1E"
+          ]
+        }
+      ],
+      "benefits": [
+        "Garantía de 12 meses con respaldo en Bolivia",
+        "Envío a todo el país en 24 a 72 horas",
+        "Pago en 3, 6 o 9 cuotas",
+        "Incluye cargador, cable, extractor de chip y funda"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Más accesible"
+        }
+      ],
+      "price": 2199.0,
+      "source": "https://www.dismac.com.bo/telefono-celular-zte-nubia-v80-max-4-256gb-color-negroz2577-negro-256.html",
+      "price_note": "Precio de Dismac Bolivia, septiembre 2026",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 12
+    }
+  ]
+}

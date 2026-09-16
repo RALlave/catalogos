@@ -1,0 +1,25 @@
+LINKS DE ORIGEN — Prendas de mujer
+=========================================================
+Un renglon por producto: nombre del archivo (sin el -NN) y el link.
+
+Ejemplo:
+honor-magic6-lite | https://tienda.com/producto/...
+
+De ahi saco specs, que incluye y precio. El texto lo reescribo yo,
+no se copia de la tienda.
+
+Si un producto no tiene link, dejalo igual y pone al lado lo que sepas.
+
+::::::::::::::
+
+01. European-and-American-Style-Women | https://www.alibaba.com/product-detail/European-and-American-Style-Women-s_1601780970965.html?spm=a2700.prosearch.normal_offer.d_image.440e67afQycMX4&priceId=b886fdb6b22b4d79b3c9c9b523d64520
+02. YUANBOFEI-Baggy-Fit-Jeans-Women | https://www.alibaba.com/product-detail/YUANBOFEI-Baggy-Fit-Jeans-Women-s_1601734171743.html?spm=a2700.prosearch.normal_offer.d_image.440e67afQycMX4&priceId=b886fdb6b22b4d79b3c9c9b523d64520
+03. Women-s-Casual-Jogger-Pants | https://www.alibaba.com/product-detail/Women-s-Casual-Jogger-Pants-High_10000047615228.html?spm=a2700.prosearch.normal_offer.d_image.440e67afQycMX4&priceId=b886fdb6b22b4d79b3c9c9b523d64520
+04. YUANBOFEI-Women-Skinny-Jeans-Denim | https://www.alibaba.com/product-detail/YUANBOFEI-Women-Skinny-Jeans-Denim-Trousers_1601734305876.html?spm=a2700.prosearch.normal_offer.d_image.440e67afQycMX4&priceId=b886fdb6b22b4d79b3c9c9b523d64520
+05. High-Waist-Tight-Custom-Pants | https://www.alibaba.com/product-detail/High-Waist-Tight-Custom-Pants-Seamed_1601281980585.html?spm=a2700.prosearch.normal_offer.d_image.177c67afarCrjX&priceId=25855d19f9234c15aca7a458977645df
+
+06. Women-s-Jacket-Hiking-Mountain | https://www.alibaba.com/product-detail/Women-s-Jacket-Hiking-Mountain-Rainproof_1601688269505.html?spm=a2700.prosearch.normal_offer.d_image.7dfc67afXxpIyW&priceId=221735b6cf3f47a0b07bded3709f829b
+07. New-Design-2025-Winter-Women | https://www.alibaba.com/product-detail/New-Design-2025-Winter-Women-s_1601598645572.html?spm=a2700.prosearch.normal_offer.d_image.7dfc67afXxpIyW&priceId=221735b6cf3f47a0b07bded3709f829b
+08. Women-s-Athletic-Yoga-Top-Jacket | https://www.alibaba.com/product-detail/Women-s-Athletic-Yoga-Top-Jacket_1601683591462.html?spm=a2700.prosearch.normal_offer.d_image.7dfc67afXxpIyW&priceId=221735b6cf3f47a0b07bded3709f829b
+09. New-Arrival-High-Quality-White-Women | https://www.alibaba.com/product-detail/New-Arrival-High-Quality-White-Women_11000030430225.html?spm=a2700.prosearch.normal_offer.d_image.7dfc67afXxpIyW&priceId=221735b6cf3f47a0b07bded3709f829b
+10. Ladies-Denim-Jacket-Classic-Casual | https://www.alibaba.com/product-detail/Ladies-Denim-Jacket-Classic-Casual-Elastic_1601800044130.html?spm=a2700.prosearch.normal_offer.d_image.7dfc67afXxpIyW&priceId=221735b6cf3f47a0b07bded3709f829b

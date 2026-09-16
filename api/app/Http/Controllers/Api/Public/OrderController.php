@@ -22,7 +22,7 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request, string $slug): JsonResponse
     {
         $store = Store::where('slug', $slug)
-            ->where('active', true)
+            ->public()
             ->where('cart_enabled', true)
             ->firstOrFail();
 

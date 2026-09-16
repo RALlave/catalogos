@@ -3,6 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
+import ImageCropper from '@/components/ImageCropper.vue'
 import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { useConfirmStore } from '@/stores/confirm'
@@ -121,6 +122,14 @@ async function save() {
     }
 }
 
+const cropping = ref(false)
+
+/* The crop is already saved. Name and alt being typed live in `form`, so they are kept. */
+function onCropped(media) {
+    current.value = media
+    items.value = items.value.map(item => (item.id === media.id ? media : item))
+}
+
 /**
  * Cuántas cosas se romperían si se borra. Se cuenta todo, no sólo los
  * productos: una imagen que es el logo también está en uso, y hasta ahora eso
@@ -211,7 +220,7 @@ onMounted(load)
         <div class="page-actions">
             <label class="btn btn-primary" :class="{ 'is-loading': uploading }">
                 <AppIcon name="plus" />
-                Subir imágenes
+                <span class="btn-label">Subir imágenes</span>
                 <input
                     class="visually-hidden"
                     type="file"
@@ -284,6 +293,7 @@ onMounted(load)
                     type="button"
                     @click="page > 1 && page--"
                 >
+                    <AppIcon name="chevronLeft" />
                     Anterior
                 </button>
                 <button
@@ -293,6 +303,7 @@ onMounted(load)
                     @click="page < meta.last_page && page++"
                 >
                     Siguiente
+                    <AppIcon name="chevronRight" />
                 </button>
             </nav>
         </div>
@@ -403,10 +414,14 @@ onMounted(load)
 
                     <button v-else class="btn btn-danger" type="button" @click="remove(current)">
                         <AppIcon name="trash" />
-                        Eliminar
+                        Eliminar imagen
                     </button>
 
                     <div class="modal-actions">
+                        <button class="btn btn-outline" type="button" @click="cropping = true">
+                            <AppIcon name="pencil" />
+                            Recortar
+                        </button>
                         <button class="btn btn-outline" type="button" @click="close">Cerrar</button>
                         <button
                             class="btn btn-primary"
@@ -421,4 +436,11 @@ onMounted(load)
             </div>
         </div>
     </Teleport>
+
+    <ImageCropper
+        :open="cropping"
+        :media="current"
+        @close="cropping = false"
+        @cropped="onCropped"
+    />
 </template>

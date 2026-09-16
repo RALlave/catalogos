@@ -1411,6 +1411,49 @@
 }
 
 /* --------------------------------------------------------------------------
+   Back to top
+   -------------------------------------------------------------------------- */
+
+.back-to-top {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--color-brand);
+    color: var(--color-invert);
+    box-shadow: 0 8px 24px var(--color-shadow-lg);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0.5rem);
+    transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.15s ease, visibility 0s linear 0.2s;
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.15s ease, visibility 0s;
+}
+
+.back-to-top:hover {
+    background-color: var(--color-brand-strong);
+}
+
+.back-to-top svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* --------------------------------------------------------------------------
    Responsive — notebook
    -------------------------------------------------------------------------- */
 

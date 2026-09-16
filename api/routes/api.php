@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\ImpersonationController as AdminImpersonation
 use App\Http\Controllers\Api\Admin\MetricsController as AdminMetricsController;
 use App\Http\Controllers\Api\Admin\PlatformLogoController as AdminPlatformLogoController;
 use App\Http\Controllers\Api\Admin\PlatformStoreLogoController as AdminPlatformStoreLogoController;
+use App\Http\Controllers\Api\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Api\Admin\StoreController as AdminStoreController;
 use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\Auth\HandoffController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Api\Public\ThemeController;
 use App\Http\Controllers\Api\Public\TrackController as PublicTrackController;
 use App\Http\Controllers\Api\Public\WaitlistController as PublicWaitlistController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\HeroCloneController;
 use App\Http\Controllers\Api\HeroController;
 use App\Http\Controllers\Api\HeroReorderController;
 use App\Http\Controllers\Api\ProfileController;
@@ -68,6 +70,8 @@ Route::get('stores/{slug}', [PublicStoreController::class, 'show'])->name('publi
 Route::get('stores/{slug}/products', [PublicProductController::class, 'index'])->name('public.products.index');
 /* La vitrina del home: los cinco de arriba, no una página del listado. */
 Route::get('stores/{slug}/featured', [PublicProductController::class, 'featured'])->name('public.products.featured');
+/* The offers below the contact page: three at random. */
+Route::get('stores/{slug}/offers', [PublicProductController::class, 'offers'])->name('public.products.offers');
 Route::get('stores/{slug}/products/{productSlug}', [PublicProductController::class, 'show'])->name('public.products.show');
 
 /* Los dos son anónimos y escriben en la base: van con límite de peticiones. */
@@ -129,8 +133,10 @@ Route::middleware('auth:sanctum')->group(function (): void {
 
     /* El singular de "media" que arma Laravel sería "medium": se fija a mano. */
     Route::apiResource('media', MediaController::class)->parameters(['media' => 'media']);
+    Route::post('media/{media}/crop', [MediaController::class, 'crop'])->name('media.crop');
 
     Route::post('heroes/reorder', HeroReorderController::class)->name('heroes.reorder');
+    Route::post('heroes/{hero}/clone', HeroCloneController::class)->name('heroes.clone');
     Route::apiResource('heroes', HeroController::class);
 
     Route::post('categories/reorder', CategoryReorderController::class)->name('categories.reorder');
@@ -203,6 +209,15 @@ Route::middleware('auth:sanctum')->group(function (): void {
             Route::put('stores/{store}', [AdminStoreController::class, 'update'])->name('stores.update');
             Route::patch('stores/{store}/active', [AdminStoreController::class, 'active'])->name('stores.active');
             Route::post('stores/{store}/impersonate', AdminImpersonationController::class)->name('stores.impersonate');
+
+            /* Papelera: mover y restaurar. El DELETE es el borrado sin rastro y
+               sólo acepta tiendas que ya están en la papelera. */
+            Route::patch('stores/{store}/trash', [AdminStoreController::class, 'trash'])->name('stores.trash');
+            Route::patch('stores/{store}/restore', [AdminStoreController::class, 'restore'])->name('stores.restore');
+            Route::delete('stores/{store}', [AdminStoreController::class, 'destroy'])->name('stores.destroy');
+
+            Route::get('settings', [AdminSettingController::class, 'show'])->name('settings.show');
+            Route::put('settings', [AdminSettingController::class, 'update'])->name('settings.update');
 
             Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
             Route::get('users/{user}', [AdminUserController::class, 'show'])->name('users.show');

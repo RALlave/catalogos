@@ -56,6 +56,8 @@ useSeoMeta({ ogUrl: canonical })
 
     <TheFooter :store="store" />
 
+    <BackToTop />
+
     <!-- El carrito vive en el navegador: en el servidor estaría siempre
          vacío y la hidratación no coincidiría. -->
     <ClientOnly>

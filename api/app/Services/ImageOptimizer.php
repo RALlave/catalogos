@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\ImageManager;
+use Intervention\Image\Interfaces\ImageInterface;
 
 /**
  * Turns an uploaded file into the set of WebP variants the catalog serves.
@@ -43,6 +44,32 @@ class ImageOptimizer
     {
         $image = $this->manager->decodePath($source)->orient();
 
+        return $this->write($image, $directory, $this->sizes($profile));
+    }
+
+    /**
+     * Cuts a rectangle out of an already optimized file and writes it again as
+     * the given variants. The rectangle is in pixels of the source file.
+     *
+     * @param  array<int, string>  $names  variants to generate, e.g. the ones the media already had
+     * @param  array{x: int, y: int, width: int, height: int}  $rect
+     * @return array{variants: array<string, array{path: string, width: int, height: int}>, path: string, size: int, width: int, height: int}
+     */
+    public function crop(string $source, string $directory, array $names, array $rect): array
+    {
+        $image = $this->manager->decodePath($source);
+
+        $image->crop($rect['width'], $rect['height'], $rect['x'], $rect['y']);
+
+        return $this->write($image, $directory, $this->sizesNamed($names));
+    }
+
+    /**
+     * @param  array<string, int>  $sizes  biggest first
+     * @return array{variants: array<string, array{path: string, width: int, height: int}>, path: string, size: int, width: int, height: int}
+     */
+    private function write(ImageInterface $image, string $directory, array $sizes): array
+    {
         $encoder = new WebpEncoder(quality: (int) config('media.quality'));
         $base = Str::random(40);
 
@@ -52,7 +79,7 @@ class ImageOptimizer
 
         /* Biggest first: each step scales down the previous result instead of
            decoding the source again. */
-        foreach ($this->sizes($profile) as $name => $max) {
+        foreach ($sizes as $name => $max) {
             $image->scaleDown($max, $max);
 
             $width = $image->width();
@@ -115,7 +142,18 @@ class ImageOptimizer
         $sizes = config('media.sizes');
         $names = config('media.profiles.'.$profile) ?? array_keys($sizes);
 
-        $selected = array_intersect_key($sizes, array_flip($names));
+        return $this->sizesNamed($names);
+    }
+
+    /**
+     * The given sizes, biggest first. Unknown names are ignored.
+     *
+     * @param  array<int, string>  $names
+     * @return array<string, int>
+     */
+    private function sizesNamed(array $names): array
+    {
+        $selected = array_intersect_key(config('media.sizes'), array_flip($names));
 
         arsort($selected);
 

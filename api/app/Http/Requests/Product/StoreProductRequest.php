@@ -2,14 +2,23 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Http\Requests\Concerns\SanitizesRichText;
+use App\Rules\RichTextMax;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
+    use SanitizesRichText;
+
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->sanitizeRichText(['description']);
     }
 
     /**
@@ -29,7 +38,7 @@ class StoreProductRequest extends FormRequest
                 Rule::unique('products', 'slug')->where('store_id', $storeId),
             ],
             'sku' => ['nullable', 'string', 'max:100'],
-            'description' => ['nullable', 'string', 'max:5000'],
+            'description' => ['nullable', 'string', new RichTextMax(5000)],
             'specs' => ['nullable', 'array', 'max:20'],
             'specs.*.label' => ['required', 'string', 'max:100'],
             'specs.*.type' => ['nullable', 'string', 'in:colors'],

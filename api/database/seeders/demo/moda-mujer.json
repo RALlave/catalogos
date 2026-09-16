@@ -1,0 +1,559 @@
+{
+  "store": "amaranta",
+  "categories": [
+    {
+      "slug": "jeans",
+      "name": "Jeans",
+      "order": 1,
+      "description": "Denim elastizado en los cortes que se están usando: baggy, wide leg y oxford. Del S al XL."
+    },
+    {
+      "slug": "camperas",
+      "name": "Camperas y abrigos",
+      "order": 2,
+      "description": "De la campera de jean de entretiempo al plumón para el frío de verdad."
+    },
+    {
+      "slug": "deportivo",
+      "name": "Deportivo",
+      "order": 3,
+      "description": "Calzas que no transparentan, joggers de friza y buzos que secan rápido."
+    }
+  ],
+  "products": [
+    {
+      "images": [
+        "YUANBOFEI-Baggy-Fit-Jeans-Women-01.jpg",
+        "YUANBOFEI-Baggy-Fit-Jeans-Women-02.jpg",
+        "YUANBOFEI-Baggy-Fit-Jeans-Women-03.jpg"
+      ],
+      "slug": "jean-baggy-lavado-retro",
+      "name": "Jean baggy de lavado retro",
+      "category": "jeans",
+      "sku": "AMA-JEA-BAG",
+      "description": "Ancho de pierna, tiro medio y ese lavado gastado que no pasa de moda.\n\nEl corte baggy cae recto desde la cadera, sin marcar. La mezcla de algodón con elastano hace que ceda donde tiene que ceder: se siente como un jean de toda la vida, pero no aprieta al sentarse. El lavado es de los que quedan lindos desde el primer día, sin esperar años de uso.",
+      "specs": [
+        {
+          "label": "Corte",
+          "value": "Baggy, pierna ancha"
+        },
+        {
+          "label": "Tiro",
+          "value": "Medio"
+        },
+        {
+          "label": "Tela",
+          "value": "Denim de algodón con elastano"
+        },
+        {
+          "label": "Lavado",
+          "value": "Gastado retro"
+        },
+        {
+          "label": "Talles",
+          "value": "S a XL"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talle dentro de los 7 días",
+        "Probátelo en tienda antes de llevarlo",
+        "Talles S, M, L y XL"
+      ],
+      "badges": [],
+      "price": 349.0,
+      "featured": true,
+      "is_new": true,
+      "source": "https://www.alibaba.com/product-detail/YUANBOFEI-Baggy-Fit-Jeans-Women-s_1601734171743.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 124,55/u + importación y margen de retail",
+      "sold_out": false,
+      "sale_price": null,
+      "order": 1
+    },
+    {
+      "images": [
+        "European-and-American-Style-Women-01.jpg",
+        "European-and-American-Style-Women-02.jpg",
+        "European-and-American-Style-Women-03.jpg"
+      ],
+      "slug": "jean-wide-leg-tiro-bajo",
+      "name": "Jean wide leg de tiro bajo",
+      "category": "jeans",
+      "sku": "AMA-JEA-WID",
+      "description": "Pierna ancha que barre el piso, tiro bajo, silueta larga.\n\nEs el jean que alarga la pierna sin tacos. La tela tiene elastano, así que el tiro bajo no se clava ni se corre al caminar. Tratamiento transpirable y de secado rápido, algo raro en un denim de este peso.",
+      "specs": [
+        {
+          "label": "Corte",
+          "value": "Wide leg, largo al piso"
+        },
+        {
+          "label": "Tiro",
+          "value": "Bajo"
+        },
+        {
+          "label": "Tela",
+          "value": "Denim de algodón con elastano"
+        },
+        {
+          "label": "Terminación",
+          "value": "Transpirable y de secado rápido"
+        },
+        {
+          "label": "Talles",
+          "value": "S a XL"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talle dentro de los 7 días",
+        "Probátelo en tienda antes de llevarlo",
+        "Talles S, M, L y XL"
+      ],
+      "badges": [],
+      "price": 289.0,
+      "featured": true,
+      "source": "https://www.alibaba.com/product-detail/European-and-American-Style-Women-s_1601780970965.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 99,51/u + importación y margen de retail",
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 2
+    },
+    {
+      "images": [
+        "YUANBOFEI-Women-Skinny-Jeans-Denim-01.jpg",
+        "YUANBOFEI-Women-Skinny-Jeans-Denim-02.jpg",
+        "YUANBOFEI-Women-Skinny-Jeans-Denim-03.jpg"
+      ],
+      "slug": "jean-oxford-tiro-alto",
+      "name": "Jean oxford de tiro alto",
+      "category": "jeans",
+      "sku": "AMA-JEA-OXF",
+      "description": "Ajustado hasta la rodilla y abierto de ahí para abajo. Tiro alto que sostiene.\n\nEl tiro alto marca la cintura y cubre lo que hay que cubrir, sin faja ni artificios. Abajo se abre en oxford, que equilibra la silueta y deja lugar a la bota. Denim elastizado, con lavado suave y detalle de volados.",
+      "specs": [
+        {
+          "label": "Corte",
+          "value": "Oxford, ajustado arriba"
+        },
+        {
+          "label": "Tiro",
+          "value": "Alto"
+        },
+        {
+          "label": "Tela",
+          "value": "Denim de algodón con elastano"
+        },
+        {
+          "label": "Detalle",
+          "value": "Volados"
+        },
+        {
+          "label": "Talles",
+          "value": "S a XL"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talle dentro de los 7 días",
+        "Probátelo en tienda antes de llevarlo",
+        "Talles S, M, L y XL"
+      ],
+      "badges": [
+        {
+          "type": "discount",
+          "text": "-15%",
+          "detail": "OFF"
+        }
+      ],
+      "price": 269.0,
+      "sale_price": 229.0,
+      "source": "https://www.alibaba.com/product-detail/YUANBOFEI-Women-Skinny-Jeans-Denim-Trousers_1601734305876.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 93,41/u + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "order": 3
+    },
+    {
+      "images": [
+        "Ladies-Denim-Jacket-Classic-Casual-01.jpg",
+        "Ladies-Denim-Jacket-Classic-Casual-02.jpg",
+        "Ladies-Denim-Jacket-Classic-Casual-03.jpg",
+        "Ladies-Denim-Jacket-Classic-Casual-04.jpg"
+      ],
+      "slug": "campera-jean-clasica",
+      "name": "Campera de jean clásica",
+      "category": "camperas",
+      "sku": "AMA-CAM-JEA",
+      "description": "La campera de jean de siempre, con botones de metal y corte entallado.\n\nVa con todo y se usa todo el año menos en pleno invierno. El denim es pesado —520 gramos—, así que tiene cuerpo y no se deforma con el uso. Corte regular con elástico que la ajusta en la cintura, en el largo que queda bien tanto sobre vestido como sobre jean.",
+      "specs": [
+        {
+          "label": "Tela",
+          "value": "Denim de 520 g"
+        },
+        {
+          "label": "Corte",
+          "value": "Regular, entallado"
+        },
+        {
+          "label": "Cierre",
+          "value": "Botones de metal"
+        },
+        {
+          "label": "Temporada",
+          "value": "Primavera, verano y otoño"
+        },
+        {
+          "label": "Talles",
+          "value": "S a XL"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talle dentro de los 7 días",
+        "Probátelo en tienda antes de llevarlo",
+        "Talles S, M, L y XL"
+      ],
+      "badges": [],
+      "price": 399.0,
+      "featured": true,
+      "source": "https://www.alibaba.com/product-detail/Ladies-Denim-Jacket-Classic-Casual-Elastic_1601800044130.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 143,23/u + importación y margen de retail",
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 4
+    },
+    {
+      "images": [
+        "New-Design-2025-Winter-Women-01.jpg",
+        "New-Design-2025-Winter-Women-02.jpg",
+        "New-Design-2025-Winter-Women-03.jpg"
+      ],
+      "slug": "campera-puffer-reversible",
+      "name": "Campera puffer reversible con capucha",
+      "category": "camperas",
+      "sku": "AMA-CAM-PUF",
+      "description": "Dos camperas en una: se da vuelta y cambia de color.\n\nEl corte boxy es amplio de hombros y corto de largo, esa línea urbana que no marca el cuerpo. El relleno ronda los 100 a 150 gramos, suficiente para el invierno de valle sin que abulte como una campera de montaña. Capucha y cierre completo.",
+      "specs": [
+        {
+          "label": "Corte",
+          "value": "Boxy, amplio"
+        },
+        {
+          "label": "Exterior",
+          "value": "Poliéster y nylon"
+        },
+        {
+          "label": "Relleno",
+          "value": "100 a 150 g"
+        },
+        {
+          "label": "Capucha",
+          "value": "Sí"
+        },
+        {
+          "label": "Detalle",
+          "value": "Reversible, dos colores"
+        },
+        {
+          "label": "Talles",
+          "value": "S a XL"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talle dentro de los 7 días",
+        "Probátelo en tienda antes de llevarlo",
+        "Se usa de los dos lados"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Reversible"
+        }
+      ],
+      "price": 659.0,
+      "is_new": true,
+      "source": "https://www.alibaba.com/product-detail/New-Design-2025-Winter-Women-s_1601598645572.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 283,96/u + importación y margen de retail",
+      "featured": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 5
+    },
+    {
+      "images": [
+        "Women-s-Jacket-Hiking-Mountain-01.jpg",
+        "Women-s-Jacket-Hiking-Mountain-02.jpg",
+        "Women-s-Jacket-Hiking-Mountain-03.jpg"
+      ],
+      "slug": "campera-rompeviento-impermeable",
+      "name": "Campera rompeviento impermeable",
+      "category": "camperas",
+      "sku": "AMA-CAM-ROM",
+      "description": "Liviana, impermeable y cortaviento. Se guarda en la mochila y aparece cuando llueve.\n\nPoliéster tratado que repele el agua pero deja respirar, que es la diferencia entre una campera técnica y un piloto de plástico. Capucha, cierre completo y bolsillos con cierre. Pensada para caminar, pero funciona igual de bien para un día de lluvia en la ciudad.",
+      "specs": [
+        {
+          "label": "Tela",
+          "value": "100% poliéster tratado"
+        },
+        {
+          "label": "Protección",
+          "value": "Impermeable y cortaviento"
+        },
+        {
+          "label": "Transpirabilidad",
+          "value": "Sí"
+        },
+        {
+          "label": "Capucha",
+          "value": "Sí"
+        },
+        {
+          "label": "Cierre",
+          "value": "Completo"
+        },
+        {
+          "label": "Talles",
+          "value": "S a XL"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talle dentro de los 7 días",
+        "Probátelo en tienda antes de llevarlo",
+        "Se pliega y entra en la mochila"
+      ],
+      "badges": [],
+      "price": 529.0,
+      "source": "https://www.alibaba.com/product-detail/Women-s-Jacket-Hiking-Mountain-Rainproof_1601688269505.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 188,31/u + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 6
+    },
+    {
+      "images": [
+        "New-Arrival-High-Quality-White-Women-01.jpg",
+        "New-Arrival-High-Quality-White-Women-03.jpg"
+      ],
+      "slug": "campera-plumas-capucha-piel",
+      "name": "Campera de plumas con capucha de piel",
+      "category": "camperas",
+      "sku": "AMA-CAM-PLU",
+      "description": "Plumón de pato de verdad y capucha con piel sintética. La más abrigada del catálogo.\n\nEl plumón de pato abriga más y pesa menos que cualquier relleno sintético: es la diferencia entre aguantar el frío y pasarlo bien. El exterior es cortaviento y la capucha lleva piel sintética desmontable. Blanco, cierre completo.",
+      "specs": [
+        {
+          "label": "Relleno",
+          "value": "Plumón de pato"
+        },
+        {
+          "label": "Exterior",
+          "value": "100% poliéster cortaviento"
+        },
+        {
+          "label": "Capucha",
+          "value": "Con piel sintética"
+        },
+        {
+          "label": "Cierre",
+          "value": "Completo"
+        },
+        {
+          "label": "Color",
+          "type": "colors",
+          "values": [
+            "#F4F2EE"
+          ]
+        },
+        {
+          "label": "Talles",
+          "value": "S a XL"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talle dentro de los 7 días",
+        "Probátelo en tienda antes de llevarlo",
+        "Plumón natural, no relleno sintético"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Plumón de pato"
+        }
+      ],
+      "price": 2549.0,
+      "source": "https://www.alibaba.com/product-detail/New-Arrival-High-Quality-White-Women_11000030430225.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 1.108,41/u + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 7
+    },
+    {
+      "images": [
+        "Women-s-Casual-Jogger-Pants-01.jpg",
+        "Women-s-Casual-Jogger-Pants-02.jpg",
+        "Women-s-Casual-Jogger-Pants-03.jpg"
+      ],
+      "slug": "jogger-friza-tiro-alto",
+      "name": "Jogger de friza con tiro alto",
+      "category": "deportivo",
+      "sku": "AMA-DEP-JOG",
+      "description": "Friza por dentro, tiro alto y cordón. El pantalón de estar en casa que también sale a la calle.\n\nLa friza es lo que lo hace abrigado sin ser pesado. El tiro alto con cordón ajusta donde una quiere, y el corte regular no marca. Bolsillos a los costados.",
+      "specs": [
+        {
+          "label": "Tela",
+          "value": "Friza de poliéster y algodón"
+        },
+        {
+          "label": "Tiro",
+          "value": "Alto"
+        },
+        {
+          "label": "Cierre",
+          "value": "Cordón ajustable"
+        },
+        {
+          "label": "Corte",
+          "value": "Regular"
+        },
+        {
+          "label": "Talles",
+          "value": "S a XL"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talle dentro de los 7 días",
+        "Probátelo en tienda antes de llevarlo",
+        "Talles S, M, L y XL"
+      ],
+      "badges": [],
+      "price": 249.0,
+      "source": "https://www.alibaba.com/product-detail/Women-s-Casual-Jogger-Pants-High_10000047615228.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 87,18/u + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 8
+    },
+    {
+      "images": [
+        "Women-s-Athletic-Yoga-Top-Jacket-01.jpg",
+        "Women-s-Athletic-Yoga-Top-Jacket-02.jpg",
+        "Women-s-Athletic-Yoga-Top-Jacket-03.jpg"
+      ],
+      "slug": "buzo-deportivo-cuello-alto",
+      "name": "Buzo deportivo de cierre con cuello alto",
+      "category": "deportivo",
+      "sku": "AMA-DEP-BUZ",
+      "description": "Cuello alto, cierre completo y corte al cuerpo. Para entrenar cuando refresca.\n\nLa tela de nylon con elastano seca rápido y saca la transpiración hacia afuera, que es lo que evita quedarse fría después del ejercicio. Corte entallado con costuras que siguen la línea del cuerpo, y cuello alto que protege del viento.",
+      "specs": [
+        {
+          "label": "Tela",
+          "value": "Nylon con elastano"
+        },
+        {
+          "label": "Cuello",
+          "value": "Alto"
+        },
+        {
+          "label": "Cierre",
+          "value": "Completo"
+        },
+        {
+          "label": "Corte",
+          "value": "Entallado"
+        },
+        {
+          "label": "Terminación",
+          "value": "Secado rápido, absorbe la transpiración"
+        },
+        {
+          "label": "Talles",
+          "value": "S a XL, incluye talles grandes"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talle dentro de los 7 días",
+        "Probátelo en tienda antes de llevarlo",
+        "Talles S, M, L y XL"
+      ],
+      "badges": [],
+      "price": 239.0,
+      "is_new": true,
+      "source": "https://www.alibaba.com/product-detail/Women-s-Athletic-Yoga-Top-Jacket_1601683591462.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 86,93/u + importación y margen de retail",
+      "featured": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 9
+    },
+    {
+      "images": [
+        "High-Waist-Tight-Custom-Pants-01.jpg",
+        "High-Waist-Tight-Custom-Pants-02.jpg",
+        "High-Waist-Tight-Custom-Pants-03.jpg"
+      ],
+      "slug": "calza-tiro-alto-sin-costuras",
+      "name": "Calza de tiro alto sin costura central",
+      "category": "deportivo",
+      "sku": "AMA-DEP-CAL",
+      "description": "Tiro alto, sin costura al medio y 230 gramos de tela. No transparenta.\n\nEl gramaje es la clave: 230 gramos es tela de calza buena, de esas que no se ven a través al agacharse. Sin costura central, así que no molesta ni marca. Cintura ancha elastizada que se queda en su lugar. Largo completo, en doce colores.",
+      "specs": [
+        {
+          "label": "Tela",
+          "value": "Nylon con elastano, 230 g"
+        },
+        {
+          "label": "Tiro",
+          "value": "Alto"
+        },
+        {
+          "label": "Largo",
+          "value": "Completo"
+        },
+        {
+          "label": "Cintura",
+          "value": "Elastizada ancha"
+        },
+        {
+          "label": "Terminación",
+          "value": "Transpirable, secado rápido, no transparenta"
+        },
+        {
+          "label": "Talles",
+          "value": "S a XL, incluye talles grandes"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talle dentro de los 7 días",
+        "Probátelo en tienda antes de llevarlo",
+        "Doce colores disponibles"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "No transparenta"
+        }
+      ],
+      "price": 159.0,
+      "featured": true,
+      "source": "https://www.alibaba.com/product-detail/High-Waist-Tight-Custom-Pants-Seamed_1601281980585.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 49,82/u + importación y margen de retail",
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 10
+    }
+  ]
+}

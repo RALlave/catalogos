@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 
 import AppIcon from '@/components/AppIcon.vue'
 import NavItem from '@/components/NavItem.vue'
+import SidebarMobileExtras from '@/components/SidebarMobileExtras.vue'
 import { usePlatformStore } from '@/stores/platform'
 import { useUiStore } from '@/stores/ui'
 
@@ -197,6 +198,8 @@ function toggle(key) {
                     </ul>
                 </div>
             </div>
+
+            <SidebarMobileExtras />
         </nav>
 
         <div class="sidebar-footer">

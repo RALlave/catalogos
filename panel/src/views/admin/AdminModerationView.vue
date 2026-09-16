@@ -1,4 +1,8 @@
 <!-- Maqueta del prototipo: esta pantalla todavía no tiene backend. -->
+<script setup>
+import RowActions from '@/components/RowActions.vue'
+</script>
+
 <template>
         <div class="page-header">
             <div class="page-title">
@@ -80,10 +84,10 @@
                             <thead>
                                 <tr>
                                     <th>Contenido</th>
-                                    <th>Tienda</th>
-                                    <th>Motivo</th>
-                                    <th>Reportes</th>
-                                    <th>Fecha</th>
+                                    <th class="is-hide-mobile">Tienda</th>
+                                    <th class="is-hide-mobile">Motivo</th>
+                                    <th class="is-hide-mobile">Reportes</th>
+                                    <th class="is-hide-mobile">Fecha</th>
                                     <th><span class="visually-hidden">Acciones</span></th>
                                 </tr>
                             </thead>
@@ -99,16 +103,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td>Todo Celu</td>
-                                    <td><span class="badge badge-warning">Falsificado</span></td>
-                                    <td>6</td>
-                                    <td>Hace 2 días</td>
+                                    <td class="is-hide-mobile">Todo Celu</td>
+                                    <td class="is-hide-mobile"><span class="badge badge-warning">Falsificado</span></td>
+                                    <td class="is-hide-mobile">6</td>
+                                    <td class="is-hide-mobile">Hace 2 días</td>
                                     <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-ghost btn-sm" type="button">Ver</button>
-                                            <button class="btn btn-outline btn-sm" type="button">Descartar</button>
-                                            <button class="btn btn-danger btn-sm" type="button">Quitar</button>
-                                        </div>
+                                        <RowActions
+                                            :actions="[
+                                                { label: 'Ver' },
+                                                { label: 'Descartar' },
+                                                { label: 'Quitar', danger: true },
+                                            ]"
+                                        />
                                     </td>
                                 </tr>
 
@@ -122,16 +128,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td>Luz Beauty</td>
-                                    <td><span class="badge badge-danger">Inapropiado</span></td>
-                                    <td>4</td>
-                                    <td>Hace 1 día</td>
+                                    <td class="is-hide-mobile">Luz Beauty</td>
+                                    <td class="is-hide-mobile"><span class="badge badge-danger">Inapropiado</span></td>
+                                    <td class="is-hide-mobile">4</td>
+                                    <td class="is-hide-mobile">Hace 1 día</td>
                                     <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-ghost btn-sm" type="button">Ver</button>
-                                            <button class="btn btn-outline btn-sm" type="button">Descartar</button>
-                                            <button class="btn btn-danger btn-sm" type="button">Quitar</button>
-                                        </div>
+                                        <RowActions
+                                            :actions="[
+                                                { label: 'Ver' },
+                                                { label: 'Descartar' },
+                                                { label: 'Quitar', danger: true },
+                                            ]"
+                                        />
                                     </td>
                                 </tr>
 
@@ -145,16 +153,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td>Promos Rápidas</td>
-                                    <td><span class="badge">Spam</span></td>
-                                    <td>11</td>
-                                    <td>Hace 22 horas</td>
+                                    <td class="is-hide-mobile">Promos Rápidas</td>
+                                    <td class="is-hide-mobile"><span class="badge">Spam</span></td>
+                                    <td class="is-hide-mobile">11</td>
+                                    <td class="is-hide-mobile">Hace 22 horas</td>
                                     <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-ghost btn-sm" type="button">Ver</button>
-                                            <button class="btn btn-outline btn-sm" type="button">Descartar</button>
-                                            <button class="btn btn-danger btn-sm" type="button">Suspender</button>
-                                        </div>
+                                        <RowActions
+                                            :actions="[
+                                                { label: 'Ver' },
+                                                { label: 'Descartar' },
+                                                { label: 'Suspender', danger: true },
+                                            ]"
+                                        />
                                     </td>
                                 </tr>
 
@@ -168,16 +178,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td>Bazar Norte</td>
-                                    <td><span class="badge badge-warning">Falsificado</span></td>
-                                    <td>3</td>
-                                    <td>Hace 14 horas</td>
+                                    <td class="is-hide-mobile">Bazar Norte</td>
+                                    <td class="is-hide-mobile"><span class="badge badge-warning">Falsificado</span></td>
+                                    <td class="is-hide-mobile">3</td>
+                                    <td class="is-hide-mobile">Hace 14 horas</td>
                                     <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-ghost btn-sm" type="button">Ver</button>
-                                            <button class="btn btn-outline btn-sm" type="button">Descartar</button>
-                                            <button class="btn btn-danger btn-sm" type="button">Quitar</button>
-                                        </div>
+                                        <RowActions
+                                            :actions="[
+                                                { label: 'Ver' },
+                                                { label: 'Descartar' },
+                                                { label: 'Quitar', danger: true },
+                                            ]"
+                                        />
                                     </td>
                                 </tr>
 
@@ -191,16 +203,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td>Nómade</td>
-                                    <td><span class="badge">Otro</span></td>
-                                    <td>1</td>
-                                    <td>Hace 5 horas</td>
+                                    <td class="is-hide-mobile">Nómade</td>
+                                    <td class="is-hide-mobile"><span class="badge">Otro</span></td>
+                                    <td class="is-hide-mobile">1</td>
+                                    <td class="is-hide-mobile">Hace 5 horas</td>
                                     <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-ghost btn-sm" type="button">Ver</button>
-                                            <button class="btn btn-outline btn-sm" type="button">Descartar</button>
-                                            <button class="btn btn-danger btn-sm" type="button">Quitar</button>
-                                        </div>
+                                        <RowActions
+                                            :actions="[
+                                                { label: 'Ver' },
+                                                { label: 'Descartar' },
+                                                { label: 'Quitar', danger: true },
+                                            ]"
+                                        />
                                     </td>
                                 </tr>
 

@@ -36,7 +36,7 @@ const year = new Date().getFullYear()
                         <span class="brand-name-alt">{{ brandAlt }}</span>
                     </span>
                 </NuxtLink>
-                <p v-if="store.description" class="footer-description">{{ store.description }}</p>
+                <p v-if="store.description_text" class="footer-description">{{ store.description_text }}</p>
             </div>
 
             <nav class="footer-col" aria-labelledby="footer-content-title">

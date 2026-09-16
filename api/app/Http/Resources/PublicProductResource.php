@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Support\RichText;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,6 +18,8 @@ class PublicProductResource extends JsonResource
             'slug' => $this->slug,
             'sku' => $this->sku,
             'description' => $this->description,
+            /* Without formatting: excerpts, the summary and the meta tags. */
+            'description_text' => RichText::toText($this->description),
             'specs' => $this->specs,
             'benefits' => $this->benefits,
             'badges' => $this->badges,

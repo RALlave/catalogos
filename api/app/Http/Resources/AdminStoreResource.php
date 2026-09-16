@@ -16,6 +16,7 @@ class AdminStoreResource extends StoreResource
             'categories_count' => $this->whenCounted('categories'),
             'products_count' => $this->whenCounted('products'),
             'updated_at' => $this->updated_at,
+            'trashed_at' => $this->trashed_at,
         ]);
     }
 }

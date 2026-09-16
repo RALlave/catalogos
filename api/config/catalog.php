@@ -46,4 +46,38 @@ return [
         'fade',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Alineación del contenido del hero
+    |--------------------------------------------------------------------------
+    |
+    | Cada hero elige cómo se alinean sus textos y botones. Viaja al catálogo
+    | como `data-align` del slide.
+    |
+    */
+
+    'hero_aligns' => [
+        'center',
+        'left',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Destinos del botón del hero
+    |--------------------------------------------------------------------------
+    |
+    | A dónde lleva el botón principal de cada hero. Se elige de esta lista y
+    | nunca se escribe a mano. `category` no tiene URL fija: se arma con el
+    | slug de la categoría elegida en `heroes.category_id`.
+    |
+    */
+
+    'hero_links' => [
+        'products' => '#products',
+        'featured' => '#featured',
+        'home' => '/#products',
+        'contact' => '/contacto',
+        'category' => null,
+    ],
+
 ];

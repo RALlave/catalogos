@@ -1,6 +1,7 @@
 <script setup>
 import { onBeforeUnmount, onMounted } from 'vue'
 
+import BackToTop from '@/components/BackToTop.vue'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import ToastStack from '@/components/ToastStack.vue'
 import UnsavedModal from '@/components/UnsavedModal.vue'
@@ -50,6 +51,7 @@ onBeforeUnmount(() => {
 
 <template>
     <RouterView />
+    <BackToTop />
     <ToastStack />
     <UnsavedModal />
     <ConfirmModal />

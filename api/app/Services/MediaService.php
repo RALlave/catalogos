@@ -108,6 +108,68 @@ class MediaService
     }
 
     /**
+     * Crops the image in place: every product, hero, logo or cover using it
+     * shows the cropped version. There is no original to go back to, so it
+     * cannot be undone.
+     *
+     * The cut is taken from the biggest variant and the same variants are
+     * written again under new file names, so browsers and Cloudflare do not
+     * keep serving the old picture. The old files are deleted right away.
+     *
+     * @param  array{x: int, y: int, width: int, height: int}  $rect  pixels of the biggest variant
+     */
+    public function crop(Media $media, array $rect): Media
+    {
+        $rect = $this->clamp($rect, (int) $media->width, (int) $media->height);
+
+        /* Rows older than the conversion have no variants: they get the full set. */
+        $names = $media->variants ? array_keys($media->variants) : config('media.profiles.library');
+
+        $oldPath = $media->path;
+        $oldVariants = $media->variants;
+
+        $image = $this->optimizer->crop(
+            Storage::disk('public')->path($oldPath),
+            $media->directory(),
+            $names,
+            $rect,
+        );
+
+        $media->update([
+            'path' => $image['path'],
+            'variants' => $image['variants'],
+            'mime' => ImageOptimizer::MIME,
+            'size' => $image['size'],
+            'width' => $image['width'],
+            'height' => $image['height'],
+        ]);
+
+        $this->optimizer->forget($oldPath, $oldVariants);
+
+        return $media->refresh();
+    }
+
+    /**
+     * Keeps the rectangle inside the picture: the panel sends what the cropper
+     * reports, which can go a pixel past the edge after rounding.
+     *
+     * @param  array{x: int, y: int, width: int, height: int}  $rect
+     * @return array{x: int, y: int, width: int, height: int}
+     */
+    private function clamp(array $rect, int $width, int $height): array
+    {
+        $x = min(max(0, (int) $rect['x']), $width - 1);
+        $y = min(max(0, (int) $rect['y']), $height - 1);
+
+        return [
+            'x' => $x,
+            'y' => $y,
+            'width' => max(1, min((int) $rect['width'], $width - $x)),
+            'height' => max(1, min((int) $rect['height'], $height - $y)),
+        ];
+    }
+
+    /**
      * El archivo se va con el registro. Las galerías que la usaban pierden la
      * imagen por la cascada de la base, y el logo o la portada quedan en null.
      */

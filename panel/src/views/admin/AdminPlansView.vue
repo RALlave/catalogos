@@ -1,4 +1,8 @@
 <!-- Maqueta del prototipo: esta pantalla todavía no tiene backend. -->
+<script setup>
+import RowActions from '@/components/RowActions.vue'
+</script>
+
 <template>
         <div class="page-header">
             <div class="page-title">
@@ -240,10 +244,10 @@
                             <thead>
                                 <tr>
                                     <th>Tienda</th>
-                                    <th>Plan</th>
-                                    <th>Monto</th>
-                                    <th>Fecha</th>
-                                    <th>Estado</th>
+                                    <th class="is-hide-mobile">Plan</th>
+                                    <th class="is-hide-mobile">Monto</th>
+                                    <th class="is-hide-mobile">Fecha</th>
+                                    <th class="is-hide-mobile">Estado</th>
                                     <th><span class="visually-hidden">Acciones</span></th>
                                 </tr>
                             </thead>
@@ -258,16 +262,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td><span class="badge badge-accent">Emprendedor</span></td>
-                                    <td>
+                                    <td class="is-hide-mobile"><span class="badge badge-accent">Emprendedor</span></td>
+                                    <td class="is-hide-mobile">
                                         <div class="table-price">$ 4.900</div>
                                     </td>
-                                    <td>06/08/2026</td>
-                                    <td><span class="badge badge-success badge-dot">Aprobado</span></td>
+                                    <td class="is-hide-mobile">06/08/2026</td>
+                                    <td class="is-hide-mobile"><span class="badge badge-success badge-dot">Aprobado</span></td>
                                     <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-ghost btn-sm" type="button">Comprobante</button>
-                                        </div>
+                                        <RowActions
+                                            :actions="[
+                                                { label: 'Comprobante' },
+                                            ]"
+                                        />
                                     </td>
                                 </tr>
                                 <tr>
@@ -280,16 +286,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td><span class="badge badge-warning">Negocio</span></td>
-                                    <td>
+                                    <td class="is-hide-mobile"><span class="badge badge-warning">Negocio</span></td>
+                                    <td class="is-hide-mobile">
                                         <div class="table-price">$ 11.900</div>
                                     </td>
-                                    <td>05/08/2026</td>
-                                    <td><span class="badge badge-success badge-dot">Aprobado</span></td>
+                                    <td class="is-hide-mobile">05/08/2026</td>
+                                    <td class="is-hide-mobile"><span class="badge badge-success badge-dot">Aprobado</span></td>
                                     <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-ghost btn-sm" type="button">Comprobante</button>
-                                        </div>
+                                        <RowActions
+                                            :actions="[
+                                                { label: 'Comprobante' },
+                                            ]"
+                                        />
                                     </td>
                                 </tr>
                                 <tr>
@@ -302,16 +310,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td><span class="badge badge-accent">Emprendedor</span></td>
-                                    <td>
+                                    <td class="is-hide-mobile"><span class="badge badge-accent">Emprendedor</span></td>
+                                    <td class="is-hide-mobile">
                                         <div class="table-price">$ 4.900</div>
                                     </td>
-                                    <td>05/08/2026</td>
-                                    <td><span class="badge badge-danger badge-dot">Rechazado</span></td>
+                                    <td class="is-hide-mobile">05/08/2026</td>
+                                    <td class="is-hide-mobile"><span class="badge badge-danger badge-dot">Rechazado</span></td>
                                     <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-outline btn-sm" type="button">Reintentar</button>
-                                        </div>
+                                        <RowActions
+                                            :actions="[
+                                                { label: 'Reintentar' },
+                                            ]"
+                                        />
                                     </td>
                                 </tr>
                                 <tr>
@@ -324,16 +334,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td><span class="badge badge-accent">Emprendedor</span></td>
-                                    <td>
+                                    <td class="is-hide-mobile"><span class="badge badge-accent">Emprendedor</span></td>
+                                    <td class="is-hide-mobile">
                                         <div class="table-price">$ 4.900</div>
                                     </td>
-                                    <td>03/08/2026</td>
-                                    <td><span class="badge badge-warning badge-dot">Pendiente</span></td>
+                                    <td class="is-hide-mobile">03/08/2026</td>
+                                    <td class="is-hide-mobile"><span class="badge badge-warning badge-dot">Pendiente</span></td>
                                     <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-ghost btn-sm" type="button">Ver</button>
-                                        </div>
+                                        <RowActions
+                                            :actions="[
+                                                { label: 'Ver' },
+                                            ]"
+                                        />
                                     </td>
                                 </tr>
                                 <tr>
@@ -346,16 +358,18 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td><span class="badge badge-warning">Negocio</span></td>
-                                    <td>
+                                    <td class="is-hide-mobile"><span class="badge badge-warning">Negocio</span></td>
+                                    <td class="is-hide-mobile">
                                         <div class="table-price">$ 11.900</div>
                                     </td>
-                                    <td>01/08/2026</td>
-                                    <td><span class="badge badge-success badge-dot">Aprobado</span></td>
+                                    <td class="is-hide-mobile">01/08/2026</td>
+                                    <td class="is-hide-mobile"><span class="badge badge-success badge-dot">Aprobado</span></td>
                                     <td>
-                                        <div class="table-actions">
-                                            <button class="btn btn-ghost btn-sm" type="button">Comprobante</button>
-                                        </div>
+                                        <RowActions
+                                            :actions="[
+                                                { label: 'Comprobante' },
+                                            ]"
+                                        />
                                     </td>
                                 </tr>
                             </tbody>

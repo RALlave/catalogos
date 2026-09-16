@@ -4,8 +4,10 @@ import { useRoute, useRouter } from 'vue-router'
 
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
+import RichTextEditor from '@/components/RichTextEditor.vue'
 import SkeletonForm from '@/components/SkeletonForm.vue'
 import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
+import { richTextCounter } from '@/lib/richText'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
 import { useCategoriesStore } from '@/stores/categories'
@@ -195,15 +197,15 @@ onMounted(async () => {
                 <FormField
                     label="Descripción"
                     field-id="category-description"
-                    :counter="form.description"
+                    :counter="richTextCounter(form.description)"
                     :max="2000"
                     :error="errors.description?.[0]"
                 >
-                    <textarea
+                    <RichTextEditor
                         id="category-description"
-                        maxlength="2000"
                         v-model="form.description"
-                        class="textarea"
+                        :max="2000"
+                        :has-error="Boolean(errors.description)"
                         placeholder="Qué incluye esta categoría"
                     />
                 </FormField>

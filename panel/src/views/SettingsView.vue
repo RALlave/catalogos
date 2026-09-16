@@ -87,7 +87,7 @@ onMounted(async () => {
         <div class="page-actions">
             <a v-if="previewUrl" class="btn btn-outline" :href="previewUrl" target="_blank" rel="noopener">
                 <AppIcon name="external" />
-                Ver mi catálogo
+                <span class="btn-label">Ver mi catálogo</span>
             </a>
         </div>
     </div>

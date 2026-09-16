@@ -5,7 +5,9 @@ import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
 import MediaPicker from '@/components/MediaPicker.vue'
 import PlatformLogoPicker from '@/components/PlatformLogoPicker.vue'
+import RichTextEditor from '@/components/RichTextEditor.vue'
 import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
+import { richTextCounter } from '@/lib/richText'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
 import { useAuthStore } from '@/stores/auth'
@@ -197,7 +199,7 @@ onMounted(() => {
                 rel="noopener"
             >
                 <AppIcon name="external" />
-                Ver catálogo
+                <span class="btn-label">Ver catálogo</span>
             </a>
         </div>
     </div>
@@ -286,15 +288,15 @@ onMounted(() => {
                     <FormField
                         label="Descripción"
                         field-id="store-description"
-                        :counter="form.description"
+                        :counter="richTextCounter(form.description)"
                         :max="2000"
                         :error="errors.description?.[0]"
                     >
-                        <textarea
+                        <RichTextEditor
                             id="store-description"
-                            maxlength="2000"
                             v-model="form.description"
-                            class="textarea"
+                            :max="2000"
+                            :has-error="Boolean(errors.description)"
                             placeholder="Contá qué vendés"
                         />
                     </FormField>
@@ -316,7 +318,7 @@ onMounted(() => {
 
             <div class="card-body">
                 <div class="form">
-                    <div class="form-row">
+                    <div class="form-row is-stacked">
                         <FormField label="Logo" field-id="store-logo">
                             <img v-if="auth.store.logo_url" class="preview-logo" :src="auth.store.logo_url" alt="Logo">
                             <input
@@ -368,7 +370,7 @@ onMounted(() => {
 
             <div class="card-body">
                 <div class="form">
-                    <div class="form-row">
+                    <div class="form-row is-stacked">
                         <FormField
                             label="WhatsApp"
                             field-id="store-whatsapp"
@@ -394,7 +396,7 @@ onMounted(() => {
                         </FormField>
                     </div>
 
-                    <div class="form-row">
+                    <div class="form-row is-stacked">
                         <FormField label="Facebook" field-id="store-facebook" :error="errors.facebook?.[0]">
                             <input id="store-facebook" maxlength="255" v-model="form.facebook" class="input" type="text">
                         </FormField>
@@ -408,7 +410,7 @@ onMounted(() => {
                         </FormField>
                     </div>
 
-                    <div class="form-row">
+                    <div class="form-row is-stacked">
                         <FormField label="Sitio web" field-id="store-website" :error="errors.website?.[0]">
                             <input id="store-website" maxlength="255" v-model="form.website" class="input" type="text">
                         </FormField>
@@ -418,7 +420,7 @@ onMounted(() => {
                         </FormField>
                     </div>
 
-                    <div class="form-row">
+                    <div class="form-row is-stacked">
                         <FormField label="Enlace del mapa" field-id="store-map" :error="errors.map_url?.[0]">
                             <input id="store-map" maxlength="500" v-model="form.map_url" class="input" type="text">
                         </FormField>

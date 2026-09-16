@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 
 import AppIcon from '@/components/AppIcon.vue'
 import NavItem from '@/components/NavItem.vue'
+import SidebarMobileExtras from '@/components/SidebarMobileExtras.vue'
 import { usePwaInstall } from '@/lib/pwa'
 import { usePlatformStore } from '@/stores/platform'
 import { useUiStore } from '@/stores/ui'
@@ -117,18 +118,18 @@ onMounted(() => platform.load())
                         </li>
 
                         <li>
-                            <div class="nav-item">
-                                <a href="#">
-                                    <span class="nav-icon">
-                                        <AppIcon name="settings" />
-                                    </span>
-                                    <span class="nav-text">Ajustes</span>
-                                </a>
-                            </div>
+                            <NavItem :to="{ name: 'admin-settings' }">
+                                <span class="nav-icon">
+                                    <AppIcon name="settings" />
+                                </span>
+                                <span class="nav-text">Ajustes</span>
+                            </NavItem>
                         </li>
                     </ul>
                 </div>
             </div>
+
+            <SidebarMobileExtras admin />
         </nav>
 
         <div class="sidebar-footer">

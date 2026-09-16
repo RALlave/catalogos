@@ -3,7 +3,9 @@ import { computed, onMounted } from 'vue'
 import draggable from 'vuedraggable'
 
 import AppIcon from '@/components/AppIcon.vue'
+import RowActions from '@/components/RowActions.vue'
 import SkeletonTable from '@/components/SkeletonTable.vue'
+import { richTextToPlain } from '@/lib/richText'
 import { api } from '@/services/api'
 import { useCategoriesStore } from '@/stores/categories'
 import { useConfirmStore } from '@/stores/confirm'
@@ -80,7 +82,7 @@ onMounted(store.fetch)
         <div class="page-actions">
             <RouterLink class="btn btn-primary" :to="{ name: 'category-create' }">
                 <AppIcon name="plus" />
-                Nueva categoría
+                <span class="btn-label">Nueva categoría</span>
             </RouterLink>
         </div>
     </div>
@@ -102,8 +104,8 @@ onMounted(store.fetch)
                         <tr>
                             <th class="table-handle"><span class="visually-hidden">Ordenar</span></th>
                             <th>Categoría</th>
-                            <th>Descripción</th>
-                            <th>Estado</th>
+                            <th class="is-hide-mobile">Descripción</th>
+                            <th class="is-hide-mobile">Estado</th>
                             <th><span class="visually-hidden">Acciones</span></th>
                         </tr>
                     </thead>
@@ -138,9 +140,9 @@ onMounted(store.fetch)
                                     </span>
                                 </td>
 
-                                <td>{{ category.description }}</td>
+                                <td class="is-hide-mobile">{{ richTextToPlain(category.description) }}</td>
 
-                                <td>
+                                <td class="is-hide-mobile">
                                     <span
                                         class="badge badge-dot"
                                         :class="category.active ? 'badge-success' : 'badge-warning'"
@@ -150,26 +152,12 @@ onMounted(store.fetch)
                                 </td>
 
                                 <td>
-                                    <div class="table-actions">
-                                        <RouterLink
-                                            class="btn btn-ghost btn-icon"
-                                            :to="{ name: 'category-edit', params: { id: category.id } }"
-                                            title="Editar"
-                                            aria-label="Editar"
-                                        >
-                                            <AppIcon name="pencil" />
-                                        </RouterLink>
-
-                                        <button
-                                            class="btn btn-ghost btn-icon"
-                                            type="button"
-                                            title="Eliminar"
-                                            aria-label="Eliminar"
-                                            @click="remove(category)"
-                                        >
-                                            <AppIcon name="trash" />
-                                        </button>
-                                    </div>
+                                    <RowActions
+                                        :actions="[
+                                            { label: 'Editar', icon: 'pencil', to: { name: 'category-edit', params: { id: category.id } } },
+                                            { label: 'Eliminar', icon: 'trash', danger: true, onClick: () => remove(category) },
+                                        ]"
+                                    />
                                 </td>
                             </tr>
                         </template>

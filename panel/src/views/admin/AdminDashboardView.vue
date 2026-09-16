@@ -189,7 +189,7 @@ onMounted(async () => {
         <div class="page-actions">
             <RouterLink class="btn btn-primary" :to="{ name: 'admin-store-create' }">
                 <AppIcon name="plus" />
-                Nueva tienda
+                <span class="btn-label">Nueva tienda</span>
             </RouterLink>
         </div>
     </div>
@@ -325,9 +325,9 @@ onMounted(async () => {
                     <thead>
                         <tr>
                             <th>Tienda</th>
-                            <th>Dueño</th>
-                            <th>Productos</th>
-                            <th>Estado</th>
+                            <th class="is-hide-mobile">Dueño</th>
+                            <th class="is-hide-mobile">Productos</th>
+                            <th class="is-hide-mobile">Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -338,14 +338,14 @@ onMounted(async () => {
                                     <span>{{ store.slug }}</span>
                                 </span>
                             </td>
-                            <td>
+                            <td class="is-hide-mobile">
                                 <span class="table-cell-text">
                                     <strong>{{ store.owner?.name }}</strong>
                                     <span>{{ store.owner?.email }}</span>
                                 </span>
                             </td>
-                            <td>{{ store.products_count }}</td>
-                            <td>
+                            <td class="is-hide-mobile">{{ store.products_count }}</td>
+                            <td class="is-hide-mobile">
                                 <span
                                     class="badge badge-dot"
                                     :class="store.active ? 'badge-success' : 'badge-warning'"

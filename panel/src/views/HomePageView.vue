@@ -6,22 +6,15 @@
 -->
 
 <script setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
-import AppIcon from '@/components/AppIcon.vue'
 import HomeFeaturedPanel from '@/components/HomeFeaturedPanel.vue'
 import HomeHeroPanel from '@/components/HomeHeroPanel.vue'
-import { useAuthStore } from '@/stores/auth'
-
-const auth = useAuthStore()
 
 const TABS = [
     { key: 'hero', label: 'Hero (banner)' },
     { key: 'featured', label: 'Destacados' },
 ]
-
-/* Vista previa del catálogo tal como está guardado hoy. */
-const previewUrl = computed(() => auth.store?.public_url ?? null)
 
 const tab = ref(TABS[0].key)
 
@@ -42,13 +35,6 @@ async function goTab(key) {
         <div class="page-title">
             <h1>Home</h1>
             <p>Las secciones de la portada de tu catálogo</p>
-        </div>
-
-        <div class="page-actions">
-            <a v-if="previewUrl" class="btn btn-outline" :href="previewUrl" target="_blank" rel="noopener">
-                <AppIcon name="external" />
-                Ver mi catálogo
-            </a>
         </div>
     </div>
 

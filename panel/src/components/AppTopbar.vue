@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 
 import AppDropdown from '@/components/AppDropdown.vue'
 import AppIcon from '@/components/AppIcon.vue'
+import GlobalSearch from '@/components/GlobalSearch.vue'
 import { usePwaInstall } from '@/lib/pwa'
 import { useAuthStore } from '@/stores/auth'
 import { ADMIN_THEMES, THEMES, useUiStore } from '@/stores/ui'
@@ -39,16 +40,13 @@ async function logout() {
                 <AppIcon name="menu" />
             </button>
 
-            <div class="search topbar-search">
-                <AppIcon name="search" />
-                <input class="input" type="search" placeholder="Buscar productos, categorías…" aria-label="Buscar">
-            </div>
+            <GlobalSearch :admin="admin" />
         </div>
 
         <div class="topbar-right">
             <a
                 v-if="auth.store"
-                class="btn btn-outline btn-sm"
+                class="btn btn-outline btn-sm topbar-catalog"
                 :href="auth.store.public_url"
                 target="_blank"
                 rel="noopener"
@@ -57,7 +55,8 @@ async function logout() {
                 Ver mi catálogo
             </a>
 
-            <AppDropdown>
+            <!-- On mobile both move to the side menu (SidebarMobileExtras). -->
+            <AppDropdown class="topbar-theme">
                 <template #trigger="{ toggle, open }">
                     <button
                         class="topbar-action"

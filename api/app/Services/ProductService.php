@@ -153,7 +153,7 @@ class ProductService
      * @param  Builder<Product>  $query
      * @return Builder<Product>
      */
-    private function onSale(Builder $query, bool $onSale): Builder
+    public function onSale(Builder $query, bool $onSale = true): Builder
     {
         $condition = fn (Builder $q) => $q
             ->whereNotNull('sale_price')

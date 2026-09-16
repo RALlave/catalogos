@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import type { Category } from '~/types/catalog'
 
-const props = defineProps<{ categories: Category[], active: string }>()
+const props = defineProps<{ categories: Category[], active: string, loading?: boolean }>()
 
 const route = useRoute()
 
@@ -22,7 +22,7 @@ const chips = computed(() => [
 </script>
 
 <template>
-    <div class="filters" role="group" aria-label="Filtrar por categoría">
+    <div class="filters" role="group" aria-label="Filtrar por categoría" :aria-busy="loading || undefined">
         <NuxtLink
             v-for="chip in chips"
             :key="chip.slug"
@@ -30,7 +30,8 @@ const chips = computed(() => [
             :to="linkTo(chip.slug)"
             :aria-current="chip.slug === active ? 'true' : undefined"
         >
-            <AppIcon name="check" class="chip-icon" />
+            <span v-if="loading && chip.slug === active" class="chip-spinner" aria-hidden="true"></span>
+            <AppIcon v-else name="check" class="chip-icon" />
             {{ chip.name }}
         </NuxtLink>
     </div>

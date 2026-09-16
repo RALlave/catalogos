@@ -66,7 +66,7 @@ function price(product: Product): string | null {
                             <NuxtLink class="product-link" :to="path(lead)">{{ lead.name }}</NuxtLink>
                         </h3>
 
-                        <p v-if="lead.description" class="product-excerpt">{{ lead.description }}</p>
+                        <p v-if="lead.description_text" class="product-excerpt">{{ lead.description_text }}</p>
 
                         <p v-if="price(lead)" class="price">
                             <span v-if="store.currency" class="price-currency">{{ store.currency }}</span>
@@ -102,7 +102,7 @@ function price(product: Product): string | null {
                                     <NuxtLink class="product-link" :to="path(product)">{{ product.name }}</NuxtLink>
                                 </h3>
 
-                                <p v-if="product.description" class="product-excerpt">{{ product.description }}</p>
+                                <p v-if="product.description_text" class="product-excerpt">{{ product.description_text }}</p>
 
                                 <p v-if="price(product)" class="price">
                                     <span v-if="store.currency" class="price-currency">{{ store.currency }}</span>

@@ -36,7 +36,10 @@ export interface Product {
     name: string
     slug: string
     sku: string | null
+    /* HTML from the panel editor, already sanitized by the API. */
     description: string | null
+    /* The same text without formatting, for excerpts and meta tags. */
+    description_text: string | null
     specs: Spec[] | null
     benefits: string[] | null
     badges: Badge[] | null
@@ -54,7 +57,11 @@ export interface Hero {
     image_srcset: string | null
     eyebrow: string | null
     title: string
+    /* HTML from the panel editor, already sanitized by the API. */
     text: string | null
+    button_text: string | null
+    button_href: string
+    align: 'center' | 'left'
 }
 
 export interface Theme {
@@ -73,7 +80,10 @@ export interface Store {
     theme: Theme
     hero_effect: string
     heroes: Hero[]
+    /* HTML from the panel editor, already sanitized by the API. */
     description: string | null
+    /* The same text without formatting, for the footer and meta tags. */
+    description_text: string | null
     meta_title: string | null
     meta_description: string | null
     industry: string | null

@@ -27,10 +27,14 @@ class StoreController extends Controller
         /* Un slug que no existe no se cachea: la excepción sale del closure y
            `remember` no llega a guardar nada. */
         $data = $this->cache->remember($slug, 'store', function () use ($slug): array {
-            $store = Store::with(['activeCategories', 'activeHeroes.media', 'logoMedia', 'coverMedia'])
+            $store = Store::with(['activeCategories', 'activeHeroes.media', 'activeHeroes.category', 'logoMedia', 'coverMedia'])
                 ->where('slug', $slug)
-                ->where('active', true)
+                ->public()
                 ->firstOrFail();
+
+            /* El botón del hero mira si la vitrina está prendida: se le pasa la
+               tienda ya cargada en vez de pedirla otra vez por cada hero. */
+            $store->activeHeroes->each->setRelation('store', $store);
 
             /* Por JSON y no con `resolve()`: ese aplana un solo nivel y deja
                `heroes` y `categories` adentro como objetos Resource, que la

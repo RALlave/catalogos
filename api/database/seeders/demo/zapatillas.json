@@ -1,0 +1,1293 @@
+{
+  "store": "paso-firme",
+  "categories": [
+    {
+      "slug": "running",
+      "name": "Running y entrenamiento",
+      "order": 1,
+      "description": "Para correr y entrenar: amortiguación, peso liviano y suelas que agarran asfalto."
+    },
+    {
+      "slug": "cancha",
+      "name": "Cancha",
+      "order": 2,
+      "description": "Tenis, pádel, pickleball y golf. Suelas que no marcan el piso y sujeción para los cambios de dirección."
+    },
+    {
+      "slug": "urbanas",
+      "name": "Urbanas",
+      "order": 3,
+      "description": "Las de todos los días. Livianas, cómodas desde el primer uso y sin estridencias."
+    },
+    {
+      "slug": "trabajo",
+      "name": "Trabajo",
+      "order": 4,
+      "description": "Calzado de seguridad con protección real, pero con forma y peso de zapatilla."
+    },
+    {
+      "slug": "gorras",
+      "name": "Gorras",
+      "order": 5,
+      "description": "Unisex, talle único con ajuste regulable. De la lisa de todos los días a la técnica con protección solar."
+    }
+  ],
+  "products": [
+    {
+      "images": [
+        "Factory-Direct-Carbon-Plate-Running-01.jpg",
+        "Factory-Direct-Carbon-Plate-Running-02.jpg",
+        "Factory-Direct-Carbon-Plate-Running-03.jpg"
+      ],
+      "slug": "zapatilla-running-placa-carbono",
+      "name": "Zapatilla de running con placa de carbono",
+      "category": "running",
+      "sku": "ZAP-RUN-CARB",
+      "description": "Placa de carbono y espuma PEBA supercrítica. Para entrenar rápido y competir.\n\nLa placa devuelve energía en cada zancada y la espuma PEBA amortigua sin achatarse, que es lo que separa una zapatilla de competición de una de trote. El upper es de malla, así que ventila en verano, y la suela de caucho aguanta asfalto. Unisex, del 35 al 43.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Running en asfalto · entrenamiento y competición"
+        },
+        {
+          "label": "Mediasuela",
+          "value": "Espuma PEBA supercrítica con placa de carbono"
+        },
+        {
+          "label": "Capellada",
+          "value": "Malla transpirable"
+        },
+        {
+          "label": "Suela",
+          "value": "Caucho"
+        },
+        {
+          "label": "Género",
+          "value": "Unisex"
+        },
+        {
+          "label": "Tallas",
+          "value": "35 a 43"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Apta para todas las estaciones"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Competición"
+        }
+      ],
+      "price": 449.0,
+      "featured": true,
+      "is_new": true,
+      "source": "https://www.alibaba.com/product-detail/Factory-Direct-Carbon-Plate-Running-Shoes_1601919442423.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 156,80/par (MOQ 500) + importación y margen de retail",
+      "sold_out": false,
+      "sale_price": null,
+      "order": 1
+    },
+    {
+      "images": [
+        "Professional-Tennis-Shoes-Shoes-Unisex-01.jpg",
+        "Professional-Tennis-Shoes-Shoes-Unisex-02.jpg",
+        "Professional-Tennis-Shoes-Shoes-Unisex-03.jpg"
+      ],
+      "slug": "zapatilla-tenis-mediasuela-wave",
+      "name": "Zapatilla de tenis con mediasuela wave",
+      "category": "cancha",
+      "sku": "ZAP-TEN-WAVE",
+      "description": "Para cancha techada: suela que no marca el piso y mediasuela wave que absorbe los frenos.\n\nEl diseño ondulado de la mediasuela reparte el impacto de los cambios de dirección, que es donde más sufre el pie en tenis. Capellada de malla con refuerzos de cuero sintético en las zonas de roce y suela antideslizante. Unisex, del 35 al 45.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Tenis · cancha techada y exterior"
+        },
+        {
+          "label": "Mediasuela",
+          "value": "PVC con diseño wave"
+        },
+        {
+          "label": "Capellada",
+          "value": "Malla con refuerzos de cuero sintético"
+        },
+        {
+          "label": "Suela",
+          "value": "PVC antideslizante"
+        },
+        {
+          "label": "Forro",
+          "value": "Malla"
+        },
+        {
+          "label": "Género",
+          "value": "Unisex"
+        },
+        {
+          "label": "Tallas",
+          "value": "35 a 45"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "No marca el piso de la cancha"
+      ],
+      "badges": [
+        {
+          "type": "discount",
+          "text": "-20%",
+          "detail": "OFF"
+        }
+      ],
+      "price": 569.0,
+      "sale_price": 455.0,
+      "featured": true,
+      "source": "https://www.alibaba.com/product-detail/Professional-Tennis-Shoes-Shoes-Unisex-Cushioned_1601927330340.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 199,27/par + importación y margen de retail",
+      "is_new": false,
+      "sold_out": false,
+      "order": 2
+    },
+    {
+      "images": [
+        "Non-Marking-Padel-Court-Shoes-01.jpg",
+        "Non-Marking-Padel-Court-Shoes-02.jpg",
+        "Non-Marking-Padel-Court-Shoes-03.jpg"
+      ],
+      "slug": "zapatilla-padel-cana-media",
+      "name": "Zapatilla de pádel de caña media",
+      "category": "cancha",
+      "sku": "ZAP-PAD-MID",
+      "description": "Caña media para sujetar el tobillo en los cruces, y suela que no deja marcas.\n\nLa suela combina EVA, TPU y caucho: el caucho agarra, el TPU sostiene la torsión y el EVA amortigua. La capellada de TPU sin costuras evita los puntos de roce que aparecen cuando se juega seguido. Unisex, del 36 al 46.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Pádel · cancha de cemento y césped sintético"
+        },
+        {
+          "label": "Suela",
+          "value": "EVA + TPU + caucho, non marking"
+        },
+        {
+          "label": "Capellada",
+          "value": "TPU sin costuras, KPU y tejido técnico"
+        },
+        {
+          "label": "Mediasuela",
+          "value": "EVA"
+        },
+        {
+          "label": "Corte",
+          "value": "Caña media"
+        },
+        {
+          "label": "Género",
+          "value": "Unisex"
+        },
+        {
+          "label": "Tallas",
+          "value": "36 a 46"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Sujeción de tobillo para cambios de dirección"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Caña media"
+        }
+      ],
+      "price": 529.0,
+      "featured": true,
+      "source": "https://www.alibaba.com/product-detail/Non-Marking-Padel-Court-Shoes-personalized_1601945265330.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 160,66 a 210,48/par (MOQ 800) + importación y margen",
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 3
+    },
+    {
+      "images": [
+        "Full-Service-OEM-Pickleball-Shoes-01.jpg",
+        "Full-Service-OEM-Pickleball-Shoes-02.jpg",
+        "Full-Service-OEM-Pickleball-Shoes-03.jpg",
+        "Full-Service-OEM-Pickleball-Shoes-04.jpg"
+      ],
+      "slug": "zapatilla-pickleball-suela-non-marking",
+      "name": "Zapatilla de pickleball con suela non-marking",
+      "category": "cancha",
+      "sku": "ZAP-PIK-NM",
+      "description": "Pensada para pickleball y pádel: liviana, con suela que agarra sin marcar.\n\nMismo armado que la de pádel pero en corte bajo, para quien prefiere libertad de tobillo antes que sujeción. Suela de EVA, TPU y caucho, mediasuela de EVA y forro de malla. Unisex, del 36 al 46, en cuatro colores.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Pickleball · pádel · tenis"
+        },
+        {
+          "label": "Suela",
+          "value": "EVA + TPU + caucho, non marking"
+        },
+        {
+          "label": "Capellada",
+          "value": "TPU sin costuras y tejido técnico"
+        },
+        {
+          "label": "Mediasuela",
+          "value": "EVA"
+        },
+        {
+          "label": "Corte",
+          "value": "Bajo"
+        },
+        {
+          "label": "Género",
+          "value": "Unisex"
+        },
+        {
+          "label": "Tallas",
+          "value": "36 a 46"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Cuatro colores disponibles"
+      ],
+      "badges": [],
+      "price": 539.0,
+      "source": "https://www.alibaba.com/product-detail/Full-Service-OEM-Pickleball-Shoes-B2B_1601892314303.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 160,66 a 210,48/par (MOQ 800) + importación y margen",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 4
+    },
+    {
+      "images": [
+        "Golf-Shoes-Outdoor-Training-Lightweight-01.jpg",
+        "Golf-Shoes-Outdoor-Training-Lightweight-02.jpg",
+        "Golf-Shoes-Outdoor-Training-Lightweight-03.jpg"
+      ],
+      "slug": "zapato-golf-cierre-giratorio",
+      "name": "Zapato de golf con cierre giratorio",
+      "category": "cancha",
+      "sku": "ZAP-GOL-BOA",
+      "description": "Cierre giratorio en lugar de cordones: se ajusta con una mano y no se suelta en el swing.\n\nEl cuerpo es de microfibra lavable y de secado rápido, que es lo que corresponde a un calzado que pasa la mañana sobre pasto húmedo. Suela antideslizante sin clavos, así que se puede usar fuera de la cancha. Del 36 al 48.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Golf · entrenamiento al aire libre"
+        },
+        {
+          "label": "Cierre",
+          "value": "Giratorio de ajuste rápido"
+        },
+        {
+          "label": "Capellada",
+          "value": "Microfibra lavable de secado rápido"
+        },
+        {
+          "label": "Suela",
+          "value": "Antideslizante, sin clavos"
+        },
+        {
+          "label": "Tallas",
+          "value": "36 a 48"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Se lava y seca rápido"
+      ],
+      "badges": [
+        {
+          "type": "discount",
+          "text": "-10%",
+          "detail": "OFF"
+        }
+      ],
+      "price": 849.0,
+      "sale_price": 764.0,
+      "source": "https://www.alibaba.com/product-detail/Golf-Shoes-Outdoor-Training-Lightweight-Breathable_1601896184602.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 358,18/par + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "order": 5
+    },
+    {
+      "images": [
+        "Plus-size-Mens-Casual-Sneakers-01.jpg",
+        "Plus-size-Mens-Casual-Sneakers-02.jpg",
+        "Plus-size-Mens-Casual-Sneakers-03.jpg"
+      ],
+      "slug": "zapatilla-deportiva-talles-grandes",
+      "name": "Zapatilla deportiva de talles grandes",
+      "category": "running",
+      "sku": "ZAP-RUN-XL",
+      "description": "Zapatilla de entrenamiento en talles que normalmente no se consiguen: hasta el 48.\n\nCorte deportivo con mediasuela alta y capellada de malla. Pensada para quien entrena y siempre encuentra su talle agotado. Disponible en blanco y en negro.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Entrenamiento · uso diario"
+        },
+        {
+          "label": "Capellada",
+          "value": "Malla transpirable"
+        },
+        {
+          "label": "Mediasuela",
+          "value": "Alta, con amortiguación"
+        },
+        {
+          "label": "Tallas",
+          "value": "39 a 48"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Talles grandes, hasta el 48"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Talles grandes"
+        }
+      ],
+      "price": 399.0,
+      "is_new": true,
+      "source": "",
+      "price_note": "ESTIMADO: sin link de origen, precio fijado por comparación con los modelos similares del catálogo",
+      "featured": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 6
+    },
+    {
+      "images": [
+        "Wholesale-Sneakers-for-Women-01.jpg",
+        "Wholesale-Sneakers-for-Women-02.jpg",
+        "Wholesale-Sneakers-for-Women-03.jpg"
+      ],
+      "slug": "zapatilla-mujer-plataforma",
+      "name": "Zapatilla deportiva de mujer con plataforma",
+      "category": "urbanas",
+      "sku": "ZAP-MUJ-PLAT",
+      "description": "Suela EVA con plataforma: suma altura y absorbe el impacto de caminar todo el día.\n\nEs una zapatilla de uso diario más que de entrenamiento, de corte bajo y línea chunky. Capellada y forro de malla, suela antideslizante. Del 36 al 44.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Uso diario · caminata"
+        },
+        {
+          "label": "Suela",
+          "value": "EVA con plataforma, antideslizante"
+        },
+        {
+          "label": "Mediasuela",
+          "value": "EVA con cámara de aire"
+        },
+        {
+          "label": "Forro",
+          "value": "Malla"
+        },
+        {
+          "label": "Género",
+          "value": "Mujer"
+        },
+        {
+          "label": "Tallas",
+          "value": "36 a 44"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Liviana para estar de pie todo el día"
+      ],
+      "badges": [],
+      "price": 319.0,
+      "featured": true,
+      "source": "https://www.alibaba.com/product-detail/Wholesale-Sneakers-for-Women-Refreshing-Fashion_1601853136695.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 110,85/par + importación y margen de retail",
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 7
+    },
+    {
+      "images": [
+        "2026-Casual-Shoes-Fashion-for-Men-01.jpg",
+        "2026-Casual-Shoes-Fashion-for-Men-02.jpg",
+        "2026-Casual-Shoes-Fashion-for-Men-03.jpg"
+      ],
+      "slug": "zapatilla-urbana-suela-tpr",
+      "name": "Zapatilla urbana con suela TPR",
+      "category": "urbanas",
+      "sku": "ZAP-URB-TPR",
+      "description": "Plana, liviana y de cordones. La que se usa todos los días sin pensarla.\n\nCapellada de PU con forro de algodón, más abrigada que una de malla, y suela de TPR que es flexible y no pesa. Punta redonda, horma cómoda. Del 39 al 44.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Uso diario"
+        },
+        {
+          "label": "Capellada",
+          "value": "PU"
+        },
+        {
+          "label": "Suela",
+          "value": "TPR flexible"
+        },
+        {
+          "label": "Forro",
+          "value": "Algodón"
+        },
+        {
+          "label": "Cierre",
+          "value": "Cordones"
+        },
+        {
+          "label": "Tallas",
+          "value": "39 a 44"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Stock en tallas 39 a 44"
+      ],
+      "badges": [],
+      "price": 239.0,
+      "source": "https://www.alibaba.com/product-detail/2026-Casual-Shoes-Fashion-for-Men_1601349237003.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 72,99/par + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 8
+    },
+    {
+      "images": [
+        "Men-s-Casual-Shoes-Lightweight-01.jpg",
+        "Men-s-Casual-Shoes-Lightweight-02.jpg",
+        "Men-s-Casual-Shoes-Lightweight-03.jpg"
+      ],
+      "slug": "zapatilla-urbana-desodorizante",
+      "name": "Zapatilla urbana con forro desodorizante",
+      "category": "urbanas",
+      "sku": "ZAP-URB-DEO",
+      "description": "Forro tratado contra el olor, para los que la usan todos los días sin medias gruesas.\n\nSuela y mediasuela de caucho, forro de malla con tratamiento desodorizante y aislante del frío. Punta redonda, corte de caminata. Del 39 al 45.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Uso diario · caminata"
+        },
+        {
+          "label": "Suela",
+          "value": "Caucho"
+        },
+        {
+          "label": "Mediasuela",
+          "value": "Caucho"
+        },
+        {
+          "label": "Forro",
+          "value": "Malla con tratamiento desodorizante"
+        },
+        {
+          "label": "Tallas",
+          "value": "39 a 45"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Stock en tallas 39 a 44"
+      ],
+      "badges": [],
+      "price": 209.0,
+      "source": "https://www.alibaba.com/product-detail/Men-s-Casual-Shoes-Lightweight-and_1601914205032.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 61,03/par + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 9
+    },
+    {
+      "images": [
+        "Wholesale-Price-Summer-Fashion-01.jpg",
+        "Wholesale-Price-Summer-Fashion-02.jpg",
+        "Wholesale-Price-Summer-Fashion-03.jpg"
+      ],
+      "slug": "zapatilla-urbana-pu-suela-flexible",
+      "name": "Zapatilla urbana de PU con suela flexible",
+      "category": "urbanas",
+      "sku": "ZAP-URB-PU",
+      "description": "Suela blanda que dobla con el pie. Para caminar mucho sin terminar con el pie duro.\n\nCapellada de PU y suela de caucho flexible. Liviana, transpirable y de punta redonda, con horma ancha. Del 39 al 44.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Uso diario · caminata"
+        },
+        {
+          "label": "Capellada",
+          "value": "PU"
+        },
+        {
+          "label": "Suela",
+          "value": "Caucho flexible"
+        },
+        {
+          "label": "Cierre",
+          "value": "Cordones"
+        },
+        {
+          "label": "Tallas",
+          "value": "39 a 44"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Stock en tallas 39 a 44"
+      ],
+      "badges": [],
+      "price": 219.0,
+      "source": "https://www.alibaba.com/product-detail/Wholesale-Price-Summer-Fashion-Pu-Upper_1601825736505.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 65,39/par + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 10
+    },
+    {
+      "images": [
+        "Men-s-Winter-Casual-Flat-Sports-01.jpg",
+        "Men-s-Winter-Casual-Flat-Sports-02.jpg",
+        "Men-s-Winter-Casual-Flat-Sports-03.jpg"
+      ],
+      "slug": "zapatilla-urbana-suela-gruesa",
+      "name": "Zapatilla urbana de suela gruesa",
+      "category": "urbanas",
+      "sku": "ZAP-URB-GRU",
+      "description": "Suela gruesa que suma altura y aísla del piso frío.\n\nSuela y mediasuela de caucho resistente a la abrasión, forro de malla y punta redonda. Es la más abrigada del catálogo, pensada para el invierno. Del 39 al 44.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Uso diario · invierno"
+        },
+        {
+          "label": "Suela",
+          "value": "Caucho resistente a la abrasión"
+        },
+        {
+          "label": "Mediasuela",
+          "value": "Caucho, altura extra"
+        },
+        {
+          "label": "Forro",
+          "value": "Malla"
+        },
+        {
+          "label": "Tallas",
+          "value": "39 a 44"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Stock en tallas 39 a 44"
+      ],
+      "badges": [],
+      "price": 199.0,
+      "source": "https://www.alibaba.com/product-detail/Men-s-Winter-Casual-Flat-Sports_1601910784789.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 61,03/par + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 11
+    },
+    {
+      "images": [
+        "Hot-selling-Men-s-Shoes-01.jpg",
+        "Hot-selling-Men-s-Shoes-02.jpg",
+        "Hot-selling-Men-s-Shoes-03.jpg"
+      ],
+      "slug": "zapatilla-urbana-liviana-cordones",
+      "name": "Zapatilla urbana liviana de cordones",
+      "category": "urbanas",
+      "sku": "ZAP-URB-LIV",
+      "description": "La más liviana y la más barata del catálogo. Color liso, sin logos.\n\nSuela de caucho antideslizante y forro de PU. Corte simple de cordones, blanda desde el primer día. Del 38 al 44.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Uso diario"
+        },
+        {
+          "label": "Suela",
+          "value": "Caucho antideslizante"
+        },
+        {
+          "label": "Forro",
+          "value": "PU"
+        },
+        {
+          "label": "Diseño",
+          "value": "Color liso"
+        },
+        {
+          "label": "Tallas",
+          "value": "38 a 44"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Stock en tallas 39 a 44"
+      ],
+      "badges": [
+        {
+          "type": "discount",
+          "text": "-10%",
+          "detail": "OFF"
+        }
+      ],
+      "price": 189.0,
+      "sale_price": 170.0,
+      "source": "https://www.alibaba.com/product-detail/Hot-selling-Men-s-Shoes-Lightweight_1601924735882.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 61,65/par + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "order": 12
+    },
+    {
+      "images": [
+        "Mens-Summer-Lace-Up-Solid-Color-01.jpg",
+        "Mens-Summer-Lace-Up-Solid-Color-02.jpg",
+        "Mens-Summer-Lace-Up-Solid-Color-03.jpg"
+      ],
+      "slug": "zapatilla-urbana-antiolor",
+      "name": "Zapatilla urbana antiolor de talles grandes",
+      "category": "urbanas",
+      "sku": "ZAP-URB-ODOR",
+      "description": "Tratamiento antiolor y talles hasta el 48, que casi no se consiguen.\n\nSuela de poliuretano y forro de malla transpirable con tratamiento contra el olor. Color liso y punta redonda. Del 39 al 48.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Uso diario · verano"
+        },
+        {
+          "label": "Suela",
+          "value": "Poliuretano"
+        },
+        {
+          "label": "Forro",
+          "value": "Malla transpirable, antiolor"
+        },
+        {
+          "label": "Diseño",
+          "value": "Color liso"
+        },
+        {
+          "label": "Tallas",
+          "value": "39 a 48"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Talles grandes, hasta el 48"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Hasta el 48"
+        }
+      ],
+      "price": 129.0,
+      "source": "https://www.alibaba.com/product-detail/Mens-Summer-Lace-Up-Solid-Color_1601847941900.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 37,37/par + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 13
+    },
+    {
+      "images": [
+        "Safety-Shoes-Plastic-Toe-Fashion-01.jpg",
+        "Safety-Shoes-Plastic-Toe-Fashion-02.jpg",
+        "Safety-Shoes-Plastic-Toe-Fashion-03.jpg"
+      ],
+      "slug": "zapatilla-seguridad-puntera-plastica",
+      "name": "Zapatilla de seguridad con puntera plástica",
+      "category": "trabajo",
+      "sku": "ZAP-SEG-PLA",
+      "description": "Puntera antiaplastamiento y plantilla antiperforación, con forma de zapatilla y no de borcego.\n\nLa puntera es plástica en lugar de acero: protege igual y pesa menos, y no dispara los detectores de metal. Capellada de malla con microfibra, suela de caucho. Para fábrica, obra y taller. Del 5.5 al 10 US.",
+      "specs": [
+        {
+          "label": "Uso",
+          "value": "Fábrica · construcción · taller"
+        },
+        {
+          "label": "Puntera",
+          "value": "Plástica, antiaplastamiento"
+        },
+        {
+          "label": "Protección",
+          "value": "Plantilla antiperforación"
+        },
+        {
+          "label": "Capellada",
+          "value": "Malla y cuero de microfibra"
+        },
+        {
+          "label": "Suela",
+          "value": "Caucho"
+        },
+        {
+          "label": "Tallas",
+          "value": "5.5 a 10 US"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio de talla dentro de los 7 días",
+        "Probate el par en tienda antes de llevarlo",
+        "Más liviana que una puntera de acero"
+      ],
+      "badges": [
+        {
+          "type": "discount",
+          "text": "-10%",
+          "detail": "OFF"
+        }
+      ],
+      "price": 549.0,
+      "sale_price": 494.0,
+      "source": "https://www.alibaba.com/product-detail/Safety-Shoes-Plastic-Toe-Fashion-Mesh_1601874874697.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 190,55/par + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "order": 14
+    },
+    {
+      "images": [
+        "gorras/gorra-bicolor-6-panel-estructurada-01.jpg",
+        "gorras/gorra-bicolor-6-panel-estructurada-02.jpg",
+        "gorras/gorra-bicolor-6-panel-estructurada-03.jpg",
+        "gorras/gorra-bicolor-6-panel-estructurada-04.jpg"
+      ],
+      "slug": "gorra-bicolor-6-paneles",
+      "name": "Gorra bicolor de 6 paneles",
+      "category": "gorras",
+      "sku": "GOR-BIC-6P",
+      "description": "Copa de un color, visera de otro. Seis paneles de algodón con forma estructurada.\n\nLa construcción de seis paneles es la que mantiene la copa parada: no se aplasta en la mochila ni pierde forma con el uso. Algodón 100%, que transpira mejor que las mezclas sintéticas. Viene en cuatro combinaciones de color.",
+      "specs": [
+        {
+          "label": "Material",
+          "value": "100% algodón"
+        },
+        {
+          "label": "Paneles",
+          "value": "6, estructurada"
+        },
+        {
+          "label": "Ajuste",
+          "value": "Regulable atrás"
+        },
+        {
+          "label": "Talle",
+          "value": "Único"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio dentro de los 7 días",
+        "Probátela en tienda antes de llevarla",
+        "Cuatro combinaciones de color"
+      ],
+      "badges": [],
+      "price": 159.0,
+      "featured": true,
+      "source": "https://www.alibaba.com/product-detail/Wholesale-Embroidery-Logo-Two-Tone-Cotton_1600967804921.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 48,58/u + importación y margen de retail",
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 15
+    },
+    {
+      "images": [
+        "gorras/gorra-unstructured-bordada-01.jpg",
+        "gorras/gorra-unstructured-bordada-02.jpg",
+        "gorras/gorra-unstructured-bordada-03.jpg",
+        "gorras/gorra-unstructured-bordada-04.jpg"
+      ],
+      "slug": "gorra-sin-estructura-bordada",
+      "name": "Gorra sin estructura con bordado",
+      "category": "gorras",
+      "sku": "GOR-UNS-BOR",
+      "description": "Copa blanda que se adapta a la cabeza. La que se dobla y entra en el bolsillo.\n\nSin estructura interna: cae sobre la cabeza en lugar de pararse, que es el look más relajado y lo que la hace cómoda desde el primer uso. Lona de algodón y poliéster, con bordado al frente. En beige, negro y rojo.",
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Lona de algodón y poliéster"
+        },
+        {
+          "label": "Construcción",
+          "value": "Sin estructura, copa blanda"
+        },
+        {
+          "label": "Bordado",
+          "value": "Frontal"
+        },
+        {
+          "label": "Contorno",
+          "value": "56 a 58 cm"
+        },
+        {
+          "label": "Ajuste",
+          "value": "Regulable atrás"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio dentro de los 7 días",
+        "Probátela en tienda antes de llevarla",
+        "Se dobla sin deformarse"
+      ],
+      "badges": [],
+      "price": 139.0,
+      "featured": true,
+      "source": "https://www.alibaba.com/product-detail/Hat-Wholesale-Unisex-Custom-Unstructured-Embroidered_1600995687901.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 43,59/u + importación y margen de retail",
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 16
+    },
+    {
+      "images": [
+        "gorras/gorra-rayas-bordado-3d-01.jpg",
+        "gorras/gorra-rayas-bordado-3d-02.jpg",
+        "gorras/gorra-rayas-bordado-3d-03.jpg",
+        "gorras/gorra-rayas-bordado-3d-04.jpg"
+      ],
+      "slug": "gorra-algodon-bordado-3d",
+      "name": "Gorra de algodón con bordado 3D",
+      "category": "gorras",
+      "sku": "GOR-ALG-3D",
+      "description": "Bordado en relieve, no estampado. La letra sobresale y no se despinta con el lavado.\n\nEl bordado 3D se hace sobre una base de gomaespuma, así que el diseño queda levantado y mantiene la forma. Seis paneles de algodón en gris y negro, con visera curva.",
+      "specs": [
+        {
+          "label": "Material",
+          "value": "100% algodón"
+        },
+        {
+          "label": "Paneles",
+          "value": "6"
+        },
+        {
+          "label": "Bordado",
+          "value": "3D en relieve"
+        },
+        {
+          "label": "Visera",
+          "value": "Curva"
+        },
+        {
+          "label": "Ajuste",
+          "value": "Regulable atrás"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio dentro de los 7 días",
+        "Probátela en tienda antes de llevarla",
+        "El bordado no se despinta"
+      ],
+      "badges": [],
+      "price": 209.0,
+      "source": "https://www.alibaba.com/product-detail/China-Letter-3D-Embroidery-Adjustable-Custom_1600912564304.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 62,15/u + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 17
+    },
+    {
+      "images": [
+        "gorras/gorra-running-upf50-01.jpg",
+        "gorras/gorra-running-upf50-02.jpg",
+        "gorras/gorra-running-upf50-04.jpg"
+      ],
+      "slug": "gorra-running-upf50",
+      "name": "Gorra de running con UPF 50+",
+      "category": "gorras",
+      "sku": "GOR-RUN-UPF",
+      "description": "Protección solar UPF 50+ y tela que saca la transpiración. Para correr al sol.\n\nEl UPF 50+ bloquea el 98% de los rayos UV, que en Cochabamba no es un lujo. El poliéster técnico mueve el sudor hacia afuera en lugar de retenerlo, y la copa liviana se aplasta y se guarda sin que quede marcada. Sirve igual para golf, tenis o pádel.",
+      "specs": [
+        {
+          "label": "Protección",
+          "value": "UPF 50+"
+        },
+        {
+          "label": "Material",
+          "value": "100% poliéster técnico"
+        },
+        {
+          "label": "Terminación",
+          "value": "Absorbe la transpiración"
+        },
+        {
+          "label": "Uso",
+          "value": "Running · golf · tenis · pádel"
+        },
+        {
+          "label": "Contorno",
+          "value": "56 a 60 cm"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio dentro de los 7 días",
+        "Probátela en tienda antes de llevarla",
+        "Se aplasta y recupera la forma"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "UPF 50+"
+        }
+      ],
+      "price": 229.0,
+      "is_new": true,
+      "source": "https://www.alibaba.com/product-detail/Custom-Logo-Lightweight-Run-Cap-UPF_1601692880431.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 70,99/u + importación y margen de retail",
+      "featured": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 18
+    },
+    {
+      "images": [
+        "gorras/gorra-lisa-5-panel-deportiva-02.jpg",
+        "gorras/gorra-lisa-5-panel-deportiva-03.jpg",
+        "gorras/gorra-lisa-5-panel-deportiva-01.jpg"
+      ],
+      "slug": "gorra-lisa-5-paneles-malla",
+      "name": "Gorra lisa de 5 paneles con malla",
+      "category": "gorras",
+      "sku": "GOR-LIS-5P",
+      "description": "Frente liso y malla atrás. La más barata del catálogo y la que más colores tiene.\n\nCinco paneles en algodón y poliéster, con la parte trasera de malla que ventila de verdad en verano. El frente liso es ideal si querés bordarle algo después. Diez colores.",
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Algodón y poliéster"
+        },
+        {
+          "label": "Paneles",
+          "value": "5"
+        },
+        {
+          "label": "Trasera",
+          "value": "Malla ventilada"
+        },
+        {
+          "label": "Ajuste",
+          "value": "Regulable atrás"
+        },
+        {
+          "label": "Frente",
+          "value": "Liso, apto para bordar"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio dentro de los 7 días",
+        "Probátela en tienda antes de llevarla",
+        "Diez colores disponibles"
+      ],
+      "badges": [
+        {
+          "type": "strong",
+          "text": "Más accesible"
+        }
+      ],
+      "price": 49.0,
+      "source": "https://www.alibaba.com/product-detail/Factory-Wholesale-Customization-Blank-Men-Women_1601874858084.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 14,95/u + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 19
+    },
+    {
+      "images": [
+        "gorras/gorra-trucker-velvet-malla-01.jpg",
+        "gorras/gorra-trucker-velvet-malla-02.jpg"
+      ],
+      "slug": "gorra-trucker-terciopelo",
+      "name": "Gorra trucker de terciopelo",
+      "category": "gorras",
+      "sku": "GOR-TRU-VEL",
+      "description": "Terciopelo adelante, malla atrás y una placa de metal. Fuera de lo común.\n\nEl terciopelo le da una textura que ninguna gorra de algodón tiene, y contrasta con la malla trasera que la mantiene fresca. Cinco paneles, placa de metal al frente, ajuste regulable. Contorno 58 a 60 cm.",
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Terciopelo y malla"
+        },
+        {
+          "label": "Paneles",
+          "value": "5"
+        },
+        {
+          "label": "Detalle",
+          "value": "Placa de metal al frente"
+        },
+        {
+          "label": "Contorno",
+          "value": "58 a 60 cm"
+        },
+        {
+          "label": "Ajuste",
+          "value": "Regulable atrás"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio dentro de los 7 días",
+        "Probátela en tienda antes de llevarla",
+        "Talle único, con ajuste regulable atrás"
+      ],
+      "badges": [],
+      "price": 219.0,
+      "is_new": true,
+      "source": "https://www.alibaba.com/product-detail/Stylish-Common-Velvet-Mesh-5-Panel_1601649747734.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 67,88/u + importación y margen de retail",
+      "featured": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 20
+    },
+    {
+      "images": [
+        "gorras/gorra-velvet-5-panel-bicolor-01.jpg",
+        "gorras/gorra-velvet-5-panel-bicolor-02.jpg"
+      ],
+      "slug": "gorra-terciopelo-bicolor",
+      "name": "Gorra de terciopelo bicolor",
+      "category": "gorras",
+      "sku": "GOR-VEL-BIC",
+      "description": "Terciopelo en dos tonos, con bordado al frente. Abrigada para el invierno.\n\nEl terciopelo es más abrigado que el algodón, así que esta es la gorra de los días frescos. Cinco paneles en dos colores y bordado al frente. Ajuste regulable.",
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Terciopelo"
+        },
+        {
+          "label": "Paneles",
+          "value": "5, bicolor"
+        },
+        {
+          "label": "Bordado",
+          "value": "Frontal"
+        },
+        {
+          "label": "Ajuste",
+          "value": "Regulable atrás"
+        },
+        {
+          "label": "Temporada",
+          "value": "Otoño e invierno"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio dentro de los 7 días",
+        "Probátela en tienda antes de llevarla",
+        "Talle único, con ajuste regulable atrás"
+      ],
+      "badges": [],
+      "price": 179.0,
+      "source": "https://www.alibaba.com/product-detail/BSCI-Oem-Custom-High-Quality-5_62418492290.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 56,05/u + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 21
+    },
+    {
+      "images": [
+        "gorras/gorra-denim-lavada-6-panel-01.jpg",
+        "gorras/gorra-denim-lavada-6-panel-02.jpg"
+      ],
+      "slug": "gorra-denim-lavado",
+      "name": "Gorra de denim lavado",
+      "category": "gorras",
+      "sku": "GOR-DEN-LAV",
+      "description": "Denim celeste con lavado suave y bordado. Corte dad hat, de copa baja.\n\nEl dad hat es de copa más baja y visera más curva que una gorra deportiva: se apoya sobre la cabeza sin quedar alta. Algodón 100% con lavado que le da ese aspecto usado desde el principio. Contorno 58 a 60 cm.",
+      "specs": [
+        {
+          "label": "Material",
+          "value": "100% algodón, denim lavado"
+        },
+        {
+          "label": "Paneles",
+          "value": "6"
+        },
+        {
+          "label": "Corte",
+          "value": "Dad hat, copa baja"
+        },
+        {
+          "label": "Contorno",
+          "value": "58 a 60 cm"
+        },
+        {
+          "label": "Ajuste",
+          "value": "Regulable atrás"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio dentro de los 7 días",
+        "Probátela en tienda antes de llevarla",
+        "Talle único, con ajuste regulable atrás"
+      ],
+      "badges": [],
+      "price": 199.0,
+      "source": "https://www.alibaba.com/product-detail/Custom-Washed-Denim-Cap-6-panel_1601823375699.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 60,78/u + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 22
+    },
+    {
+      "images": [
+        "gorras/gorra-algodon-twill-6-panel-03.jpg",
+        "gorras/gorra-algodon-twill-6-panel-04.jpg"
+      ],
+      "slug": "gorra-algodon-twill",
+      "name": "Gorra de algodón twill lisa",
+      "category": "gorras",
+      "sku": "GOR-TWI-6P",
+      "description": "Lisa, sin logos, en negro o blanco. La que combina con todo.\n\nTwill de algodón puro: la trama diagonal es lo que le da caída y resistencia. Copa blanda, visera curva y protección solar. Sin ningún bordado, para quien no quiere andar con publicidad en la cabeza.",
+      "specs": [
+        {
+          "label": "Material",
+          "value": "100% algodón twill"
+        },
+        {
+          "label": "Paneles",
+          "value": "6"
+        },
+        {
+          "label": "Diseño",
+          "value": "Liso, sin bordado"
+        },
+        {
+          "label": "Visera",
+          "value": "Curva"
+        },
+        {
+          "label": "Ajuste",
+          "value": "Regulable atrás"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio dentro de los 7 días",
+        "Probátela en tienda antes de llevarla",
+        "Negro o blanco"
+      ],
+      "badges": [],
+      "price": 119.0,
+      "source": "https://www.alibaba.com/product-detail/OEM-ODM-Pure-Cotton-Twill-Baseball_1601459010384.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 36,00/u + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 23
+    },
+    {
+      "images": [
+        "gorras/gorra-denim-desgastada-bordada-01.jpg"
+      ],
+      "slug": "gorra-denim-desgastado",
+      "name": "Gorra de denim desgastado",
+      "category": "gorras",
+      "sku": "GOR-DEN-DES",
+      "description": "Denim gris con desgaste en los bordes, bordado a mano.\n\nEl desgaste está hecho a propósito, en los cantos de la visera y las costuras. Algodón 100% con bordado hecho a mano, lo que significa que no hay dos exactamente iguales. Ajuste regulable.",
+      "specs": [
+        {
+          "label": "Material",
+          "value": "100% algodón, denim"
+        },
+        {
+          "label": "Terminación",
+          "value": "Desgastada en los bordes"
+        },
+        {
+          "label": "Bordado",
+          "value": "Hecho a mano"
+        },
+        {
+          "label": "Ajuste",
+          "value": "Regulable atrás"
+        }
+      ],
+      "benefits": [
+        "Envío a todo el país en 24 a 72 horas",
+        "Cambio dentro de los 7 días",
+        "Probátela en tienda antes de llevarla",
+        "Bordado a mano, cada una distinta"
+      ],
+      "badges": [],
+      "price": 99.0,
+      "source": "https://www.alibaba.com/product-detail/Christmas-Flames-Distressed-Denim-Oxford-Dobby_1601290800374.html",
+      "price_note": "ESTIMADO: costo mayorista Bs 29,77/u + importación y margen de retail",
+      "featured": false,
+      "is_new": false,
+      "sold_out": false,
+      "sale_price": null,
+      "order": 24
+    }
+  ]
+}

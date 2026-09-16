@@ -3,19 +3,24 @@ import { onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import AppIcon from '@/components/AppIcon.vue'
+import RowActions from '@/components/RowActions.vue'
+import ScrollStrip from '@/components/ScrollStrip.vue'
 import { api } from '@/services/api'
 import { useAuthStore } from '@/stores/auth'
+import { useConfirmStore } from '@/stores/confirm'
 import { useUiStore } from '@/stores/ui'
 
 const router = useRouter()
 const auth = useAuthStore()
+const confirm = useConfirmStore()
 const ui = useUiStore()
 
 const stores = ref([])
 const meta = ref(null)
+const counts = ref({ all: 0, published: 0, hidden: 0, trash: 0 })
 const loading = ref(true)
 
-const filters = ref({ search: '', active: '' })
+const filters = ref({ search: '', status: '' })
 const page = ref(1)
 
 async function load() {
@@ -24,14 +29,70 @@ async function load() {
     try {
         const payload = await api.get('/admin/stores', {
             search: filters.value.search,
-            active: filters.value.active,
+            status: filters.value.status,
             page: page.value,
         })
 
         stores.value = payload.data
         meta.value = payload.meta
+        counts.value = payload.counts
     } finally {
         loading.value = false
+    }
+}
+
+function formatDate(value) {
+    return new Date(value).toLocaleDateString('es', { day: '2-digit', month: '2-digit', year: 'numeric' })
+}
+
+/** La tienda sale de la lista actual: se recarga para mover también los contadores. */
+async function moveToTrash(store) {
+    const confirmed = await confirm.ask({
+        title: `¿Mover "${store.name}" a la papelera?`,
+        text: 'El catálogo deja de verse. El dueño sigue entrando a su panel y la podés restaurar.',
+        action: 'Mover a papelera',
+    })
+
+    if (! confirmed) {
+        return
+    }
+
+    await api.patch(`/admin/stores/${store.id}/trash`)
+
+    ui.toast('Tienda en la papelera', store.name)
+
+    load()
+}
+
+async function restore(store) {
+    await api.patch(`/admin/stores/${store.id}/restore`)
+
+    ui.toast('Tienda restaurada', store.name)
+
+    load()
+}
+
+async function destroy(store) {
+    const confirmed = await confirm.ask({
+        title: `¿Eliminar "${store.name}" definitivamente?`,
+        text: 'Se borran la tienda, la cuenta de su dueño, sus categorías, productos, pedidos, '
+            + 'estadísticas y todas sus imágenes.\nNo se puede deshacer.',
+        action: 'Eliminar definitivamente',
+        danger: true,
+    })
+
+    if (! confirmed) {
+        return
+    }
+
+    try {
+        await api.delete(`/admin/stores/${store.id}`)
+
+        ui.toast('Tienda eliminada', store.name)
+
+        load()
+    } catch (error) {
+        ui.toast('No pudimos eliminar la tienda', error.message, 'danger')
     }
 }
 
@@ -45,7 +106,7 @@ watch(() => filters.value.search, () => {
     }, 350)
 })
 
-watch(() => filters.value.active, () => {
+watch(() => filters.value.status, () => {
     page.value = 1
     load()
 })
@@ -86,7 +147,7 @@ onMounted(load)
         <div class="page-actions">
             <RouterLink class="btn btn-primary" :to="{ name: 'admin-store-create' }">
                 <AppIcon name="plus" />
-                Nueva tienda
+                <span class="btn-label">Nueva tienda</span>
             </RouterLink>
         </div>
     </div>
@@ -104,13 +165,16 @@ onMounted(load)
                 >
             </div>
 
-            <div class="toolbar-filters">
-                <select v-model="filters.active" class="select" aria-label="Filtrar por estado">
-                    <option value="">Todos los estados</option>
-                    <option value="1">Publicadas</option>
-                    <option value="0">Ocultas</option>
-                </select>
-            </div>
+            <ScrollStrip>
+                <div class="toolbar-filters">
+                    <select v-model="filters.status" class="select" aria-label="Filtrar por estado">
+                        <option value="">Todos los estados ({{ counts.all }})</option>
+                        <option value="published">Publicadas ({{ counts.published }})</option>
+                        <option value="hidden">Ocultas ({{ counts.hidden }})</option>
+                        <option value="trash">En papelera ({{ counts.trash }})</option>
+                    </select>
+                </div>
+            </ScrollStrip>
 
             <div class="toolbar-count">{{ meta?.total ?? 0 }} tiendas</div>
         </div>
@@ -129,10 +193,10 @@ onMounted(load)
                     <thead>
                         <tr>
                             <th>Tienda</th>
-                            <th>Dueño</th>
-                            <th>Categorías</th>
-                            <th>Productos</th>
-                            <th>Estado</th>
+                            <th class="is-hide-mobile">Dueño</th>
+                            <th class="is-hide-mobile">Categorías</th>
+                            <th class="is-hide-mobile">Productos</th>
+                            <th class="is-hide-mobile">Estado</th>
                             <th><span class="visually-hidden">Acciones</span></th>
                         </tr>
                     </thead>
@@ -153,18 +217,26 @@ onMounted(load)
                                 </div>
                             </td>
 
-                            <td>
+                            <td class="is-hide-mobile">
                                 <span class="table-cell-text">
                                     <strong>{{ store.owner?.name }}</strong>
                                     <span>{{ store.owner?.email }}</span>
                                 </span>
                             </td>
 
-                            <td>{{ store.categories_count }}</td>
-                            <td>{{ store.products_count }}</td>
+                            <td class="is-hide-mobile">{{ store.categories_count }}</td>
+                            <td class="is-hide-mobile">{{ store.products_count }}</td>
 
-                            <td>
+                            <td class="is-hide-mobile">
                                 <span
+                                    v-if="store.trashed_at"
+                                    class="badge badge-dot badge-danger"
+                                    :title="`En la papelera desde el ${formatDate(store.trashed_at)}`"
+                                >
+                                    En papelera
+                                </span>
+                                <span
+                                    v-else
                                     class="badge badge-dot"
                                     :class="store.active ? 'badge-success' : 'badge-warning'"
                                 >
@@ -173,45 +245,24 @@ onMounted(load)
                             </td>
 
                             <td>
-                                <div class="table-actions">
-                                    <a
-                                        class="btn btn-ghost btn-icon"
-                                        :href="store.public_url"
-                                        target="_blank"
-                                        rel="noopener"
-                                        aria-label="Ver catálogo"
-                                    >
-                                        <AppIcon name="external" />
-                                    </a>
+                                <RowActions
+                                    v-if="store.trashed_at"
+                                    :actions="[
+                                        { label: 'Restaurar', icon: 'restore', onClick: () => restore(store) },
+                                        { label: 'Eliminar definitivamente', icon: 'trash', danger: true, onClick: () => destroy(store) },
+                                    ]"
+                                />
 
-                                    <button
-                                        class="btn btn-ghost btn-icon"
-                                        type="button"
-                                        title="Entrar al panel de la tienda"
-                                        aria-label="Entrar al panel de la tienda"
-                                        @click="enterPanel(store)"
-                                    >
-                                        <AppIcon name="enter" />
-                                    </button>
-
-                                    <RouterLink
-                                        class="btn btn-ghost btn-icon"
-                                        :to="{ name: 'admin-store-edit', params: { id: store.id } }"
-                                        title="Editar"
-                                        aria-label="Editar"
-                                    >
-                                        <AppIcon name="pencil" />
-                                    </RouterLink>
-
-                                    <button
-                                        class="btn btn-ghost btn-icon"
-                                        type="button"
-                                        :aria-label="store.active ? 'Ocultar' : 'Publicar'"
-                                        @click="toggleActive(store)"
-                                    >
-                                        <AppIcon :name="store.active ? 'ban' : 'check'" />
-                                    </button>
-                                </div>
+                                <RowActions
+                                    v-else
+                                    :actions="[
+                                        { label: 'Ver catálogo', icon: 'external', href: store.public_url },
+                                        { label: 'Entrar al panel de la tienda', icon: 'enter', onClick: () => enterPanel(store) },
+                                        { label: 'Editar', icon: 'pencil', to: { name: 'admin-store-edit', params: { id: store.id } } },
+                                        { label: store.active ? 'Ocultar' : 'Publicar', icon: store.active ? 'check' : 'ban', onClick: () => toggleActive(store) },
+                                        { label: 'Mover a papelera', icon: 'trash', danger: true, onClick: () => moveToTrash(store) },
+                                    ]"
+                                />
                             </td>
                         </tr>
                     </tbody>
@@ -229,6 +280,7 @@ onMounted(load)
                     type="button"
                     @click="page > 1 && page--"
                 >
+                    <AppIcon name="chevronLeft" />
                     Anterior
                 </button>
                 <button
@@ -238,6 +290,7 @@ onMounted(load)
                     @click="page < meta.last_page && page++"
                 >
                     Siguiente
+                    <AppIcon name="chevronRight" />
                 </button>
             </nav>
         </div>

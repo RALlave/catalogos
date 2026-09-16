@@ -192,12 +192,12 @@ onMounted(async () => {
         <div class="page-actions">
             <button v-if="auth.store" class="btn btn-outline" type="button" @click="copyLink">
                 <AppIcon name="copy" />
-                Copiar enlace
+                <span class="btn-label">Copiar enlace</span>
             </button>
 
             <RouterLink class="btn btn-primary" :to="{ name: 'product-create' }">
                 <AppIcon name="plus" />
-                Nuevo producto
+                <span class="btn-label">Nuevo producto</span>
             </RouterLink>
         </div>
     </div>
@@ -405,9 +405,9 @@ onMounted(async () => {
                     <thead>
                         <tr>
                             <th>Producto</th>
-                            <th>Categoría</th>
-                            <th>Precio</th>
-                            <th>Estado</th>
+                            <th class="is-hide-mobile">Categoría</th>
+                            <th class="is-hide-mobile">Precio</th>
+                            <th class="is-hide-mobile">Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -424,9 +424,9 @@ onMounted(async () => {
                                     </span>
                                 </div>
                             </td>
-                            <td>{{ product.category?.name }}</td>
-                            <td>{{ product.sale_price ?? product.price }}</td>
-                            <td>
+                            <td class="is-hide-mobile">{{ product.category?.name }}</td>
+                            <td class="is-hide-mobile">{{ product.sale_price ?? product.price }}</td>
+                            <td class="is-hide-mobile">
                                 <span class="badge" :class="product.visible ? 'badge-success' : 'badge-warning'">
                                     {{ product.visible ? 'Visible' : 'Oculto' }}
                                 </span>

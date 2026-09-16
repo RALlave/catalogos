@@ -105,6 +105,13 @@
     height: 18px;
 }
 
+/* Mobile: regular buttons a bit shorter. */
+@media (max-width: 720px) {
+    .btn:not(.btn-sm, .btn-lg, .btn-icon) {
+        padding: 0.525rem 1rem;
+    }
+}
+
 .btn-loader {
     width: 15px;
     height: 15px;
@@ -129,6 +136,61 @@
 
 .form-row > .field {
     flex: 1 1 0;
+}
+
+@media (max-width: 720px) {
+    /* Two fields per row; an odd one takes the full width below. */
+    .form-row {
+        flex-wrap: wrap;
+    }
+
+    .form-row > .field {
+        flex: 1 1 calc(50% - 0.5rem);
+        min-width: 0;
+    }
+
+    /* A row with its own button (schedules) stays on one line. */
+    .form-row:has(> .btn) {
+        flex-wrap: nowrap;
+    }
+
+    .form-row:has(> .btn) > .field {
+        flex: 1 1 0;
+    }
+
+    /* One field per row. */
+    .form-row.is-stacked > .field {
+        flex-basis: 100%;
+    }
+
+    .form-row.is-stacked .field-actions {
+        align-items: stretch;
+    }
+}
+
+/* Fields in 3 columns on desktop, 2 on tablet and 1 on mobile */
+.form-cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+}
+
+/* Two columns on desktop and tablet; the 720px rule below still stacks it on mobile */
+.form-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 1200px) {
+    .form-cols {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .form-cols {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }
 
 .field {
@@ -203,6 +265,94 @@
 .textarea {
     min-height: 110px;
     resize: vertical;
+}
+
+/* Rich text editor: looks like a textarea with a toolbar on top */
+
+.rich-editor {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rich-editor:focus-within {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.rich-editor.has-error {
+    border-color: var(--color-danger);
+}
+
+.rich-editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 0.375rem;
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 8px 8px 0 0;
+    background-color: var(--color-surface-alt);
+}
+
+.rich-editor-tool {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem;
+    border: 0;
+    border-radius: 6px;
+    background-color: transparent;
+    color: var(--color-text-soft);
+}
+
+.rich-editor-tool:hover {
+    background-color: var(--color-surface-hover);
+    color: var(--color-text);
+}
+
+.rich-editor-tool.is-active {
+    background-color: var(--color-accent-soft);
+    color: var(--color-text);
+}
+
+.rich-editor-tool svg {
+    width: 16px;
+    height: 16px;
+}
+
+.rich-editor-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-height: 110px;
+    padding: 0.625rem 0.875rem;
+    font-size: 14px;
+    line-height: 1.5;
+    outline: none;
+}
+
+.rich-editor-content ul,
+.rich-editor-content ol {
+    padding-left: 1.25rem;
+}
+
+.rich-editor-content ul {
+    list-style: disc;
+}
+
+.rich-editor-content ol {
+    list-style: decimal;
+}
+
+.rich-editor-content p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    color: var(--color-text-muted);
+    pointer-events: none;
 }
 
 .select {
@@ -597,12 +747,10 @@
    el banner en el catálogo. */
 .preview-wide {
     width: 100%;
-    max-height: 15rem;
+    height: auto;
     border: 1px solid var(--color-border-soft);
     border-radius: 8px;
     background-color: var(--color-surface-alt);
-    aspect-ratio: 1024 / 411;
-    object-fit: cover;
 }
 
 /* Vista previa de un logo: entero y a todo el ancho del campo. Va con
@@ -753,6 +901,75 @@
     gap: 0.25rem;
 }
 
+@media (max-width: 900px) {
+    .table th,
+    .table td {
+        padding: 0.95rem 0.7rem;
+    }
+}
+
+/* Row actions: loose buttons on desktop, a "⋮" menu on mobile. */
+.row-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.row-actions-menu {
+    display: none;
+}
+
+.row-actions-menu .dropdown-menu {
+    min-width: 180px;
+}
+
+/* Mobile: header buttons show only their icon (the label stays for screen
+   readers) and tables drop the secondary columns, so nothing scrolls sideways. */
+@media (max-width: 720px) {
+    /* Without horizontal scroll there is nothing to clip, and clipping would
+       cut the actions menu of the last rows. */
+    .table-wrap {
+        overflow: visible;
+    }
+
+    .row-actions-inline {
+        display: none;
+    }
+
+    .row-actions-menu {
+        display: block;
+    }
+
+    .btn:has(.btn-label) {
+        padding: 0.5rem;
+    }
+
+    .btn:has(.btn-label) svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .btn-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .table .is-hide-mobile {
+        display: none;
+    }
+
+    /* Mobile: the name alone, without the gray line below it. */
+    .table .table-cell-text > span {
+        display: none;
+    }
+}
+
 /* Botones que ocupan una columna del form: apilados y al pie, a la altura del
    control del campo de al lado. */
 .field-actions {
@@ -783,6 +1000,49 @@
     align-items: center;
     gap: 0.5rem;
     flex: 0 0 auto;
+}
+
+/* Horizontal strip: slides with the finger, gradients hint hidden items. */
+.scroll-strip {
+    position: relative;
+    min-width: 0;
+}
+
+.scroll-strip-track {
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.scroll-strip-track::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-strip::before,
+.scroll-strip::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 40px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.scroll-strip::before {
+    left: 0;
+    background: linear-gradient(to right, var(--color-surface), transparent);
+}
+
+.scroll-strip::after {
+    right: 0;
+    background: linear-gradient(to left, var(--color-surface), transparent);
+}
+
+.scroll-strip.is-fade-start::before,
+.scroll-strip.is-fade-end::after {
+    opacity: 1;
 }
 
 .toolbar-filters .select {
@@ -892,8 +1152,10 @@
     gap: 0.25rem;
 }
 
+/* The views use the button itself as `.page-link`, not a wrapper around it. */
 .page-link > a,
-.page-link > button {
+.page-link > button,
+button.page-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -909,7 +1171,8 @@
 }
 
 .page-link > a:hover,
-.page-link > button:hover {
+.page-link > button:hover,
+button.page-link:hover {
     background-color: var(--color-surface-hover);
     color: var(--color-text);
 }
@@ -919,7 +1182,8 @@
     color: var(--color-text-invert);
 }
 
-.page-link.is-disabled > button {
+.page-link.is-disabled > button,
+button.page-link.is-disabled {
     color: var(--color-text-muted);
     opacity: 0.5;
     pointer-events: none;
@@ -1931,6 +2195,134 @@
 
 /* Feedback ---------------------------------------------------------------- */
 
+/* Impersonation badge ----------------------------------------------------- */
+
+/* Bottom left: the right corner already has the toasts and back to top. */
+.impersonation {
+    position: fixed;
+    left: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 70;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.625rem;
+}
+
+.impersonation-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--color-warning);
+    border-radius: 50%;
+    background-color: var(--color-warning-soft);
+    color: var(--color-warning);
+    box-shadow: 0 6px 18px var(--color-shadow-strong);
+    cursor: pointer;
+}
+
+/* Soft pulse so the button is not overlooked. */
+.impersonation-toggle::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border: 2px solid var(--color-warning);
+    border-radius: 50%;
+    animation: pulse 2s ease-out infinite;
+    pointer-events: none;
+}
+
+.impersonation-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+.impersonation-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    width: min(26rem, calc(100vw - 2.5rem));
+    padding: 0.875rem 0.875rem 1rem;
+    border: 1px solid var(--color-warning);
+    border-radius: 12px;
+    background-color: var(--color-warning-soft);
+    color: var(--color-warning);
+    font-size: 13px;
+    box-shadow: 0 14px 34px var(--color-shadow-strong);
+    animation: toast-in 0.2s ease;
+}
+
+.impersonation-card > svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+}
+
+.impersonation-card .alert-body {
+    flex: 1 1 auto;
+}
+
+.impersonation-actions {
+    display: flex;
+    padding-top: 0.5rem;
+}
+
+.impersonation-close {
+    color: var(--color-warning);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .impersonation-toggle::after,
+    .impersonation-card {
+        animation: none;
+    }
+}
+
+/* Back to top ------------------------------------------------------------- */
+
+.back-to-top {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 70;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: var(--color-text-invert);
+    box-shadow: 0 6px 18px var(--color-shadow-strong);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0.5rem);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
+}
+
+.back-to-top:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.back-to-top svg {
+    width: 20px;
+    height: 20px;
+}
+
 .toast-stack {
     position: fixed;
     right: 1.25rem;
@@ -2316,6 +2708,11 @@
     border-bottom: 1px solid var(--color-border-soft);
 }
 
+/* The close button sits flush with the header's padding. */
+.modal-header .btn-icon {
+    padding: 0;
+}
+
 .modal-title {
     display: flex;
     flex-direction: column;
@@ -2367,12 +2764,131 @@
     margin-left: auto;
 }
 
+/* Tablet and mobile: text on its own row and every button in one centered
+   group that wraps as needed. The confirmation modals keep their own layout. */
+@media (max-width: 900px) {
+    .modal:not(.modal-confirm) .modal-footer {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem 0.5rem;
+    }
+
+    /* Text goes on its own row, above the buttons. */
+    .modal:not(.modal-confirm) .modal-footer > :not(.btn, .modal-actions) {
+        flex-basis: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Its buttons join the footer's other buttons in one wrapping group. */
+    .modal:not(.modal-confirm) .modal-actions {
+        display: contents;
+    }
+}
+
+/* Recorte de imagen ------------------------------------------------------- */
+
+/* Opens over the media detail modal, below the confirmation. */
+.modal-cropper {
+    z-index: 70;
+}
+
+.modal-cropper .modal-body {
+    overflow: hidden;
+}
+
+/* Cropper.js sizes itself from the image box: it needs a bounded height. */
+.cropper-area {
+    height: 100%;
+}
+
+.cropper-area img {
+    display: block;
+    max-width: 100%;
+}
+
+/* Bigger handles than the library's 5px: easier to grab, also on touch. */
+.cropper-area .cropper-point {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--color-text-invert);
+    opacity: 1;
+}
+
+.cropper-area .cropper-point.point-n,
+.cropper-area .cropper-point.point-s {
+    margin-left: -0.4375rem;
+}
+
+.cropper-area .cropper-point.point-e,
+.cropper-area .cropper-point.point-w {
+    margin-top: -0.4375rem;
+}
+
+.cropper-area .cropper-point.point-n,
+.cropper-area .cropper-point.point-ne,
+.cropper-area .cropper-point.point-nw {
+    top: -7px;
+}
+
+.cropper-area .cropper-point.point-s,
+.cropper-area .cropper-point.point-se,
+.cropper-area .cropper-point.point-sw {
+    bottom: -7px;
+}
+
+.cropper-area .cropper-point.point-e,
+.cropper-area .cropper-point.point-ne,
+.cropper-area .cropper-point.point-se {
+    right: -7px;
+}
+
+.cropper-area .cropper-point.point-w,
+.cropper-area .cropper-point.point-nw,
+.cropper-area .cropper-point.point-sw {
+    left: -7px;
+}
+
 /* Biblioteca de imágenes -------------------------------------------------- */
+
+/* Overlay shown while files are dragged over the picker. */
+.media-dropzone {
+    position: absolute;
+    inset: 0.75rem;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border: 2px dashed var(--color-accent);
+    border-radius: 10px;
+    background-color: var(--color-accent-soft);
+    color: var(--color-primary);
+    pointer-events: none;
+}
+
+.media-dropzone-icon svg {
+    width: 40px;
+    height: 40px;
+}
+
+.media-dropzone-text {
+    font-size: 16px;
+    font-weight: 600;
+}
 
 .media-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 1rem;
+}
+
+/* Mobile: always two columns, the auto-fill minimum leaves only one. */
+@media (max-width: 720px) {
+    .media-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .media-card {
@@ -2678,6 +3194,18 @@
 
     to {
         background-position: 160% 0;
+    }
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(1.5);
     }
 }
 

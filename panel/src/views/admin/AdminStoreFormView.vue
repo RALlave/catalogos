@@ -5,7 +5,9 @@ import { useRoute, useRouter } from 'vue-router'
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
 import PasswordInput from '@/components/PasswordInput.vue'
+import RichTextEditor from '@/components/RichTextEditor.vue'
 import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
+import { richTextCounter } from '@/lib/richText'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
 import { useAuthStore } from '@/stores/auth'
@@ -159,7 +161,7 @@ onMounted(async () => {
         <div class="page-actions">
             <button v-if="isEdit" class="btn btn-outline" type="button" @click="enterPanel">
                 <AppIcon name="enter" />
-                Entrar al panel
+                <span class="btn-label">Entrar al panel</span>
             </button>
 
             <RouterLink class="btn btn-outline" :to="{ name: 'admin-stores' }">Volver</RouterLink>
@@ -310,11 +312,16 @@ onMounted(async () => {
                     <FormField
                         label="Descripción"
                         field-id="store-description"
-                        :counter="form.description"
+                        :counter="richTextCounter(form.description)"
                         :max="2000"
                         :error="errors.description?.[0]"
                     >
-                        <textarea id="store-description" v-model="form.description" class="textarea" maxlength="2000" />
+                        <RichTextEditor
+                            id="store-description"
+                            v-model="form.description"
+                            :max="2000"
+                            :has-error="Boolean(errors.description)"
+                        />
                     </FormField>
 
                     <div class="form-row">

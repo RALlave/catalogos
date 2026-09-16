@@ -221,6 +221,26 @@
     font-size: 13px;
 }
 
+/* Catalog link and panel theme: only on mobile, where the topbar drops them.
+   A line separates them from the menu because they are not navigation. */
+.sidebar-extras {
+    display: none;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-sidebar-border);
+}
+
+.sidebar-theme {
+    padding: 0.4375rem 0.75rem;
+    font-size: 13px;
+}
+
+.sidebar-theme.is-current {
+    background-color: var(--color-sidebar-active);
+    color: var(--color-sidebar-text-strong);
+    font-weight: 600;
+}
+
 .sidebar-footer {
     display: flex;
     flex-direction: column;
@@ -368,6 +388,105 @@
     width: min(320px, 100%);
 }
 
+/* Global search ----------------------------------------------------------- */
+
+.global-search {
+    position: relative;
+    display: flex;
+    flex: 0 1 320px;
+}
+
+.global-search .topbar-search {
+    width: 100%;
+}
+
+.global-search-panel {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: max(100%, 360px);
+    max-height: min(70vh, 480px);
+    padding: 0.5rem;
+    overflow-y: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background-color: var(--color-surface);
+    box-shadow: 0 12px 28px var(--color-shadow);
+}
+
+.global-search-state {
+    padding: 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 13px;
+}
+
+.global-search-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.global-search-title {
+    padding: 0.25rem 0.625rem;
+    color: var(--color-text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.global-search-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    width: 100%;
+    padding: 0.5rem 0.625rem;
+    border: 0;
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--color-text);
+    text-align: left;
+    cursor: pointer;
+}
+
+.global-search-item.is-active {
+    background-color: var(--color-surface-hover);
+}
+
+.global-search-item svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+    color: var(--color-text-muted);
+}
+
+.global-search-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.global-search-label,
+.global-search-detail {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.global-search-label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.global-search-detail {
+    color: var(--color-text-muted);
+    font-size: 12px;
+}
+
 .topbar-right {
     display: flex;
     align-items: center;
@@ -381,11 +500,15 @@
     background-color: var(--color-border);
 }
 
+/* Fixed size: in a narrow topbar the search squeezed it down to a dot. */
 .sidebar-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    padding: 0;
     border: 0;
     border-radius: 8px;
     background-color: transparent;
@@ -398,6 +521,7 @@
 }
 
 .sidebar-toggle svg {
+    flex: 0 0 auto;
     width: 20px;
     height: 20px;
 }
@@ -756,6 +880,40 @@
     .sidebar-footer {
         display: none;
     }
+
+    /* Bigger hamburger: here it opens the side menu with the finger. */
+    .sidebar-toggle {
+        width: 42px;
+        height: 42px;
+    }
+
+    .sidebar-toggle svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    /* Filters stay in one line and slide sideways (ScrollStrip). */
+    .toolbar {
+        flex-wrap: wrap;
+    }
+
+    .toolbar-search {
+        max-width: none;
+        width: 100%;
+    }
+
+    .toolbar .scroll-strip {
+        width: 100%;
+    }
+
+    .toolbar-filters {
+        flex-wrap: nowrap;
+        width: max-content;
+    }
+
+    .toolbar-filters .select {
+        flex: 0 0 auto;
+    }
 }
 
 @media (max-width: 720px) {
@@ -765,8 +923,14 @@
 
     .topbar-search,
     .topbar-divider,
+    .topbar-catalog,
+    .topbar-theme,
     .user-meta {
         display: none;
+    }
+
+    .sidebar-extras {
+        display: block;
     }
 
     .breadcrumb {
@@ -782,25 +946,22 @@
         grid-template-columns: 1fr;
     }
 
+    /* Title on the left, icon buttons on the right, aligned with the h1. */
     .page-header {
-        flex-direction: column;
-        align-items: stretch;
+        flex-wrap: nowrap;
+    }
+
+    .page-title {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .page-actions {
+        flex: 0 0 auto;
+        flex-wrap: nowrap;
     }
 
     .store-actions {
         flex-direction: column;
-    }
-
-    .toolbar {
-        flex-wrap: wrap;
-    }
-
-    .toolbar-search {
-        max-width: none;
-        width: 100%;
-    }
-
-    .toolbar-filters {
-        flex-wrap: wrap;
     }
 }

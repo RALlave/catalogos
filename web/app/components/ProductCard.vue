@@ -68,7 +68,7 @@ const discount = computed(() => discountPercent(props.product.price, props.produ
                     <NuxtLink class="product-link" :to="productPath">{{ product.name }}</NuxtLink>
                 </h3>
 
-                <p v-if="product.description" class="product-excerpt">{{ product.description }}</p>
+                <p v-if="product.description_text" class="product-excerpt">{{ product.description_text }}</p>
 
                 <div class="product-foot">
                     <!-- El precio actual y, si es oferta, el anterior tachado.

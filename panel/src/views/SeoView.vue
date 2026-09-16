@@ -117,7 +117,7 @@ onMounted(() => {
                 rel="noopener"
             >
                 <AppIcon name="external" />
-                Ver catálogo
+                <span class="btn-label">Ver catálogo</span>
             </a>
         </div>
     </div>

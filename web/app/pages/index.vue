@@ -21,7 +21,7 @@ const filters = computed<ProductFilters>(() => ({
     ...(page.value > 1 ? { page: page.value } : {}),
 }))
 
-const { data: products } = await useStoreProducts(filters)
+const { data: products, status } = await useStoreProducts(filters)
 
 /* La vitrina de destacados: sólo en el home sin filtrar. Con un filtro o una
    búsqueda activa el visitante ya sabe qué está buscando, y la vitrina se le
@@ -36,7 +36,7 @@ const lastPage = computed(() => products.value?.meta.last_page ?? 1)
 
 /* El SEO se edita en el panel; sin cargar, se arma con los datos de la tienda. */
 const title = computed(() => store.value.meta_title || `Catálogo de productos — ${store.value.name}`)
-const description = computed(() => store.value.meta_description || store.value.description || undefined)
+const description = computed(() => store.value.meta_description || store.value.description_text || undefined)
 
 useSeoMeta({
     title,
@@ -69,6 +69,7 @@ useSeoMeta({
                         v-if="store.categories.length"
                         :categories="store.categories"
                         :active="category"
+                        :loading="status === 'pending'"
                     />
                 </div>
 

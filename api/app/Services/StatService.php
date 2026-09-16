@@ -56,7 +56,7 @@ class StatService
             return;
         }
 
-        $store = Store::query()->where('slug', $slug)->where('active', true)->first(['id']);
+        $store = Store::query()->where('slug', $slug)->public()->first(['id']);
 
         if (! $store) {
             return;

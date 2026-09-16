@@ -190,6 +190,31 @@ function iniciarSeleccionDeTexto() {
 }
 
 /* --------------------------------------------------------------------------
+   Back to top: shows after scrolling and goes back to the top
+   -------------------------------------------------------------------------- */
+
+function initBackToTop() {
+    const button = document.querySelector("[data-back-to-top]")
+
+    if (!button) {
+        return
+    }
+
+    const threshold = 400
+
+    const update = () => button.classList.toggle("is-visible", window.scrollY > threshold)
+
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+
+    button.addEventListener("click", () => {
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+        window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" })
+    })
+}
+
+/* --------------------------------------------------------------------------
    Arranque
    -------------------------------------------------------------------------- */
 
@@ -200,4 +225,5 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarReveal()
     iniciarAnio()
     iniciarSeleccionDeTexto()
+    initBackToTop()
 })

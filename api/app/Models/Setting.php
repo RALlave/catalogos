@@ -42,4 +42,10 @@ class Setting extends Model
      * tienen su propia carpeta al lado de `media/`.
      */
     public const DIRECTORY = 'platform';
+
+    /**
+     * Días que una tienda espera en la papelera antes de borrarse sola. El
+     * valor inicial lo carga una migración.
+     */
+    public const STORE_TRASH_DAYS = 'store_trash_days';
 }

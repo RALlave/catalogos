@@ -5,8 +5,9 @@
     servidor, así que el banner se ve completo sin JavaScript; las flechas
     y los puntos son <ClientOnly> porque sin JS no harían nada.
 
-    Los dos botones son fijos: van siempre al catálogo y al WhatsApp de la
-    tienda, no se editan por hero.
+    The main button text and destination are chosen for each hero (the API
+    sends the URL already resolved); "Pedir por WhatsApp" is fixed and always
+    opens the store WhatsApp.
 -->
 
 <script setup lang="ts">
@@ -82,6 +83,7 @@ const whatsapp = computed(() => props.store.whatsapp
             v-for="(hero, position) in heroes"
             :key="position"
             class="banner-slide"
+            :data-align="hero.align"
             :class="{ 'is-active': position === index, 'is-before': position < index }"
             :aria-hidden="position !== index || undefined"
             :inert="position !== index || undefined"
@@ -103,14 +105,14 @@ const whatsapp = computed(() => props.store.whatsapp
                 <p v-if="hero.eyebrow" class="banner-eyebrow">{{ hero.eyebrow }}</p>
 
                 <h1 v-if="position === 0" class="banner-title">{{ hero.title }}</h1>
-                <p v-else class="banner-title">{{ hero.title }}</p>
+                <div v-else class="banner-title h1">{{ hero.title }}</div>
 
-                <p v-if="hero.text" class="banner-text">{{ hero.text }}</p>
+                <div v-if="hero.text" class="banner-text rich-text" v-html="hero.text" />
 
                 <ul class="banner-actions">
-                    <li>
-                        <a class="btn btn-cta" href="#products">
-                            Ver catálogo
+                    <li v-if="hero.button_text">
+                        <a class="btn btn-cta" :href="hero.button_href">
+                            {{ hero.button_text }}
                             <AppIcon name="arrow" class="btn-icon" />
                         </a>
                     </li>

@@ -1,0 +1,38 @@
+CARPETA DE FOTOS — Gorras unisex
+========================================================
+
+ESTA CARPETA SE LLENA SOLA
+--------------------------
+No hace falta que busques, guardes ni renombres fotos.
+
+  1. Vos pasas las URLs de producto en el chat, una por linea.
+  2. Claude abre cada una, saca las fotos de galeria y los datos
+     (precio, materiales, talles, proveedor) y llena productos.txt.
+  3. Claude deja un archivo descargar.ps1 en esta carpeta.
+  4. Vos le das clic derecho -> "Ejecutar con PowerShell".
+     Las fotos caen aca, ya nombradas y en el orden correcto.
+  5. Claude escribe gorras.json y sembras.
+
+Si preferis poner fotos a mano, la convencion sigue siendo la misma:
+
+  nombre-del-producto-NN.jpg
+
+  gorra-trucker-negra-01.jpg
+  gorra-trucker-negra-02.jpg
+  gorra-snapback-beige-01.jpg
+
+- El sufijo -NN va siempre, dos digitos, aunque haya una sola foto.
+- La foto -01 es la que sale en la tarjeta del catalogo.
+- Mismo modelo en otro color = producto distinto = nombre distinto.
+- Minusculas, sin acentos ni enes, separado por guiones.
+
+TAMANO
+------
+800 px de lado mayor es EXACTO lo que necesita el catalogo. El optimizador
+genera dos variantes de producto, 400 px y 800 px, y nunca agranda una foto.
+Mas de 800 px se descarta. No busques mas grandes para productos.
+
+BANNER Y LOGO
+-------------
+Ya resueltos: el logo sale de la galeria de la plataforma y el banner de los
+que estan en _compartido. Los cambias despues desde el panel.

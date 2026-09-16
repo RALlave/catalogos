@@ -1,10 +1,12 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
-
+import { useRoute } from 'vue-router'
 
 import AppIcon from '@/components/AppIcon.vue'
 import FormField from '@/components/FormField.vue'
 import PasswordInput from '@/components/PasswordInput.vue'
+import RowActions from '@/components/RowActions.vue'
+import ScrollStrip from '@/components/ScrollStrip.vue'
 import { useUnsavedChanges } from '@/composables/useUnsavedChanges'
 import { ApiError, api } from '@/services/api'
 import { useAuthStore } from '@/stores/auth'
@@ -19,7 +21,10 @@ const users = ref([])
 const meta = ref(null)
 const loading = ref(true)
 
-const filters = ref({ search: '', role: '', suspended: '' })
+const route = useRoute()
+
+/* The topbar search lands here with ?search= already filled in. */
+const filters = ref({ search: String(route.query.search ?? ''), role: '', suspended: '' })
 const page = ref(1)
 
 /* Edición en modal: se abre un solo usuario a la vez. */
@@ -54,6 +59,13 @@ watch(() => filters.value.search, () => {
         page.value = 1
         load()
     }, 350)
+})
+
+/* Same view, new ?search= from the topbar: the component is reused, so sync it. */
+watch(() => route.query.search, (search) => {
+    if (search !== undefined) {
+        filters.value.search = String(search)
+    }
 })
 
 watch(() => [filters.value.role, filters.value.suspended], () => {
@@ -192,19 +204,21 @@ onBeforeUnmount(() => {
                 >
             </div>
 
-            <div class="toolbar-filters">
-                <select v-model="filters.role" class="select" aria-label="Filtrar por rol">
-                    <option value="">Todos los roles</option>
-                    <option value="store_owner">Dueños de tienda</option>
-                    <option value="superadmin">Superadmins</option>
-                </select>
+            <ScrollStrip>
+                <div class="toolbar-filters">
+                    <select v-model="filters.role" class="select" aria-label="Filtrar por rol">
+                        <option value="">Todos los roles</option>
+                        <option value="store_owner">Dueños de tienda</option>
+                        <option value="superadmin">Superadmins</option>
+                    </select>
 
-                <select v-model="filters.suspended" class="select" aria-label="Filtrar por estado">
-                    <option value="">Todos los estados</option>
-                    <option value="0">Activos</option>
-                    <option value="1">Suspendidos</option>
-                </select>
-            </div>
+                    <select v-model="filters.suspended" class="select" aria-label="Filtrar por estado">
+                        <option value="">Todos los estados</option>
+                        <option value="0">Activos</option>
+                        <option value="1">Suspendidos</option>
+                    </select>
+                </div>
+            </ScrollStrip>
 
             <div class="toolbar-count">{{ meta?.total ?? 0 }} usuarios</div>
         </div>
@@ -223,9 +237,9 @@ onBeforeUnmount(() => {
                     <thead>
                         <tr>
                             <th>Usuario</th>
-                            <th>Tienda</th>
-                            <th>Rol</th>
-                            <th>Estado</th>
+                            <th class="is-hide-mobile">Tienda</th>
+                            <th class="is-hide-mobile">Rol</th>
+                            <th class="is-hide-mobile">Estado</th>
                             <th><span class="visually-hidden">Acciones</span></th>
                         </tr>
                     </thead>
@@ -242,15 +256,15 @@ onBeforeUnmount(() => {
                                 </div>
                             </td>
 
-                            <td>{{ user.store?.name }}</td>
+                            <td class="is-hide-mobile">{{ user.store?.name }}</td>
 
-                            <td>
+                            <td class="is-hide-mobile">
                                 <span v-for="role in user.roles" :key="role" class="badge">
                                     {{ role === 'superadmin' ? 'Superadmin' : 'Dueño' }}
                                 </span>
                             </td>
 
-                            <td>
+                            <td class="is-hide-mobile">
                                 <span
                                     class="badge badge-dot"
                                     :class="user.suspended ? 'badge-danger' : 'badge-success'"
@@ -260,28 +274,18 @@ onBeforeUnmount(() => {
                             </td>
 
                             <td>
-                                <div class="table-actions">
-                                    <button
-                                        class="btn btn-ghost btn-icon"
-                                        type="button"
-                                        title="Editar"
-                                        aria-label="Editar"
-                                        @click="edit(user)"
-                                    >
-                                        <AppIcon name="pencil" />
-                                    </button>
-
-                                    <button
-                                        v-if="user.id !== auth.user?.id"
-                                        class="btn btn-ghost btn-icon"
-                                        type="button"
-                                        :title="user.suspended ? 'Reactivar' : 'Suspender'"
-                                        :aria-label="user.suspended ? 'Reactivar' : 'Suspender'"
-                                        @click="toggleSuspend(user)"
-                                    >
-                                        <AppIcon :name="user.suspended ? 'check' : 'ban'" />
-                                    </button>
-                                </div>
+                                <RowActions
+                                    :actions="[
+                                        { label: 'Editar', icon: 'pencil', onClick: () => edit(user) },
+                                        ...(user.id !== auth.user?.id
+                                            ? [{
+                                                label: user.suspended ? 'Reactivar' : 'Suspender',
+                                                icon: user.suspended ? 'check' : 'ban',
+                                                onClick: () => toggleSuspend(user),
+                                            }]
+                                            : []),
+                                    ]"
+                                />
                             </td>
                         </tr>
                     </tbody>
@@ -299,6 +303,7 @@ onBeforeUnmount(() => {
                     type="button"
                     @click="page > 1 && page--"
                 >
+                    <AppIcon name="chevronLeft" />
                     Anterior
                 </button>
                 <button
@@ -308,6 +313,7 @@ onBeforeUnmount(() => {
                     @click="page < meta.last_page && page++"
                 >
                     Siguiente
+                    <AppIcon name="chevronRight" />
                 </button>
             </nav>
         </div>

@@ -326,7 +326,7 @@ async function removeStoreLogo(logo) {
 
             <label class="btn btn-outline btn-sm" :class="{ 'is-loading': uploadingLogo }">
                 <AppIcon name="plus" />
-                Subir logos
+                <span class="btn-label">Subir logos</span>
                 <input
                     class="visually-hidden"
                     type="file"

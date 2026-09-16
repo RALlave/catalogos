@@ -558,3 +558,11 @@
 .theme-picker button.is-current {
     border-color: var(--color-accent-dark);
 }
+
+/* Tablet and mobile: same cell padding for every theme. */
+@media (max-width: 900px) {
+    :root[data-theme] .table th,
+    :root[data-theme] .table td {
+        padding: 0.95rem 0.7rem;
+    }
+}

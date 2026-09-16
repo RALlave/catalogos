@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,7 +60,25 @@ class Store extends Model
             'waitlist_enabled' => 'boolean',
             'featured_enabled' => 'boolean',
             'active' => 'boolean',
+            'trashed_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Lo que el catálogo público puede mostrar: publicada y fuera de la
+     * papelera. Es el único filtro por el que un visitante llega a una tienda.
+     *
+     * @param  Builder<Store>  $query
+     */
+    #[Scope]
+    protected function public(Builder $query): void
+    {
+        $query->where('active', true)->whereNull('trashed_at');
+    }
+
+    public function isTrashed(): bool
+    {
+        return $this->trashed_at !== null;
     }
 
     /**

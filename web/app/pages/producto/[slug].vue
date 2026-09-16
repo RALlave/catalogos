@@ -46,10 +46,9 @@ const whatsapp = computed(() => store.value.whatsapp
 
 const shareUrl = computed(() => `https://wa.me/?text=${encodeURIComponent(`${product.value.name} — ${productUrl.value}`)}`)
 
-/* El enlace se abre igual: el aviso a la API sale en paralelo. */
-function share(): void {
-    trackShare(store.value.slug, product.value.slug)
-}
+/* Without JS the link shares straight to WhatsApp; with JS the click
+   opens the modal and the share is counted when a network is picked. */
+const shareModal = ref<{ open: () => void } | null>(null)
 
 /* Las pestañas se arman con lo que el producto tenga cargado. Con una
    sola no se activa el modo tablist: se ve el panel abierto. */
@@ -62,10 +61,10 @@ const title = computed(() => `${product.value.name} — ${store.value.name}`)
 
 useSeoMeta({
     title,
-    description: () => product.value.description ?? undefined,
+    description: () => product.value.description_text ?? undefined,
     ogType: 'product',
     ogTitle: () => product.value.name,
-    ogDescription: () => product.value.description ?? undefined,
+    ogDescription: () => product.value.description_text ?? undefined,
     /* Para compartir va la más grande: las redes la recortan a su gusto. */
     ogImage: () => product.value.images[0]?.src ?? store.value.logo_url ?? undefined,
 })
@@ -143,7 +142,7 @@ useSeoMeta({
                         </span>
                     </p>
 
-                    <p v-if="product.description" class="detail-summary">{{ product.description }}</p>
+                    <p v-if="product.description_text" class="detail-summary">{{ product.description_text }}</p>
 
                     <dl v-if="product.specs?.length" class="spec spec-detail">
                         <div v-for="spec in product.specs" :key="spec.label" class="spec-row">
@@ -186,13 +185,21 @@ useSeoMeta({
                                 :href="shareUrl"
                                 target="_blank"
                                 rel="noopener"
-                                @click="share"
+                                @click.prevent="shareModal?.open()"
                             >
                                 <AppIcon name="share" class="btn-icon" />
                                 Compartir
                             </a>
                         </li>
                     </ul>
+
+                    <ShareModal
+                        ref="shareModal"
+                        :name="product.name"
+                        :url="productUrl"
+                        :store-slug="store.slug"
+                        :product-slug="product.slug"
+                    />
 
                     <WaitlistForm
                         v-if="store.waitlist_enabled && product.sold_out"
@@ -221,7 +228,7 @@ useSeoMeta({
 
                 <ProductTabs :tabs="tabs">
                     <template #description>
-                        <p>{{ product.description }}</p>
+                        <div class="rich-text" v-html="product.description" />
                     </template>
 
                     <template #specs>

@@ -219,7 +219,7 @@ img {
    ELEMENTOS BASE (sin clases, según convención del proyecto)
    ============================================================ */
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, .h1 {
     margin: 0;
     font-family: var(--font-heading);
     font-weight: var(--weight-bold);
@@ -227,7 +227,7 @@ h1, h2, h3, h4 {
     overflow-wrap: anywhere;
 }
 
-h1 { font-size: var(--text-xl); }
+h1, .h1 { font-size: var(--text-xl); }
 h2 { font-size: var(--text-lg); }
 
 h3 {

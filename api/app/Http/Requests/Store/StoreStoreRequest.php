@@ -2,15 +2,24 @@
 
 namespace App\Http\Requests\Store;
 
+use App\Http\Requests\Concerns\SanitizesRichText;
+use App\Rules\RichTextMax;
 use App\Services\ThemeService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreStoreRequest extends FormRequest
 {
+    use SanitizesRichText;
+
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->sanitizeRichText(['description']);
     }
 
     /**
@@ -35,7 +44,7 @@ class StoreStoreRequest extends FormRequest
             'hero_effect' => ['sometimes', 'string', Rule::in(config('catalog.hero_effects'))],
             'cart_enabled' => ['sometimes', 'boolean'],
             'waitlist_enabled' => ['sometimes', 'boolean'],
-            'description' => ['nullable', 'string', 'max:2000'],
+            'description' => ['nullable', 'string', new RichTextMax(2000)],
             'meta_title' => ['nullable', 'string', 'max:60'],
             'meta_description' => ['nullable', 'string', 'max:160'],
             'industry' => ['nullable', 'string', 'max:255'],

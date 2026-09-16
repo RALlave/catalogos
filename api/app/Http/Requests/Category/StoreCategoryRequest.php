@@ -2,14 +2,23 @@
 
 namespace App\Http\Requests\Category;
 
+use App\Http\Requests\Concerns\SanitizesRichText;
+use App\Rules\RichTextMax;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreCategoryRequest extends FormRequest
 {
+    use SanitizesRichText;
+
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->sanitizeRichText(['description']);
     }
 
     /**
@@ -26,7 +35,7 @@ class StoreCategoryRequest extends FormRequest
                 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 Rule::unique('categories', 'slug')->where('store_id', $this->user()->store?->id),
             ],
-            'description' => ['nullable', 'string', 'max:2000'],
+            'description' => ['nullable', 'string', new RichTextMax(2000)],
             'order' => ['sometimes', 'integer', 'min:0'],
             'active' => ['sometimes', 'boolean'],
         ];

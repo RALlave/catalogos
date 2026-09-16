@@ -2,14 +2,23 @@
 
 namespace App\Http\Requests\Category;
 
+use App\Http\Requests\Concerns\SanitizesRichText;
+use App\Rules\RichTextMax;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends FormRequest
 {
+    use SanitizesRichText;
+
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->sanitizeRichText(['description']);
     }
 
     /**
@@ -29,7 +38,7 @@ class UpdateCategoryRequest extends FormRequest
                     ->where('store_id', $this->user()->store?->id)
                     ->ignore($this->route('category')),
             ],
-            'description' => ['nullable', 'string', 'max:2000'],
+            'description' => ['nullable', 'string', new RichTextMax(2000)],
             'order' => ['sometimes', 'integer', 'min:0'],
             'active' => ['sometimes', 'boolean'],
         ];

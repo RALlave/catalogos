@@ -2,15 +2,24 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\Concerns\SanitizesRichText;
+use App\Rules\RichTextMax;
 use App\Services\ThemeService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateAdminStoreRequest extends FormRequest
 {
+    use SanitizesRichText;
+
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->sanitizeRichText(['description']);
     }
 
     /**
@@ -35,7 +44,7 @@ class UpdateAdminStoreRequest extends FormRequest
             'banner' => ['sometimes', 'string', Rule::in(app(ThemeService::class)->optionKeys('banner'))],
             'cart_enabled' => ['sometimes', 'boolean'],
             'waitlist_enabled' => ['sometimes', 'boolean'],
-            'description' => ['nullable', 'string', 'max:2000'],
+            'description' => ['nullable', 'string', new RichTextMax(2000)],
             'industry' => ['nullable', 'string', 'max:255'],
             'whatsapp' => ['nullable', 'string', 'max:30'],
             'phone' => ['nullable', 'string', 'max:30'],

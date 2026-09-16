@@ -19,7 +19,7 @@ class WaitlistController extends Controller
     public function store(StoreWaitlistEntryRequest $request, string $slug): JsonResponse
     {
         $store = Store::where('slug', $slug)
-            ->where('active', true)
+            ->public()
             ->where('waitlist_enabled', true)
             ->firstOrFail();
 

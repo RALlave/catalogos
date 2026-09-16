@@ -322,7 +322,7 @@ Vive en `web/`, separado de `api/`. Estructura de URLs:
 ```
 {tienda}.dominio.com/                  catálogo   (?cat= &q= &page=)
 {tienda}.dominio.com/producto/{slug}   detalle
-{tienda}.dominio.com/buscar            resultados de búsqueda (?q= &cat= &page=)
+{tienda}.dominio.com/search            resultados de búsqueda (?s= &cat= &page=)
 {tienda}.dominio.com/contacto          contacto
 ```
 
@@ -339,7 +339,7 @@ subdominio, una URL fija sería la de otra tienda. La única variable es
 
 El catálogo es el diseño de `prototipo-3/`, portado el 2026-08-28. Ya no hay
 cuatro layouts: es **un solo diseño configurable** y lo que cambia es la paleta
-(12) más tres opciones de forma, que viajan como atributos del `<html>`:
+(14) más tres opciones de forma, que viajan como atributos del `<html>`:
 `data-radius` (square/round), `data-nav` (dark/color) y `data-banner`
 (dark/light). El layout de tienda inyecta los colores de la paleta como un
 `<style>` con `:root`.
@@ -350,14 +350,17 @@ tipografía, responsive; ni un hexadecimal), `palette.css` (colores) y
 `prototipo-3/CLAUDE.md`: **ningún hexadecimal dentro de una regla de
 componente**. La fuente de verdad de los colores sigue siendo
 `prototipo-3/assets/css/paletas.css`; de ahí salen los de `config/themes.php`.
+Excepción (2026-09-14): las cuatro rosas (`rosa-pastel`, `rosa-fucsia`,
+`rosa-dorado`, `rosa-nude`) viven **sólo** en `themes.php`, y Alegre y Arcoíris
+se quitaron de ahí pero siguen en la maqueta congelada.
 
 Filtro, búsqueda y paginación son la URL (`?cat=`, `?q=`, `?page=`), no estado
 del cliente: andan sin JS, se comparten y los indexa el buscador.
 
 El banner del home es un **carrusel de heros administrables** (ver más abajo).
-Lo que sigue fijo en el código son los títulos de las pestañas de producto y los
-dos botones del hero: "Ver catálogo" (va al listado) y "Pedir por WhatsApp" (se
-arma con el número de la tienda).
+Lo que sigue fijo en el código son los títulos de las pestañas de producto y el
+botón "Pedir por WhatsApp" del hero (se arma con el número de la tienda). El
+botón principal —texto y destino— se elige por hero (ver abajo).
 
 ## Hero (banner) del home
 
@@ -365,7 +368,26 @@ El banner dejó de ser un bloque fijo: la tienda carga **hasta 10 heros** en la
 tabla `heroes` (`store_id`, `media_id`, `eyebrow`, `title`, `text`, `order`,
 `active`) y el catálogo los rota. Cada hero tiene imagen y tres textos —
 **eyebrow** (el texto chico de arriba; se llama así, no *kicker*), título y
-texto—; los botones no se editan.
+texto—.
+
+- **El botón principal** se personaliza por hero (2026-09-14):
+  `heroes.button_text` (30, por defecto "Ver catálogo" en la columna; vacío
+  = no hay botón) y `heroes.link`, que **se elige de una lista y nunca se
+  escribe**, para que el dueño no pueda dejar un enlace roto. Los valores y
+  sus URLs están en `config/catalog.php` (`hero_links`): anclas `products`
+  (`#products`) y `featured` (`#featured`), páginas `home` (`/#products`, baja
+  a la grilla) y `contact` (`/contacto`), y `category`, que usa
+  `heroes.category_id` y abre `/?cat={slug}#products`.
+- La URL la arma la API (`PublicHeroResource` → `button_href`), no el
+  catálogo. Todo destino que no abriría nada va a `#products`: categoría
+  oculta o borrada (`category_id` queda `null`) y Destacados con la vitrina
+  apagada.
+- "Pedir por WhatsApp" sigue fijo.
+- **La alineación del contenido** también se elige por hero (2026-09-16):
+  `heroes.align`, `center` (por defecto) o `left`, con los valores en
+  `config/catalog.php` (`hero_aligns`). Viaja como `data-align` del
+  `.banner-slide` y rige en todos los tamaños de pantalla; el banner corto de
+  Contacto no se ve afectado.
 
 - El orden se arrastra en el panel, con el mismo `reorder` en lote que
   categorías y productos.
@@ -386,8 +408,12 @@ texto—; los botones no se editan.
   frena al pasar el mouse o al usar los controles, y no se mueve si el visitante
   pidió menos movimiento.
 
-Endpoints: `GET|POST /api/heroes`, `GET|PUT|DELETE /api/heroes/{hero}` y
-`POST /api/heroes/reorder`.
+- **Duplicar** (2026-09-16): la copia trae imagen (compartida, no se copia el
+  archivo), textos, botón y alineación; nace **oculta**, **al final** del orden
+  y con "(copia)" en el título. Respeta el tope de 10 heros.
+
+Endpoints: `GET|POST /api/heroes`, `GET|PUT|DELETE /api/heroes/{hero}`,
+`POST /api/heroes/reorder` y `POST /api/heroes/{hero}/clone`.
 
 ## Destacados del home — la vitrina
 
@@ -411,6 +437,62 @@ quedaron sin usar, y `.rail` sigue reservado para la futura sección Ofertas.
 
 Endpoint: `GET /api/stores/{slug}/featured`, cacheado con clave fija. Con la
 sección apagada devuelve la lista vacía, no un 404.
+
+## Ofertas debajo de Contacto
+
+Al pie de `/contacto` va una sección **"Ofertas"**: título y la grilla de
+siempre (`ProductCard`), sin chips de categoría.
+
+- Entran los productos visibles con `sale_price` menor que `price`
+  (`ProductService::onSale()`, el mismo criterio del filtro del panel). Los
+  **agotados nunca**.
+- Son **3 al azar**. La caché guarda todas las ofertas y el sorteo se hace
+  **fuera** del `remember`, así cada visita ve otras; el resultado viaja en el
+  payload del SSR y no parpadea al hidratar.
+- Es fija: no se administra desde el panel y el título está en el código. Sin
+  ofertas, la sección no se dibuja.
+
+Endpoint: `GET /api/stores/{slug}/offers`.
+
+## Compartir producto
+
+El botón **Compartir** de la ficha abre un modal (`ShareModal.vue`, sobre el
+`<dialog>` nativo) con tres opciones: **WhatsApp**, **Facebook** e
+**Instagram**.
+
+- El botón sigue siendo un `<a>` a `wa.me`: **sin JS comparte directo por
+  WhatsApp**; con JS el clic se intercepta y abre el modal.
+- Instagram **no tiene enlace para compartir desde la web**: en pantallas
+  táctiles con `navigator.share` abre el menú del teléfono; en escritorio copia
+  el enlace y el botón dice "Enlace copiado".
+- El compartido se cuenta (`trackShare`) **al elegir una red**, no al abrir el
+  modal.
+
+## Texto enriquecido
+
+Las descripciones de producto, categoría y tienda y el texto del hero se
+escriben con un **mini editor** (`panel/src/components/RichTextEditor.vue`,
+sobre Tiptap): negrita, cursiva, subrayado, viñetas y lista numerada. La meta
+description del SEO queda como textarea: Google la muestra como texto plano.
+
+- Se guarda **HTML**, y la API lo limpia antes de validar
+  (`App\Support\RichText::sanitize()`, con `symfony/html-sanitizer`): sólo
+  sobreviven `p`, `br`, `strong`, `em`, `u`, `ul`, `ol` y `li`. Un editor
+  vacío se guarda `null`, no `<p></p>`.
+- **Excepción a la regla de `maxlength`**: en estos campos el límite cuenta los
+  **caracteres visibles**, no el HTML (regla `RichTextMax`, y el contador del
+  panel usa `richTextCounter()`). Por eso la columna es más grande que el
+  límite: `heroes.text` pasó a `text` (2026-09-16). Los límites siguen siendo
+  hero 255 · categoría y tienda 2000 · producto 5000.
+- En el catálogo **sólo lleva formato** la pestaña Descripción del producto, el
+  texto del hero y la descripción de la tienda en el banner de Contacto, con
+  `v-html` dentro de un wrap `.rich-text`. Los resúmenes de las tarjetas y la
+  vitrina, el resumen de la ficha, el footer y las meta tags usan
+  `description_text`, que la API devuelve ya sin etiquetas.
+- Los listados del panel muestran el texto plano con `richTextToPlain()`.
+- La migración `convert_texts_to_rich_text` pasó a HTML los textos que ya había.
+  Lo que se cargue **sin pasar por la API** (seeders) queda como texto suelto:
+  se ve, pero sin párrafos.
 
 ## SEO de la tienda
 
@@ -511,6 +593,36 @@ formulario contra cómo estaba al cargarse. Consecuencias para el código nuevo:
 El aviso al cerrar la pestaña lo dibuja el navegador y **no se puede
 personalizar**: ahí no hay tres botones, sólo su propio cartel.
 
+### Regla: el panel se piensa primero en el celular
+
+Es desde donde más lo van a usar los dueños. Por debajo de **720px** (el único
+corte de mobile del panel), dos piezas de `components.css`:
+
+- **`.btn-label`** envuelve el texto de los botones con ícono de los
+  **encabezados** de pantallas y tarjetas ("Nuevo producto", "Ver catálogo"…):
+  en mobile queda sólo el ícono. Guardar, cancelar y los botones de
+  formularios y modales **mantienen el texto**.
+- **`.is-hide-mobile`** va en el `<th>` y el `<td>` de cada columna secundaria.
+  **Ninguna tabla hace scroll horizontal**: en mobile quedan arrastrar, el
+  nombre (con su miniatura), las acciones y, en Productos, el checkbox del
+  lote. El estado también se oculta.
+- **Las acciones de una fila van en `<RowActions :actions="[…]">`**
+  (`{ label, icon?, to?, href?, onClick?, danger?, disabled?, loading? }`).
+  Se declaran una vez: en escritorio son los botones sueltos y en mobile, un
+  menú **⋮**, aunque haya una sola acción. En mobile el `.table-wrap` deja de
+  recortar, para que el menú de la última fila no quede cortado.
+- **Las filas de campos (`.form-row`) van de a 2 en mobile**, y un campo impar
+  queda a lo ancho debajo. Una fila con su propio botón (Horarios) no salta de
+  línea. Con `.form-row.is-stacked` va **un campo por fila** (Logo y Contacto
+  de Mi tienda).
+- **El encabezado de pantalla no se apila**: título a la izquierda y botones a
+  la derecha, también en mobile.
+- **Los filtros de una lista van en `<ScrollStrip>`**: en tablet y mobile
+  (≤900px) quedan en una línea que se desliza con el dedo, con un gradiente del
+  lado donde hay opciones ocultas que desaparece al llegar a ese extremo.
+
+Toda pantalla o tabla nueva se revisa a ~400px antes de darla por terminada.
+
 ### Dónde vive
 
 SPA en `panel/` (Vite + Vue 3 + Pinia + Vue Router), hermana de `api/` y `web/`.
@@ -567,7 +679,11 @@ El token del superadmin **no se mueve**: sigue esperando intacto en el dominio
 principal, así que no hay nada que guardar para volver (se fue el
 `dash.admin_token`). En el subdominio queda `dash.impersonated_store` con el
 nombre de la tienda, para que la sesión sobreviva a un F5 y el layout muestre
-la barra "Volver a superadmin". Al volver, el token del dueño se revoca
+el aviso. Ya no es una barra arriba del contenido: es un **botón redondo
+flotante abajo a la izquierda** (escudo, con un pulso suave) que abre una
+tarjeta con "Estás en el panel de…" y **Volver a superadmin**
+(`ImpersonationBadge.vue`). La tarjeta se cierra con la X, clic afuera, Escape
+o el mismo botón. Al volver, el token del dueño se revoca
 (`POST /api/logout`) y el navegador vuelve al dominio principal.
 
 No se puede impersonar a otro superadmin, y el token impersonado no entra a
@@ -738,6 +854,38 @@ restaura. Los binarios de MySQL y el límite de subida están en
 `api/config/backup.php`. Necesita **ext-zip**, y el límite real de subida lo
 ponen PHP y nginx, no esa config.
 
+### Papelera de tiendas
+
+El superadmin no borra una tienda de un clic: primero la **mueve a la
+papelera** y recién desde ahí la **elimina definitivamente**.
+
+- En la papelera (`stores.trashed_at`) el catálogo responde **404**, pero el
+  dueño **sigue entrando a su panel**. Por eso es una columna propia y no el
+  `SoftDeletes` de Laravel, que escondería la tienda también en
+  `$user->store`. Todo lo público filtra con el scope `Store::public()`
+  (publicada y fuera de la papelera): **una consulta pública nueva tiene que
+  usarlo**, no `where('active', true)`.
+- Restaurar deja la tienda como estaba: `active` no se toca al moverla.
+- **Eliminar definitivamente no deja rastro**: se borra el **usuario dueño** (un
+  dueño = una tienda) y la cascada de la base se lleva tienda, categorías,
+  productos, galerías, media, heros, pedidos, lista de espera y estadísticas. A
+  mano se borran tokens, token de recuperación y sesiones, y en disco la carpeta
+  entera `media/{store_id}`. Si el dueño fuera superadmin, se va la tienda y la
+  cuenta queda. Lo hace `StoreTrashService`.
+- Se **vacía sola**: `stores:purge-trash` corre todos los días y borra las que
+  llevan más días que `settings.store_trash_days` (90, cargado por migración).
+  Se edita en **Ajustes** del superadmin. Necesita el cron de `schedule:run` en
+  el servidor (ver `DEPLOY.md`).
+- En el listado es una opción más del select de estados, con contador; "Todos"
+  no cuenta las de la papelera.
+
+Endpoints: `PATCH /api/admin/stores/{store}/trash`, `PATCH …/restore`,
+`DELETE /api/admin/stores/{store}` (sólo si ya está en la papelera, si no 422) y
+`GET|PUT /api/admin/settings`.
+
+**Pendiente:** notificaciones por email a los admins (por ejemplo, antes de que
+la papelera borre una tienda). No hay nada implementado.
+
 ### Fuera de esta fase
 
 `planes` y `moderación` del prototipo superadmin quedan sin conectar: no tienen
@@ -823,6 +971,23 @@ directa siguen existiendo: suben el archivo y de paso lo dejan en la biblioteca.
 En el panel: pantalla `Multimedia` (`/multimedia`) y el modal `MediaPicker`,
 reutilizado desde el formulario de producto y desde la configuración de la
 tienda.
+
+### Recortar una imagen
+
+Desde el formulario del hero y desde el detalle de Multimedia hay un botón
+**Recortar** (`ImageCropper.vue`, sobre `cropperjs` 1.x) con recuadro libre.
+
+- **Pisa la imagen**: no crea una copia. El recorte se ve en todo lo que la usa
+  —productos, heros, logo, portada— y **no se puede deshacer**, porque el
+  original no se guarda. Por eso pide confirmación.
+- El panel manda sólo el rectángulo, en píxeles de la variante más grande. La
+  API recorta ese archivo (`MediaService::crop()` → `ImageOptimizer::crop()`),
+  regenera **las mismas variantes que ya tenía** con nombres nuevos —así ni el
+  navegador ni Cloudflare sirven la vieja— y borra los archivos anteriores.
+- Recortar **baja la resolución**: la mitad de una foto de 1600 px queda en
+  800 px, y ahí se queda.
+
+Endpoint: `POST /api/media/{media}/crop` (`x`, `y`, `width`, `height`).
 
 ### Optimización: WebP en varias medidas
 

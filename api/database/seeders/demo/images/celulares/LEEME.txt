@@ -1,0 +1,55 @@
+CARPETA DE FOTOS — Celulares y accesorios
+========================================================
+
+CONVENCION DE NOMBRES
+---------------------
+  nombre-del-producto-NN.jpg
+
+El nombre describe el producto. Los dos ultimos digitos son el numero de foto.
+
+Ejemplo de esta carpeta:
+  honor-magic6-lite-01.jpg
+  honor-magic6-lite-02.jpg
+  iphone-15-128gb-negro-01.jpg
+  iphone-15-128gb-negro-02.jpg
+  xiaomi-redmi-note-13-01.jpg
+
+REGLAS
+------
+1. El sufijo -NN va SIEMPRE, con dos digitos, aunque el producto tenga una
+   sola foto. Sin el sufijo no se puede saber donde termina el nombre.
+
+2. La foto -01 es la que sale en la tarjeta del catalogo. Que sea la mejor.
+
+3. Marca + modelo en el nombre. Si con el nombre no se sabe que modelo es,
+   yo tampoco lo voy a saber mirando la foto: un Air Max 90 y un 95 se
+   parecen bastante, y ahi te invento specs equivocadas.
+
+4. Mismo modelo en otro color = producto distinto = nombre distinto.
+   nike-air-max-90-blanco-01.jpg  y  nike-air-max-90-negro-01.jpg
+   son dos productos, no dos fotos del mismo.
+
+5. Todo en minusculas, sin acentos, sin enes, separado por guiones.
+   El nombre del archivo se convierte en el slug del producto en el catalogo.
+
+6. El ORDEN en la grilla ya no sale del nombre (esto es alfabetico).
+   Lo defino yo en el JSON. Si queres un orden concreto, decimelo.
+
+TAMANO
+------
+- Productos: 800 px de lado mayor es EXACTO lo que necesita el catalogo.
+  El optimizador genera dos variantes de producto, 400 px y 800 px, y nunca
+  agranda una foto. Mas de 800 px se descarta, menos se ve borroso en retina.
+  No busques mas grandes para productos: perdes el tiempo.
+- Fondo blanco o limpio y recorte parejo entre productos: es lo que mas
+  cambia como se ve la grilla.
+
+BANNER Y LOGO
+-------------
+Ya estan resueltos: el banner se reusa de selina-tienda y lo cambias despues
+desde el panel; el logo sale de la galeria de logos de la plataforma.
+No hace falta que busques nada para esto.
+
+LINKS DE ORIGEN
+---------------
+Anotalos en productos.txt (al lado). De ahi saco specs y precio reales.

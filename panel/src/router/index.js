@@ -186,6 +186,12 @@ const routes = [
                 component: () => import('@/views/admin/AdminBackupView.vue'),
                 meta: { title: 'Import & Export' },
             },
+            {
+                path: 'ajustes',
+                name: 'admin-settings',
+                component: () => import('@/views/admin/AdminSettingsView.vue'),
+                meta: { title: 'Ajustes' },
+            },
         ],
     },
 

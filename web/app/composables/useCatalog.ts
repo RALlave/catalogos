@@ -90,6 +90,19 @@ export function useFeaturedProducts(enabled: Ref<boolean>) {
     )
 }
 
+/**
+ * Offers below the contact page: three drawn at random by the API.
+ *
+ * The draw travels in the SSR payload, so the client hydrates the same three
+ * and the section does not flicker.
+ */
+export function useOfferProducts() {
+    const slug = useRequiredStoreSlug()
+    const { apiBase } = useRuntimeConfig().public
+
+    return useFetch<{ data: Product[] }>(() => `${apiBase}/stores/${slug}/offers`)
+}
+
 export function useStoreProduct(productSlug: Ref<string>) {
     const slug = useRequiredStoreSlug()
     const { apiBase } = useRuntimeConfig().public

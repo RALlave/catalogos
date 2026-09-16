@@ -2,11 +2,15 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Http\Requests\Concerns\SanitizesRichText;
+use App\Rules\RichTextMax;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
+    use SanitizesRichText;
+
     public function authorize(): bool
     {
         return true;
@@ -18,6 +22,8 @@ class UpdateProductRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
+        $this->sanitizeRichText(['description']);
+
         if ($this->has('sale_price') && ! $this->has('price')) {
             $this->merge(['price' => $this->route('product')?->price]);
         }
@@ -43,7 +49,7 @@ class UpdateProductRequest extends FormRequest
                     ->ignore($this->route('product')),
             ],
             'sku' => ['nullable', 'string', 'max:100'],
-            'description' => ['nullable', 'string', 'max:5000'],
+            'description' => ['nullable', 'string', new RichTextMax(5000)],
             'specs' => ['nullable', 'array', 'max:20'],
             'specs.*.label' => ['required', 'string', 'max:100'],
             'specs.*.type' => ['nullable', 'string', 'in:colors'],

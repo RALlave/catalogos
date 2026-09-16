@@ -39,7 +39,7 @@ const SCROLL_STEP = 8
    donde el visitante espera ver la marca. */
 const SCROLL_FLOOR = 120
 
-const search = ref(String(route.query.q ?? ''))
+const search = ref(String(route.query.s ?? ''))
 
 const navPanel = ref<HTMLElement | null>(null)
 const panelClose = ref<HTMLElement | null>(null)
@@ -131,13 +131,13 @@ function onSearchBlur(event: FocusEvent) {
 
 /* Buscar es una página aparte, no un filtro del catálogo: se sale con el
    término solo, sin arrastrar la categoría ni la página que hubiera. */
-const searchPath = '/buscar'
+const searchPath = '/search'
 
 function submitSearch() {
     searchOpen.value = false
     menuOpen.value = false
 
-    navigateTo({ path: searchPath.value, query: { q: search.value.trim() || undefined } })
+    navigateTo({ path: searchPath, query: { s: search.value.trim() || undefined } })
 }
 
 function onEscape(event: KeyboardEvent) {
@@ -317,7 +317,7 @@ onMounted(() => {
                         </button>
 
                         <!-- `action` y `method` son la versión sin JS: el
-                             navegador arma solo `/tienda/buscar?q=…`. -->
+                             navegador arma solo `/search?s=…`. -->
                         <form
                             id="form-search"
                             class="search"
@@ -326,14 +326,14 @@ onMounted(() => {
                             :action="searchPath"
                             @submit.prevent="submitSearch"
                         >
-                            <label class="visually-hidden" for="q">Buscar productos</label>
+                            <label class="visually-hidden" for="s">Buscar productos</label>
                             <input
-                                id="q"
+                                id="s"
                                 ref="searchField"
                                 v-model="search"
                                 class="search-field"
                                 type="search"
-                                name="q"
+                                name="s"
                                 placeholder="Buscar productos…"
                                 autocomplete="off"
                                 maxlength="120"

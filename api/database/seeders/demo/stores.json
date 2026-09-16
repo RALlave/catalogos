@@ -1,0 +1,169 @@
+{
+  "stores": [
+    {
+      "slug": "nexo-movil",
+      "name": "Nexo Móvil",
+      "images_dir": "celulares",
+      "user": {
+        "name": "Nexo Móvil",
+        "username": "nexomovil",
+        "email": "nexomovil@demo.local"
+      },
+      "description": "Importamos celulares nuevos y sellados, con garantía real en Bolivia. Trabajamos con Apple, Samsung, Google, OnePlus, HONOR, realme y ZTE, desde la gama de entrada hasta los plegables. Si el modelo que buscás no está en el catálogo, escribinos por WhatsApp y lo cotizamos.",
+      "industry": "Celulares y tecnología",
+      "whatsapp": "59170000000",
+      "phone": "+591 4 4000000",
+      "email": "hola@nexomovil.demo",
+      "facebook": "https://facebook.com/nexomovil",
+      "instagram": "https://instagram.com/nexomovil",
+      "tiktok": "",
+      "website": "",
+      "address": "Av. América 1234, entre Pando y Portales",
+      "map_url": "",
+      "city": "Cochabamba",
+      "country": "Bolivia",
+      "currency": "Bs.",
+      "schedules": [
+        {
+          "days": "Lunes a viernes",
+          "hours": "09:00 a 19:00"
+        },
+        {
+          "days": "Sábados",
+          "hours": "09:00 a 13:00"
+        }
+      ],
+      "meta_title": "Nexo Móvil · Celulares con garantía en Bolivia",
+      "meta_description": "Celulares nuevos y sellados con garantía en Bolivia: Apple, Samsung, Google, OnePlus, HONOR, realme y ZTE. Envíos a todo el país en 24 a 72 horas.",
+      "palette": "tech",
+      "radius": "round",
+      "nav": "dark",
+      "banner": "dark",
+      "hero_effect": "fade",
+      "cart_enabled": true,
+      "waitlist_enabled": true,
+      "featured_enabled": true,
+      "featured_title": "Lo más buscado",
+      "featured_subtitle": "Los equipos que más nos piden este mes",
+      "logo": "default",
+      "heroes": [
+        {
+          "image": "_compartido/banner-oficina.webp",
+          "eyebrow": "Nuevos y sellados",
+          "title": "Tu próximo celular, con garantía en Bolivia",
+          "text": "Apple, Samsung, Google, OnePlus y más. Envíos a todo el país en 24 a 72 horas."
+        }
+      ]
+    },
+    {
+      "slug": "paso-firme",
+      "name": "Paso Firme",
+      "images_dir": "zapatillas",
+      "user": {
+        "name": "Paso Firme",
+        "username": "pasofirme",
+        "email": "pasofirme@demo.local"
+      },
+      "description": "Zapatillas importadas para correr, para cancha, para el trabajo y para todos los días. Traemos talles que en otro lado no se consiguen: del 35 al 48. Vení a probarte el par antes de llevarlo, o escribinos por WhatsApp y te decimos qué talles tenemos en stock.",
+      "industry": "Calzado deportivo",
+      "whatsapp": "59171111111",
+      "phone": "+591 4 4111111",
+      "email": "hola@pasofirme.demo",
+      "facebook": "https://facebook.com/pasofirme",
+      "instagram": "https://instagram.com/pasofirme",
+      "tiktok": "",
+      "website": "",
+      "address": "Av. Ayacucho 567, casi esquina Jordán",
+      "map_url": "",
+      "city": "Cochabamba",
+      "country": "Bolivia",
+      "currency": "Bs.",
+      "schedules": [
+        {
+          "days": "Lunes a viernes",
+          "hours": "09:30 a 19:30"
+        },
+        {
+          "days": "Sábados",
+          "hours": "10:00 a 14:00"
+        }
+      ],
+      "meta_title": "Paso Firme · Zapatillas del 35 al 48 en Cochabamba",
+      "meta_description": "Zapatillas importadas para running, cancha, trabajo y uso diario. Talles del 35 al 48, cambio dentro de los 7 días y envíos a todo el país.",
+      "palette": "noche",
+      "radius": "round",
+      "nav": "dark",
+      "banner": "dark",
+      "hero_effect": "slide",
+      "cart_enabled": true,
+      "waitlist_enabled": true,
+      "featured_enabled": true,
+      "featured_title": "Lo que más sale",
+      "featured_subtitle": "los modelos que se agotan primero",
+      "logo": "default",
+      "heroes": [
+        {
+          "image": "_compartido/banner-girasol.webp",
+          "eyebrow": "Del 35 al 48",
+          "title": "Tu talle existe. Acá lo tenemos",
+          "text": "Zapatillas para correr, para cancha y para todos los días. Cambio dentro de los 7 días."
+        }
+      ]
+    },
+    {
+      "slug": "amaranta",
+      "name": "Amaranta",
+      "images_dir": "moda-mujer",
+      "user": {
+        "name": "Amaranta",
+        "username": "amaranta",
+        "email": "amaranta@demo.local"
+      },
+      "description": "Ropa de mujer para todos los días: jeans en los cortes que se están usando, camperas para cada temporada y deportivo que aguanta el lavado. Trabajamos del S al XL y podés probarte todo antes de llevarlo. Si no te queda, lo cambiás dentro de los 7 días.",
+      "industry": "Indumentaria femenina",
+      "whatsapp": "59172222222",
+      "phone": "+591 4 4222222",
+      "email": "hola@amaranta.demo",
+      "facebook": "https://facebook.com/amaranta",
+      "instagram": "https://instagram.com/amaranta",
+      "tiktok": "https://tiktok.com/@amaranta",
+      "website": "",
+      "address": "Calle España 234, entre Ecuador y Colombia",
+      "map_url": "",
+      "city": "Cochabamba",
+      "country": "Bolivia",
+      "currency": "Bs.",
+      "schedules": [
+        {
+          "days": "Lunes a viernes",
+          "hours": "10:00 a 20:00"
+        },
+        {
+          "days": "Sábados",
+          "hours": "10:00 a 18:00"
+        }
+      ],
+      "meta_title": "Amaranta · Ropa de mujer en Cochabamba",
+      "meta_description": "Jeans, camperas y deportivo de mujer del S al XL. Probate todo en tienda, cambio dentro de los 7 días y envíos a todo el país.",
+      "palette": "piel",
+      "radius": "round",
+      "nav": "color",
+      "banner": "light",
+      "hero_effect": "fade",
+      "cart_enabled": true,
+      "waitlist_enabled": true,
+      "featured_enabled": true,
+      "featured_title": "Las favoritas",
+      "featured_subtitle": "lo que más se está llevando esta temporada",
+      "logo": "default",
+      "heroes": [
+        {
+          "image": "_compartido/banner-girasol.webp",
+          "eyebrow": "Del S al XL",
+          "title": "Ropa que te queda, no que te disfraza",
+          "text": "Jeans, camperas y deportivo. Probate todo en tienda y cambialo si no te convence."
+        }
+      ]
+    }
+  ]
+}

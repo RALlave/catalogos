@@ -1,0 +1,25 @@
+LINKS DE ORIGEN — Zapatillas deportivas
+=========================================================
+Un renglon por producto: nombre del archivo (sin el -NN) y el link.
+
+Ejemplo:
+honor-magic6-lite | https://tienda.com/producto/...
+
+De ahi saco specs, que incluye y precio. El texto lo reescribo yo,
+no se copia de la tienda.
+
+Si un producto no tiene link, dejalo igual y pone al lado lo que sepas.
+
+01. Safety-Shoes-Plastic-Toe-Fashion | https://www.alibaba.com/product-detail/Safety-Shoes-Plastic-Toe-Fashion-Mesh_1601874874697.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+02. Wholesale-Price-Summer-Fashion | https://www.alibaba.com/product-detail/Wholesale-Price-Summer-Fashion-Pu-Upper_1601825736505.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+03. Factory-Direct-Carbon-Plate-Running | https://www.alibaba.com/product-detail/Factory-Direct-Carbon-Plate-Running-Shoes_1601919442423.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+04. Mens-Summer-Lace-Up-Solid-Color | https://www.alibaba.com/product-detail/Mens-Summer-Lace-Up-Solid-Color_1601847941900.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+04. 2026-Casual-Shoes-Fashion-for-Men | https://www.alibaba.com/product-detail/2026-Casual-Shoes-Fashion-for-Men_1601349237003.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+05. Professional-Tennis-Shoes-Shoes-Unisex | https://www.alibaba.com/product-detail/Professional-Tennis-Shoes-Shoes-Unisex-Cushioned_1601927330340.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+06. Wholesale-Sneakers-for-Women | https://www.alibaba.com/product-detail/Wholesale-Sneakers-for-Women-Refreshing-Fashion_1601853136695.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+07. Non-Marking-Padel-Court-Shoes | https://www.alibaba.com/product-detail/Non-Marking-Padel-Court-Shoes-personalized_1601945265330.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+08. Men-s-Winter-Casual-Flat-Sports | https://www.alibaba.com/product-detail/Men-s-Winter-Casual-Flat-Sports_1601910784789.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+09. Hot-selling-Men-s-Shoes | https://www.alibaba.com/product-detail/Hot-selling-Men-s-Shoes-Lightweight_1601924735882.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+10. Men-s-Casual-Shoes-Lightweight | https://www.alibaba.com/product-detail/Men-s-Casual-Shoes-Lightweight-and_1601914205032.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0
+11. Full-Service-OEM-Pickleball-Shoes | https://www.alibaba.com/product-detail/Full-Service-OEM-Pickleball-Shoes-B2B_1601892314303.html?spm=a2700.prosearch.normal_offer.d_image.249f67af8HePMk&priceId=b414afe42e66489a8f2d457957f4126a
+12. Golf-Shoes-Outdoor-Training-Lightweight | https://www.alibaba.com/product-detail/Golf-Shoes-Outdoor-Training-Lightweight-Breathable_1601896184602.html?spm=a2700.prosearch.normal_offer.d_image.780b67afASMIj8&priceId=db5cefd2aea3483d88abe520f6f262e0

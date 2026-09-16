@@ -33,6 +33,8 @@ const location = computed(() => [store.value.city, store.value.country].filter(B
 
 const schedules = computed(() => store.value.schedules ?? [])
 
+const { data: offers } = await useOfferProducts()
+
 /* Un enlace común de Maps no se puede meter en un iframe: el sitio lo
    rechaza con X-Frame-Options. Sólo las URL de tipo "embed" se dibujan;
    con cualquier otra queda el botón, que siempre funciona. */
@@ -65,10 +67,10 @@ const title = computed(() => `Contacto — ${store.value.name}`)
 
 useSeoMeta({
     title,
-    description: () => store.value.description ?? undefined,
+    description: () => store.value.description_text ?? undefined,
     ogType: 'website',
     ogTitle: title,
-    ogDescription: () => store.value.description ?? undefined,
+    ogDescription: () => store.value.description_text ?? undefined,
     ogImage: () => store.value.cover_url ?? store.value.logo_url ?? undefined,
 })
 </script>
@@ -93,7 +95,7 @@ useSeoMeta({
 
             <div class="container banner-inner">
                 <h1 class="banner-title">Contacto</h1>
-                <p v-if="store.description" class="banner-text">{{ store.description }}</p>
+                <div v-if="store.description" class="banner-text rich-text" v-html="store.description" />
             </div>
         </section>
 
@@ -170,6 +172,26 @@ useSeoMeta({
                         </a>
                     </p>
                 </div>
+
+            </div>
+        </section>
+
+        <!-- Without offers the section is not rendered -->
+        <section v-if="offers?.data.length" class="section" aria-labelledby="offers-title">
+            <div class="container">
+
+                <div class="section-header">
+                    <h2 id="offers-title">Ofertas</h2>
+                </div>
+
+                <ul class="grid">
+                    <ProductCard
+                        v-for="product in offers.data"
+                        :key="product.slug"
+                        :product="product"
+                        :store="store"
+                    />
+                </ul>
 
             </div>
         </section>

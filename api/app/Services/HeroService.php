@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Hero;
 use App\Models\Store;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class HeroService
 {
@@ -29,6 +30,24 @@ class HeroService
         $hero->update($data);
 
         return $hero->refresh();
+    }
+
+    /**
+     * Copy the hero with its image, texts and button. The copy is born hidden
+     * and at the end of the order so it never reaches the catalog before being
+     * reviewed. The image is shared, not copied: it is the same library media.
+     */
+    public function duplicate(Hero $hero): Hero
+    {
+        $store = $hero->store;
+
+        $copy = $hero->replicate(['order', 'active']);
+        $copy->title = Str::limit($hero->title.' (copia)', 120, '');
+        $copy->active = false;
+        $copy->order = $this->nextOrder($store);
+        $copy->save();
+
+        return $copy->refresh();
     }
 
     public function delete(Hero $hero): void

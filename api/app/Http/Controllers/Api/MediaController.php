@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Media\CropMediaRequest;
 use App\Http\Requests\Media\StoreMediaRequest;
 use App\Http\Requests\Media\UpdateMediaRequest;
 use App\Http\Resources\MediaResource;
@@ -58,6 +59,17 @@ class MediaController extends Controller
         Gate::authorize('update', $media);
 
         $media = $this->media->update($media, $request->validated());
+
+        return response()->json([
+            'media' => new MediaResource($media->load(['products:id,name', 'heroes:id,title,media_id'])),
+        ]);
+    }
+
+    public function crop(CropMediaRequest $request, Media $media): JsonResponse
+    {
+        Gate::authorize('update', $media);
+
+        $media = $this->media->crop($media, $request->validated());
 
         return response()->json([
             'media' => new MediaResource($media->load(['products:id,name', 'heroes:id,title,media_id'])),

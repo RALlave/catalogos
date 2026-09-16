@@ -3,6 +3,8 @@ import { computed, onMounted, ref, watch } from 'vue'
 import draggable from 'vuedraggable'
 
 import AppIcon from '@/components/AppIcon.vue'
+import RowActions from '@/components/RowActions.vue'
+import ScrollStrip from '@/components/ScrollStrip.vue'
 import SkeletonTable from '@/components/SkeletonTable.vue'
 import { api } from '@/services/api'
 import { useCategoriesStore } from '@/stores/categories'
@@ -214,7 +216,7 @@ onMounted(() => {
         <div class="page-actions">
             <RouterLink class="btn btn-primary" :to="{ name: 'product-create' }">
                 <AppIcon name="plus" />
-                Nuevo producto
+                <span class="btn-label">Nuevo producto</span>
             </RouterLink>
         </div>
     </div>
@@ -232,27 +234,29 @@ onMounted(() => {
                 >
             </div>
 
-            <div class="toolbar-filters">
-                <select v-model="filters.category_id" class="select" aria-label="Filtrar por categoría">
-                    <option value="">Todas las categorías</option>
-                    <option v-for="category in categories" :key="category.id" :value="category.id">
-                        {{ category.name }}
-                    </option>
-                </select>
+            <ScrollStrip>
+                <div class="toolbar-filters">
+                    <select v-model="filters.category_id" class="select" aria-label="Filtrar por categoría">
+                        <option value="">Todas las categorías</option>
+                        <option v-for="category in categories" :key="category.id" :value="category.id">
+                            {{ category.name }}
+                        </option>
+                    </select>
 
-                <select v-model="filters.visible" class="select" aria-label="Filtrar por estado">
-                    <option value="">Todos los estados</option>
-                    <option value="1">Visible</option>
-                    <option value="0">Oculto</option>
-                </select>
+                    <select v-model="filters.visible" class="select" aria-label="Filtrar por estado">
+                        <option value="">Todos los estados</option>
+                        <option value="1">Visible</option>
+                        <option value="0">Oculto</option>
+                    </select>
 
-                <select v-model="filters.mark" class="select" aria-label="Filtrar por marca">
-                    <option value="">Todos</option>
-                    <option value="featured">Destacados</option>
-                    <option value="is_new">Nuevos</option>
-                    <option value="on_sale">En oferta</option>
-                </select>
-            </div>
+                    <select v-model="filters.mark" class="select" aria-label="Filtrar por marca">
+                        <option value="">Todos</option>
+                        <option value="featured">Destacados</option>
+                        <option value="is_new">Nuevos</option>
+                        <option value="on_sale">En oferta</option>
+                    </select>
+                </div>
+            </ScrollStrip>
 
             <div class="toolbar-count">{{ meta?.total ?? 0 }} resultados</div>
         </div>
@@ -289,11 +293,11 @@ onMounted(() => {
                                 >
                             </th>
                             <th>Producto</th>
-                            <th>Código</th>
-                            <th>Categoría</th>
-                            <th>Precio</th>
-                            <th>Destacado</th>
-                            <th>Estado</th>
+                            <th class="is-hide-mobile">Código</th>
+                            <th class="is-hide-mobile">Categoría</th>
+                            <th class="is-hide-mobile">Precio</th>
+                            <th class="is-hide-mobile">Destacado</th>
+                            <th class="is-hide-mobile">Estado</th>
                             <th><span class="visually-hidden">Acciones</span></th>
                         </tr>
                     </thead>
@@ -349,14 +353,14 @@ onMounted(() => {
                                     </div>
                                 </td>
 
-                                <td>{{ product.sku }}</td>
-                                <td>{{ product.category?.name }}</td>
+                                <td class="is-hide-mobile">{{ product.sku }}</td>
+                                <td class="is-hide-mobile">{{ product.category?.name }}</td>
 
-                                <td>
+                                <td class="is-hide-mobile">
                                     <div class="table-price">{{ money(product) }}</div>
                                 </td>
 
-                                <td>
+                                <td class="is-hide-mobile">
                                     <button
                                         class="star"
                                         :class="{ 'is-on': product.featured, 'is-loading': featuring === product.id }"
@@ -371,7 +375,7 @@ onMounted(() => {
                                     </button>
                                 </td>
 
-                                <td>
+                                <td class="is-hide-mobile">
                                     <span
                                         class="badge badge-dot"
                                         :class="product.visible ? 'badge-success' : 'badge-warning'"
@@ -381,38 +385,13 @@ onMounted(() => {
                                 </td>
 
                                 <td>
-                                    <div class="table-actions">
-                                        <button
-                                            class="btn btn-ghost btn-icon"
-                                            type="button"
-                                            :disabled="cloning === product.id"
-                                            title="Clonar"
-                                            aria-label="Clonar"
-                                            @click="duplicate(product)"
-                                        >
-                                            <span v-if="cloning === product.id" class="btn-loader" />
-                                            <AppIcon v-else name="copy" />
-                                        </button>
-
-                                        <RouterLink
-                                            class="btn btn-ghost btn-icon"
-                                            :to="{ name: 'product-edit', params: { id: product.id } }"
-                                            title="Editar"
-                                            aria-label="Editar"
-                                        >
-                                            <AppIcon name="pencil" />
-                                        </RouterLink>
-
-                                        <button
-                                            class="btn btn-ghost btn-icon"
-                                            type="button"
-                                            title="Eliminar"
-                                            aria-label="Eliminar"
-                                            @click="remove(product)"
-                                        >
-                                            <AppIcon name="trash" />
-                                        </button>
-                                    </div>
+                                    <RowActions
+                                        :actions="[
+                                            { label: 'Clonar', icon: 'copy', loading: cloning === product.id, onClick: () => duplicate(product) },
+                                            { label: 'Editar', icon: 'pencil', to: { name: 'product-edit', params: { id: product.id } } },
+                                            { label: 'Eliminar', icon: 'trash', danger: true, onClick: () => remove(product) },
+                                        ]"
+                                    />
                                 </td>
                             </tr>
                         </template>
@@ -431,6 +410,7 @@ onMounted(() => {
                     type="button"
                     @click="store.page > 1 && store.page--"
                 >
+                    <AppIcon name="chevronLeft" />
                     Anterior
                 </button>
                 <button
@@ -440,6 +420,7 @@ onMounted(() => {
                     @click="store.page < meta.last_page && store.page++"
                 >
                     Siguiente
+                    <AppIcon name="chevronRight" />
                 </button>
             </nav>
         </div>

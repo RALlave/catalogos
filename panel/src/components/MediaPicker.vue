@@ -37,10 +37,64 @@ async function load() {
     }
 }
 
-/** Lo recién subido queda elegido: es lo que el usuario vino a buscar. */
-async function upload(event) {
-    const files = Array.from(event.target.files ?? [])
+const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 
+const dragging = ref(false)
+
+/* Counts nested dragenter/dragleave pairs so crossing a child doesn't hide the overlay. */
+let dragDepth = 0
+
+function hasFiles(event) {
+    return Array.from(event.dataTransfer?.types ?? []).includes('Files')
+}
+
+function onDragEnter(event) {
+    if (! hasFiles(event)) {
+        return
+    }
+
+    dragDepth++
+    dragging.value = true
+}
+
+function onDragLeave(event) {
+    if (! hasFiles(event)) {
+        return
+    }
+
+    dragDepth = Math.max(0, dragDepth - 1)
+
+    if (! dragDepth) {
+        dragging.value = false
+    }
+}
+
+function onDrop(event) {
+    dragDepth = 0
+    dragging.value = false
+
+    if (uploading.value) {
+        return
+    }
+
+    const files = Array.from(event.dataTransfer?.files ?? [])
+    const images = files.filter(file => ACCEPTED_TYPES.includes(file.type))
+
+    if (images.length < files.length) {
+        ui.toast('Solo se aceptan imágenes JPG, PNG o WebP', '', 'danger')
+    }
+
+    uploadFiles(images)
+}
+
+function upload(event) {
+    uploadFiles(Array.from(event.target.files ?? []))
+
+    event.target.value = ''
+}
+
+/** Lo recién subido queda elegido: es lo que el usuario vino a buscar. */
+async function uploadFiles(files) {
     if (! files.length) {
         return
     }
@@ -64,7 +118,6 @@ async function upload(event) {
         ui.toast('No pudimos subir las imágenes', '', 'danger')
     } finally {
         uploading.value = false
-        event.target.value = ''
     }
 }
 
@@ -123,7 +176,20 @@ watch(() => props.open, (open) => {
         <div v-if="open" class="modal" role="dialog" aria-modal="true" aria-label="Biblioteca de imágenes">
             <div class="modal-backdrop" @click="emit('close')" />
 
-            <div class="modal-dialog modal-lg">
+            <div
+                class="modal-dialog modal-lg"
+                @dragenter.prevent="onDragEnter"
+                @dragover.prevent
+                @dragleave="onDragLeave"
+                @drop.prevent="onDrop"
+            >
+                <div v-if="dragging" class="media-dropzone" aria-hidden="true">
+                    <span class="media-dropzone-icon">
+                        <AppIcon name="image" />
+                    </span>
+                    <span class="media-dropzone-text">Soltá las imágenes para subirlas</span>
+                </div>
+
                 <div class="modal-header">
                     <div class="modal-title">
                         <h2>{{ title }}</h2>
@@ -217,6 +283,7 @@ watch(() => props.open, (open) => {
                             type="button"
                             @click="page > 1 && page--"
                         >
+                            <AppIcon name="chevronLeft" />
                             Anterior
                         </button>
                         <button
@@ -226,6 +293,7 @@ watch(() => props.open, (open) => {
                             @click="page < meta.last_page && page++"
                         >
                             Siguiente
+                            <AppIcon name="chevronRight" />
                         </button>
                     </nav>
 

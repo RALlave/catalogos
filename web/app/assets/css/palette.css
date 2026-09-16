@@ -135,6 +135,7 @@
 
 :root {
     --color-veil: rgba(0, 0, 0, 0.55);
+    --color-shadow: rgba(0, 0, 0, 0.2);
 }
 
 
