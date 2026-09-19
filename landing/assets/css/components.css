@@ -42,14 +42,6 @@
     align-items: center;
 }
 
-.section-title {
-    max-width: 22ch;
-}
-
-.section-header-center .section-title {
-    max-width: none;
-}
-
 .section-subtitle {
     font-size: 1.125rem;
     color: var(--color-body);

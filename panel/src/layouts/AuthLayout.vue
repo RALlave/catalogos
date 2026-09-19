@@ -15,6 +15,11 @@ defineProps({
 const ui = useUiStore()
 const platform = usePlatformStore()
 
+/* The access screens always use the store panel theme. Coming back from the
+   superadmin (logout, expired session) would otherwise keep its dark theme,
+   and the picker below would overwrite the superadmin's saved theme. */
+ui.useScope('panel')
+
 /* El logo lo sube el superadmin y es el mismo en todos los accesos, sea el
    dominio principal o el subdominio de una tienda. Si no hay ninguno cargado
    la marca no se dibuja: no hay texto de reserva. */

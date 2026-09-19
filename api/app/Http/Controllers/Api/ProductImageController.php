@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\AttachProductImagesRequest;
 use App\Http\Requests\Product\ReorderProductImagesRequest;
+use App\Http\Requests\Product\ReplaceProductImageRequest;
 use App\Http\Requests\Product\StoreProductImagesRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
@@ -48,6 +49,30 @@ class ProductImageController extends Controller
         return response()->json([
             'product' => new ProductResource($this->fresh($product)),
         ], 201);
+    }
+
+    /**
+     * Cambiar una foto de la galería por otra de la biblioteca, en el mismo lugar.
+     */
+    public function update(ReplaceProductImageRequest $request, Product $product, ProductImage $image): JsonResponse
+    {
+        Gate::authorize('update', $product);
+
+        if ($image->product_id !== $product->id) {
+            throw new AccessDeniedHttpException('The image does not belong to the product.');
+        }
+
+        $mediaId = (int) $request->validated()['media_id'];
+
+        if (! $this->images->belongToStore($product, [$mediaId])) {
+            throw new AccessDeniedHttpException('The image does not belong to the store.');
+        }
+
+        $this->images->replace($image, $mediaId);
+
+        return response()->json([
+            'product' => new ProductResource($this->fresh($product)),
+        ]);
     }
 
     public function destroy(Request $request, Product $product, ProductImage $image): JsonResponse

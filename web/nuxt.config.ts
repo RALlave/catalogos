@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
     compatibilityDate: '2026-08-12',
 
-    devtools: { enabled: true },
+    devtools: { enabled: false },
 
     /* El orden importa: base define forma y tipografía, palette los
        colores y components los consume con var(). */

@@ -17,10 +17,10 @@ const props = defineProps<{ products: Product[], store: Store }>()
 const LEAD_SIZES = '(min-width: 90rem) 660px, (min-width: 48rem) 55vw, 100vw'
 
 /* Las chicas tienen la foto a un ancho fijo: 7.5rem, y 8rem desde 992px. */
-const MINI_SIZES = '128px'
+const MINI_SIZES = '(min-width: 62rem) 280px, (min-width: 48rem) 128px, 50vw'
 
 const lead = computed(() => props.products[0])
-const rest = computed(() => props.products.slice(1, 5))
+const rest = computed(() => props.products.slice(1))
 
 function path(product: Product): string {
     return `/producto/${product.slug}`

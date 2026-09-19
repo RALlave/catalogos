@@ -1,3 +1,9 @@
+## Regla: cómo se avisa que una tarea está lista
+
+Al terminar una tarea, la respuesta arranca con **`Tarea lista!`** y recién
+debajo van los detalles: qué se hizo, qué archivos se tocaron y lo que haya que
+tener en cuenta.
+
 ## Regla: anotar detalles importantes del proyecto
 
 Todo detalle importante del proyecto debe quedar anotado para recordarlo siempre.
@@ -357,6 +363,10 @@ se quitaron de ahí pero siguen en la maqueta congelada.
 Filtro, búsqueda y paginación son la URL (`?cat=`, `?q=`, `?page=`), no estado
 del cliente: andan sin JS, se comparten y los indexa el buscador.
 
+En mobile (<768px) las categorías no son chips sino un **dropdown** hecho con
+`<details>`/`<summary>` (`CategoryChips.vue`): abre sin JS y cada opción sigue
+siendo un enlace a `?cat=`. Nunca un `<select>`, que necesitaría JS para navegar.
+
 El banner del home es un **carrusel de heros administrables** (ver más abajo).
 Lo que sigue fijo en el código son los títulos de las pestañas de producto y el
 botón "Pedir por WhatsApp" del hero (se arma con el número de la tienda). El
@@ -382,7 +392,8 @@ texto—.
   catálogo. Todo destino que no abriría nada va a `#products`: categoría
   oculta o borrada (`category_id` queda `null`) y Destacados con la vitrina
   apagada.
-- "Pedir por WhatsApp" sigue fijo.
+- "Pedir por WhatsApp" sigue fijo, pero **sólo desde 768px**: en mobile el
+  banner muestra únicamente el botón principal (2026-09-17).
 - **La alineación del contenido** también se elige por hero (2026-09-16):
   `heroes.align`, `center` (por defecto) o `left`, con los valores en
   `config/catalog.php` (`hero_aligns`). Viaja como `data-align` del
@@ -404,9 +415,11 @@ texto—.
   el servidor y el cliente saquen el mismo número y la foto no parpadee al
   hidratar.
 - En el catálogo, el primer hero se renderiza en el servidor (se ve sin JS) y
-  las flechas y los puntos son `<ClientOnly>`. Pasa solo cada 6 segundos, se
-  frena al pasar el mouse o al usar los controles, y no se mueve si el visitante
-  pidió menos movimiento.
+  las flechas y los puntos son `<ClientOnly>`. Pasa solo cada **3 segundos en
+  mobile y 4 desde 768px** (2026-09-17). En mobile no hay flechas ni puntos:
+  se desliza con el dedo y el automático sigue. Se frena al pasar el mouse
+  (sólo con mouse real: en táctiles un toque lo congelaba) o al usar los
+  controles, y no se mueve solo si el visitante pidió menos movimiento.
 
 - **Duplicar** (2026-09-16): la copia trae imagen (compartida, no se copia el
   archivo), textos, botón y alineación; nace **oculta**, **al final** del orden
@@ -418,12 +431,12 @@ Endpoints: `GET|POST /api/heroes`, `GET|PUT|DELETE /api/heroes/{hero}`,
 ## Destacados del home — la vitrina
 
 Entre el banner y la grilla va la **vitrina de destacados**: un producto grande
-y hasta cuatro chicos al costado. Es la propuesta **C** de las tres que se
+y hasta tres chicos al costado (eran cuatro hasta el 2026-09-17). Es la propuesta **C** de las tres que se
 maquetaron el 2026-08-29 (`prototipo-3/index-featured-c.html`); las otras dos
 quedaron sin usar, y `.rail` sigue reservado para la futura sección Ofertas.
 
 - Los productos **no se eligen a mano**: salen de los marcados como `featured`
-  en su ficha y, si son menos de cinco, **se completa con el resto del
+  en su ficha y, si son menos de cuatro, **se completa con el resto del
   catálogo** por su orden. La vitrina no queda coja nunca.
 - Los **agotados quedan afuera**: recomendar algo que no se puede comprar es
   peor que mostrar una tarjeta menos. Por eso las tarjetas de la vitrina son
@@ -947,8 +960,19 @@ El JSON no cambió de forma: `StoreResource` sigue devolviendo `logo`, `logo_url
 
 Consecuencias del modelo compartido:
 
-- Sacar una imagen de un producto **no borra el archivo**: solo suelta la
-  referencia. El archivo se borra desde la biblioteca.
+- Sacar una imagen de un producto **borra el archivo sólo si nadie más la
+  usa** (otro producto, un hero, el logo o la portada, según
+  `Media::isInUse()`): en ese caso se va la fila de la biblioteca y todos sus
+  archivos. Si está en uso en otro lado, sólo se suelta la referencia
+  (2026-09-17). Borrar un producto entero todavía **no** limpia sus fotos.
+- **Cambiar** una foto de la galería (botón al lado del tacho) la reemplaza
+  por otra de la biblioteca **en el mismo lugar**: la principal sigue siendo la
+  principal. La anterior se limpia con la misma regla que al quitarla.
+  `PUT /api/products/{product}/images/{image}` (`media_id`); si esa imagen ya
+  está en el producto, 422.
+- La foto **principal** es la primera de la galería. El botón **Hacer
+  principal** (estrella) de cada foto la pasa al primer lugar con el
+  `reorder` que ya existía; las demás conservan su orden.
 - Clonar un producto **no duplica archivos**: el clon comparte las mismas media.
 - Borrar una media borra el archivo y cae en cascada: desaparece de todos los
   productos y deja el logo o la portada en `null`. Por eso `MediaResource`

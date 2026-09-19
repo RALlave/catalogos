@@ -160,6 +160,44 @@ async function removeImage(image) {
     images.value = payload.product.images
 }
 
+/* The main photo is the first one: move this image to the front, the rest keep their order. */
+async function makeMain(image) {
+    const ids = [image.id, ...images.value.filter(item => item.id !== image.id).map(item => item.id)]
+
+    try {
+        const payload = await api.post(`/products/${id.value}/images/reorder`, { ids })
+
+        images.value = payload.product.images
+
+        ui.toast('Imagen principal actualizada')
+    } catch (error) {
+        ui.toast('No pudimos cambiar la imagen principal', error instanceof ApiError ? error.message : '', 'danger')
+    }
+}
+
+/* Gallery photo being swapped: the library opens in single mode for it. */
+const replacing = ref(null)
+
+async function replaceImage(media) {
+    const image = replacing.value
+
+    replacing.value = null
+
+    if (! image) {
+        return
+    }
+
+    try {
+        const payload = await api.put(`/products/${id.value}/images/${image.id}`, { media_id: media.id })
+
+        images.value = payload.product.images
+
+        ui.toast('Imagen cambiada')
+    } catch (error) {
+        ui.toast('No pudimos cambiar la imagen', error instanceof ApiError ? error.first('media_id') ?? error.message : '', 'danger')
+    }
+}
+
 /**
  * Los campos vacíos no se mandan: la API guarda null y el catálogo
  * simplemente no los renderiza.
@@ -521,6 +559,27 @@ onMounted(async () => {
                                 <span v-if="index === 0" class="gallery-tag">Principal</span>
 
                                 <button
+                                    v-else
+                                    class="gallery-main"
+                                    type="button"
+                                    title="Hacer principal"
+                                    aria-label="Hacer principal"
+                                    @click="makeMain(image)"
+                                >
+                                    <AppIcon name="star" />
+                                </button>
+
+                                <button
+                                    class="gallery-replace"
+                                    type="button"
+                                    title="Cambiar imagen"
+                                    aria-label="Cambiar imagen"
+                                    @click="replacing = image"
+                                >
+                                    <AppIcon name="image" />
+                                </button>
+
+                                <button
                                     class="gallery-remove"
                                     type="button"
                                     title="Quitar imagen"
@@ -767,5 +826,12 @@ onMounted(async () => {
         title="Elegir imágenes del producto"
         @close="pickerOpen = false"
         @select="onPick"
+    />
+
+    <MediaPicker
+        :open="Boolean(replacing)"
+        title="Cambiar imagen"
+        @close="replacing = null"
+        @select="replaceImage"
     />
 </template>

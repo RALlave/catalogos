@@ -143,13 +143,6 @@ async function logout() {
                     </RouterLink>
                 </div>
 
-                <div class="dropdown-item">
-                    <RouterLink :to="{ name: accountRoute, hash: '#seguridad' }">
-                        <AppIcon name="shield" />
-                        Seguridad
-                    </RouterLink>
-                </div>
-
                 <template v-if="! admin">
                     <div class="dropdown-item">
                         <RouterLink :to="{ name: 'settings' }">

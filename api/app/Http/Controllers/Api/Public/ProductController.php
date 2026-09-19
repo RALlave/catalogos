@@ -18,9 +18,9 @@ class ProductController extends Controller
     private const PER_PAGE = 20;
 
     /**
-     * Cuántos entran en la vitrina del home: uno grande y cuatro al costado.
+     * Cuántos entran en la vitrina del home: uno grande y tres al costado.
      */
-    private const FEATURED = 5;
+    private const FEATURED = 4;
 
     /**
      * How many offers the contact page shows, drawn at random.

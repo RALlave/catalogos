@@ -78,11 +78,41 @@ class ProductImageService
     }
 
     /**
-     * Quita la imagen del producto. El archivo sigue en la biblioteca.
+     * Swaps the photo of one gallery slot for another library image. The slot
+     * keeps its position, so the main photo stays the main one. The previous
+     * image is cleaned up like a removal: gone from disk if nothing else uses it.
+     */
+    public function replace(ProductImage $image, int $mediaId): ProductImage
+    {
+        $previous = $image->media;
+
+        if ($previous?->id === $mediaId) {
+            return $image;
+        }
+
+        $image->update(['media_id' => $mediaId]);
+
+        if ($previous !== null && ! $previous->isInUse()) {
+            $this->media->delete($previous);
+        }
+
+        return $image;
+    }
+
+    /**
+     * Takes the image out of the product. If nothing else shows it (another
+     * product, a hero, the logo or the cover), the file and its library entry
+     * go too: an unused image is only disk garbage.
      */
     public function delete(ProductImage $image): void
     {
+        $media = $image->media;
+
         $image->delete();
+
+        if ($media !== null && ! $media->isInUse()) {
+            $this->media->delete($media);
+        }
     }
 
     /**

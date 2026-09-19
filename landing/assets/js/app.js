@@ -114,13 +114,13 @@ function iniciarDemo() {
         tab.addEventListener("click", () => activar(tab.dataset.demoTab))
 
         tab.addEventListener("keydown", (evento) => {
-            if (evento.key !== "ArrowRight" && evento.key !== "ArrowLeft") {
+            if (!["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(evento.key)) {
                 return
             }
 
             evento.preventDefault()
 
-            const paso = evento.key === "ArrowRight" ? 1 : -1
+            const paso = ["ArrowRight", "ArrowDown"].includes(evento.key) ? 1 : -1
             const siguiente = tabs[(indice + paso + tabs.length) % tabs.length]
 
             activar(siguiente.dataset.demoTab)
@@ -215,10 +215,65 @@ function initBackToTop() {
 }
 
 /* --------------------------------------------------------------------------
+   Platform brand: logo and favicon uploaded by the superadmin
+   -------------------------------------------------------------------------- */
+
+const LOCAL_HOSTS = ["lvh.me", "localhost", "127.0.0.1"]
+
+/* The landing has no build step, so the API address comes from the domain:
+   api.{domain} in production and the local API port in development. */
+function apiBase() {
+    const { protocol, hostname } = window.location
+
+    if (LOCAL_HOSTS.includes(hostname)) {
+        return "http://127.0.0.1:8001/api"
+    }
+
+    return `${protocol}//api.${hostname.replace(/^www\./, "")}/api`
+}
+
+async function initPlatform() {
+    let logos
+
+    try {
+        const response = await fetch(`${apiBase()}/platform`, { headers: { Accept: "application/json" } })
+
+        if (!response.ok) {
+            return
+        }
+
+        logos = (await response.json()).logos
+    } catch {
+        return
+    }
+
+    const logo = document.querySelector("[data-platform-logo]")
+
+    if (logo && logos.auth) {
+        logo.src = logos.auth.src
+        logo.srcset = logos.auth.srcset
+
+        if (logos.auth.width && logos.auth.height) {
+            logo.width = logos.auth.width
+            logo.height = logos.auth.height
+        }
+
+        logo.hidden = false
+    }
+
+    const favicon = document.querySelector("[data-favicon]")
+
+    if (favicon && logos.icon) {
+        favicon.href = logos.icon.thumb
+    }
+}
+
+/* --------------------------------------------------------------------------
    Arranque
    -------------------------------------------------------------------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
+    initPlatform()
     montarContenido()
     iniciarHeader()
     iniciarDemo()

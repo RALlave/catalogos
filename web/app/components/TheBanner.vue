@@ -15,8 +15,12 @@ import type { Store } from '~/types/catalog'
 
 const props = defineProps<{ store: Store }>()
 
-/* Cada cuánto pasa solo al hero siguiente. */
-const AUTOPLAY_MS = 6000
+/* How often it moves to the next hero: faster on mobile, where there are no arrows. */
+const AUTOPLAY_MOBILE_MS = 3000
+const AUTOPLAY_MS = 4000
+
+/* Horizontal distance a finger has to travel to count as a swipe. */
+const SWIPE_MIN_PX = 50
 
 const heroes = computed(() => props.store.heroes ?? [])
 const many = computed(() => heroes.value.length > 1)
@@ -40,20 +44,74 @@ function play() {
         return
     }
 
+    const delay = window.matchMedia('(min-width: 48rem)').matches ? AUTOPLAY_MS : AUTOPLAY_MOBILE_MS
+
     timer = setInterval(() => {
         index.value = (index.value + 1) % heroes.value.length
-    }, AUTOPLAY_MS)
+    }, delay)
+}
+
+function show(to: number) {
+    index.value = (to + heroes.value.length) % heroes.value.length
 }
 
 /* Tocar las flechas o los puntos apaga el automático: manda el visitante. */
 function go(to: number) {
-    index.value = (to + heroes.value.length) % heroes.value.length
+    show(to)
     playing.value = false
 
     stop()
 }
 
+/* Hover pause only with a real mouse: on touch screens a tap fires mouseenter
+   and never mouseleave, which froze the autoplay after the first touch. */
+let canHover = false
+
+function pause() {
+    if (canHover) {
+        stop()
+    }
+}
+
+function resume() {
+    if (canHover) {
+        play()
+    }
+}
+
+/* Swipe: left goes forward, right goes back. The autoplay keeps running,
+   because on mobile it is the only other way the carousel moves. */
+let touchX = 0
+let touchY = 0
+
+function touchStart(event: TouchEvent) {
+    const touch = event.changedTouches[0]
+
+    touchX = touch?.clientX ?? 0
+    touchY = touch?.clientY ?? 0
+}
+
+function touchEnd(event: TouchEvent) {
+    const touch = event.changedTouches[0]
+
+    if (! many.value || ! touch) {
+        return
+    }
+
+    const dx = touch.clientX - touchX
+    const dy = touch.clientY - touchY
+
+    if (Math.abs(dx) < SWIPE_MIN_PX || Math.abs(dx) < Math.abs(dy)) {
+        return
+    }
+
+    show(index.value + (dx < 0 ? 1 : -1))
+    play()
+}
+
 onMounted(() => {
+    canHover = window.matchMedia('(hover: hover)').matches
+
     /* Quien pidió menos movimiento no recibe un carrusel que se mueve solo. */
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         playing.value = false
@@ -76,8 +134,10 @@ const whatsapp = computed(() => props.store.whatsapp
         v-if="heroes.length"
         class="banner"
         :data-effect="store.hero_effect"
-        @mouseenter="stop"
-        @mouseleave="play"
+        @mouseenter="pause"
+        @mouseleave="resume"
+        @touchstart.passive="touchStart"
+        @touchend.passive="touchEnd"
     >
         <article
             v-for="(hero, position) in heroes"

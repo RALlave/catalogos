@@ -22,7 +22,18 @@ const filesInput = ref(null)
 const busy = ref('')
 
 function pick(event, key) {
-    chosen.value[key] = event.target.files?.[0] ?? null
+    const file = event.target.files?.[0] ?? null
+
+    /* No lleva accept=".zip": con ese filtro, Windows entra al zip como a una carpeta en vez de elegirlo. */
+    if (key === 'files' && file && ! file.name.toLowerCase().endsWith('.zip')) {
+        ui.toast('El archivo tiene que ser un .zip', '', 'danger')
+        event.target.value = ''
+        chosen.value[key] = null
+
+        return
+    }
+
+    chosen.value[key] = file
 }
 
 function fail(error, fallback) {
@@ -265,7 +276,6 @@ async function importFiles() {
                             ref="filesInput"
                             class="input"
                             type="file"
-                            accept=".zip"
                             :disabled="busy !== ''"
                             @change="pick($event, 'files')"
                         >

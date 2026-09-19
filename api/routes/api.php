@@ -158,7 +158,8 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('products/{product}/images', [ProductImageController::class, 'store'])->name('products.images.store');
     Route::post('products/{product}/images/attach', [ProductImageController::class, 'attach'])->name('products.images.attach');
     Route::post('products/{product}/images/reorder', [ProductImageController::class, 'reorder'])->name('products.images.reorder');
-    Route::delete('products/{product}/images/{image}', [ProductImageController::class, 'destroy'])->name('products.images.destroy');
+    Route::put('products/{product}/images/{image}', [ProductImageController::class, 'update'])->name('products.images.update');
+    Route::delete('products/{product}/images/{image}',[ProductImageController::class, 'destroy'])->name('products.images.destroy');
 
     Route::middleware('role:'.UserRole::Superadmin->value.',sanctum')
         ->prefix('admin')
