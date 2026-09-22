@@ -319,8 +319,6 @@ onMounted(async () => {
                         <a
                             class="btn btn-outline btn-sm"
                             :href="auth.store.public_url"
-                            target="_blank"
-                            rel="noopener"
                         >Abrir tienda</a>
                         <a class="btn btn-whatsapp btn-sm" :href="shareUrl" target="_blank" rel="noopener">Compartir</a>
                     </div>

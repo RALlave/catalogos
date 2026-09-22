@@ -46,8 +46,28 @@ function iniciarHeader() {
         return
     }
 
+    /* Hides while scrolling down and comes back on the way up. Moves under
+       SCROLL_TOLERANCE are ignored so trackpad bounce does not flicker it, and
+       it never hides above its own height or with the mobile menu open. */
+    const SCROLL_TOLERANCE = 8
+    let lastScroll = window.scrollY
+
     const marcarScroll = () => {
-        header.classList.toggle("is-stuck", window.scrollY > 8)
+        const y = window.scrollY
+        const delta = y - lastScroll
+
+        header.classList.toggle("is-stuck", y > 8)
+        /* Half height anywhere but the top of the page. */
+        header.classList.toggle("is-compact", y > 8)
+
+        if (Math.abs(delta) < SCROLL_TOLERANCE) {
+            return
+        }
+
+        const menuOpen = nav.classList.contains("is-open")
+
+        header.classList.toggle("is-hidden", delta > 0 && y > header.offsetHeight && !menuOpen)
+        lastScroll = y
     }
 
     const cerrarMenu = () => {
@@ -89,29 +109,103 @@ function iniciarHeader() {
    Demo: pestañas entre las pantallas del producto
    -------------------------------------------------------------------------- */
 
-function iniciarDemo() {
-    const tabs = Array.from(document.querySelectorAll("[data-demo-tab]"))
-    const paneles = Array.from(document.querySelectorAll("[data-demo-panel]"))
+/* Every screenshot of every tab forms one sequence: each one shows for
+   DEMO_DELAY and, when a tab runs out of screenshots, the next tab opens.
+   Clicking a tab or a dot jumps there and the sequence goes on from it. */
+const DEMO_DELAY = 4000
 
-    if (!tabs.length || !paneles.length) {
+function iniciarDemo() {
+    const demo = document.querySelector(".demo-body")
+    const tabs = Array.from(document.querySelectorAll("[data-demo-tab]"))
+
+    if (!demo || !tabs.length) {
         return
     }
 
-    const activar = (clave) => {
-        tabs.forEach((tab) => {
-            const activo = tab.dataset.demoTab === clave
+    /* One dots bar below the card for every tab: each tab adds its own dots and
+       only the active tab's are shown. A single screenshot gets no dots. */
+    const dotsWrap = document.querySelector("[data-demo-dots]")
 
-            tab.setAttribute("aria-selected", String(activo))
-            tab.setAttribute("tabindex", activo ? "0" : "-1")
-        })
+    const panels = tabs.map((tab) => {
+        const panel = document.querySelector(`[data-demo-panel="${tab.dataset.demoTab}"]`)
+        const slides = Array.from(panel.querySelectorAll("[data-demo-slide]"))
+        const dots = []
 
-        paneles.forEach((panel) => {
-            panel.hidden = panel.dataset.demoPanel !== clave
+        if (dotsWrap && slides.length > 1) {
+            slides.forEach((slide, index) => {
+                const dot = document.createElement("button")
+
+                dot.type = "button"
+                dot.setAttribute("aria-label", `Ver imagen ${index + 1} de ${slides.length}`)
+                dot.addEventListener("click", () => {
+                    show(tabs.indexOf(tab), index)
+                    restart()
+                })
+
+                dotsWrap.appendChild(dot)
+                dots.push(dot)
+            })
+        }
+
+        return { tab, panel, slides, dots }
+    })
+
+    /* Flat list of [tab, slide] pairs: the order the sequence walks. */
+    const steps = panels.flatMap((item, tabIndex) => item.slides.map((slide, slideIndex) => [tabIndex, slideIndex]))
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    let current = 0
+    let timer = null
+    let inView = false
+
+    function show(tabIndex, slideIndex) {
+        current = steps.findIndex(([t, s]) => t === tabIndex && s === slideIndex)
+
+        panels.forEach((item, index) => {
+            const active = index === tabIndex
+
+            item.tab.setAttribute("aria-selected", String(active))
+            item.tab.setAttribute("tabindex", active ? "0" : "-1")
+            item.panel.hidden = !active
+            item.dots.forEach((dot) => {
+                dot.hidden = !active
+            })
+
+            if (!active) {
+                return
+            }
+
+            item.slides.forEach((slide, i) => slide.classList.toggle("is-active", i === slideIndex))
+            item.dots.forEach((dot, i) => dot.setAttribute("aria-current", String(i === slideIndex)))
         })
     }
 
-    tabs.forEach((tab, indice) => {
-        tab.addEventListener("click", () => activar(tab.dataset.demoTab))
+    /* Walks the whole sequence, crossing tabs: +1 forward, -1 back. */
+    function step(direction = 1) {
+        const [tabIndex, slideIndex] = steps[(current + direction + steps.length) % steps.length]
+
+        show(tabIndex, slideIndex)
+    }
+
+    function stop() {
+        window.clearInterval(timer)
+        timer = null
+    }
+
+    function restart() {
+        stop()
+
+        if (!reducedMotion && inView) {
+            timer = window.setInterval(() => step(1), DEMO_DELAY)
+        }
+    }
+
+    tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => {
+            show(index, 0)
+            restart()
+        })
 
         tab.addEventListener("keydown", (evento) => {
             if (!["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(evento.key)) {
@@ -121,14 +215,38 @@ function iniciarDemo() {
             evento.preventDefault()
 
             const paso = ["ArrowRight", "ArrowDown"].includes(evento.key) ? 1 : -1
-            const siguiente = tabs[(indice + paso + tabs.length) % tabs.length]
+            const siguiente = (index + paso + tabs.length) % tabs.length
 
-            activar(siguiente.dataset.demoTab)
-            siguiente.focus()
+            show(siguiente, 0)
+            tabs[siguiente].focus()
+            restart()
         })
     })
 
-    activar(tabs[0].dataset.demoTab)
+    const arrows = [
+        [document.querySelector("[data-demo-prev]"), -1],
+        [document.querySelector("[data-demo-next]"), 1],
+    ]
+
+    arrows.forEach(([button, direction]) => {
+        button?.addEventListener("click", () => {
+            step(direction)
+            restart()
+        })
+    })
+
+    /* Starts when the section scrolls into view, so it opens on Dashboard. */
+    if ("IntersectionObserver" in window) {
+        new IntersectionObserver((entries) => {
+            inView = entries[0].isIntersecting
+            restart()
+        }, { threshold: 0.3 }).observe(demo)
+    } else {
+        inView = true
+    }
+
+    show(0, 0)
+    restart()
 }
 
 /* --------------------------------------------------------------------------
@@ -232,6 +350,19 @@ function apiBase() {
     return `${protocol}//api.${hostname.replace(/^www\./, "")}/api`
 }
 
+/* Panel links are written as /login and /registro, which nginx serves on the
+   same domain in production. Locally the panel runs on its own port, so they
+   are pointed there. Must run after montarContenido(): the plans add some. */
+function initPanelLinks() {
+    if (!LOCAL_HOSTS.includes(window.location.hostname)) {
+        return
+    }
+
+    document.querySelectorAll("[data-panel-link]").forEach((link) => {
+        link.href = `http://lvh.me:5173${link.getAttribute("href")}`
+    })
+}
+
 async function initPlatform() {
     let logos
 
@@ -247,9 +378,12 @@ async function initPlatform() {
         return
     }
 
-    const logo = document.querySelector("[data-platform-logo]")
+    /* Header and footer draw the same logo. */
+    document.querySelectorAll("[data-platform-logo]").forEach((logo) => {
+        if (!logos.auth) {
+            return
+        }
 
-    if (logo && logos.auth) {
         logo.src = logos.auth.src
         logo.srcset = logos.auth.srcset
 
@@ -259,7 +393,7 @@ async function initPlatform() {
         }
 
         logo.hidden = false
-    }
+    })
 
     const favicon = document.querySelector("[data-favicon]")
 
@@ -275,6 +409,7 @@ async function initPlatform() {
 document.addEventListener("DOMContentLoaded", () => {
     initPlatform()
     montarContenido()
+    initPanelLinks()
     iniciarHeader()
     iniciarDemo()
     iniciarReveal()

@@ -4,43 +4,82 @@
    ========================================================================== */
 
 :root {
-    /* Marca */
-    --color-brand: #0f9268;
-    --color-brand-strong: #0a6e4f;
-    --color-brand-soft: #e7f5ef;
-    --color-brand-line: #bfe3d3;
+    /* Brand: logo orange, deepened so white text on buttons reaches 5.2:1 */
+    --color-brand: #c2410c;
+    --color-brand-strong: #9a3412;
+    --color-brand-soft: #fff1e8;
+    --color-brand-line: #fcd3b8;
 
-    /* Neutros */
-    --color-ink: #0c1512;
-    --color-ink-soft: #1a2b25;
-    --color-body: #4b5a55;
-    --color-muted: #7d8b86;
+    /* Action: solid fills with white text (main buttons, badges, back to top) */
+    --color-action: #16110e;
+    --color-action-strong: #3a2f28;
+
+    /* Neutrals (warm) */
+    --color-ink: #16110e;
+    --color-ink-soft: #2a211c;
+    --color-body: #5a504a;
+    --color-muted: #8a7f78;
     --color-surface: #ffffff;
-    --color-surface-alt: #f6f8f7;
-    --color-surface-sunken: #eef2f0;
-    --color-border: #e3e9e6;
-    --color-border-strong: #cfd8d4;
+    --color-surface-alt: #faf7f5;
+    --color-surface-sunken: #f3eeea;
+    --color-border: #ece5e0;
+    --color-border-strong: #dcd2cb;
 
-    /* Sobre fondo oscuro */
+    /* On dark background */
     --color-invert: #ffffff;
-    --color-invert-soft: #a9bcb5;
-    --color-invert-line: #22322c;
+    --color-invert-soft: #c4b5ab;
+    --color-invert-line: #33291f;
 
-    /* Acentos y estados */
+    /* Accents and states */
     --color-accent: #ffb020;
     --color-accent-soft: #fff4dd;
     --color-whatsapp: #25d366;
     --color-danger: #d1544c;
     --color-danger-soft: #fdeeed;
 
-    /* Sombras y velos */
+    /* Shadows and overlays */
+    --color-shadow-sm: rgba(22, 17, 14, 0.05);
+    --color-shadow-md: rgba(22, 17, 14, 0.08);
+    --color-shadow-lg: rgba(22, 17, 14, 0.12);
+    --color-overlay: rgba(22, 17, 14, 0.55);
+    --color-glass: rgba(255, 255, 255, 0.86);
+    --color-glass-dark: rgba(255, 255, 255, 0.06);
+}
+
+/* Alternative: all orange (buttons in the brand orange instead of black).
+   Copy these values into :root above.
+
+    --color-action: #c2410c;
+    --color-action-strong: #9a3412;
+*/
+
+/* Original palette (emerald green), kept to switch back: copy these values
+   into :root above. Tokens not listed here did not change.
+
+    --color-action: #0f9268;
+    --color-action-strong: #0a6e4f;
+
+    --color-brand: #0f9268;
+    --color-brand-strong: #0a6e4f;
+    --color-brand-soft: #e7f5ef;
+    --color-brand-line: #bfe3d3;
+    --color-ink: #0c1512;
+    --color-ink-soft: #1a2b25;
+    --color-body: #4b5a55;
+    --color-muted: #7d8b86;
+    --color-surface-alt: #f6f8f7;
+    --color-surface-sunken: #eef2f0;
+    --color-border: #e3e9e6;
+    --color-border-strong: #cfd8d4;
+    --color-invert-soft: #a9bcb5;
+    --color-invert-line: #22322c;
     --color-shadow-sm: rgba(12, 21, 18, 0.05);
     --color-shadow-md: rgba(12, 21, 18, 0.08);
     --color-shadow-lg: rgba(12, 21, 18, 0.12);
     --color-overlay: rgba(12, 21, 18, 0.55);
-    --color-glass: rgba(255, 255, 255, 0.86);
-    --color-glass-dark: rgba(255, 255, 255, 0.06);
-}
+
+   And in index.html: <meta name="theme-color" content="#0f9268">
+*/
 
 *,
 *::before,
@@ -51,7 +90,7 @@
 html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
+    scroll-padding-top: 4.5rem;
 }
 
 body {
@@ -168,7 +207,7 @@ summary::-webkit-details-marker {
 }
 
 ::selection {
-    background-color: var(--color-brand);
+    background-color: var(--color-action);
     color: var(--color-invert);
 }
 
@@ -273,7 +312,7 @@ summary::-webkit-details-marker {
 
 @media (max-width: 767px) {
     html {
-        scroll-padding-top: 5rem;
+        scroll-padding-top: 4rem;
     }
 
     body {

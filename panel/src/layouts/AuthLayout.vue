@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 
+import { apexUrl } from '@/lib/host'
 import { usePlatformStore } from '@/stores/platform'
 import { THEMES, useUiStore } from '@/stores/ui'
 
@@ -42,8 +43,8 @@ onMounted(() => platform.load())
         </section>
 
         <footer class="auth-footer">
-            <a href="#">Términos</a>
-            <a href="#">Privacidad</a>
+            <a :href="apexUrl('/terminos-y-condiciones.html')" target="_blank" rel="noopener">Términos</a>
+            <a :href="apexUrl('/politica-de-privacidad.html')" target="_blank" rel="noopener">Privacidad</a>
             <a href="#">Ayuda</a>
 
             <div class="theme-picker">

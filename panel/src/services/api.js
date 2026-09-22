@@ -10,6 +10,19 @@ const STORAGE_TOKEN = 'dash.token'
    tiene su propio localStorage. */
 const STORAGE_IMPERSONATED = 'dash.impersonated_store'
 
+/* Marca de "hay sesión" para el catálogo, que vive en el mismo host y la usa
+   para mostrar el botón "Mi panel". Va en cookie y no en localStorage porque
+   la cookie no distingue puertos: en desarrollo el catálogo (:3000) y el
+   panel (:5173) son orígenes distintos. No lleva el token, sólo un 1. */
+const SESSION_COOKIE = 'dash_session'
+
+function syncSessionCookie(active) {
+    const secure = window.location.protocol === 'https:' ? '; Secure' : ''
+    const age = active ? 60 * 60 * 24 * 365 : 0
+
+    document.cookie = `${SESSION_COOKIE}=1; path=/; max-age=${age}; SameSite=Lax${secure}`
+}
+
 export function getToken() {
     return window.localStorage.getItem(STORAGE_TOKEN)
 }
@@ -20,7 +33,13 @@ export function setToken(token) {
     } else {
         window.localStorage.removeItem(STORAGE_TOKEN)
     }
+
+    syncSessionCookie(!! token)
 }
+
+/* Las sesiones abiertas antes de que existiera la cookie la reciben al
+   cargar el panel, sin tener que volver a entrar. */
+syncSessionCookie(!! getToken())
 
 export function getImpersonatedStore() {
     return window.localStorage.getItem(STORAGE_IMPERSONATED)

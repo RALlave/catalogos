@@ -195,8 +195,6 @@ onMounted(() => {
                 v-if="exists"
                 class="btn btn-outline"
                 :href="auth.store.public_url"
-                target="_blank"
-                rel="noopener"
             >
                 <AppIcon name="external" />
                 <span class="btn-label">Ver catálogo</span>

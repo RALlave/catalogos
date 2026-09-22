@@ -396,6 +396,8 @@ onMounted(() => {
                         </li>
                     </ul>
 
+                    <PanelLink />
+
                 </div>
 
                 <!-- Va fuera del panel a propósito: adentro se lo llevaría el

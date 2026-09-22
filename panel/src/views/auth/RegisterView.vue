@@ -7,7 +7,7 @@ import FormField from '@/components/FormField.vue'
 import PasswordInput from '@/components/PasswordInput.vue'
 import PasswordStrength from '@/components/PasswordStrength.vue'
 import AuthLayout from '@/layouts/AuthLayout.vue'
-import { BASE_DOMAIN as baseDomain } from '@/lib/host'
+import { BASE_DOMAIN as baseDomain, apexUrl } from '@/lib/host'
 import { ApiError, api } from '@/services/api'
 import { REQUIRED_TOAST, checkRequired, hasErrors } from '@/services/validation'
 import { useAuthStore } from '@/stores/auth'
@@ -176,7 +176,10 @@ async function submit() {
 
             <label class="check">
                 <input v-model="form.terms" type="checkbox">
-                <span>Acepto los términos y la política de privacidad</span>
+                <span>
+                    Acepto los <a :href="apexUrl('/terminos-y-condiciones.html')" target="_blank" rel="noopener">términos</a>
+                    y la <a :href="apexUrl('/politica-de-privacidad.html')" target="_blank" rel="noopener">política de privacidad</a>
+                </span>
             </label>
 
             <button

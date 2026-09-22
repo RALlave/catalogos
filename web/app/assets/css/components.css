@@ -442,6 +442,39 @@
 }
 
 /* ------------------------------------------------------------
+   Acceso al panel (sólo con la sesión del dueño abierta)
+   Los colores de la barra dados vuelta: `--color-accent` no tiene
+   contraste garantizado contra la barra en todas las paletas, y el
+   par texto/fondo de la barra sí.
+   ------------------------------------------------------------ */
+
+.panel-link {
+    padding: 0 var(--panel-pad);
+}
+
+.panel-link a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--touch-min);
+    padding: var(--space-3) var(--space-5);
+    background-color: var(--nav-text-strong);
+    border-radius: var(--radius-md);
+    color: var(--nav-bg);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background-color var(--transition-fast);
+}
+
+.panel-link a:hover {
+    background-color: var(--nav-text);
+}
+
+/* ------------------------------------------------------------
    Buscador
    ------------------------------------------------------------ */
 
@@ -3398,6 +3431,24 @@
 
     .cart-toggle-nav:hover {
         color: var(--nav-active);
+    }
+
+    /* El acceso al panel se queda con el `auto` que empujaba a la lupa:
+       va entre el menú y la lupa, y ella pasa a pegarse a él. */
+    .panel-link {
+        order: 2;
+        margin-left: auto;
+        padding: 0;
+    }
+
+    .panel-link a {
+        min-height: auto;
+        padding: var(--space-2) var(--space-4);
+    }
+
+    .nav-inner:has(.panel-link) .nav-search {
+        order: 3;
+        margin-left: 0;
     }
 
     /* Acá sí es un desplegable: el formulario está anclado a la derecha

@@ -153,7 +153,7 @@ function tplPlan(plan) {
                 </ul>
             </div>
             <div class="btn btn-block ${plan.destacado ? "btn-brand" : "btn-outline"}">
-                <a href="#">${esc(plan.cta)}</a>
+                <a href="/registro" data-panel-link>${esc(plan.cta)}</a>
             </div>
             <div class="plan-note">
                 <p>${esc(plan.nota)}</p>
@@ -163,25 +163,31 @@ function tplPlan(plan) {
 }
 
 function tplTestimonio(item) {
+    /* The name is written right next to it, so the photo carries no alt. */
+    const avatar = item.foto
+        ? `<img src="${esc(item.foto)}" alt="" width="70" height="70" loading="lazy">`
+        : esc(iniciales(item.nombre))
+
     return `
         <article class="card quote-card reveal">
             <blockquote class="quote-text">
                 <p>“${esc(item.texto)}”</p>
             </blockquote>
             <div class="quote-author">
-                <span class="avatar">${esc(iniciales(item.nombre))}</span>
+                <span class="avatar">${avatar}</span>
                 <div class="card-text">
                     <h4>${esc(item.nombre)}</h4>
-                    <p>${esc(item.negocio)}</p>
+                    <p>Rubro: ${esc(item.negocio)}</p>
                 </div>
             </div>
         </article>
     `
 }
 
-function tplFaq(item) {
+/* The first question starts open. */
+function tplFaq(item, index) {
     return `
-        <details class="faq-item">
+        <details class="faq-item"${index === 0 ? " open" : ""}>
             <summary>${esc(item.pregunta)}</summary>
             <div class="faq-answer">
                 <p>${esc(item.respuesta)}</p>

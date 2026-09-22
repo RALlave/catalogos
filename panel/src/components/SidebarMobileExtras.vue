@@ -28,7 +28,7 @@ const themeOpen = ref(false)
             <ul>
                 <li v-if="! admin && auth.store">
                     <div class="nav-item">
-                        <a :href="auth.store.public_url" target="_blank" rel="noopener" @click="ui.closeMobile()">
+                        <a :href="auth.store.public_url" @click="ui.closeMobile()">
                             <span class="nav-icon">
                                 <AppIcon name="external" />
                             </span>

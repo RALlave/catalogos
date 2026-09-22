@@ -16,11 +16,15 @@ export default defineNuxtConfig({
        lvh.me, que resuelve a 127.0.0.1 sin tocar el archivo hosts.
 
        No hay `siteUrl`: con una tienda por subdominio, una URL fija sería la
-       de otra tienda. La absoluta sale del host (`useSiteUrl`). */
+       de otra tienda. La absoluta sale del host (`useSiteUrl`).
+
+       `panelPort` sólo se llena en desarrollo, donde el panel corre en otro
+       puerto; en producción comparte origen con el catálogo. */
     runtimeConfig: {
         public: {
             apiBase: 'http://127.0.0.1:8000/api',
             baseDomain: 'lvh.me:3000',
+            panelPort: '',
         },
     },
 

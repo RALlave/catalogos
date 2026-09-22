@@ -6,8 +6,11 @@
    Sección
    -------------------------------------------------------------------------- */
 
+/* The negative scroll-margin cancels the top padding when jumping to an
+   anchor, so the section's badge lands right under the header. */
 .section {
     padding: 7rem 0;
+    scroll-margin-top: -7rem;
 }
 
 .section-tight {
@@ -36,7 +39,7 @@
 }
 
 .section-header-center {
-    max-width: 760px;
+    max-width: 860px;
     margin: 0 auto;
     text-align: center;
     align-items: center;
@@ -137,15 +140,15 @@
 
 .btn-brand > a,
 .btn-brand > button {
-    background-color: var(--color-brand);
+    background-color: var(--color-action);
     color: var(--color-invert);
-    box-shadow: 0 1px 2px var(--color-shadow-md), 0 8px 20px -10px var(--color-brand);
+    box-shadow: 0 1px 2px var(--color-shadow-md), 0 8px 20px -10px var(--color-action);
 }
 
 .btn-brand > a:hover,
 .btn-brand > button:hover {
-    background-color: var(--color-brand-strong);
-    box-shadow: 0 2px 4px var(--color-shadow-md), 0 14px 26px -12px var(--color-brand);
+    background-color: var(--color-action-strong);
+    box-shadow: 0 2px 4px var(--color-shadow-md), 0 14px 26px -12px var(--color-action);
 }
 
 .btn-outline > a,
@@ -353,7 +356,7 @@
 }
 
 .badge-brand {
-    background-color: var(--color-brand);
+    background-color: var(--color-action);
     color: var(--color-invert);
 }
 
@@ -396,7 +399,7 @@
     margin-top: 0.188rem;
     border-radius: 50%;
     background-color: var(--color-brand-soft);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f9268' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c2410c' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
     background-size: 12px 12px;
     background-position: center;
     background-repeat: no-repeat;
@@ -404,7 +407,7 @@
 
 .check-list-muted li::before {
     background-color: var(--color-surface-sunken);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237d8b86' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a7f78' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
 }
 
 .check-list-inline,
@@ -425,6 +428,7 @@
 @media (max-width: 991px) {
     .section {
         padding: 5rem 0;
+        scroll-margin-top: -5rem;
     }
 
     .section-inner {
@@ -440,6 +444,7 @@
 @media (max-width: 767px) {
     .section {
         padding: 4rem 0;
+        scroll-margin-top: -4rem;
     }
 
     .section-tight {

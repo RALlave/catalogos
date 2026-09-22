@@ -23,12 +23,14 @@ function toggle(key) {
 <template>
     <aside class="sidebar">
         <div v-if="platform.logos.panel" class="sidebar-brand">
-            <img
-                :src="platform.logos.panel.src"
-                :srcset="platform.logos.panel.srcset"
-                sizes="218px"
-                alt="Logo"
-            >
+            <RouterLink :to="{ name: 'dashboard' }" @click="ui.closeMobile()">
+                <img
+                    :src="platform.logos.panel.src"
+                    :srcset="platform.logos.panel.srcset"
+                    sizes="218px"
+                    alt="Ir al dashboard"
+                >
+            </RouterLink>
         </div>
 
         <nav class="sidebar-nav" aria-label="Menú principal">

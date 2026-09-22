@@ -803,7 +803,7 @@ onMounted(async () => {
                 </div>
             </div>
 
-            <footer class="card-footer">
+            <footer class="card-footer is-stacked-mobile">
                 <RouterLink class="btn btn-outline" :to="{ name: 'products' }">Cancelar</RouterLink>
 
                 <div class="table-actions">

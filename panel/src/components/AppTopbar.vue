@@ -51,8 +51,6 @@ async function logout() {
                 v-if="auth.store"
                 class="btn btn-outline btn-sm topbar-catalog"
                 :href="auth.store.public_url"
-                target="_blank"
-                rel="noopener"
             >
                 <AppIcon name="external" />
                 Ver mi catálogo

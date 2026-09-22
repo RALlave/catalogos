@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Catálogo digital para vendedores | Creá y compartí tu catálogo online</title>
+    <title>Mio tienda | Catálogo digital para vendedores</title>
     <meta name="description" content="Creá tu catálogo digital en minutos, cargá tus productos con fotos y precios, y compartilo por WhatsApp con un solo enlace. Gratis para empezar.">
-    <link rel="canonical" href="https://catalogos.com/">
+    <link rel="canonical" href="https://miotienda.com/">
 
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Catálogos">
+    <meta property="og:site_name" content="Mio tienda">
     <meta property="og:title" content="Tu catálogo profesional. Tus productos. Más ventas.">
     <meta property="og:description" content="Creá un catálogo digital en minutos y compartilo con tus clientes por WhatsApp o redes sociales.">
-    <meta property="og:url" content="https://catalogos.com/">
-    <meta property="og:image" content="https://catalogos.com/assets/img/og.jpg">
+    <meta property="og:url" content="https://miotienda.com/">
+    <meta property="og:image" content="https://miotienda.com/assets/img/og.jpg">
     <meta property="og:locale" content="es_ES">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="theme-color" content="#0f9268">
+    <meta name="theme-color" content="#c2410c">
 
     <link rel="icon" data-favicon>
 
@@ -32,14 +32,14 @@
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Catálogos",
+        "name": "Mio tienda",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "description": "Plataforma para crear un catálogo digital de productos y compartirlo por WhatsApp y redes sociales.",
         "offers": {
             "@type": "Offer",
             "price": "0",
-            "priceCurrency": "USD"
+            "priceCurrency": "BOB"
         }
     }
     </script>
@@ -55,8 +55,8 @@
         <div class="container">
             <div class="navbar">
                 <div class="brand">
-                    <a href="#inicio" aria-label="Catálogos">
-                        <img data-platform-logo alt="Catálogos" hidden>
+                    <a href="#inicio" aria-label="Mio tienda">
+                        <img data-platform-logo alt="Mio tienda" hidden>
                     </a>
                 </div>
 
@@ -69,10 +69,10 @@
                     </ul>
                     <div class="nav-actions">
                         <div class="btn btn-ghost btn-sm">
-                            <a href="/login">Iniciar sesión</a>
+                            <a href="/login" data-panel-link>Iniciar sesión</a>
                         </div>
                         <div class="btn btn-brand btn-sm">
-                            <a href="/registro">Crear mi catálogo</a>
+                            <a href="/registro" data-panel-link>Crear mi catálogo</a>
                         </div>
                     </div>
                 </nav>
@@ -109,7 +109,7 @@
                         </div>
                         <div class="btn-group">
                             <div class="btn btn-brand btn-lg btn-arrow">
-                                <a href="#">Crear mi catálogo gratis</a>
+                                <a href="/registro" data-panel-link>Crear mi catálogo gratis</a>
                             </div>
                             <div class="btn btn-outline btn-lg btn-play">
                                 <a href="#demo">Ver cómo funciona</a>
@@ -185,7 +185,7 @@
                     <div class="grid grid-3" data-beneficios></div>
                     <div class="section-footer">
                         <div class="btn btn-brand btn-lg btn-arrow">
-                            <a href="#">Crear mi catálogo gratis</a>
+                            <a href="/registro" data-panel-link>Crear mi catálogo gratis</a>
                         </div>
                     </div>
                 </div>
@@ -216,364 +216,71 @@
                             <button type="button" role="tab" id="tab-catalogo" aria-controls="panel-catalogo" aria-selected="false" data-demo-tab="catalogo">Catálogo público</button>
                         </div>
 
-                        <div class="demo-stage">
-                            <!-- Dashboard -->
-                            <div class="demo-panel" role="tabpanel" id="panel-dashboard" aria-labelledby="tab-dashboard" data-demo-panel="dashboard">
-                                <div class="mockup-app">
-                                    <div class="app-side">
-                                        <div class="app-side-brand">
-                                            <span class="brand-mark">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                                    <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                                                    <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                                                    <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-                                                    <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-                                                </svg>
-                                            </span>
-                                            Tu Negocio
-                                        </div>
-                                        <div class="app-menu">
-                                            <ul>
-                                                <li aria-current="page">Dashboard</li>
-                                                <li>Productos</li>
-                                                <li>Categorías</li>
-                                                <li>Multimedia</li>
-                                                <li>Configuración</li>
-                                            </ul>
-                                        </div>
+                        <div class="demo-view">
+                            <div class="demo-stage">
+                                <!-- Dashboard -->
+                                <div class="demo-panel" role="tabpanel" id="panel-dashboard" aria-labelledby="tab-dashboard" data-demo-panel="dashboard">
+                                    <div class="demo-slides">
+                                        <figure class="demo-slide is-active" data-demo-slide>
+                                            <img src="assets/img/screen-dash-1.jpg" alt="Dashboard del panel con el resumen del catálogo" width="1145" height="663">
+                                        </figure>
                                     </div>
-                                    <div class="app-main">
-                                        <div class="app-head">
-                                            <div class="card-text">
-                                                <h3>Hola de nuevo</h3>
-                                                <p>Este es el resumen de tu catálogo</p>
-                                            </div>
-                                            <div class="btn btn-brand btn-sm">
-                                                <a href="#">Nuevo producto</a>
-                                            </div>
-                                        </div>
-                                        <div class="app-stats">
-                                            <div class="app-stat">
-                                                <h4>48</h4>
-                                                <p>Productos</p>
-                                            </div>
-                                            <div class="app-stat">
-                                                <h4>6</h4>
-                                                <p>Categorías</p>
-                                            </div>
-                                            <div class="app-stat">
-                                                <h4>5</h4>
-                                                <p>Destacados</p>
-                                            </div>
-                                            <div class="app-stat">
-                                                <h4>3</h4>
-                                                <p>Agotados</p>
-                                            </div>
-                                        </div>
-                                        <div class="app-table">
-                                            <div class="app-row app-row-head">
-                                                <span>Últimos productos</span>
-                                                <span>Categoría</span>
-                                                <span>Precio</span>
-                                                <span>Estado</span>
-                                            </div>
-                                            <div class="app-row">
-                                                <div class="app-row-product">
-                                                    <span class="app-thumb"></span>
-                                                    <h4>Producto uno</h4>
-                                                </div>
-                                                <span>Novedades</span>
-                                                <span>$ 12.900</span>
-                                                <span class="badge badge-soft">Visible</span>
-                                            </div>
-                                            <div class="app-row">
-                                                <div class="app-row-product">
-                                                    <span class="app-thumb"></span>
-                                                    <h4>Producto dos</h4>
-                                                </div>
-                                                <span>Accesorios</span>
-                                                <span>$ 8.400</span>
-                                                <span class="badge badge-soft">Visible</span>
-                                            </div>
-                                            <div class="app-row">
-                                                <div class="app-row-product">
-                                                    <span class="app-thumb"></span>
-                                                    <h4>Producto tres</h4>
-                                                </div>
-                                                <span>Ofertas</span>
-                                                <span>$ 24.500</span>
-                                                <span class="badge">Oculto</span>
-                                            </div>
-                                        </div>
+                                </div>
+
+                                <!-- Productos -->
+                                <div class="demo-panel" role="tabpanel" id="panel-productos" aria-labelledby="tab-productos" data-demo-panel="productos" hidden>
+                                    <div class="demo-slides">
+                                        <figure class="demo-slide is-active" data-demo-slide>
+                                            <img src="assets/img/screen-product-1.jpg" alt="Listado de productos en el panel" width="1145" height="663" loading="lazy">
+                                        </figure>
+                                        <figure class="demo-slide" data-demo-slide>
+                                            <img src="assets/img/screen-multimedia-1.jpg" alt="Biblioteca de imágenes del panel" width="1145" height="663" loading="lazy">
+                                        </figure>
+                                    </div>
+                                </div>
+
+                                <!-- Editor de producto -->
+                                <div class="demo-panel" role="tabpanel" id="panel-editor" aria-labelledby="tab-editor" data-demo-panel="editor" hidden>
+                                    <div class="demo-slides">
+                                        <figure class="demo-slide is-active" data-demo-slide>
+                                            <img src="assets/img/screen-edit-product-1.jpg" alt="Formulario para editar un producto" width="1145" height="663" loading="lazy">
+                                        </figure>
+                                    </div>
+                                </div>
+
+                                <!-- Catálogo público -->
+                                <div class="demo-panel" role="tabpanel" id="panel-catalogo" aria-labelledby="tab-catalogo" data-demo-panel="catalogo" hidden>
+                                    <div class="demo-slides">
+                                        <figure class="demo-slide is-active" data-demo-slide>
+                                            <img src="assets/img/screen-home-1.jpg" alt="Home del catálogo público de una tienda" width="1199" height="759" loading="lazy">
+                                        </figure>
+                                        <figure class="demo-slide" data-demo-slide>
+                                            <img src="assets/img/screen-product-page-1.jpg" alt="Ficha de un producto en el catálogo" width="1199" height="759" loading="lazy">
+                                        </figure>
+                                        <figure class="demo-slide" data-demo-slide>
+                                            <img src="assets/img/screen-product-page-2.jpg" alt="Detalle de la ficha de un producto" width="1199" height="759" loading="lazy">
+                                        </figure>
+                                        <figure class="demo-slide" data-demo-slide>
+                                            <img src="assets/img/screen-cart.jpg" alt="Pedido listo para enviar por WhatsApp" width="1199" height="759" loading="lazy">
+                                        </figure>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Productos -->
-                            <div class="demo-panel" role="tabpanel" id="panel-productos" aria-labelledby="tab-productos" data-demo-panel="productos" hidden>
-                                <div class="mockup-app">
-                                    <div class="app-side">
-                                        <div class="app-side-brand">
-                                            <span class="brand-mark">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                                    <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                                                    <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                                                    <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-                                                    <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-                                                </svg>
-                                            </span>
-                                            Tu Negocio
-                                        </div>
-                                        <div class="app-menu">
-                                            <ul>
-                                                <li>Dashboard</li>
-                                                <li aria-current="page">Productos</li>
-                                                <li>Categorías</li>
-                                                <li>Multimedia</li>
-                                                <li>Configuración</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="app-main">
-                                        <div class="app-head">
-                                            <div class="card-text">
-                                                <h3>Productos</h3>
-                                                <p>48 productos en tu catálogo</p>
-                                            </div>
-                                            <div class="btn btn-brand btn-sm">
-                                                <a href="#">Nuevo producto</a>
-                                            </div>
-                                        </div>
-                                        <div class="chip-row">
-                                            <ul>
-                                                <li>Todos</li>
-                                                <li>Novedades</li>
-                                                <li>Ofertas</li>
-                                                <li>Accesorios</li>
-                                                <li>Destacados</li>
-                                            </ul>
-                                        </div>
-                                        <div class="app-table">
-                                            <div class="app-row app-row-head">
-                                                <span>Producto</span>
-                                                <span>Categoría</span>
-                                                <span>Precio</span>
-                                                <span>Estado</span>
-                                            </div>
-                                            <div class="app-row">
-                                                <div class="app-row-product">
-                                                    <span class="app-thumb"></span>
-                                                    <h4>Producto uno</h4>
-                                                </div>
-                                                <span>Novedades</span>
-                                                <span>$ 12.900</span>
-                                                <span class="badge badge-soft">Visible</span>
-                                            </div>
-                                            <div class="app-row">
-                                                <div class="app-row-product">
-                                                    <span class="app-thumb"></span>
-                                                    <h4>Producto dos</h4>
-                                                </div>
-                                                <span>Accesorios</span>
-                                                <span>$ 8.400</span>
-                                                <span class="badge badge-soft">Visible</span>
-                                            </div>
-                                            <div class="app-row">
-                                                <div class="app-row-product">
-                                                    <span class="app-thumb"></span>
-                                                    <h4>Producto tres</h4>
-                                                </div>
-                                                <span>Ofertas</span>
-                                                <span>$ 24.500</span>
-                                                <span class="badge badge-accent">Agotado</span>
-                                            </div>
-                                            <div class="app-row">
-                                                <div class="app-row-product">
-                                                    <span class="app-thumb"></span>
-                                                    <h4>Producto cuatro</h4>
-                                                </div>
-                                                <span>Novedades</span>
-                                                <span>$ 5.200</span>
-                                                <span class="badge badge-soft">Visible</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Editor de producto -->
-                            <div class="demo-panel" role="tabpanel" id="panel-editor" aria-labelledby="tab-editor" data-demo-panel="editor" hidden>
-                                <div class="mockup-app">
-                                    <div class="app-side">
-                                        <div class="app-side-brand">
-                                            <span class="brand-mark">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                                    <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                                                    <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                                                    <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-                                                    <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-                                                </svg>
-                                            </span>
-                                            Tu Negocio
-                                        </div>
-                                        <div class="app-menu">
-                                            <ul>
-                                                <li>Dashboard</li>
-                                                <li aria-current="page">Productos</li>
-                                                <li>Categorías</li>
-                                                <li>Multimedia</li>
-                                                <li>Configuración</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="app-main">
-                                        <div class="app-head">
-                                            <div class="card-text">
-                                                <h3>Nuevo producto</h3>
-                                                <p>Cargá los datos y publicalo</p>
-                                            </div>
-                                            <div class="btn btn-brand btn-sm">
-                                                <a href="#">Guardar</a>
-                                            </div>
-                                        </div>
-                                        <div class="app-form">
-                                            <div class="app-fields">
-                                                <div class="app-field">
-                                                    <h5>Nombre</h5>
-                                                    <div class="app-input">Producto uno</div>
-                                                </div>
-                                                <div class="app-field">
-                                                    <h5>Descripción</h5>
-                                                    <div class="app-input app-input-tall">Descripción breve del producto, materiales y detalles.</div>
-                                                </div>
-                                                <div class="app-field">
-                                                    <h5>Precio</h5>
-                                                    <div class="app-input">$ 12.900</div>
-                                                </div>
-                                                <div class="app-field">
-                                                    <h5>Categoría</h5>
-                                                    <div class="app-input">Novedades</div>
-                                                </div>
-                                            </div>
-                                            <div class="app-fields">
-                                                <div class="app-field">
-                                                    <h5>Imágenes</h5>
-                                                    <div class="app-uploader">
-                                                        <div class="app-upload-slot"></div>
-                                                        <div class="app-upload-slot"></div>
-                                                        <div class="app-upload-slot app-upload-empty">
-                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                                                <line x1="12" y1="5" x2="12" y2="19"/>
-                                                                <line x1="5" y1="12" x2="19" y2="12"/>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="app-field">
-                                                    <h5>Visibilidad</h5>
-                                                    <div class="app-input">Visible en el catálogo</div>
-                                                </div>
-                                                <div class="app-field">
-                                                    <h5>Etiquetas</h5>
-                                                    <div class="chip-row">
-                                                        <span class="badge badge-brand">Destacado</span>
-                                                        <span class="badge badge-accent">-20%</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Catálogo público -->
-                            <div class="demo-panel" role="tabpanel" id="panel-catalogo" aria-labelledby="tab-catalogo" data-demo-panel="catalogo" hidden>
-                                <div class="mockup-bar">
-                                    <div class="mockup-dots">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                    <div class="mockup-url">catalogos.com/<b>tunegocio</b></div>
-                                </div>
-                                <div class="mockup-body">
-                                    <div class="shop-head">
-                                        <span class="shop-logo">TN</span>
-                                        <div class="shop-meta">
-                                            <h3>Tu Negocio</h3>
-                                            <p>Envíos a todo el país · Consultas por WhatsApp</p>
-                                        </div>
-                                    </div>
-                                    <div class="chip-row">
-                                        <ul>
-                                            <li>Todos</li>
-                                            <li>Novedades</li>
-                                            <li>Ofertas</li>
-                                            <li>Accesorios</li>
-                                        </ul>
-                                    </div>
-                                    <div class="product-grid">
-                                        <article class="product-card">
-                                            <div class="product-thumb">
-                                                <span class="product-tag">Nuevo</span>
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                                    <path d="M21 8l-9-5-9 5v8l9 5 9-5z"/>
-                                                    <polyline points="3 8 12 13 21 8"/>
-                                                </svg>
-                                            </div>
-                                            <div class="product-info">
-                                                <h4>Producto uno</h4>
-                                                <p>$ 12.900</p>
-                                            </div>
-                                            <div class="product-action">
-                                                <span>Consultar</span>
-                                            </div>
-                                        </article>
-                                        <article class="product-card">
-                                            <div class="product-thumb">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                                    <rect x="3" y="3" width="18" height="18" rx="2.5"/>
-                                                    <circle cx="8.5" cy="8.5" r="1.5"/>
-                                                    <polyline points="21 15 16 10 5 21"/>
-                                                </svg>
-                                            </div>
-                                            <div class="product-info">
-                                                <h4>Producto dos</h4>
-                                                <p>$ 8.400</p>
-                                            </div>
-                                            <div class="product-action">
-                                                <span>Consultar</span>
-                                            </div>
-                                        </article>
-                                        <article class="product-card">
-                                            <div class="product-thumb">
-                                                <span class="product-tag">-20%</span>
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                                    <path d="M20.5 13.5l-7 7a2 2 0 0 1-2.8 0l-7.2-7.2A2 2 0 0 1 3 12V4a1 1 0 0 1 1-1h8a2 2 0 0 1 1.4.6l7.1 7.1a2 2 0 0 1 0 2.8z"/>
-                                                    <circle cx="7.5" cy="7.5" r="1.3"/>
-                                                </svg>
-                                            </div>
-                                            <div class="product-info">
-                                                <h4>Producto tres</h4>
-                                                <p>$ 24.500</p>
-                                            </div>
-                                            <div class="product-action">
-                                                <span>Consultar</span>
-                                            </div>
-                                        </article>
-                                    </div>
-                                </div>
+                            <div class="demo-controls">
+                                <button type="button" class="demo-arrow" aria-label="Imagen anterior" data-demo-prev>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                        <polyline points="15 18 9 12 15 6"/>
+                                    </svg>
+                                </button>
+                                <div class="demo-dots" data-demo-dots></div>
+                                <button type="button" class="demo-arrow" aria-label="Imagen siguiente" data-demo-next>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="demo-flow">
-                        <ul>
-                            <li>Dashboard</li>
-                            <li>Crear producto</li>
-                            <li>Publicar</li>
-                            <li>Compartir</li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -643,7 +350,7 @@
                             </ul>
                         </div>
                         <div class="btn btn-brand btn-lg btn-arrow">
-                            <a href="#">Crear mi catálogo gratis</a>
+                            <a href="/registro" data-panel-link>Crear mi catálogo gratis</a>
                         </div>
                     </div>
 
@@ -669,7 +376,7 @@
                                     <span class="wa-link-icon">TN</span>
                                     <div class="wa-link-text">
                                         <h4>Catálogo de Tu Negocio</h4>
-                                        <p>catalogos.com/tunegocio</p>
+                                        <p>tunegocio.miotienda.com</p>
                                     </div>
                                 </div>
                             </div>
@@ -796,10 +503,7 @@
                         <p>Creá tu catálogo, cargá tus productos y compartilo con tus clientes en minutos.</p>
                     </div>
                     <div class="btn btn-invert btn-lg btn-arrow">
-                        <a href="#">Crear mi catálogo gratis</a>
-                    </div>
-                    <div class="cta-note">
-                        <p>Gratis para empezar · Sin tarjeta de crédito</p>
+                        <a href="/registro" data-panel-link>Crear mi catálogo gratis</a>
                     </div>
                 </div>
             </div>
@@ -815,16 +519,8 @@
             <div class="footer-top">
                 <div class="footer-brand">
                     <div class="brand">
-                        <a href="#inicio">
-                            <span class="brand-mark">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                    <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                                    <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                                    <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-                                    <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-                                </svg>
-                            </span>
-                            <span class="brand-name">Catálogos</span>
+                        <a href="#inicio" aria-label="Mio tienda">
+                            <img data-platform-logo alt="Mio tienda" hidden>
                         </a>
                     </div>
                     <p>
@@ -868,36 +564,17 @@
                     <ul>
                         <li><a href="#como-funciona">Cómo funciona</a></li>
                         <li><a href="#faq">Preguntas frecuentes</a></li>
-                        <li><a href="#">Guía para empezar</a></li>
-                        <li><a href="#">Novedades</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h3>Empresa</h3>
-                    <ul>
-                        <li><a href="#">Sobre nosotros</a></li>
-                        <li><a href="#">Contacto</a></li>
-                        <li><a href="#">Trabajá con nosotros</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h3>Soporte</h3>
-                    <ul>
-                        <li><a href="#">Centro de ayuda</a></li>
-                        <li><a href="#">Escribinos por WhatsApp</a></li>
-                        <li><a href="#">Estado del servicio</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>© <span data-anio>2026</span> Catálogos. Todos los derechos reservados.</p>
+                <p>© <span data-anio>2026</span> Mio tienda. Todos los derechos reservados.</p>
                 <div class="footer-legal">
-                    <a href="#">Términos y condiciones</a>
-                    <a href="#">Política de privacidad</a>
+                    <a href="terminos-y-condiciones.html">Términos y condiciones</a>
+                    <a href="politica-de-privacidad.html">Política de privacidad</a>
                 </div>
+                <p>Hecho por <a href="https://diseprog.com" target="_blank" rel="noopener">DiseProg.com</a></p>
             </div>
         </div>
     </footer>

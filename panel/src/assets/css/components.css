@@ -519,6 +519,21 @@
     border-top: 1px solid var(--color-border-soft);
 }
 
+@media (max-width: 720px) {
+    /* Save buttons full width on top, the way out (Cancel) at the bottom. */
+    .card-footer.is-stacked-mobile {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .card-footer.is-stacked-mobile .table-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+}
+
 .card.is-danger {
     border-color: var(--color-danger);
 }

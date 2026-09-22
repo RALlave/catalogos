@@ -14,7 +14,7 @@ import { useUiStore } from '@/stores/ui'
 const auth = useAuthStore()
 const ui = useUiStore()
 
-const EMPTY_PASSWORD = { current_password: '', password: '', password_confirmation: '' }
+const EMPTY_PASSWORD = { password: '', password_confirmation: '' }
 
 const profile = ref({ name: '', username: '', email: '' })
 const password = ref({ ...EMPTY_PASSWORD })
@@ -23,8 +23,8 @@ const errors = ref({})
 const message = ref('')
 const loading = ref(false)
 
-/* La contraseña es opcional: con los tres campos vacíos se guarda sólo el
-   perfil. Basta con que haya uno escrito para que se pidan los tres. */
+/* La contraseña es opcional: con los dos campos vacíos se guarda sólo el
+   perfil. Basta con que haya uno escrito para que se pidan los dos. */
 const changingPassword = computed(() => Object.values(password.value).some(value => value !== ''))
 
 /* Un solo botón guarda las dos cosas, así que el aviso de cambios sin guardar
@@ -42,7 +42,7 @@ async function save() {
     if (changingPassword.value) {
         errors.value = {
             ...errors.value,
-            ...checkRequired(password.value, ['current_password', 'password', 'password_confirmation']),
+            ...checkRequired(password.value, ['password', 'password_confirmation']),
         }
     }
 
@@ -176,14 +176,6 @@ onMounted(() => {
             <div class="card-body">
                 <div class="form">
                     <div class="form-row">
-                        <FormField
-                            label="Contraseña actual"
-                            field-id="current-password"
-                            :error="errors.current_password?.[0]"
-                        >
-                            <PasswordInput id="current-password" v-model="password.current_password" />
-                        </FormField>
-
                         <FormField label="Nueva contraseña" field-id="new-password" :error="errors.password?.[0]">
                             <PasswordInput id="new-password" v-model="password.password" autocomplete="new-password" />
                             <PasswordStrength :value="password.password" />
