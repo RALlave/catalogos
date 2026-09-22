@@ -16,7 +16,7 @@ const ui = useUiStore()
 
 const EMPTY_PASSWORD = { current_password: '', password: '', password_confirmation: '' }
 
-const profile = ref({ name: '', email: '' })
+const profile = ref({ name: '', username: '', email: '' })
 const password = ref({ ...EMPTY_PASSWORD })
 
 const errors = ref({})
@@ -37,7 +37,7 @@ const changes = useUnsavedChanges({
 /** @returns {Promise<boolean>} Si salió bien: lo mira el aviso de cambios sin guardar. */
 async function save() {
     message.value = ''
-    errors.value = checkRequired(profile.value, ['name', 'email'])
+    errors.value = checkRequired(profile.value, ['name', 'username', 'email'])
 
     if (changingPassword.value) {
         errors.value = {
@@ -85,6 +85,7 @@ async function save() {
 onMounted(() => {
     profile.value = {
         name: auth.user?.name ?? '',
+        username: auth.user?.username ?? '',
         email: auth.user?.email ?? '',
     }
 
@@ -128,6 +129,23 @@ onMounted(() => {
                                 :class="{ 'has-error': errors.name }"
                                 type="text"
                                 autocomplete="name"
+                            >
+                        </FormField>
+
+                        <FormField
+                            label="Usuario"
+                            hint="Con esto entrás al panel. Entre 4 y 15 letras o números, sin espacios"
+                            field-id="profile-username"
+                            :error="errors.username?.[0]"
+                        >
+                            <input
+                                id="profile-username"
+                                maxlength="15"
+                                v-model="profile.username"
+                                class="input"
+                                :class="{ 'has-error': errors.username }"
+                                type="text"
+                                autocomplete="username"
                             >
                         </FormField>
 
