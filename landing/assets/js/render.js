@@ -67,15 +67,6 @@ function iniciales(nombre) {
    Plantillas
    -------------------------------------------------------------------------- */
 
-function tplStat(stat) {
-    return `
-        <div class="stat">
-            <span class="stat-value">${esc(stat.value)}</span>
-            <span class="stat-label">${esc(stat.label)}</span>
-        </div>
-    `
-}
-
 function tplProblema(item) {
     return `
         <article class="card card-hover card-problem reveal">
@@ -112,23 +103,6 @@ function tplAudiencia(item) {
     `
 }
 
-function tplFeature(item) {
-    const pronto = item.estado === "pronto"
-
-    return `
-        <article class="feature${pronto ? " feature-soon" : ""}">
-            <span class="feature-icon">${icon(item.icono)}</span>
-            <div class="feature-text">
-                <div class="feature-head">
-                    <h3>${esc(item.titulo)}</h3>
-                    ${pronto ? '<span class="badge badge-accent">Próximamente</span>' : ""}
-                </div>
-                <p>${esc(item.texto)}</p>
-            </div>
-        </article>
-    `
-}
-
 function tplPlan(plan) {
     const incluye = plan.incluye.map((linea) => `<li>${esc(linea)}</li>`).join("")
 
@@ -154,9 +128,6 @@ function tplPlan(plan) {
             </div>
             <div class="btn btn-block ${plan.destacado ? "btn-brand" : "btn-outline"}">
                 <a href="/registro" data-panel-link>${esc(plan.cta)}</a>
-            </div>
-            <div class="plan-note">
-                <p>${esc(plan.nota)}</p>
             </div>
         </article>
     `

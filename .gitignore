@@ -38,3 +38,5 @@ desktop.ini
 
 # Claude Code
 .claude/settings.local.json
+# Large media files (exceed GitHub's 100 MB limit)
+DOCUMENTS/VDEOS/

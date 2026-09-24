@@ -6,15 +6,6 @@
 
 const LANDING = {
 
-    /* Métricas del social proof.
-       PLACEHOLDER: reemplazar por datos reales cuando existan. */
-    stats: [
-        { value: "+1.000", label: "catálogos creados" },
-        { value: "+10.000", label: "productos publicados" },
-        { value: "24/7", label: "catálogo siempre disponible" },
-        { value: "100%", label: "adaptado a celulares" },
-    ],
-
     /* Sección "Problema" */
     problemas: [
         {
@@ -97,23 +88,6 @@ const LANDING = {
         },
     ],
 
-    /* Sección "Características".
-       estado: "listo" (implementado) o "pronto" (placeholder, todavía no existe). */
-    features: [
-        { icono: "box", titulo: "Gestión de productos", texto: "Altas, bajas, orden y duplicado.", estado: "listo" },
-        { icono: "tag", titulo: "Categorías", texto: "Ordená tu catálogo como quieras.", estado: "listo" },
-        { icono: "images", titulo: "Biblioteca de imágenes", texto: "Subí una vez y reutilizá en varios productos.", estado: "listo" },
-        { icono: "price", titulo: "Precios y ofertas", texto: "Precio, precio de oferta y moneda de tu país.", estado: "listo" },
-        { icono: "grid", titulo: "Catálogo público", texto: "Tu vidriera online, siempre disponible.", estado: "listo" },
-        { icono: "link", titulo: "URL personalizada", texto: "tunegocio.miotienda.com, con tu nombre.", estado: "listo" },
-        { icono: "sparkles", titulo: "Diseños y colores", texto: "Elegís el diseño y la paleta de tu marca.", estado: "listo" },
-        { icono: "phone", titulo: "Diseño responsive", texto: "Se ve bien en celular, tablet y computadora.", estado: "listo" },
-        { icono: "share", titulo: "Compartir catálogo", texto: "Enlace directo del catálogo y de cada producto.", estado: "listo" },
-        { icono: "search", titulo: "Buscador y filtros", texto: "Tus clientes encuentran rápido lo que buscan.", estado: "listo" },
-        { icono: "dashboard", titulo: "Panel de control", texto: "Todo tu catálogo administrado desde un solo lugar.", estado: "listo" },
-        { icono: "chart", titulo: "Estadísticas", texto: "Visitas y productos más vistos.", estado: "listo" },
-    ],
-
     /* Sección "Precios".
        PLACEHOLDER: precios y límites tentativos, ajustar antes de publicar.
        destacado: true marca visualmente el plan recomendado. */
@@ -132,7 +106,6 @@ const LANDING = {
                 "URL de catálogo",
                 "Compartir por WhatsApp",
             ],
-            nota: "Sin tarjeta de crédito.",
         },
         {
             nombre: "Pro",
@@ -142,30 +115,28 @@ const LANDING = {
             destacado: true,
             cta: "Comenzar ahora",
             incluye: [
-                "Hasta 50 productos",
+                "Hasta 60 productos",
                 "Categorías ilimitadas",
-                "Hasta 5 imágenes por producto",
+                "Hasta 3 imágenes por producto",
                 "Diseños y paletas de color",
                 "Productos destacados y etiquetas",
                 "Sin marca de la plataforma",
             ],
-            nota: "Cancelás cuando quieras.",
         },
         {
             nombre: "Negocio",
             tagline: "Para negocios ya establecidos.",
-            precio: "Bs. 100",
+            precio: "Bs. 130",
             periodo: "/ mes",
             destacado: false,
             cta: "Elegir plan",
             incluye: [
-                "Hasta 100 productos",
+                "Hasta 150 productos",
                 "Todas las funciones de Pro",
-                "Hasta 10 imágenes por producto",
+                "Hasta 8 imágenes por producto",
                 "Estadísticas del catálogo",
                 "Soporte prioritario",
             ],
-            nota: "Facturación mensual.",
         },
     ],
 
@@ -195,6 +166,10 @@ const LANDING = {
     /* Sección "Preguntas frecuentes" */
     faq: [
         {
+            pregunta: "¿Hay un plan gratis?",
+            respuesta: "Sí. Podés crear tu catálogo y publicarlo gratis, con un límite de productos. Si necesitás más, pasás a un plan pago cuando quieras.",
+        },
+        {
             pregunta: "¿Necesito conocimientos técnicos?",
             respuesta: "No. Creás tu cuenta, cargás tus productos desde un panel simple y tu catálogo queda publicado. No hay que instalar ni programar nada.",
         },
@@ -217,10 +192,6 @@ const LANDING = {
         {
             pregunta: "¿Se cobran los pedidos desde el catálogo?",
             respuesta: "No. El catálogo es como una vitrina: tus clientes ven los productos y te escriben por WhatsApp para comprar. No hay carrito ni pagos online.",
-        },
-        {
-            pregunta: "¿Hay un plan gratis?",
-            respuesta: "Sí. Podés crear tu catálogo y publicarlo gratis, con un límite de productos. Si necesitás más, pasás a un plan pago cuando quieras.",
         },
     ],
 }

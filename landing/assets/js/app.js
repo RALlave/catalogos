@@ -17,11 +17,9 @@ function montar(selector, items, plantilla) {
 }
 
 function montarContenido() {
-    montar("[data-stats]", LANDING.stats, tplStat)
     montar("[data-problemas]", LANDING.problemas, tplProblema)
     montar("[data-beneficios]", LANDING.beneficios, tplBeneficio)
     montar("[data-audiencias]", LANDING.audiencias, tplAudiencia)
-    montar("[data-features]", LANDING.features, tplFeature)
     montar("[data-planes]", LANDING.planes, tplPlan)
     montar("[data-testimonios]", LANDING.testimonios, tplTestimonio)
     montar("[data-faq]", LANDING.faq, tplFaq)
@@ -42,7 +40,9 @@ function iniciarHeader() {
     const nav = document.querySelector("[data-nav]")
     const toggle = document.querySelector("[data-nav-toggle]")
 
-    if (!header || !nav || !toggle) {
+    /* The legal pages have a header without a menu: the scroll behaviour still
+       applies there, only the menu part is skipped. */
+    if (!header) {
         return
     }
 
@@ -64,13 +64,20 @@ function iniciarHeader() {
             return
         }
 
-        const menuOpen = nav.classList.contains("is-open")
+        /* Scrolling with the menu open closes it instead of leaving it there. */
+        if (nav && nav.classList.contains("is-open")) {
+            cerrarMenu()
+        }
 
-        header.classList.toggle("is-hidden", delta > 0 && y > header.offsetHeight && !menuOpen)
+        header.classList.toggle("is-hidden", delta > 0 && y > header.offsetHeight)
         lastScroll = y
     }
 
     const cerrarMenu = () => {
+        if (!nav || !toggle) {
+            return
+        }
+
         nav.classList.remove("is-open")
         toggle.setAttribute("aria-expanded", "false")
         toggle.setAttribute("aria-label", "Abrir menú")
@@ -78,6 +85,10 @@ function iniciarHeader() {
 
     marcarScroll()
     window.addEventListener("scroll", marcarScroll, { passive: true })
+
+    if (!nav || !toggle) {
+        return
+    }
 
     toggle.addEventListener("click", () => {
         const abierto = nav.classList.toggle("is-open")
@@ -94,6 +105,13 @@ function iniciarHeader() {
 
     document.addEventListener("keydown", (evento) => {
         if (evento.key === "Escape") {
+            cerrarMenu()
+        }
+    })
+
+    /* A tap outside the panel and its button closes the menu too. */
+    document.addEventListener("click", (evento) => {
+        if (!evento.target.closest("[data-nav]") && !evento.target.closest("[data-nav-toggle]")) {
             cerrarMenu()
         }
     })
@@ -147,10 +165,11 @@ function iniciarDemo() {
             })
         }
 
-        return { tab, panel, slides, dots }
+        return { tab, panel, slides, dots, video: panel.querySelector("[data-demo-video]") }
     })
 
-    /* Flat list of [tab, slide] pairs: the order the sequence walks. */
+    /* Flat list of [tab, slide] pairs: the order the sequence walks. The phone
+       tour is not part of it: choosing it stops the sequence. */
     const steps = panels.flatMap((item, tabIndex) => item.slides.map((slide, slideIndex) => [tabIndex, slideIndex]))
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -158,9 +177,16 @@ function iniciarDemo() {
     let current = 0
     let timer = null
     let inView = false
+    let videoOpen = false
 
     function show(tabIndex, slideIndex) {
-        current = steps.findIndex(([t, s]) => t === tabIndex && s === slideIndex)
+        const position = steps.findIndex(([t, s]) => t === tabIndex && s === slideIndex)
+
+        if (position >= 0) {
+            current = position
+        }
+
+        videoOpen = position < 0
 
         panels.forEach((item, index) => {
             const active = index === tabIndex
@@ -171,6 +197,15 @@ function iniciarDemo() {
             item.dots.forEach((dot) => {
                 dot.hidden = !active
             })
+
+            /* The video only downloads when it is shown, and pauses on leaving. */
+            if (item.video) {
+                if (active) {
+                    item.video.play().catch(() => {})
+                } else {
+                    item.video.pause()
+                }
+            }
 
             if (!active) {
                 return
@@ -196,7 +231,7 @@ function iniciarDemo() {
     function restart() {
         stop()
 
-        if (!reducedMotion && inView) {
+        if (!reducedMotion && inView && !videoOpen) {
             timer = window.setInterval(() => step(1), DEMO_DELAY)
         }
     }
@@ -245,7 +280,11 @@ function iniciarDemo() {
         inView = true
     }
 
-    show(0, 0)
+    /* On a phone the tabs are hidden and only the phone tour is shown. */
+    const phone = window.matchMedia("(max-width: 767px)").matches
+    const videoTab = panels.findIndex((item) => item.slides.length === 0)
+
+    show(phone && videoTab >= 0 ? videoTab : 0, 0)
     restart()
 }
 

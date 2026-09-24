@@ -1,3 +1,9 @@
+<!--
+    PANTALLA DE ERROR — en la práctica se ve con la tienda caída o
+    inexistente: las URLs que no existen dentro de una tienda redirigen
+    al catálogo sin pasar por acá.
+-->
+
 <script setup lang="ts">
 import type { NuxtError } from '#app'
 

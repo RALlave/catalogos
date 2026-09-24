@@ -4,6 +4,15 @@ Al terminar una tarea, la respuesta arranca con **`Tarea lista!`** y recién
 debajo van los detalles: qué se hizo, qué archivos se tocaron y lo que haya que
 tener en cuenta.
 
+## Regla: el nombre de la marca se escribe MioTienda
+
+Todo junto, con la M y la T mayúsculas: **MioTienda**. Nunca "Mio tienda",
+"Mio Tienda" ni "miotienda" en textos visibles. Vale para la landing, las
+páginas legales, los correos y cualquier texto de interfaz.
+
+El **dominio** sí va todo en minúscula y sin espacios: `miotienda.com`, y una
+tienda es `tunegocio.miotienda.com`.
+
 ## Regla: anotar detalles importantes del proyecto
 
 Todo detalle importante del proyecto debe quedar anotado para recordarlo siempre.

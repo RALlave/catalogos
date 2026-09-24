@@ -23,7 +23,7 @@
 
 .site-header.is-stuck {
     border-bottom-color: var(--color-border);
-    box-shadow: 0 1px 3px var(--color-shadow-sm);
+    box-shadow: 0 3px 8px var(--color-shadow-md), 0 16px 32px -18px var(--color-shadow-lg);
 }
 
 /* Toggled by app.js: out of view while scrolling down, back on the way up. */
@@ -153,18 +153,7 @@
     position: relative;
     padding: 3.5rem 0 7rem;
     overflow: hidden;
-}
-
-.section-hero::before {
-    content: "";
-    position: absolute;
-    top: -18rem;
-    left: 50%;
-    width: 72rem;
-    height: 42rem;
-    transform: translateX(-50%);
-    background: radial-gradient(closest-side, var(--color-brand-soft), transparent 70%);
-    pointer-events: none;
+    background-color: var(--color-brand-soft);
 }
 
 .hero {
@@ -191,10 +180,6 @@
     font-size: 1.188rem;
 }
 
-.hero-note {
-    color: var(--color-muted);
-}
-
 /* --------------------------------------------------------------------------
    Hero — video
    -------------------------------------------------------------------------- */
@@ -209,69 +194,44 @@
     justify-content: center;
 }
 
-.hero-video video {
+/* Both are the same vertical recording of a phone: the clip-path trims the
+   dark edge on the right and rounds the corners, in percentages so it holds
+   at any size. The demo video reuses it. */
+.hero-video video,
+.demo-video video {
     display: block;
     width: auto;
     max-width: 100%;
     height: auto;
-    max-height: 500px;
+    max-height: 600px;
     clip-path: inset(0 1% 0 0 round 12% / 6%);
-}
-
-/* --------------------------------------------------------------------------
-   Social proof
-   -------------------------------------------------------------------------- */
-
-.proof {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-    text-align: center;
-}
-
-.proof-label h2 {
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-}
-
-.stat-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    width: 100%;
-}
-
-.stat {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 1.25rem 1rem;
-    border-radius: 16px;
-    background-color: var(--color-surface-alt);
-}
-
-.stat-value {
-    font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--color-ink);
-}
-
-.stat-label {
-    font-size: 0.875rem;
-    color: var(--color-body);
 }
 
 /* --------------------------------------------------------------------------
    Beneficios
    -------------------------------------------------------------------------- */
 
-.benefit-card {
+/* Two columns: the icon takes a third of the card and the text the rest. */
+.benefit-card,
+.audience-card {
+    display: grid;
+    grid-template-columns: 2fr 4fr;
+    align-items: flex-start;
     gap: 1.25rem;
+}
+
+.benefit-card .icon-box,
+.audience-card .icon-box {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 18px;
+}
+
+.benefit-card .icon-box svg,
+.audience-card .icon-box svg {
+    width: 45%;
+    height: auto;
 }
 
 .benefit-card h3 {
@@ -322,6 +282,24 @@
 .demo-tabs button[aria-selected="true"] {
     background-color: var(--color-invert);
     color: var(--color-ink);
+}
+
+/* "Ver en móvil" is not one more screen of the panel: it gets its own space
+   and the brand colour, so it reads as the thing to try. */
+.demo-tab-apart {
+    margin-top: 1.25rem;
+    background-color: var(--color-brand);
+    color: var(--color-invert);
+}
+
+.demo-tabs button.demo-tab-apart:hover {
+    background-color: var(--color-brand-strong);
+    color: var(--color-invert);
+}
+
+.demo-tabs button.demo-tab-apart[aria-selected="true"] {
+    background-color: var(--color-invert);
+    color: var(--color-brand);
 }
 
 .demo-stage {
@@ -414,6 +392,16 @@
     transition: background-color 0.15s ease, width 0.15s ease;
 }
 
+.demo-panel-video {
+    background-color: var(--color-ink);
+    padding: 2rem 1rem;
+}
+
+.demo-video {
+    display: flex;
+    justify-content: center;
+}
+
 .demo-dots button[aria-current="true"] {
     width: 22px;
     border-radius: 999px;
@@ -427,241 +415,15 @@
 }
 
 /* --------------------------------------------------------------------------
-   Cómo funciona
-   -------------------------------------------------------------------------- */
-
-.steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    counter-reset: paso;
-}
-
-.step {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding-top: 2rem;
-    border-top: 2px solid var(--color-border);
-}
-
-.step-number {
-    position: absolute;
-    top: -0.938rem;
-    left: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 2rem;
-    height: 1.875rem;
-    padding: 0 0.625rem;
-    border-radius: 999px;
-    background-color: var(--color-ink);
-    color: var(--color-invert);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-}
-
-.step-text {
-    font-size: 0.938rem;
-}
-
-/* --------------------------------------------------------------------------
-   WhatsApp
-   -------------------------------------------------------------------------- */
-
-.section-whatsapp {
-    background-color: var(--color-surface-alt);
-}
-
-.split {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: center;
-    gap: 4rem;
-}
-
-.split-copy {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-}
-
-.wa-flow {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.5rem;
-    border: 1px solid var(--color-border);
-    border-radius: 20px;
-    background-color: var(--color-surface);
-    box-shadow: 0 30px 60px -40px var(--color-shadow-lg);
-}
-
-.wa-head {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--color-border);
-}
-
-.wa-head h3 {
-    font-size: 0.938rem;
-}
-
-.wa-head p {
-    font-size: 0.75rem;
-    color: var(--color-brand);
-}
-
-.wa-thread {
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-    padding: 0.5rem 0;
-}
-
-.wa-msg {
-    max-width: 82%;
-    padding: 0.625rem 0.813rem;
-    border-radius: 14px;
-    background-color: var(--color-surface-alt);
-    font-size: 0.875rem;
-}
-
-.wa-msg-out {
-    align-self: flex-end;
-    background-color: var(--color-brand-soft);
-}
-
-.wa-link {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    margin-top: 0.5rem;
-    padding: 0.625rem;
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-    background-color: var(--color-surface);
-}
-
-.wa-link-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
-    background-color: var(--color-ink);
-    color: var(--color-invert);
-    font-size: 0.75rem;
-    font-weight: 700;
-}
-
-.wa-link-text {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-
-.wa-link-text h4 {
-    font-size: 0.813rem;
-}
-
-.wa-link-text p {
-    font-size: 0.75rem;
-    color: var(--color-muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.wa-share {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.625rem;
-    border-radius: 10px;
-    background-color: var(--color-whatsapp);
-    color: var(--color-invert);
-    font-size: 0.875rem;
-    font-weight: 600;
-}
-
-.wa-share svg {
-    width: 17px;
-    height: 17px;
-}
-
-/* --------------------------------------------------------------------------
    Para quién es
    -------------------------------------------------------------------------- */
 
 .audience-card {
-    gap: 0.875rem;
     background-color: var(--color-surface);
 }
 
 .audience-card h3 {
     font-size: 1rem;
-}
-
-/* --------------------------------------------------------------------------
-   Características
-   -------------------------------------------------------------------------- */
-
-.feature-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem 2rem;
-}
-
-.feature {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.875rem;
-    padding: 1rem 0;
-    border-top: 1px solid var(--color-border);
-}
-
-.feature-icon {
-    flex-shrink: 0;
-    color: var(--color-brand);
-}
-
-.feature-icon svg {
-    width: 20px;
-    height: 20px;
-}
-
-.feature-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.feature-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.feature-head h3 {
-    font-size: 0.938rem;
-}
-
-.feature-text p {
-    font-size: 0.875rem;
-}
-
-.feature-soon .feature-icon {
-    color: var(--color-muted);
 }
 
 /* --------------------------------------------------------------------------
@@ -734,12 +496,6 @@
 
 .plan-features {
     flex: 1;
-}
-
-.plan-note {
-    font-size: 0.75rem;
-    color: var(--color-muted);
-    text-align: center;
 }
 
 .pricing-note {
@@ -933,8 +689,8 @@
 }
 
 .footer-social svg {
-    width: 17px;
-    height: 17px;
+    width: 22px;
+    height: 22px;
 }
 
 .footer-col {
@@ -1226,24 +982,9 @@
         justify-self: center;
     }
 
-    .stat-row {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .steps,
-    .plans,
-    .feature-list {
+    .plans {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
-    }
-
-    .split {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-
-    .split-copy {
-        align-items: flex-start;
     }
 
     .footer-top {
@@ -1278,9 +1019,50 @@
         height: 56px;
     }
 
+    /* Dark panel on a phone: the white one blended into the page behind it. */
     .nav {
         top: 4rem;
         max-height: calc(100vh - 4rem);
+        align-items: center;
+        text-align: center;
+        border-bottom-color: var(--color-invert-line);
+        background-color: var(--color-ink);
+    }
+
+    .nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-actions {
+        flex-direction: column;
+        align-items: stretch;
+        align-self: stretch;
+    }
+
+    .nav ul a {
+        color: var(--color-invert-soft);
+    }
+
+    .nav ul a:hover {
+        color: var(--color-invert);
+    }
+
+    .nav .btn-ghost > a {
+        color: var(--color-invert);
+    }
+
+    .nav .btn-ghost > a:hover {
+        background-color: var(--color-glass-dark);
+    }
+
+    .nav .btn-brand > a {
+        background-color: var(--color-invert);
+        color: var(--color-ink);
+    }
+
+    .nav .btn-brand > a:hover {
+        background-color: var(--color-surface-sunken);
     }
 
     .site-header.is-compact .navbar {
@@ -1301,7 +1083,7 @@
     }
 
     .section-hero {
-        padding: 2.5rem 0 4rem;
+        padding: 2.5rem 0 2.5rem;
     }
 
     .hero {
@@ -1317,7 +1099,7 @@
     }
 
     .hero-visual {
-        padding-bottom: 3.5rem;
+        padding-bottom: 0;
     }
 
     .btn-group {
@@ -1331,14 +1113,6 @@
         width: 100%;
     }
 
-    .stat {
-        padding: 1rem 0.75rem;
-    }
-
-    .stat-value {
-        font-size: 1.375rem;
-    }
-
     .demo {
         gap: 1.75rem;
     }
@@ -1347,32 +1121,29 @@
         gap: 1.75rem;
     }
 
-    .demo-tabs {
-        justify-self: stretch;
-        overflow-x: auto;
-        flex-wrap: nowrap;
+    /* On a phone the panel screenshots are unreadable: the tabs and the
+       controls go away and only the phone tour is left. */
+    .demo-tabs,
+    .demo-controls {
+        display: none;
     }
 
-    .demo-tabs button {
-        white-space: nowrap;
+    .demo-stage {
+        border: 0;
+        background-color: transparent;
+        box-shadow: none;
     }
 
-    .steps,
-    .plans,
-    .feature-list {
+    .demo-panel-video {
+        padding: 0;
+    }
+
+    .plans {
         grid-template-columns: 1fr;
-    }
-
-    .steps {
-        gap: 2.5rem;
     }
 
     .plan {
         padding: 1.5rem;
-    }
-
-    .wa-flow {
-        padding: 1rem;
     }
 
     .faq-item summary {
@@ -1388,14 +1159,38 @@
         padding: 3rem 0 1.5rem;
     }
 
+    /* Stacked and centred: a single column reads better centred on a phone. */
     .footer-top {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1fr);
         padding-bottom: 2rem;
+        text-align: center;
+    }
+
+    .footer-brand,
+    .footer-social,
+    .footer-col {
+        align-items: center;
+    }
+
+    .footer-brand {
+        max-width: none;
     }
 
     .footer-bottom {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-legal {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .hero-video video,
+    .demo-video video {
+        max-height: 700px;
     }
 }
 

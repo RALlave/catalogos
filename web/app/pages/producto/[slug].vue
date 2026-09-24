@@ -10,12 +10,12 @@ const productSlug = computed(() => String(route.params.slug ?? ''))
 const { data: storeData } = await useCurrentStore()
 const { data: productData, error } = await useStoreProduct(productSlug)
 
+/* Un producto borrado u oculto no muestra una pantalla de error: manda al
+   catálogo. La redirección es temporal, la dirección no se mudó a ninguna
+   parte. Va antes de la pantalla de error a propósito: desde `error.vue`
+   el servidor sigue respondiendo 404 en vez de redirigir. */
 if (error.value || ! productData.value) {
-    throw createError({
-        statusCode: 404,
-        statusMessage: 'No encontramos ese producto.',
-        fatal: true,
-    })
+    await navigateTo('/', { redirectCode: 302, replace: true })
 }
 
 const store = computed(() => storeData.value as Store)
